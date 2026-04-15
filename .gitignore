@@ -1,0 +1,70 @@
+# ─────────────────────────────────────────────
+#  AURA – .gitignore
+# ─────────────────────────────────────────────
+
+# --- Secrets & environment ---
+.env
+*.env
+
+# --- Python virtual environment ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Python cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# --- Distribution / packaging ---
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# --- Testing ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Streamlit ---
+.streamlit/secrets.toml
+
+# --- Poppler binaries (large binary dependency) ---
+poppler-*/
+poppler/
+
+# --- Temporary / scratch files ---
+*.tmp
+*.bak
+*.log
+
+# --- OS ---
+desktop.ini
+
+# --- Claude Code local settings ---
+.claude/
+
+# --- Project workspace files (not for public repo) ---
+README/
+AURA_System_Design.docx
+AURA_V2_MASTER_PROMPT.md
+memory.md
