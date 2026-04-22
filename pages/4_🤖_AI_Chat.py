@@ -1,61 +1,50 @@
 """AURA — Page 4: AI Data Analyst chat."""
 from __future__ import annotations
 
-from pathlib import Path
-
 import streamlit as st
 
 from engines.ai_insights import AIProvider, QUICK_PROMPTS, ask_ai
 from state.session import get_session
 from utils.helpers import (
     get_logger,
+    load_css,
+    page_header,
     require_dataset,
-    show_page_header,
     show_pipeline_progress,
     show_sidebar_status,
 )
 
 logger = get_logger(__name__)
 
-st.set_page_config(page_title="AURA · AI Chat", page_icon="🤖", layout="wide")
-
-
-def inject_css() -> None:
-    css_path = Path("assets/css/aura.css")
-    if css_path.exists():
-        st.markdown(
-            f"<style>{css_path.read_text(encoding='utf-8')}</style>",
-            unsafe_allow_html=True,
-        )
-
-
-inject_css()
-
-session = get_session()
-show_sidebar_status()
+st.set_page_config(page_title="AURA — AI Chat", page_icon="🤖", layout="wide")
+load_css()
 show_pipeline_progress(4)
-show_page_header("🤖", "AI Data Analyst", "Ask questions about your data in plain English")
+
+with st.sidebar:
+    show_sidebar_status()
 
 require_dataset(cleaned=True)
 
-df = session.cleaned_df
+page_header("🤖", "AI Insights", "Ask anything about your dataset in plain English")
 
-# -----------------------------------------------------------------
-# Provider selector
-# -----------------------------------------------------------------
+sess = get_session()
+df = sess.cleaned_df
+
+# ── Provider selector ─────────────────────────────────────────────────────────
 provider_label = st.radio(
     "AI Provider",
     ["Claude Sonnet 4.6 (Anthropic)", "GPT-4o-mini (OpenAI)"],
     horizontal=True,
 )
-provider = (
-    AIProvider.CLAUDE if "Anthropic" in provider_label else AIProvider.OPENAI
-)
+provider = AIProvider.CLAUDE if "Anthropic" in provider_label else AIProvider.OPENAI
 
-# -----------------------------------------------------------------
-# Quick prompts
-# -----------------------------------------------------------------
-st.markdown("#### Quick prompts")
+# ── Quick prompts ─────────────────────────────────────────────────────────────
+st.markdown(
+    '<p style="font-size:0.82rem;font-weight:700;color:#94A3B8;'
+    'text-transform:uppercase;letter-spacing:0.08em;margin:1rem 0 0.4rem;">'
+    "Quick prompts</p>",
+    unsafe_allow_html=True,
+)
 quick_cols = st.columns(len(QUICK_PROMPTS))
 quick_question: str | None = None
 for col, prompt in zip(quick_cols, QUICK_PROMPTS):
@@ -63,32 +52,24 @@ for col, prompt in zip(quick_cols, QUICK_PROMPTS):
         if st.button(prompt, use_container_width=True):
             quick_question = prompt
 
-# -----------------------------------------------------------------
-# Chat history display
-# -----------------------------------------------------------------
-for msg in session.chat_history:
+# ── Chat history ──────────────────────────────────────────────────────────────
+for msg in sess.chat_history:
     css_class = "aura-chat-user" if msg["role"] == "user" else "aura-chat-assistant"
-    align = "right" if msg["role"] == "user" else "left"
     st.markdown(
-        f'<div class="{css_class}" style="text-align:{align};margin:0.5rem 0;">'
-        f'{msg["content"]}</div>',
+        f'<div class="{css_class}">{msg["content"]}</div>',
         unsafe_allow_html=True,
     )
 
-# -----------------------------------------------------------------
-# Chat input
-# -----------------------------------------------------------------
+# ── Chat input ────────────────────────────────────────────────────────────────
 user_input = st.chat_input("Ask about your dataset…")
 question = quick_question or (user_input or "").strip()
 
 if question:
-    session.chat_history.append({"role": "user", "content": question})
+    sess.chat_history.append({"role": "user", "content": question})
     st.markdown(
-        f'<div class="aura-chat-user" style="text-align:right;margin:0.5rem 0;">'
-        f"{question}</div>",
+        f'<div class="aura-chat-user">{question}</div>',
         unsafe_allow_html=True,
     )
-
     try:
         response_placeholder = st.empty()
         full_response = ""
@@ -96,13 +77,13 @@ if question:
             for chunk in ask_ai(df, question, provider, stream=True):
                 full_response += chunk
                 response_placeholder.markdown(full_response)
-        session.chat_history.append({"role": "assistant", "content": full_response})
+        sess.chat_history.append({"role": "assistant", "content": full_response})
     except ValueError as exc:
         st.markdown(
             f"""
-<div class="aura-card" style="border-color:var(--color-error);">
-  <strong>⚠️ API key not configured</strong><br/>
-  <code>{exc}</code>
+<div class="aura-card-elevated" style="border-color:rgba(239,68,68,0.4);">
+  <strong style="color:#EF4444;">⚠ API key not configured</strong><br/>
+  <code style="font-size:0.82rem;color:#94A3B8;">{exc}</code>
 </div>
 """,
             unsafe_allow_html=True,
@@ -111,19 +92,11 @@ if question:
         logger.exception("AI chat error: %s", exc)
         st.error(f"Unexpected error: {exc}")
 
-# -----------------------------------------------------------------
-# Clear conversation
-# -----------------------------------------------------------------
-if session.chat_history and st.button("🗑  Clear conversation"):
-    session.chat_history = []
+# ── Clear conversation ────────────────────────────────────────────────────────
+if sess.chat_history and st.button("🗑  Clear conversation"):
+    sess.chat_history = []
     st.rerun()
 
-# -----------------------------------------------------------------
-# Next step
-# -----------------------------------------------------------------
+# ── CTA ───────────────────────────────────────────────────────────────────────
 st.markdown('<div style="height:1rem;"></div>', unsafe_allow_html=True)
-st.page_link(
-    "pages/5_📄_Documents.py",
-    label="Next: Process documents 📄 →",
-    use_container_width=True,
-)
+st.page_link("pages/5_📄_Documents.py", label="Next: Docs & Export →", use_container_width=True)

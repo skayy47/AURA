@@ -1,145 +1,71 @@
-"""AURA V2 — Landing / Home page."""
+"""AURA — Luminal Void | Landing Page."""
 from __future__ import annotations
 
-from pathlib import Path
-
 import streamlit as st
+from utils.helpers import load_css, show_sidebar_status
 
-from state.session import get_session, reset_session
-from utils.config import is_debug_mode
-from utils.helpers import show_sidebar_status
-
-# -------------------------------------------------
-# Page configuration
-# -------------------------------------------------
 st.set_page_config(
-    page_title="AURA – Universal Data Engine",
+    page_title="AURA — Universal Data Engine",
     page_icon="⚡",
     layout="wide",
+    initial_sidebar_state="expanded",
 )
+load_css()
 
+with st.sidebar:
+    show_sidebar_status()
 
-# -------------------------------------------------
-# CSS
-# -------------------------------------------------
-def inject_css() -> None:
-    """Inject the AURA design-system stylesheet."""
-    css_path = Path("assets/css/aura.css")
-    if css_path.exists():
-        css = css_path.read_text(encoding="utf-8")
-        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
-
-
-inject_css()
-
-# -------------------------------------------------
-# Sidebar — delegated to shared helper
-# -------------------------------------------------
-show_sidebar_status()
-
-# -------------------------------------------------
-# Hero header
-# -------------------------------------------------
+# ── Hero ─────────────────────────────────────────────────────────────────────
 st.markdown(
     """
-<div class="aura-hero">
-  <div class="aura-hero-logo">⚡</div>
-  <div>
-    <h1 class="aura-hero-title">AURA</h1>
-    <p class="aura-hero-subtitle">
-      Universal engine for data ingestion, cleaning, exploration — and AI insights.
-    </p>
-  </div>
+<div style="text-align:center;padding:4.5rem 2rem 2.5rem;">
+  <div style="display:inline-flex;align-items:center;justify-content:center;
+              width:72px;height:72px;border-radius:18px;
+              background:linear-gradient(135deg,#6C3FE5 0%,#3B82F6 100%);
+              font-size:2rem;margin-bottom:1.4rem;
+              box-shadow:0 8px 32px rgba(108,63,229,0.4);">⚡</div>
+  <h1 style="color:#F1F5F9;font-size:2.6rem;font-weight:700;
+             letter-spacing:-0.02em;margin:0 0 0.6rem;">AURA</h1>
+  <p style="color:#94A3B8;font-size:1rem;max-width:480px;
+            margin:0 auto 2.2rem;line-height:1.65;">
+    Universal Data Engine — ingest, clean, explore, and query your data with AI.
+  </p>
 </div>
 """,
     unsafe_allow_html=True,
 )
 
-# -------------------------------------------------
-# Active dataset banner
-# -------------------------------------------------
-session = get_session()
-if session.raw_df is not None:
-    cleaned_note = (
-        f" · ✅ cleaned ({session.cleaned_df.shape[0]:,} rows)"
-        if session.cleaned_df is not None
-        else " · not cleaned yet"
-    )
-    st.success(
-        f"**{session.file_name}** · {session.raw_df.shape[0]:,} rows · "
-        f"{session.file_size_kb:.1f} KB{cleaned_note}"
-    )
-
-# -------------------------------------------------
-# Section heading
-# -------------------------------------------------
-st.markdown(
-    '<h2 class="section-heading">Where would you like to start?</h2>',
-    unsafe_allow_html=True,
-)
-
-# -------------------------------------------------
-# Feature cards — 2-column grid
-# -------------------------------------------------
+# ── Feature grid ─────────────────────────────────────────────────────────────
 FEATURES = [
-    {
-        "icon": "📂",
-        "title": "Ingest",
-        "tag": "Step 1",
-        "desc": "Upload CSV, Excel, JSON, Parquet or TSV. Auto-detects encoding and multi-sheet workbooks.",
-        "page": "pages/1_📂_Ingest.py",
-        "label": "Open Ingest →",
-    },
-    {
-        "icon": "🧼",
-        "title": "Clean",
-        "tag": "Step 2",
-        "desc": "Rename columns, fill missing values, drop duplicates, auto-detect dates — all configurable.",
-        "page": "pages/2_🧼_Clean.py",
-        "label": "Open Clean →",
-    },
-    {
-        "icon": "🔍",
-        "title": "Explore",
-        "tag": "Step 3",
-        "desc": "Interactive Plotly charts — histograms, box plots, correlation heatmaps, value counts.",
-        "page": "pages/3_🔍_Explore.py",
-        "label": "Open Explore →",
-    },
-    {
-        "icon": "🤖",
-        "title": "AI Chat",
-        "tag": "Step 4",
-        "desc": "Ask Claude Sonnet 4.6 or GPT-4o-mini questions about your data in plain English.",
-        "page": "pages/4_🤖_AI_Chat.py",
-        "label": "Open AI Chat →",
-    },
-    {
-        "icon": "📄",
-        "title": "Documents",
-        "tag": "Extra",
-        "desc": "OCR text from PDFs via Tesseract. Transcribe audio with Whisper. Extract video frames.",
-        "page": "pages/5_📄_Documents.py",
-        "label": "Open Documents →",
-    },
+    ("📂", "Ingest", "CSV · Excel · JSON · Parquet · TSV", "pages/1_📂_Ingest.py", "Start: Upload Data →"),
+    ("🧼", "Clean",  "Rename · Fill · Dedupe · Date detect", "pages/2_🧼_Clean.py", "Open Clean →"),
+    ("🔍", "Explore","Charts · Correlation · Missing values",  "pages/3_🔍_Explore.py", "Open Explore →"),
+    ("🤖", "AI Chat","Claude Sonnet · GPT-4o-mini",           "pages/4_🤖_AI_Chat.py", "Open AI Chat →"),
+    ("📄", "Docs",   "OCR · Audio · Video frames · Export",   "pages/5_📄_Documents.py", "Open Docs →"),
 ]
 
-col_a, col_b = st.columns(2)
+col_a, col_b = st.columns(2, gap="large")
 cols = [col_a, col_b, col_a, col_b, col_a]
 
-for feature, col in zip(FEATURES, cols):
+for (icon, title, desc, page, cta_label), col in zip(FEATURES, cols):
     with col:
         st.markdown(
             f"""
-<div class="aura-feature-card">
-  <div class="feature-card-top">
-    <span class="feature-card-icon">{feature["icon"]}</span>
-    <span class="feature-card-tag">{feature["tag"]}</span>
-  </div>
-  <h3 class="feature-card-title">{feature["title"]}</h3>
-  <p class="feature-card-desc">{feature["desc"]}</p>
+<div class="aura-card" style="margin-bottom:1rem;">
+  <div style="font-size:2rem;margin-bottom:0.6rem;">{icon}</div>
+  <div style="font-size:1rem;font-weight:700;color:#F1F5F9;
+              margin-bottom:0.3rem;">{title}</div>
+  <div style="font-size:0.82rem;color:#475569;
+              font-family:monospace;">{desc}</div>
 </div>
 """,
             unsafe_allow_html=True,
         )
-        st.page_link(feature["page"], label=feature["label"], use_container_width=True)
+        st.page_link(page, label=cta_label, use_container_width=True)
+
+# ── Footer ───────────────────────────────────────────────────────────────────
+st.markdown(
+    "<p style='text-align:center;color:#1E2A50;font-size:0.78rem;"
+    "margin-top:2.5rem;'>AURA v2.0 · Python 3.11 · Streamlit · Claude Sonnet 4.6</p>",
+    unsafe_allow_html=True,
+)

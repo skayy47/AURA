@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import logging
 from io import BytesIO
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-
 
 _LOGGER_CACHE: dict[str, logging.Logger] = {}
 
@@ -14,10 +14,8 @@ def get_logger(name: str) -> logging.Logger:
     """Central logger factory with simple console formatting."""
     if name in _LOGGER_CACHE:
         return _LOGGER_CACHE[name]
-
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
-
     if not logger.handlers:
         handler = logging.StreamHandler()
         formatter = logging.Formatter(
@@ -26,7 +24,6 @@ def get_logger(name: str) -> logging.Logger:
         )
         handler.setFormatter(formatter)
         logger.addHandler(handler)
-
     _LOGGER_CACHE[name] = logger
     return logger
 
@@ -38,19 +35,26 @@ def df_to_csv_bytes(df: pd.DataFrame) -> bytes:
     return buffer.getvalue()
 
 
-# -----------------------------------------------------------------
-# Page header
-# -----------------------------------------------------------------
+def load_css() -> None:
+    """Inject AURA Luminal Void design system CSS."""
+    css_path = Path(__file__).parent.parent / "assets" / "css" / "aura.css"
+    if css_path.exists():
+        st.markdown(
+            f"<style>{css_path.read_text(encoding='utf-8')}</style>",
+            unsafe_allow_html=True,
+        )
 
-def show_page_header(icon: str, title: str, subtitle: str) -> None:
-    """Render a consistent page header with icon, title, and subtitle."""
+
+def page_header(icon: str, title: str, subtitle: str = "") -> None:
+    """Render the standard AURA Luminal Void page header."""
+    sub_html = f'<p class="aura-page-sub">{subtitle}</p>' if subtitle else ""
     st.markdown(
         f"""
 <div class="aura-page-header">
-  <div class="page-header-icon">{icon}</div>
+  <div class="aura-page-icon">{icon}</div>
   <div>
-    <h1 class="page-header-title">{title}</h1>
-    <p class="page-header-subtitle">{subtitle}</p>
+    <h1 class="aura-page-title">{title}</h1>
+    {sub_html}
   </div>
 </div>
 """,
@@ -58,14 +62,14 @@ def show_page_header(icon: str, title: str, subtitle: str) -> None:
     )
 
 
-# -----------------------------------------------------------------
-# Pipeline progress breadcrumb
-# -----------------------------------------------------------------
+# Keep legacy alias so engine files that import show_page_header still work
+show_page_header = page_header
 
-def show_pipeline_progress(current_step: int) -> None:
+
+def show_pipeline_progress(current: int) -> None:
     """
-    Render a 5-step pipeline breadcrumb.
-    current_step: 1=Ingest  2=Clean  3=Explore  4=AI Chat  5=Documents
+    Render the 5-step pipeline bar pinned to top of page content.
+    current: 1=Ingest · 2=Clean · 3=Explore · 4=AI Chat · 5=Docs
     """
     steps = [
         ("📂", "Ingest"),
@@ -74,137 +78,179 @@ def show_pipeline_progress(current_step: int) -> None:
         ("🤖", "AI Chat"),
         ("📄", "Docs"),
     ]
-    cols = st.columns(len(steps))
-    for i, (col, (emoji, label)) in enumerate(zip(cols, steps), 1):
-        with col:
-            if i < current_step:
-                st.markdown(
-                    f'<div class="step-done">{emoji} {label} ✓</div>',
-                    unsafe_allow_html=True,
-                )
-            elif i == current_step:
-                st.markdown(
-                    f'<div class="step-active">{emoji} {label}</div>',
-                    unsafe_allow_html=True,
-                )
-            else:
-                st.markdown(
-                    f'<div class="step-pending">{emoji} {label}</div>',
-                    unsafe_allow_html=True,
-                )
-    st.markdown('<div style="margin-bottom:1.5rem;"></div>', unsafe_allow_html=True)
+    html_steps = ""
+    for i, (icon, label) in enumerate(steps, 1):
+        if i == current:
+            cls = "aura-step active"
+            sub = '<div class="aura-step-sub">In progress</div>'
+        elif i < current:
+            cls = "aura-step done"
+            sub = '<div class="aura-step-sub">✓ Done</div>'
+        else:
+            cls = "aura-step"
+            sub = ""
+        html_steps += f"""
+        <div class="{cls}">
+          <div class="aura-step-label">{icon}&nbsp;&nbsp;{label}</div>
+          {sub}
+        </div>"""
+    st.markdown(
+        f'<div class="aura-pipeline">{html_steps}</div>',
+        unsafe_allow_html=True,
+    )
 
-
-# -----------------------------------------------------------------
-# Sidebar — brand + nav + dataset status (used on every page)
-# -----------------------------------------------------------------
 
 def show_sidebar_status() -> None:
-    """Render the full sidebar: brand, navigation, dataset status, reset button."""
+    """Render sidebar brand, navigation links, and live dataset status."""
     from state.session import get_session, reset_session
 
-    session = get_session()
+    sess = get_session()
 
-    # Brand
+    # Brand block
     st.sidebar.markdown(
         """
-<div class="sidebar-brand">
-  <span class="sidebar-brand-icon">⚡</span>
-  <span class="sidebar-brand-name">AURA</span>
+<div style="padding:20px 16px 12px;border-bottom:1px solid #1E2A50;margin-bottom:4px;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div style="background:#6C3FE5;border-radius:10px;width:40px;height:40px;
+                display:flex;align-items:center;justify-content:center;
+                font-size:1.3rem;flex-shrink:0;">⚡</div>
+    <div>
+      <div style="font-size:1.05rem;font-weight:700;color:#F1F5F9;
+                  letter-spacing:0.04em;">AURA</div>
+      <div style="font-size:0.7rem;color:#475569;letter-spacing:0.06em;">
+        data engine</div>
+    </div>
+  </div>
 </div>
 """,
         unsafe_allow_html=True,
     )
 
-    # Navigation
-    st.sidebar.page_link("app.py",                    label="🏠  Home")
+    # Nav links
+    st.sidebar.page_link("app.py",                   label="🏠  Home")
     st.sidebar.page_link("pages/1_📂_Ingest.py",     label="📂  Ingest")
     st.sidebar.page_link("pages/2_🧼_Clean.py",      label="🧼  Clean")
     st.sidebar.page_link("pages/3_🔍_Explore.py",    label="🔍  Explore")
     st.sidebar.page_link("pages/4_🤖_AI_Chat.py",    label="🤖  AI Chat")
-    st.sidebar.page_link("pages/5_📄_Documents.py",  label="📄  Documents")
+    st.sidebar.page_link("pages/5_📄_Documents.py",  label="📄  Docs")
 
-    # Dataset status
-    st.sidebar.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
+    # Dataset status card
+    st.sidebar.markdown(
+        '<div style="height:1px;background:#1E2A50;margin:10px 0;"></div>',
+        unsafe_allow_html=True,
+    )
 
-    if session.raw_df is not None:
-        cleaned_badge = (
-            f'<span class="sidebar-badge sidebar-badge-green">'
-            f'✓ cleaned · {session.cleaned_df.shape[0]:,} rows</span>'
-            if session.cleaned_df is not None
-            else '<span class="sidebar-badge sidebar-badge-amber">not cleaned yet</span>'
-        )
+    if sess.raw_df is not None:
+        rows, cols = sess.raw_df.shape
+        fname = sess.file_name or "dataset"
+        if sess.cleaned_df is not None:
+            badge_color = "#10B981"
+            badge_text = "✓ Cleaned"
+        else:
+            badge_color = "#F59E0B"
+            badge_text = "⚠ Not cleaned"
+
         st.sidebar.markdown(
             f"""
-<div class="sidebar-dataset-card">
-  <div class="sidebar-dataset-name">{session.file_name}</div>
-  <div class="sidebar-dataset-meta">
-    {session.raw_df.shape[0]:,} rows &nbsp;·&nbsp;
-    {session.raw_df.shape[1]} cols &nbsp;·&nbsp;
-    {session.file_size_kb:.1f} KB
+<div style="background:#0E162E;border:1px solid #1E2A50;border-radius:10px;
+            padding:12px 14px;margin:4px 8px 8px 8px;">
+  <div style="font-family:monospace;font-size:0.8rem;color:#F1F5F9;
+              white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
+       title="{fname}">{fname}</div>
+  <div style="font-size:0.76rem;color:#8B5CF6;margin-top:4px;">
+    {rows:,} rows · {cols} cols
   </div>
-  {cleaned_badge}
+  <span style="display:inline-block;margin-top:6px;padding:2px 10px;
+               border-radius:999px;font-size:0.7rem;font-weight:600;
+               background:rgba(16,185,129,0.12);color:{badge_color};">
+    {badge_text}
+  </span>
 </div>
 """,
             unsafe_allow_html=True,
         )
     else:
         st.sidebar.markdown(
-            '<p class="sidebar-no-data">No dataset loaded yet.</p>',
+            '<p style="font-size:0.8rem;color:#475569;padding:4px 16px;'
+            'font-style:italic;">No dataset loaded yet.</p>',
             unsafe_allow_html=True,
         )
 
-    st.sidebar.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
-
+    st.sidebar.markdown(
+        '<div style="height:1px;background:#1E2A50;margin:4px 0 10px 0;"></div>',
+        unsafe_allow_html=True,
+    )
     if st.sidebar.button("⟳  New Dataset", use_container_width=True):
         reset_session()
         st.rerun()
 
 
-# -----------------------------------------------------------------
-# Dataset guard — polished empty state
-# -----------------------------------------------------------------
-
 def require_dataset(cleaned: bool = False) -> bool:
     """
-    Stop the page with a polished empty state if required data is absent.
-    Returns True when data is present so callers can assert it.
+    Stop page render with a polished empty state when required data is missing.
+    Returns True when data is present, never returns False (calls st.stop()).
     """
     from state.session import get_session
 
-    session = get_session()
+    sess = get_session()
+    df = sess.cleaned_df if cleaned else sess.raw_df
 
-    df = session.cleaned_df if cleaned else session.raw_df
     if df is not None:
         return True
 
     if cleaned:
-        icon   = "🔍"
-        title  = "No cleaned dataset yet"
-        desc   = "Run the cleaning pipeline before exploring or chatting with AI."
-        link   = "pages/2_🧼_Clean.py"
-        cta    = "Go to Clean →"
+        icon = "🧼"
+        title = "No cleaned dataset"
+        desc = "Run the Clean step first before continuing."
+        link = "pages/2_🧼_Clean.py"
+        cta = "Go to Clean →"
     else:
-        icon   = "📂"
-        title  = "No dataset loaded"
-        desc   = "Upload a CSV, Excel, JSON, Parquet, or TSV file to get started."
-        link   = "pages/1_📂_Ingest.py"
-        cta    = "Upload a dataset →"
+        icon = "📂"
+        title = "No dataset loaded"
+        desc = "Upload a CSV, Excel, JSON, Parquet, or TSV file to begin."
+        link = "pages/1_📂_Ingest.py"
+        cta = "Upload a dataset →"
 
     st.markdown(
         f"""
-<div class="aura-empty-state">
-  <div class="empty-icon">{icon}</div>
-  <h2 class="empty-title">{title}</h2>
-  <p class="empty-desc">{desc}</p>
+<div style="background:#0E162E;border:1px solid rgba(90,60,200,0.4);
+            border-radius:16px;padding:3rem 2rem;text-align:center;
+            max-width:460px;margin:3rem auto;">
+  <div style="font-size:2.8rem;margin-bottom:1rem;">{icon}</div>
+  <div style="color:#F1F5F9;font-weight:700;font-size:1.2rem;
+              margin-bottom:0.5rem;">{title}</div>
+  <div style="color:#94A3B8;font-size:0.88rem;line-height:1.6;">{desc}</div>
 </div>
 """,
         unsafe_allow_html=True,
     )
-
     _, c, _ = st.columns([1, 2, 1])
     with c:
         st.page_link(link, label=cta, use_container_width=True)
-
     st.stop()
-    return False  # never reached, satisfies type checker
+    return False  # unreachable — satisfies type checker
+
+
+def metric_card(value: str, label: str, variant: str = "") -> str:
+    """Return HTML for a single Luminal Void metric card."""
+    cls = f"aura-metric-val {variant}".strip()
+    return f"""
+<div class="aura-metric">
+  <div class="aura-metric-label">{label}</div>
+  <div class="{cls}">{value}</div>
+</div>"""
+
+
+def cta_next(label: str, page: str, status_text: str = "") -> None:
+    """Render a bottom CTA row: optional status text + styled page_link button."""
+    st.markdown('<div class="aura-cta-row">', unsafe_allow_html=True)
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        if status_text:
+            st.markdown(
+                f'<p class="aura-cta-label">{status_text}</p>',
+                unsafe_allow_html=True,
+            )
+    with col2:
+        st.page_link(page, label=label, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
