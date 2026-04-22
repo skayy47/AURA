@@ -68,3 +68,24 @@ README/
 AURA_System_Design.docx
 AURA_V2_MASTER_PROMPT.md
 memory.md
+
+# --- Node.js / Next.js ---
+node_modules/
+.next/
+out/
+.npm
+*.tsbuildinfo
+.eslintcache
+
+# --- Environment (local overrides) ---
+.env.local
+.env.*.local
+.env.production.local
+.env.development.local
+
+# --- Deployment ---
+.vercel/
+.netlify/
+
+# --- JS/TS test coverage ---
+coverage/
