@@ -139,22 +139,3 @@ def _ask_openai(
             ],
         )
         yield response.choices[0].message.content or ""
-
-
-# ---------------------------------------------------------------------------
-# Legacy shim — kept so old callers don't break
-# ---------------------------------------------------------------------------
-
-
-def ask_gpt_about_dataframe(
-    df: pd.DataFrame,
-    question: str,
-    api_key: str,
-) -> str:
-    """Legacy wrapper — prefer ask_ai() for new code."""
-    os.environ.setdefault("OPENAI_API_KEY", api_key)
-    try:
-        return "".join(ask_ai(df, question, AIProvider.OPENAI, stream=False))
-    except Exception as exc:
-        logger.exception("AI insights error: %s", exc)
-        return f"Error: {exc}"

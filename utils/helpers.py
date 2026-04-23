@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from io import BytesIO
 from pathlib import Path
 
 import pandas as pd
@@ -26,13 +25,6 @@ def get_logger(name: str) -> logging.Logger:
         logger.addHandler(handler)
     _LOGGER_CACHE[name] = logger
     return logger
-
-
-def df_to_csv_bytes(df: pd.DataFrame) -> bytes:
-    """Convert a DataFrame to CSV bytes for Streamlit download buttons."""
-    buffer = BytesIO()
-    df.to_csv(buffer, index=False)
-    return buffer.getvalue()
 
 
 def load_css() -> None:

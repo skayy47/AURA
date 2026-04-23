@@ -1,5 +1,9 @@
+"""Pydantic request/response models for the AURA API."""
+from __future__ import annotations
+
+from typing import Any
+
 from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
 
 class Meta(BaseModel):
     file_name: str
@@ -8,13 +12,15 @@ class Meta(BaseModel):
     cols: int
     format: str
     missing_count: int
-    columns: List[str]
-    dtypes: Dict[str, str]
+    columns: list[str]
+    dtypes: dict[str, str]
+
 
 class IngestResponse(BaseModel):
     session_id: str
     meta: Meta
-    preview: List[Dict[str, Any]]   # first 5 rows as records
+    preview: list[dict[str, Any]]   # first 5 rows as records
+
 
 class CleaningConfigRequest(BaseModel):
     session_id: str
@@ -25,26 +31,30 @@ class CleaningConfigRequest(BaseModel):
     fill_missing: bool = True
     drop_duplicates: bool = True
 
+
 class CleanResponse(BaseModel):
     session_id: str
     rows_before: int
     rows_after: int
     cols_before: int
     cols_after: int
-    log: List[Dict[str, Any]]
+    log: list[dict[str, Any]]
+
 
 class ExploreResponse(BaseModel):
     session_id: str
-    profile: Dict[str, Any]         # per-column stats
-    numeric_cols: List[str]
-    categorical_cols: List[str]
-    datetime_cols: List[str]
-    missing_heatmap: List[Dict[str, Any]]
+    profile: dict[str, Any]         # per-column stats
+    numeric_cols: list[str]
+    categorical_cols: list[str]
+    datetime_cols: list[str]
+    missing_heatmap: list[dict[str, Any]]
+
 
 class AskRequest(BaseModel):
     session_id: str
     question: str
     provider: str = "claude"        # "claude" | "openai"
+
 
 class ExportRequest(BaseModel):
     session_id: str

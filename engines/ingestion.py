@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import streamlit as st
 
 from utils.helpers import get_logger
 
@@ -37,8 +36,6 @@ def load_file(file: Any) -> tuple[pd.DataFrame, dict]:
             f"File is {size_bytes / 1024 / 1024:.1f} MB — limit is 200 MB."
         )
     size_kb = round(size_bytes / 1024, 2)
-
-    import io
 
     raw_io = io.BytesIO(file_bytes)
 
@@ -71,6 +68,9 @@ def load_file(file: Any) -> tuple[pd.DataFrame, dict]:
         "n_rows": int(df.shape[0]),
         "n_cols": int(df.shape[1]),
         "format": fmt,
+        "columns": list(df.columns),
+        "dtypes": {col: str(dtype) for col, dtype in df.dtypes.items()},
+        "missing_total": int(df.isnull().sum().sum()),
     }
     logger.info("Loaded %s — %d rows × %d cols", filename, df.shape[0], df.shape[1])
     return df, meta
@@ -101,12 +101,14 @@ def _load_tsv(buf: io.BytesIO) -> pd.DataFrame:
 
 
 def _load_excel(buf: io.BytesIO) -> pd.DataFrame:
-    """Load first sheet; warn if multiple sheets exist."""
+    """Load first sheet; log a warning if multiple sheets exist."""
     xl = pd.ExcelFile(buf)
     sheet_names = xl.sheet_names
     if len(sheet_names) > 1:
-        st.warning(
-            f"Excel file has {len(sheet_names)} sheets: "
-            f"{', '.join(sheet_names)}. Loading the first sheet: **{sheet_names[0]}**."
+        logger.warning(
+            "Excel file has %d sheets: %s. Loading first sheet: '%s'.",
+            len(sheet_names),
+            ", ".join(sheet_names),
+            sheet_names[0],
         )
     return xl.parse(sheet_names[0])

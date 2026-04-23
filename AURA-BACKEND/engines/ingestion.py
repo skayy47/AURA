@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import streamlit as st
 
 from utils.helpers import get_logger
 
@@ -37,8 +36,6 @@ def load_file(file: Any) -> tuple[pd.DataFrame, dict]:
             f"File is {size_bytes / 1024 / 1024:.1f} MB — limit is 200 MB."
         )
     size_kb = round(size_bytes / 1024, 2)
-
-    import io
 
     raw_io = io.BytesIO(file_bytes)
 
@@ -105,7 +102,7 @@ def _load_excel(buf: io.BytesIO) -> pd.DataFrame:
     xl = pd.ExcelFile(buf)
     sheet_names = xl.sheet_names
     if len(sheet_names) > 1:
-        st.warning(
+        logger.warning(
             f"Excel file has {len(sheet_names)} sheets: "
             f"{', '.join(sheet_names)}. Loading the first sheet: **{sheet_names[0]}**."
         )

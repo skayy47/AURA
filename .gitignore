@@ -67,7 +67,15 @@ desktop.ini
 README/
 AURA_System_Design.docx
 AURA_V2_MASTER_PROMPT.md
+AURA_V3_MASTER_PROMPT.md
+AURA_UI_REDESIGN_PROMPT.md
 memory.md
+CLAUDE.md
+
+# --- Sample / test data uploads ---
+data/uploads/
+*.xlsx
+!data/samples/*.csv
 
 # --- Node.js / Next.js ---
 node_modules/

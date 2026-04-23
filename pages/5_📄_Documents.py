@@ -158,7 +158,8 @@ with tab_av:
             tmp.write(av_file.read())
             tmp_path = tmp.name
 
-        sub_tabs = st.tabs(["🎙 Transcription", "📈 Audio features", "🎞 Video frames"])
+        try:
+            sub_tabs = st.tabs(["🎙 Transcription", "📈 Audio features", "🎞 Video frames"])
 
         with sub_tabs[0]:
             model_size = st.selectbox("Whisper model size", ["tiny", "base", "small"], index=1)
@@ -210,6 +211,8 @@ with tab_av:
                         except Exception as exc:
                             logger.exception("Frame extraction error: %s", exc)
                             st.error(f"Frame extraction failed: {exc}\n\nMake sure `opencv-python` is installed.")
+        finally:
+            Path(tmp_path).unlink(missing_ok=True)
 
 # ── Final CTA ─────────────────────────────────────────────────────────────────
 st.markdown("---")

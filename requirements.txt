@@ -1,24 +1,31 @@
-streamlit
-pandas
-numpy
-openpyxl
-plotly
-anthropic
-pyarrow
-pillow
-pdf2image
-pytesseract
-pypdf
-PyPDF2
-python-dotenv
-requests
-pydub
-librosa
-soundfile
-moviepy
-opencv-python
-sentence-transformers
-openai
-tiktoken
-pytest
-ruff
+# ── Core ──────────────────────────────────────────────────────────────────────
+streamlit>=1.40.0
+pandas>=2.2.0
+numpy>=1.26.0
+plotly>=5.22.0
+
+# ── File formats ──────────────────────────────────────────────────────────────
+openpyxl>=3.1.0          # Excel read/write
+pyarrow>=14.0.0          # Parquet support
+pypdf>=4.0.0             # PDF text extraction (modern pypdf, replaces PyPDF2)
+
+# ── AI providers ──────────────────────────────────────────────────────────────
+anthropic>=0.28.0        # Claude Sonnet 4.6
+openai>=1.30.0           # GPT-4o-mini
+
+# ── OCR ───────────────────────────────────────────────────────────────────────
+pdf2image>=1.17.0        # PDF → PIL images (requires Poppler, see .env.example)
+pytesseract>=0.3.10      # Tesseract OCR wrapper
+
+# ── Audio / Video ─────────────────────────────────────────────────────────────
+openai-whisper>=20231117 # Speech transcription
+librosa>=0.10.0          # Audio feature extraction
+soundfile>=0.12.0        # Audio file I/O (librosa dependency)
+pydub>=0.25.0            # Audio manipulation
+moviepy>=1.0.3           # Video processing
+opencv-python>=4.8.0     # Frame extraction
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0     # .env file loading
+requests>=2.31.0         # HTTP requests
+pillow>=10.0.0           # Image processing

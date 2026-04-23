@@ -1,0 +1,5 @@
+# Development-only dependencies — not needed in production
+-r requirements.txt      # include all prod deps
+
+pytest>=8.0.0
+ruff>=0.4.0

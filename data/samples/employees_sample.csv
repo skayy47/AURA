@@ -1,0 +1,26 @@
+name,age,department,salary,hire_date,score,status,city,years_experience,remote
+Alice Martin,29,Engineering,75000,2021-03-15,0.94,Active,Paris,4,Yes
+Bob Chen,34,Marketing,82000,2020-07-01,0.87,Active,Lyon,7,No
+Charlie Dupont,,Engineering,91000,2019-11-20,0.91,Active,Paris,8,Yes
+Diana Moreau,27,Design,68000,2022-01-10,0.78,Review,Bordeaux,2,Yes
+Eve Hoffman,41,Engineering,110000,2018-05-30,0.96,Active,Paris,12,No
+Frank Osei,31,Sales,71000,2021-09-05,0.82,Active,Lyon,5,Yes
+Grace Kim,38,Marketing,88000,2019-03-22,0.89,Active,Paris,9,No
+Hugo Blanc,26,,65000,2023-02-14,0.71,Active,Marseille,1,Yes
+Isabelle Roy,45,Engineering,125000,2016-08-10,0.97,Active,Paris,15,No
+Jules Petit,33,Design,74000,2020-11-01,0.83,Active,Lyon,6,Yes
+Kara Müller,28,Sales,69000,2022-06-20,0.76,Active,Bordeaux,3,No
+Liam Diallo,36,Engineering,95000,2019-01-15,0.92,Active,Paris,10,Yes
+Maya Patel,30,Marketing,78000,2021-04-08,0.85,Active,Paris,5,Yes
+Noah Bernard,43,Design,86000,2017-07-25,0.88,Active,Lyon,11,No
+Olivia Torres,25,Engineering,63000,2023-09-01,0.68,Review,Paris,1,Yes
+Paul Nguyen,39,Sales,92000,2018-12-03,0.93,Active,Marseille,10,No
+Queenie Adams,32,Marketing,80000,2020-05-17,0.84,Active,Paris,7,Yes
+Remy Faure,44,Engineering,115000,2016-10-28,0.95,Active,Lyon,14,No
+Sophie Keller,27,Design,67000,2022-08-12,0.74,Active,Bordeaux,2,Yes
+Thomas Leroy,35,Sales,83000,2019-06-30,,Active,Paris,8,No
+Uma Nakamura,29,Engineering,77000,2021-01-20,0.91,Active,Paris,4,Yes
+Victor Sow,37,Marketing,85000,2019-09-14,0.87,Active,Lyon,9,No
+Wendy Johansson,31,Design,72000,2020-12-05,0.79,Active,Paris,6,Yes
+Xavier Martin,42,Engineering,108000,2017-04-18,0.94,Active,Paris,12,No
+Yasmine Bouali,26,Sales,64000,2023-01-09,0.72,Active,Marseille,1,Yes

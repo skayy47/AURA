@@ -10,7 +10,7 @@ CHART_THEME: dict = {
     "template": "plotly_dark",
     "paper_bgcolor": "rgba(0,0,0,0)",
     "plot_bgcolor": "rgba(15,23,42,0.8)",
-    "font": {"family": "Arial, sans-serif", "color": "#E2E8F0"},
+    "font": {"family": "Inter, system-ui, sans-serif", "color": "#94A3B8"},
     "margin": {"t": 40, "b": 40, "l": 40, "r": 20},
 }
 
