@@ -1,18 +1,26 @@
 import { create } from 'zustand';
-import { Meta, CleaningConfig, CleanResult, ExploreData, Message, AuraStore } from './types';
+import { Meta, CleanResult, ExploreData, Message, AuraStore } from './types';
 
 export const useStore = create<AuraStore>((set) => ({
   sessionId: null,
   meta: null,
   preview: [],
+  ingestWarnings: [],
   cleanResult: null,
   exploreData: null,
   chatHistory: [],
 
   setSession: (sessionId: string) => set({ sessionId }),
 
-  setIngest: (meta: Meta, preview: Array<Record<string, any>>) =>
-    set({ meta, preview, cleanResult: null, exploreData: null, chatHistory: [] }),
+  setIngest: (meta: Meta, preview: Array<Record<string, any>>, warnings: string[] = []) =>
+    set({
+      meta,
+      preview,
+      ingestWarnings: warnings,
+      cleanResult: null,
+      exploreData: null,
+      chatHistory: [],
+    }),
 
   setClean: (result: CleanResult) => set({ cleanResult: result }),
 
@@ -28,6 +36,7 @@ export const useStore = create<AuraStore>((set) => ({
       sessionId: null,
       meta: null,
       preview: [],
+      ingestWarnings: [],
       cleanResult: null,
       exploreData: null,
       chatHistory: [],

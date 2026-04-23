@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { AuraLogo } from "@/components/ui/AuraLogo";
 
 const NAV = [
   { href: "/ingest",   icon: "📂", label: "Ingest",   step: 1 },
@@ -21,13 +22,16 @@ export function Sidebar() {
     <aside className="fixed left-0 top-0 h-screen w-[280px] bg-sidebar border-r border-border flex flex-col z-40"
            style={{ borderTop: "3px solid #6C3FE5" }}>
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-6 border-b border-border">
-        <div className="w-10 h-10 rounded-[10px] bg-purple flex items-center justify-center text-xl shrink-0">⚡</div>
-        <div>
-          <div className="font-heading font-bold text-text text-lg tracking-tight">AURA</div>
-          <div className="text-text-d text-xs">data engine</div>
+      <Link href="/ingest" className="flex items-center gap-3 px-5 py-6 border-b border-border group">
+        <div className="shrink-0 relative">
+          <div className="absolute inset-0 rounded-[10px] bg-gradient-to-br from-aurora-purple via-aurora-cyan to-aurora-blue blur-md opacity-40 group-hover:opacity-80 transition-opacity" />
+          <AuraLogo size={44} />
         </div>
-      </div>
+        <div>
+          <div className="font-morya text-text text-xl">AURA</div>
+          <div className="text-text-d text-xs tracking-[0.2em] uppercase">data engine</div>
+        </div>
+      </Link>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
@@ -59,8 +63,8 @@ export function Sidebar() {
         <div className="px-3 py-4 border-t border-border">
           <p className="text-text-d text-[11px] font-bold tracking-widest uppercase px-2 mb-2">Dataset</p>
           <div className="aura-card-elevated p-3 rounded-md">
-            <p className="text-text font-mono text-xs truncate" title={meta.file_name}>{meta.file_name}</p>
-            <p className="text-purple-l text-xs mt-1">{meta.rows.toLocaleString()} rows · {meta.cols} cols</p>
+            <p className="text-text font-mono text-xs truncate" title={meta.name}>{meta.name}</p>
+            <p className="text-purple-l text-xs mt-1">{meta.n_rows.toLocaleString()} rows · {meta.n_cols} cols</p>
             <span className={cn("aura-tag mt-2", cleanResult ? "aura-tag-success" : "aura-tag-warning")}>
               {cleanResult ? "✓ Cleaned" : "⚠ Raw"}
             </span>

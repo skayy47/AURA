@@ -23,7 +23,7 @@ export default function IngestPage() {
     try {
       const res = await uploadFile(file);
       setSession(res.session_id);
-      setIngest(res.meta, res.preview);
+      setIngest(res.meta, res.preview, res.warnings ?? []);
     } catch (e: any) {
       setError(e.message ?? "Upload failed");
     } finally {
@@ -49,14 +49,14 @@ export default function IngestPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-8 space-y-8">
           {/* Metrics */}
           <div className="grid grid-cols-5 gap-3">
-            <MetricCard value={meta.rows.toLocaleString()} label="Rows" index={0} />
-            <MetricCard value={meta.cols} label="Columns" index={1} />
-            <MetricCard value={`${meta.file_size_kb} KB`} label="File Size" variant="accent" index={2} />
-            <MetricCard value={meta.format} label="Format" index={3} />
+            <MetricCard value={meta.n_rows} label="Rows" index={0} />
+            <MetricCard value={meta.n_cols} label="Columns" index={1} />
+            <MetricCard value={`${meta.size_kb} KB`} label="File Size" variant="purple" index={2} />
+            <MetricCard value={meta.format} label="Format" variant="blue" index={3} />
             <MetricCard
-              value={meta.missing_count > 0 ? `${meta.missing_count} missing` : "0 missing"}
+              value={meta.missing_total > 0 ? `${meta.missing_total} missing` : "Clean"}
               label="Issues"
-              variant={meta.missing_count > 0 ? "warn" : "success"}
+              variant={meta.missing_total > 0 ? "amber" : "green"}
               index={4}
             />
           </div>

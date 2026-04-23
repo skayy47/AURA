@@ -5,20 +5,34 @@ from typing import Any
 
 from pydantic import BaseModel
 
-class Meta(BaseModel):
-    file_name: str
-    file_size_kb: float
-    rows: int
-    cols: int
+class FileMeta(BaseModel):
+    name: str
+    size_kb: float
     format: str
-    missing_count: int
+    n_rows: int
+    n_cols: int
     columns: list[str]
     dtypes: dict[str, str]
+    missing_total: int
+    missing_by_col: dict[str, int]
+    duplicate_rows: int
+    estimated_date_cols: list[str]
+    estimated_id_cols: list[str]
+    estimated_numeric_cols: list[str]
+    estimated_cat_cols: list[str]
+    memory_mb: float
+    encoding_detected: str | None = None
+    has_header: bool = True
+
+
+# Kept as alias for any downstream code still importing `Meta`
+Meta = FileMeta
 
 
 class IngestResponse(BaseModel):
     session_id: str
-    meta: Meta
+    meta: FileMeta
+    warnings: list[str] = []
     preview: list[dict[str, Any]]   # first 5 rows as records
 
 
