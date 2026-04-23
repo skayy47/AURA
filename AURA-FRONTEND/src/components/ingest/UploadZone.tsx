@@ -2,6 +2,7 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { AuraLoader } from "@/components/ui/AuraLoader";
 
 interface Props { onFile: (f: File) => void; loading: boolean; }
 
@@ -38,8 +39,7 @@ export function UploadZone({ onFile, loading }: Props) {
         {loading ? (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             className="flex flex-col items-center gap-3">
-            <div className="w-12 h-12 rounded-full border-2 border-purple border-t-transparent animate-spin" />
-            <p className="text-text-m text-sm">Processing file…</p>
+            <AuraLoader label="Processing file" />
           </motion.div>
         ) : (
           <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -50,8 +50,8 @@ export function UploadZone({ onFile, loading }: Props) {
               <p className="text-text font-semibold text-lg">Drop your file here</p>
               <p className="text-text-d text-sm mt-1">or</p>
             </div>
-            <label className="aura-btn cursor-pointer">
-              Browse Files
+            <label className="aura-btn-neon cursor-pointer">
+              <span>Browse Files</span>
               <input type="file" className="hidden"
                 accept=".csv,.xlsx,.xls,.json,.parquet,.tsv"
                 onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); }} />

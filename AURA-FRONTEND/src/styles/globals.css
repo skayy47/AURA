@@ -4,7 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Luminal Void Design Tokens */
+/* ---------------------------------------------------------------
+   Luminal Void Design Tokens
+---------------------------------------------------------------- */
 :root {
   --bg: #040712;
   --surface: #0a1022;
@@ -21,6 +23,12 @@
   --text: #f1f5f9;
   --text-m: #94a3b8;
   --text-d: #475569;
+
+  /* Aurora/gradient tokens */
+  --aurora-purple: #6c3fed;
+  --aurora-cyan: #22d3ee;
+  --aurora-blue: #3b82f6;
+  --aurora-pink: #ec4899;
 }
 
 * {
@@ -32,11 +40,19 @@ html {
 }
 
 body {
-  @apply bg-bg text-text font-sans antialiased;
+  @apply text-text font-sans antialiased;
+  background: transparent;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* AURA Component Classes */
+/* Solid fallback behind the aurora layer — keeps contrast if JS fails */
+html {
+  background-color: var(--bg);
+}
+
+/* ---------------------------------------------------------------
+   AURA Component Classes
+---------------------------------------------------------------- */
 
 .aura-btn {
   @apply px-4 py-2 rounded-full font-medium transition-all duration-200;
@@ -128,7 +144,7 @@ body {
   @apply text-amber font-semibold;
 }
 
-/* Pipeline Progress Bar */
+/* Pipeline Progress Bar (legacy — kept for fallback) */
 .aura-pipeline {
   @apply flex items-center justify-between mb-8 px-6 py-4;
   @apply bg-surface border-b border-border;
@@ -160,7 +176,7 @@ body {
   @apply relative border-2 border-dashed border-border rounded-2xl p-12;
   @apply bg-gradient-to-b from-surface to-bg;
   @apply cursor-pointer transition-all duration-300;
-  @apply hover:border-purple hover:bg-gradient-to-b hover:from-surface/80 hover:to-bg;
+  @apply hover:border-purple;
   overflow: hidden;
 }
 
@@ -193,31 +209,421 @@ body {
   @apply text-text-m text-sm;
 }
 
-/* Animations */
+/* ---------------------------------------------------------------
+   Animations (base set)
+---------------------------------------------------------------- */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { animation: fade-in 0.3s ease-in-out; }
+.animate-slide-up { animation: slide-up 0.3s ease-in-out; }
+
+/* ---------------------------------------------------------------
+   V3.1 — Aurora Background
+---------------------------------------------------------------- */
+.aura-bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(108, 63, 237, 0.28), transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(34, 211, 238, 0.18), transparent 55%),
+    radial-gradient(ellipse at 50% 90%, rgba(59, 130, 246, 0.22), transparent 60%),
+    linear-gradient(180deg, #030610 0%, #040712 60%, #020409 100%);
+}
+
+.aura-bg-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  will-change: transform;
+  animation: aurora-shift 40s ease-in-out infinite;
+}
+
+.aura-bg-blob-1 {
+  top: -10%;
+  left: -5%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, var(--aurora-purple) 0%, transparent 70%);
+  animation-duration: 38s;
+}
+
+.aura-bg-blob-2 {
+  top: 30%;
+  right: -10%;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, var(--aurora-cyan) 0%, transparent 70%);
+  animation-duration: 52s;
+  animation-direction: reverse;
+}
+
+.aura-bg-blob-3 {
+  bottom: -15%;
+  left: 25%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, var(--aurora-blue) 0%, transparent 70%);
+  animation-duration: 46s;
+  animation-delay: -12s;
+}
+
+.aura-bg-waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40vh;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aura-bg-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  will-change: transform;
+}
+
+.aura-bg-wave-1 { animation: wave-slide 28s linear infinite; opacity: 0.18; }
+.aura-bg-wave-2 { animation: wave-slide 22s linear infinite reverse; opacity: 0.12; }
+.aura-bg-wave-3 { animation: wave-slide 18s linear infinite; opacity: 0.07; }
+
+@keyframes aurora-shift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50%      { transform: translate3d(-4%, 3%, 0) rotate(6deg) scale(1.08); }
+}
+
+@keyframes wave-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------------------------------------------------------------
+   V3.1 — NeonButton (uiverse jawad_8494)
+---------------------------------------------------------------- */
+.aura-btn-neon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  background: #0a0a1a;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: none;
+  isolation: isolate;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.25s ease;
+}
+
+.aura-btn-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, var(--aurora-purple), var(--aurora-cyan), var(--aurora-purple));
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: aurora-shift 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.aura-btn-neon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, var(--aurora-purple), var(--aurora-cyan));
+  opacity: 0.35;
+  filter: blur(18px);
+  z-index: -1;
+  transition: opacity 0.3s ease, inset 0.3s ease;
+}
+
+.aura-btn-neon:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+
+.aura-btn-neon:hover::after {
+  opacity: 0.85;
+  inset: -8px;
+}
+
+.aura-btn-neon:hover .aura-btn-neon-arrow {
+  transform: translateX(4px);
+}
+
+.aura-btn-neon:focus-visible {
+  outline: 2px solid var(--aurora-cyan);
+  outline-offset: 4px;
+}
+
+.aura-btn-neon:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.aura-btn-neon:disabled::after {
+  opacity: 0;
+}
+
+.aura-btn-neon-arrow {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aura-btn-neon--sm { padding: 0.5rem 1.1rem; font-size: 0.78rem; }
+.aura-btn-neon--lg { padding: 0.95rem 2.1rem; font-size: 1rem; }
+
+.aura-btn-neon--ghost { background: transparent; }
+.aura-btn-neon--ghost::before { opacity: 0.8; }
+
+/* ---------------------------------------------------------------
+   V3.1 — GlowCard (codepen vEOdYLZ — squiggly + glow)
+---------------------------------------------------------------- */
+.aura-glow-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  --glow-opacity: 0.35;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aura-glow-card:hover {
+  --glow-opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.aura-glow-card-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+}
+
+.aura-glow-card-border rect {
+  stroke-dasharray: 8 6;
+  animation: squiggle-dance 3s linear infinite;
+}
+
+.aura-glow-card-halo {
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, var(--aurora-purple), var(--aurora-cyan), var(--aurora-blue));
+  filter: blur(22px);
+  opacity: var(--glow-opacity);
+  z-index: -1;
+  transition: opacity 0.35s ease;
+}
+
+.aura-glow-card-inner {
+  position: relative;
+  z-index: 2;
+  border-radius: inherit;
+  background: rgba(10, 16, 34, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(108, 63, 237, 0.22);
+}
+
+@keyframes squiggle-dance {
+  to { stroke-dashoffset: -28; }
+}
+
+/* ---------------------------------------------------------------
+   V3.1 — AuraLoader (uiverse SelfMadeSystem, branded "aura")
+---------------------------------------------------------------- */
+.aura-loader {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.aura-loader-svg {
+  display: block;
+}
+
+.aura-loader-svg text {
+  fill: transparent;
+  stroke: url(#auraLoaderGradient);
+  stroke-width: 1.4;
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+  animation: loader-dash 2.6s ease-in-out infinite;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.aura-loader-label {
+  font-size: 0.78rem;
+  color: var(--text-m);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes loader-dash {
+  0%   { stroke-dashoffset: 520; }
+  50%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -520; }
+}
+
+/* ---------------------------------------------------------------
+   V3.1 — Pipeline Road
+---------------------------------------------------------------- */
+.aura-road {
+  position: relative;
+  width: 100%;
+  margin: 0 0 1.75rem 0;
+  padding: 0.5rem 0 0.25rem 0;
+}
+
+.aura-road-svg {
+  width: 100%;
+  height: 140px;
+  display: block;
+  overflow: visible;
+}
+
+.aura-road-base {
+  fill: none;
+  stroke: rgba(108, 63, 237, 0.18);
+  stroke-width: 2.5;
+  stroke-dasharray: 4 10;
+  stroke-linecap: round;
+}
+
+.aura-road-progress {
+  fill: none;
+  stroke: url(#roadGradient);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 850ms cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 6px rgba(108, 63, 237, 0.5));
+}
+
+.aura-road-vehicle {
+  fill: var(--aurora-cyan);
+  filter: drop-shadow(0 0 6px var(--aurora-cyan));
+}
+
+.aura-road-node {
+  cursor: pointer;
+}
+
+.aura-road-node-pulse {
+  fill: var(--aurora-purple);
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: node-pulse 2.2s ease-out infinite;
+}
+
+.aura-road-node-core {
+  stroke-width: 2;
+  transition: all 0.25s ease;
+}
+
+.aura-road-node-core[data-state="done"] {
+  fill: var(--aurora-purple);
+  stroke: var(--aurora-purple);
+}
+
+.aura-road-node-core[data-state="active"] {
+  fill: var(--bg);
+  stroke: var(--aurora-cyan);
+}
+
+.aura-road-node-core[data-state="todo"] {
+  fill: transparent;
+  stroke: rgba(108, 63, 237, 0.45);
+  stroke-dasharray: 3 3;
+}
+
+.aura-road-node-label {
+  fill: var(--text-m);
+  font-size: 12px;
+  font-weight: 600;
+  text-anchor: middle;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.aura-road-node-label[data-state="active"] {
+  fill: var(--text);
+  font-weight: 700;
+}
+
+.aura-road-node-label[data-state="done"] {
+  fill: var(--purple-l);
+}
+
+.aura-road-node-icon {
+  font-size: 13px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes node-pulse {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  70%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ---------------------------------------------------------------
+   Reduced motion
+---------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .aura-bg-blob,
+  .aura-bg-wave,
+  .aura-road-progress,
+  .aura-road-vehicle,
+  .aura-road-node-pulse,
+  .aura-glow-card-border rect,
+  .aura-loader-svg text,
+  .aura-btn-neon::before {
+    animation: none !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .aura-btn-neon:hover {
+    transform: none;
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease-in-out;
+/* Thin custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(108, 63, 237, 0.3);
+  border-radius: 999px;
 }
-
-.animate-slide-up {
-  animation: slide-up 0.3s ease-in-out;
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 63, 237, 0.55);
 }

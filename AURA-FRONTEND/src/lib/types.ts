@@ -1,9 +1,12 @@
 export interface Meta {
-  name: string;
-  size_kb: number;
-  n_rows: number;
-  n_cols: number;
+  file_name: string;
+  file_size_kb: number;
+  rows: number;
+  cols: number;
   format: string;
+  missing_count: number;
+  columns: string[];
+  dtypes: Record<string, string>;
 }
 
 export interface CleaningConfig {
@@ -16,10 +19,11 @@ export interface CleaningConfig {
 }
 
 export interface CleanResult {
-  before_rows: number;
-  before_cols: number;
-  after_rows: number;
-  after_cols: number;
+  session_id: string;
+  rows_before: number;
+  rows_after: number;
+  cols_before: number;
+  cols_after: number;
   log: Array<{
     step: string;
     detail: string;
@@ -28,18 +32,18 @@ export interface CleanResult {
 }
 
 export interface ExploreData {
-  n_rows: number;
-  n_cols: number;
-  numeric_count: number;
-  categorical_count: number;
-  datetime_count: number;
-  missing_total: number;
-  column_overview: Array<any>;
+  session_id: string;
+  profile: Record<string, any>;
+  numeric_cols: string[];
+  categorical_cols: string[];
+  datetime_cols: string[];
+  missing_heatmap: Array<{ column: string; missing: number }>;
 }
 
 export interface Message {
   role: 'user' | 'assistant';
   content: string;
+  ts?: number;
 }
 
 export interface AuraStore {

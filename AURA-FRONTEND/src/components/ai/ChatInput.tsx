@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { NeonButton } from "@/components/ui/NeonButton";
 
 interface Props {
   onSend: (msg: string) => void;
@@ -17,19 +18,19 @@ export function ChatInput({ onSend, disabled }: Props) {
   };
 
   return (
-    <div className="flex gap-3 mt-4">
-      <input 
-        type="text" 
-        className="aura-input flex-1" 
+    <div className="flex gap-3 mt-4 items-center">
+      <input
+        type="text"
+        className="aura-input flex-1"
         placeholder="Ask a question about your data..."
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSend()}
         disabled={disabled}
       />
-      <button className="aura-btn" onClick={handleSend} disabled={disabled || !text.trim()}>
+      <NeonButton onClick={handleSend} disabled={disabled || !text.trim()} size="sm">
         Send
-      </button>
+      </NeonButton>
     </div>
   );
 }

@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { PipelineBar } from "@/components/layout/PipelineBar";
+import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { MetricCard } from "@/components/ui/MetricCard";
+import { NeonButton } from "@/components/ui/NeonButton";
+import { AuraLoader } from "@/components/ui/AuraLoader";
 import { DistributionChart } from "@/components/explore/DistributionChart";
 import { CorrelationMatrix } from "@/components/explore/CorrelationMatrix";
 import { fetchExplore } from "@/lib/api";
@@ -30,11 +32,15 @@ export default function ExplorePage() {
 
   return (
     <div>
-      <PipelineBar />
+      <PipelineRoad />
       <PageHeader icon="🔍" title="Data Exploration"
         subtitle="Automated profiling, distributions, and missing value analysis" />
 
-      {loading && <div className="text-text-m text-sm">Generating profile...</div>}
+      {loading && (
+        <div className="flex justify-center py-10">
+          <AuraLoader label="Generating profile" />
+        </div>
+      )}
       {error && <div className="mt-4 p-4 rounded-md bg-red-500/10 border border-red-500/30 text-red-400 text-sm">{error}</div>}
 
       {exploreData && (
@@ -43,7 +49,7 @@ export default function ExplorePage() {
             <MetricCard value={exploreData.numeric_cols.length} label="Numeric Cols" />
             <MetricCard value={exploreData.categorical_cols.length} label="Categorical Cols" />
             <MetricCard value={exploreData.datetime_cols.length} label="Datetime Cols" />
-            <MetricCard value={`${exploreData.shape.rows} x ${exploreData.shape.cols}`} label="Shape" variant="accent" />
+            <MetricCard value={`${meta.rows} x ${meta.cols}`} label="Shape" variant="accent" />
           </div>
 
           <div className="grid grid-cols-2 gap-6">
@@ -63,9 +69,9 @@ export default function ExplorePage() {
           </div>
 
           <div className="flex justify-end pt-4 border-t border-border">
-            <button className="aura-btn" onClick={() => router.push("/ai-chat")}>
-              Next: AI Chat →
-            </button>
+            <NeonButton onClick={() => router.push("/ai-chat")}>
+              Next: AI Chat
+            </NeonButton>
           </div>
         </div>
       )}

@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { PipelineBar } from "@/components/layout/PipelineBar";
+import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { UploadZone } from "@/components/ingest/UploadZone";
 import { MetricCard } from "@/components/ui/MetricCard";
+import { NeonButton } from "@/components/ui/NeonButton";
 import { DataTable } from "@/components/ingest/DataTable";
 import { uploadFile } from "@/lib/api";
 import { useStore } from "@/lib/store";
@@ -32,7 +33,7 @@ export default function IngestPage() {
 
   return (
     <div>
-      <PipelineBar />
+      <PipelineRoad />
       <PageHeader icon="📂" title="Data Ingestion"
         subtitle="Upload and validate your dataset — CSV, Excel, JSON, Parquet, TSV" />
 
@@ -73,9 +74,9 @@ export default function IngestPage() {
           {/* CTA */}
           <div className="flex items-center justify-between pt-4 border-t border-border">
             <p className="text-text-m text-sm">Dataset validated — ready for cleaning.</p>
-            <button className="aura-btn" onClick={() => router.push("/clean")}>
-              Next: Clean Data →
-            </button>
+            <NeonButton onClick={() => router.push("/clean")}>
+              Next: Clean Data
+            </NeonButton>
           </div>
         </motion.div>
       )}

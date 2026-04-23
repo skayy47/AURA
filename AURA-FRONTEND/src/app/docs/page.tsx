@@ -1,5 +1,5 @@
 "use client";
-import { PipelineBar } from "@/components/layout/PipelineBar";
+import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ExportPanel } from "@/components/docs/ExportPanel";
@@ -12,7 +12,7 @@ export default function DocsPage() {
 
   return (
     <div>
-      <PipelineBar />
+      <PipelineRoad />
       <PageHeader icon="📄" title="Export & Documentation"
         subtitle="Download your processed dataset in multiple formats." />
 

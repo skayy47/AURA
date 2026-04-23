@@ -2,12 +2,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { PipelineBar } from "@/components/layout/PipelineBar";
+import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CleaningPanel } from "@/components/clean/CleaningPanel";
 import { CleaningLog } from "@/components/clean/CleaningLog";
 import { MetricCard } from "@/components/ui/MetricCard";
+import { NeonButton } from "@/components/ui/NeonButton";
 import { runCleaning } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { CleaningConfig } from "@/lib/types";
@@ -35,7 +36,7 @@ export default function CleanPage() {
 
   return (
     <div>
-      <PipelineBar />
+      <PipelineRoad />
       <PageHeader icon="🧼" title="Data Cleaning"
         subtitle="Standardize columns, impute missing values, and handle anomalies" />
 
@@ -53,9 +54,9 @@ export default function CleanPage() {
             </div>
             <CleaningLog log={cleanResult.log} />
             <div className="flex justify-end mt-6">
-              <button className="aura-btn" onClick={() => router.push("/explore")}>
-                Next: Explore Data →
-              </button>
+              <NeonButton onClick={() => router.push("/explore")}>
+                Next: Explore Data
+              </NeonButton>
             </div>
           </motion.div>
         )}

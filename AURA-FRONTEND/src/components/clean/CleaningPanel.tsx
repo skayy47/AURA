@@ -1,10 +1,8 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useStore } from "@/lib/store";
-import { runCleaning } from "@/lib/api";
 import { CleaningConfig } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { NeonButton } from "@/components/ui/NeonButton";
+import { AuraLoader } from "@/components/ui/AuraLoader";
 
 export function CleaningPanel({ onClean, loading }: { onClean: (c: CleaningConfig) => void, loading: boolean }) {
   const [config, setConfig] = useState<CleaningConfig>({
@@ -30,9 +28,15 @@ export function CleaningPanel({ onClean, loading }: { onClean: (c: CleaningConfi
           </label>
         ))}
       </div>
-      <button className="aura-btn w-full" onClick={() => onClean(config)} disabled={loading}>
-        {loading ? "Cleaning..." : "Run Cleaning Pipeline"}
-      </button>
+      <div className="flex justify-center">
+        {loading ? (
+          <AuraLoader size="sm" label="Cleaning" />
+        ) : (
+          <NeonButton onClick={() => onClean(config)} disabled={loading}>
+            Run Cleaning Pipeline
+          </NeonButton>
+        )}
+      </div>
     </div>
   );
 }

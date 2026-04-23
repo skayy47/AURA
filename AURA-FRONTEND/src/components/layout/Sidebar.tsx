@@ -69,8 +69,10 @@ export function Sidebar() {
       )}
 
       {/* Footer */}
-      <div className="px-3 py-3 border-t border-border">
-        <button className="w-full aura-btn-ghost text-left text-xs py-2 px-3">🔄  New Dataset</button>
+      <div className="px-3 py-3 border-t border-border flex justify-center">
+        <button className="aura-btn-neon aura-btn-neon--sm aura-btn-neon--ghost">
+          <span>🔄 New Dataset</span>
+        </button>
       </div>
     </aside>
   );

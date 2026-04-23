@@ -1,9 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { PipelineBar } from "@/components/layout/PipelineBar";
+import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { NeonButton } from "@/components/ui/NeonButton";
+import { AuraLoader } from "@/components/ui/AuraLoader";
 import { ChatBubble } from "@/components/ai/ChatBubble";
 import { ChatInput } from "@/components/ai/ChatInput";
 import { streamAsk } from "@/lib/api";
@@ -44,7 +46,7 @@ export default function AiChatPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)]">
-      <PipelineBar />
+      <PipelineRoad />
       <PageHeader icon="🤖" title="AI Assistant"
         subtitle="Ask questions about your dataset. The AI knows its structure and stats." />
 
@@ -66,8 +68,8 @@ export default function AiChatPage() {
         
         {loading && !streamedResponse && (
           <div className="flex justify-start mb-4">
-            <div className="bg-surface2 border border-border rounded-lg p-4 text-sm text-text-m">
-              Thinking...
+            <div className="bg-surface2 border border-border rounded-lg p-3">
+              <AuraLoader size="sm" label="Thinking" />
             </div>
           </div>
         )}
@@ -79,9 +81,9 @@ export default function AiChatPage() {
       </div>
 
       <div className="flex justify-end pt-4 border-t border-border shrink-0">
-        <button className="aura-btn" onClick={() => router.push("/docs")}>
-          Next: Export & Docs →
-        </button>
+        <NeonButton onClick={() => router.push("/docs")}>
+          Next: Export &amp; Docs
+        </NeonButton>
       </div>
     </div>
   );

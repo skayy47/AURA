@@ -2,7 +2,7 @@ import { Meta, CleaningConfig, CleanResult, ExploreData, Message } from './types
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-export async function uploadFile(file: File): Promise<{ sessionId: string; meta: Meta; preview: Array<Record<string, any>> }> {
+export async function uploadFile(file: File): Promise<{ session_id: string; meta: Meta; preview: Array<Record<string, any>> }> {
   const formData = new FormData();
   formData.append('file', file);
 
