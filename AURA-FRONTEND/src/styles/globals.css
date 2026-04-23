@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -37,6 +40,21 @@
 
 html {
   @apply scroll-smooth;
+}
+
+.font-morya {
+  font-family: 'Audiowide', 'Inter', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.font-bricolage {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  font-optical-sizing: auto;
+}
+
+.font-geist-mono {
+  font-family: 'Geist Mono', 'Courier New', ui-monospace, monospace;
+  font-feature-settings: "zero", "ss01";
 }
 
 body {
