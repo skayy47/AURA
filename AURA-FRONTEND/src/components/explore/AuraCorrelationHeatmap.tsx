@@ -1,5 +1,6 @@
 "use client";
 import { useState, useMemo } from "react";
+import { useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import type { CorrelationMatrix } from "@/lib/types";
 
@@ -41,6 +42,15 @@ export function AuraCorrelationHeatmap({ data, onColumnClick }: Props) {
   const cols = data.columns;
   const matrix = data.matrix.data;
   const n = cols.length;
+  const locale = useLocale();
+  const fmt = useMemo(
+    () => new Intl.NumberFormat(locale, { minimumFractionDigits: 3, maximumFractionDigits: 3 }),
+    [locale]
+  );
+  const fmt2 = useMemo(
+    () => new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+    [locale]
+  );
   const [hover, setHover] = useState<{ i: number; j: number } | null>(null);
 
   const labelSpace = 120;
@@ -76,7 +86,7 @@ export function AuraCorrelationHeatmap({ data, onColumnClick }: Props) {
               className="font-bold"
               style={{ color: correlationColor(matrix[hover.i][hover.j]) }}
             >
-              r = {matrix[hover.i][hover.j].toFixed(3)}
+              r = {fmt.format(matrix[hover.i][hover.j])}
             </span>
             {strengthLabel(matrix[hover.i][hover.j]) && (
               <span className="ms-2 text-text-d">
@@ -161,7 +171,7 @@ export function AuraCorrelationHeatmap({ data, onColumnClick }: Props) {
                       className="fill-white font-geist-mono font-bold pointer-events-none"
                       style={{ fontSize: 9 }}
                     >
-                      {value.toFixed(2)}
+                      {fmt2.format(value)}
                     </text>
                   )}
                 </g>
@@ -187,7 +197,7 @@ export function AuraCorrelationHeatmap({ data, onColumnClick }: Props) {
                   color: p.r >= 0 ? "#A78BFA" : "#FCA5A5",
                 }}
               >
-                {p.col_a} × {p.col_b} · r = {p.r.toFixed(2)}
+                {p.col_a} × {p.col_b} · r = {fmt2.format(p.r)}
               </div>
             ))}
           </div>

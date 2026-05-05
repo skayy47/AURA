@@ -1,5 +1,6 @@
 "use client";
 import { useMemo } from "react";
+import { useLocale } from "next-intl";
 import {
   ScatterChart,
   Scatter,
@@ -9,7 +10,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
 } from "recharts";
 
 interface Point { x: number; y: number }
@@ -43,6 +43,10 @@ function regression(points: Point[]) {
 }
 
 export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) {
+  const locale = useLocale();
+  const isRTL = locale === "ar";
+  const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 3 });
+
   const reg = useMemo(() => regression(points), [points]);
   const xMin = useMemo(() => Math.min(...points.map((p) => p.x)), [points]);
   const xMax = useMemo(() => Math.max(...points.map((p) => p.x)), [points]);
@@ -63,14 +67,18 @@ export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) 
         </div>
         {reg && (
           <div className="font-geist-mono text-xs text-text-m">
-            R² = <span className="text-purple-l font-bold">{reg.r2.toFixed(3)}</span>
+            R² = <span className="text-purple-l font-bold">{fmt.format(reg.r2)}</span>
           </div>
         )}
       </div>
 
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 6, right: 6, bottom: 6, left: 0 }}>
+          <ScatterChart
+            margin={isRTL
+              ? { top: 6, right: 0, bottom: 6, left: 6 }
+              : { top: 6, right: 6, bottom: 6, left: 0 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="#1E2A50" />
             <XAxis
               dataKey="x"
@@ -80,6 +88,7 @@ export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) 
               fontSize={10}
               tickLine={false}
               axisLine={false}
+              tickFormatter={(v: number) => fmt.format(v)}
             />
             <YAxis
               dataKey="y"
@@ -90,6 +99,8 @@ export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) 
               tickLine={false}
               axisLine={false}
               width={40}
+              orientation={isRTL ? "right" : "left"}
+              tickFormatter={(v: number) => fmt.format(v)}
             />
             <ZAxis range={[30, 30]} />
             <Tooltip
@@ -102,7 +113,7 @@ export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) 
                 color: "#F1F5F9",
                 fontFamily: "Geist Mono, monospace",
               }}
-              formatter={(value: number, name: string) => [value.toFixed(3), name]}
+              formatter={(value: number, name: string) => [fmt.format(value), name]}
               labelFormatter={() => ""}
             />
             <Scatter data={points} fill="#8B5CF6" opacity={0.55} />

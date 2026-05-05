@@ -1,4 +1,5 @@
 "use client";
+import { useLocale } from "next-intl";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import type { HistogramBin } from "@/lib/types";
 
@@ -9,7 +10,11 @@ interface Props {
 }
 
 export function AuraHistogram({ title, subtitle, data }: Props) {
+  const locale = useLocale();
+  const isRTL = locale === "ar";
   const total = data.reduce((a, b) => a + b.count, 0) || 1;
+
+  const fmt = new Intl.NumberFormat(locale);
 
   return (
     <div className="aura-card p-6">
@@ -20,7 +25,12 @@ export function AuraHistogram({ title, subtitle, data }: Props) {
 
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
+          <BarChart
+            data={data}
+            margin={isRTL
+              ? { top: 4, right: -16, left: 4, bottom: 0 }
+              : { top: 4, right: 4, left: -16, bottom: 0 }}
+          >
             <defs>
               <linearGradient id="histGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#8B5CF6" stopOpacity={0.95} />
@@ -42,6 +52,8 @@ export function AuraHistogram({ title, subtitle, data }: Props) {
               tickLine={false}
               axisLine={false}
               width={40}
+              orientation={isRTL ? "right" : "left"}
+              tickFormatter={(v: number) => fmt.format(v)}
             />
             <Tooltip
               cursor={{ fill: "rgba(108,63,229,0.08)" }}
@@ -55,7 +67,7 @@ export function AuraHistogram({ title, subtitle, data }: Props) {
               }}
               itemStyle={{ color: "#F1F5F9" }}
               formatter={(value: number) => [
-                `${value.toLocaleString()} (${((value / total) * 100).toFixed(1)}%)`,
+                `${fmt.format(value)} (${((value / total) * 100).toFixed(1)}%)`,
                 "count",
               ]}
             />
