@@ -1,23 +1,7 @@
-import type { Metadata } from "next";
-import { Providers } from "./providers";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { AuroraBackground } from "@/components/background/AuroraBackground";
-import "@/styles/globals.css";
+import type { ReactNode } from "react";
 
-export const metadata: Metadata = { title: "AURA — Data Engine", description: "Universal data ingestion, cleaning, and AI insights" };
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="text-text">
-        <AuroraBackground />
-        <Providers>
-          <Sidebar />
-          <main className="ml-[280px] min-h-screen px-8 py-8 relative">
-            {children}
-          </main>
-        </Providers>
-      </body>
-    </html>
-  );
+// Root layout — app/[locale]/layout.tsx owns <html> and <body> for locale-aware lang/dir.
+// This passthrough is required by Next.js 14 App Router.
+export default function RootLayout({ children }: { children: ReactNode }): any {
+  return children;
 }
