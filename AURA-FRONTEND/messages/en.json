@@ -1,1 +1,106 @@
-{}
+{
+  "nav": {
+    "ingest": "Ingest",
+    "clean": "Clean",
+    "explore": "Explore",
+    "aiChat": "AI Chat",
+    "docs": "Export"
+  },
+  "actions": {
+    "upload": "Upload File",
+    "clean": "Run Cleaning",
+    "explore": "Explore Data",
+    "export": "Export",
+    "exportPdf": "Export PDF",
+    "startOver": "Start Over",
+    "askAi": "Ask AI"
+  },
+  "ingest": {
+    "title": "Data Ingestion",
+    "subtitle": "Upload and validate your dataset — CSV, Excel, JSON, Parquet, TSV",
+    "dropzone": "Drop your file here, or click to browse",
+    "trySamples": "Try with sample data",
+    "fileTooBig": "File exceeds the 100 MB limit",
+    "unsupportedFormat": "Unsupported file format",
+    "rowsLabel": "Rows",
+    "colsLabel": "Columns",
+    "sizeLabel": "File Size",
+    "formatLabel": "Format",
+    "issuesLabel": "Issues",
+    "cleanLabel": "Clean",
+    "missingLabel": "{count} missing",
+    "preview": "Preview",
+    "previewSub": "first 5 rows",
+    "ready": "Dataset validated — ready for cleaning.",
+    "nextClean": "Next: Clean Data"
+  },
+  "clean": {
+    "title": "Data Cleaning",
+    "subtitle": "Standardize columns, impute missing values, and handle anomalies",
+    "rowsLabel": "Rows",
+    "colsLabel": "Columns",
+    "nextExplore": "Next: Explore Data"
+  },
+  "explore": {
+    "title": "Data Exploration",
+    "subtitle": "Automated profiling, correlations, and smart chart recommendations",
+    "rowsLabel": "Rows",
+    "colsLabel": "Columns",
+    "topRLabel": "Top |r|",
+    "memoryLabel": "In-memory",
+    "columnsHeading": "Columns · click to inspect",
+    "nextChat": "Next: AI Chat"
+  },
+  "ai": {
+    "title": "AI Chat",
+    "placeholder": "Ask anything about your data...",
+    "thinking": "Analyzing...",
+    "analyzed": "I've analyzed your data. Ask me anything.",
+    "rowColSummary": "{rows} rows across {cols} columns. Cleaned. Profiled. Ready for questions."
+  },
+  "docs": {
+    "title": "Export & Documentation",
+    "subtitle": "Download your processed dataset in multiple formats."
+  },
+  "empty": {
+    "heading": "No dataset loaded",
+    "body": "Go to Ingest to upload your data file.",
+    "cta": "Go to Ingest →"
+  },
+  "errors": {
+    "networkDown": "Backend offline — start the FastAPI server first (port 8000).",
+    "sessionExpired": "Session expired — please upload your file again.",
+    "unknownFormat": "Unsupported file format",
+    "renderTimeout": "Report generation timed out. Please try again.",
+    "uploadFailed": "Upload failed",
+    "cleaningFailed": "Cleaning failed"
+  },
+  "billing": {
+    "free": "Free",
+    "pro": "Pro",
+    "team": "Team",
+    "upgrade": "Upgrade to Pro",
+    "manageSubscription": "Manage Subscription"
+  },
+  "landing": {
+    "hero": "Your data is messy. Not anymore.",
+    "sub": "Upload a CSV. Clean it. Visualize it. Ask it questions. Export the report. Five minutes — not five hours.",
+    "cta": "Try with sample data",
+    "ctaSecondary": "Upload your own",
+    "loading": "Loading…",
+    "byline": "Built by SKAY · Powered by Claude",
+    "smartIngestion": "Smart Ingestion",
+    "smartIngestionBody": "CSV, Excel, JSON, Parquet — auto-detected encoding, types, and anomalies.",
+    "automatedCleaning": "Automated Cleaning",
+    "automatedCleaningBody": "8-step pipeline: normalize, dedupe, impute, validate. One click.",
+    "aiAnalysis": "AI Analysis",
+    "aiAnalysisBody": "Ask anything about your data. Claude understands the structure, stats, and patterns."
+  },
+  "pipeline": {
+    "ingest": "Ingest",
+    "clean": "Clean",
+    "explore": "Explore",
+    "aiChat": "AI Chat",
+    "docs": "Docs"
+  }
+}

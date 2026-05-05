@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { BarChart3 } from "@/components/layout/pipeline-icons";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { NeonButton } from "@/components/ui/NeonButton";
@@ -18,6 +19,7 @@ import { fetchExplore } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import type { ChartRecommendation, ColumnProfile } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useRouter } from "@/i18n/navigation";
 
 const kindColor: Record<string, string> = {
   numeric:     "#6C3FE5",
@@ -30,6 +32,7 @@ const kindColor: Record<string, string> = {
 };
 
 export default function ExplorePage() {
+  const t = useTranslations("explore");
   const router = useRouter();
   const { sessionId, meta, exploreData, setExplore } = useStore();
   const [loading, setLoading] = useState(false);
@@ -51,18 +54,13 @@ export default function ExplorePage() {
   const profile = exploreData?.profile;
   const recommendations = exploreData?.recommendations ?? [];
 
-  const openDrawerFor = (colName: string) => {
-    const col = profile?.columns.find((c) => c.name === colName);
-    if (col) setSelectedColumn(col);
-  };
-
   return (
     <div>
       <PipelineRoad />
       <PageHeader
-        icon="🔍"
-        title="Data Exploration"
-        subtitle="Automated profiling, correlations, and smart chart recommendations"
+        icon={<BarChart3 size={28} className="text-blue" />}
+        title={t("title")}
+        subtitle={t("subtitle")}
       />
 
       {loading && (
@@ -79,28 +77,25 @@ export default function ExplorePage() {
 
       {profile && (
         <div className="space-y-8 mt-4">
-          {/* Summary Strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <MetricCard value={profile.n_rows} label="Rows" index={0} />
-            <MetricCard value={profile.n_cols} label="Columns" index={1} />
+            <MetricCard value={profile.n_rows} label={t("rowsLabel")} index={0} />
+            <MetricCard value={profile.n_cols} label={t("colsLabel")} index={1} />
             <MetricCard
               value={profile.correlation?.top_pairs?.[0]?.r.toFixed(2) ?? "—"}
-              label="Top |r|"
+              label={t("topRLabel")}
               variant="purple"
               index={2}
             />
             <MetricCard
               value={`${profile.memory_mb.toFixed(2)} MB`}
-              label="In-memory"
+              label={t("memoryLabel")}
               variant="blue"
               index={3}
             />
           </div>
 
-          {/* Insights */}
           <InsightsStrip profile={profile} />
 
-          {/* Charts grid */}
           <div
             className="grid gap-4"
             style={{ gridTemplateColumns: "repeat(auto-fit, minmax(480px, 1fr))" }}
@@ -114,24 +109,19 @@ export default function ExplorePage() {
               />
             ))}
 
-            {/* Missing pattern — always last, full width */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + recommendations.length * 0.12 }}
               style={{ gridColumn: "1 / -1" }}
             >
-              <AuraMissingHeatmap
-                data={profile.missing_by_col}
-                nRows={profile.n_rows}
-              />
+              <AuraMissingHeatmap data={profile.missing_by_col} nRows={profile.n_rows} />
             </motion.div>
           </div>
 
-          {/* Column index */}
           <div className="aura-card p-6">
             <h3 className="font-bricolage font-bold text-text text-lg mb-4">
-              Columns · click to inspect
+              {t("columnsHeading")}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
               {profile.columns.map((col) => (
@@ -166,7 +156,7 @@ export default function ExplorePage() {
 
           <div className="flex justify-end pt-4 border-t border-white/[0.06]">
             <NeonButton onClick={() => router.push("/ai-chat")}>
-              Next: AI Chat
+              {t("nextChat")}
             </NeonButton>
           </div>
         </div>
@@ -183,7 +173,7 @@ export default function ExplorePage() {
 
 interface ChartTileProps {
   rec: ChartRecommendation;
-  profile: NonNullable<ReturnType<typeof useStore>["exploreData"]>["profile"];
+  profile: import("@/lib/types").DatasetProfile;
   delay: number;
 }
 
@@ -194,103 +184,52 @@ function ChartTile({ rec, profile, delay }: ChartTileProps) {
     case "heatmap_corr": {
       if (!profile.correlation) return null;
       return (
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay }}
-          style={fullWidth}
-        >
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} style={fullWidth}>
           <AuraCorrelationHeatmap data={profile.correlation} />
         </motion.div>
       );
     }
-
     case "histogram": {
       const colName = rec.column ?? "";
       const col = profile.columns.find((c) => c.name === colName);
       if (!col?.histogram?.length) return null;
       return (
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay }}
-        >
-          <AuraHistogram
-            title={`Distribution — ${colName}`}
-            subtitle={rec.rationale}
-            data={col.histogram}
-          />
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
+          <AuraHistogram title={`Distribution — ${colName}`} subtitle={rec.rationale} data={col.histogram} />
         </motion.div>
       );
     }
-
     case "scatter": {
       const points = (rec.points ?? []) as Array<{ x: number; y: number }>;
       if (!points.length) return null;
       return (
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay }}
-        >
-          <AuraScatter
-            title={`${rec.x} × ${rec.y}`}
-            subtitle={rec.rationale}
-            xLabel={rec.x ?? "x"}
-            yLabel={(rec.y as string) ?? "y"}
-            points={points}
-          />
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
+          <AuraScatter title={`${rec.x} × ${rec.y}`} subtitle={rec.rationale} xLabel={rec.x ?? "x"} yLabel={(rec.y as string) ?? "y"} points={points} />
         </motion.div>
       );
     }
-
     case "bar_grouped": {
       const bars = rec.bars ?? [];
       if (!bars.length) return null;
       const binData = bars.map((b) => ({ bin: b.label, lo: 0, hi: 0, count: b.value }));
       return (
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay }}
-        >
-          <AuraHistogram
-            title={`${rec.y} by ${rec.x}`}
-            subtitle={rec.rationale}
-            data={binData}
-          />
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
+          <AuraHistogram title={`${rec.y} by ${rec.x}`} subtitle={rec.rationale} data={binData} />
         </motion.div>
       );
     }
-
     case "timeseries": {
       const points = (rec.points ?? []) as Array<Record<string, any>>;
       if (!points.length) return null;
       const yCols = Array.isArray(rec.y) ? rec.y : [rec.y as string];
       const firstY = yCols[0];
-      // Coerce to {bin, count} shape for histogram component reuse (simple line-like bar)
-      const simplified = points.map((p) => ({
-        bin: String(p.x).slice(0, 10),
-        lo: 0,
-        hi: 0,
-        count: Number(p[firstY]) || 0,
-      }));
+      const simplified = points.map((p) => ({ bin: String(p.x).slice(0, 10), lo: 0, hi: 0, count: Number(p[firstY]) || 0 }));
       return (
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay }}
-          style={fullWidth}
-        >
-          <AuraHistogram
-            title={`${firstY} over ${rec.x}`}
-            subtitle={rec.rationale}
-            data={simplified}
-          />
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} style={fullWidth}>
+          <AuraHistogram title={`${firstY} over ${rec.x}`} subtitle={rec.rationale} data={simplified} />
         </motion.div>
       );
     }
-
     default:
       return null;
   }

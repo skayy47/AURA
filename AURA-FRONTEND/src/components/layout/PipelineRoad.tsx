@@ -1,31 +1,35 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Upload, Sparkles, BarChart3, Bot, FileText, Check } from "./pipeline-icons";
+import { Link, usePathname } from "@/i18n/navigation";
 
 type StepStatus = "done" | "active" | "pending";
 type IconComponent = React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
 
 interface PipelineStep {
   id: string;
-  label: string;
+  labelKey: string;
   href: string;
   Icon: IconComponent;
   accent: string;
 }
 
 const STEPS: PipelineStep[] = [
-  { id: "ingest",  label: "Ingest",  href: "/ingest",  Icon: Upload,    accent: "#6C3FE5" },
-  { id: "clean",   label: "Clean",   href: "/clean",   Icon: Sparkles,  accent: "#10B981" },
-  { id: "explore", label: "Explore", href: "/explore", Icon: BarChart3, accent: "#3B82F6" },
-  { id: "ai-chat", label: "AI Chat", href: "/ai-chat", Icon: Bot,       accent: "#8B5CF6" },
-  { id: "docs",    label: "Docs",    href: "/docs",    Icon: FileText,  accent: "#F59E0B" },
+  { id: "ingest",  labelKey: "ingest",  href: "/ingest",  Icon: Upload,    accent: "#6C3FE5" },
+  { id: "clean",   labelKey: "clean",   href: "/clean",   Icon: Sparkles,  accent: "#10B981" },
+  { id: "explore", labelKey: "explore", href: "/explore", Icon: BarChart3, accent: "#3B82F6" },
+  { id: "ai-chat", labelKey: "aiChat",  href: "/ai-chat", Icon: Bot,       accent: "#8B5CF6" },
+  { id: "docs",    labelKey: "docs",    href: "/docs",    Icon: FileText,  accent: "#F59E0B" },
 ];
 
 export function PipelineRoad() {
+  const t = useTranslations("pipeline");
   const path = usePathname();
-  const currentIdx = Math.max(0, STEPS.findIndex((s) => s.href === path));
+  const currentIdx = Math.max(
+    0,
+    STEPS.findIndex((s) => path === s.href || path.startsWith(s.href + "/"))
+  );
 
   return (
     <nav
@@ -43,7 +47,7 @@ export function PipelineRoad() {
             i < currentIdx ? "done" : i === currentIdx ? "active" : "pending";
           return (
             <div key={step.id} className="flex items-center flex-1 last:flex-none">
-              <StepNode step={step} status={status} />
+              <StepNode step={step} label={t(step.labelKey)} status={status} />
               {i < STEPS.length - 1 && <Connector done={i < currentIdx} />}
             </div>
           );
@@ -53,7 +57,15 @@ export function PipelineRoad() {
   );
 }
 
-function StepNode({ step, status }: { step: PipelineStep; status: StepStatus }) {
+function StepNode({
+  step,
+  label,
+  status,
+}: {
+  step: PipelineStep;
+  label: string;
+  status: StepStatus;
+}) {
   const isActive = status === "active";
   const isDone = status === "done";
   const size = isActive ? 64 : 52;
@@ -62,14 +74,13 @@ function StepNode({ step, status }: { step: PipelineStep; status: StepStatus }) 
 
   return (
     <Link
-      href={step.href}
-      aria-label={`Go to ${step.label}`}
+      href={step.href as any}
+      aria-label={`Go to ${label}`}
       aria-current={isActive ? "step" : undefined}
       className="flex flex-col items-center gap-2.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded-xl px-1"
       style={{ ["--tw-ring-color" as any]: step.accent }}
     >
       <div className="relative" style={{ width: size, height: size }}>
-        {/* Pulsing ring — active only */}
         {isActive && (
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
@@ -83,7 +94,6 @@ function StepNode({ step, status }: { step: PipelineStep; status: StepStatus }) 
           />
         )}
 
-        {/* Icon container with entrance animation on status change */}
         <motion.div
           key={status}
           initial={{ scale: 0.75, opacity: 0 }}
@@ -108,17 +118,13 @@ function StepNode({ step, status }: { step: PipelineStep; status: StepStatus }) 
           <Icon size={iconSize} strokeWidth={isActive ? 2.2 : 2} />
         </motion.div>
 
-        {/* Done checkmark badge */}
         {isDone && (
           <motion.div
             initial={{ scale: 0, rotate: -20 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 500, damping: 20 }}
             className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full flex items-center justify-center border-2"
-            style={{
-              background: "#10B981",
-              borderColor: "#040712",
-            }}
+            style={{ background: "#10B981", borderColor: "#040712" }}
           >
             <Check size={10} color="#040712" strokeWidth={3} />
           </motion.div>
@@ -139,7 +145,7 @@ function StepNode({ step, status }: { step: PipelineStep; status: StepStatus }) 
         }}
         transition={{ duration: 0.25, ease: "easeOut" }}
       >
-        {step.label}
+        {label}
       </motion.span>
     </Link>
   );
