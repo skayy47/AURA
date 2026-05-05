@@ -59,13 +59,13 @@ export function AuraMissingHeatmap({ data, nRows }: Props) {
                 )}
               </div>
               <span
-                className="font-geist-mono tabular-nums shrink-0 text-right"
+                className="font-geist-mono tabular-nums shrink-0 text-end"
                 style={{ width: 64, color: pct > 0 ? "#F1F5F9" : "#475569" }}
               >
                 {pct.toFixed(1)}%
               </span>
               <span
-                className="font-geist-mono tabular-nums shrink-0 text-right text-text-d"
+                className="font-geist-mono tabular-nums shrink-0 text-end text-text-d"
                 style={{ width: 64 }}
               >
                 {col.missing.toLocaleString()}/{nRows.toLocaleString()}

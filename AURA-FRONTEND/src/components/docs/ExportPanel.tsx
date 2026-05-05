@@ -15,9 +15,9 @@ export function ExportPanel({ sessionId }: { sessionId: string }) {
       {formats.map(f => (
         <a 
           key={f.id} 
-          href={exportUrl(sessionId, f.id)} 
+          href={exportUrl(sessionId, f.id as "csv" | "xlsx" | "json" | "parquet")}
           download
-          className="aura-card p-6 flex flex-col gap-2 hover:border-purple/40 block text-left"
+          className="aura-card p-6 flex flex-col gap-2 hover:border-purple/40 block text-start"
         >
           <div className="flex items-center justify-between">
             <span className="font-semibold text-lg text-text">{f.label}</span>

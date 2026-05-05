@@ -1,5 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale } from "next-intl";
 import { AuraHistogram } from "./AuraHistogram";
 import type { ColumnProfile, DatasetProfile } from "@/lib/types";
 
@@ -41,6 +42,9 @@ function topCorrelationsFor(col: string, profile: DatasetProfile): Array<{ other
 }
 
 export function AuraColumnProfile({ column, profile, onClose }: Props) {
+  const locale = useLocale();
+  const offscreen = locale === "ar" ? "-100%" : "100%";
+
   return (
     <AnimatePresence>
       {column && profile && (
@@ -53,11 +57,11 @@ export function AuraColumnProfile({ column, profile, onClose }: Props) {
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
           />
           <motion.aside
-            initial={{ x: "100%" }}
+            initial={{ x: offscreen }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            exit={{ x: offscreen }}
             transition={{ type: "spring", stiffness: 300, damping: 32 }}
-            className="fixed right-0 top-0 h-full w-full max-w-[440px] bg-[#0A1022] border-l border-white/[0.08] z-50 overflow-y-auto custom-scrollbar"
+            className="fixed end-0 top-0 h-full w-full max-w-[440px] bg-[#0A1022] border-s border-white/[0.08] z-50 overflow-y-auto custom-scrollbar"
           >
             <div className="sticky top-0 bg-[#0A1022] border-b border-white/[0.06] p-5 z-10 flex items-start justify-between gap-3">
               <div>
@@ -135,7 +139,7 @@ export function AuraColumnProfile({ column, profile, onClose }: Props) {
                               style={{ width: `${(tv.count / max) * 100}%` }}
                             />
                           </div>
-                          <span className="font-geist-mono text-text-d tabular-nums w-14 text-right">
+                          <span className="font-geist-mono text-text-d tabular-nums w-14 text-end">
                             {tv.count.toLocaleString()}
                           </span>
                         </div>
@@ -158,7 +162,7 @@ export function AuraColumnProfile({ column, profile, onClose }: Props) {
                       <div className="space-y-1">
                         {corrs.map((c) => (
                           <div key={c.other} className="flex items-center justify-between text-xs font-geist-mono">
-                            <span className="text-purple-l truncate mr-3">{c.other}</span>
+                            <span className="text-purple-l truncate me-3">{c.other}</span>
                             <span
                               className="tabular-nums font-bold"
                               style={{ color: c.r >= 0 ? "#A78BFA" : "#FCA5A5" }}

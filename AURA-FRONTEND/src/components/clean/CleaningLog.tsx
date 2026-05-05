@@ -57,9 +57,9 @@ export function CleaningLog({ log }: Props) {
         )}
       </div>
 
-      <div className="relative pl-2">
+      <div className="relative ps-2">
         <div
-          className="absolute left-4 top-3 bottom-3 w-px opacity-40"
+          className="absolute start-4 top-3 bottom-3 w-px opacity-40"
           style={{ background: "linear-gradient(180deg, #6C3FE5, #3B82F6, transparent)" }}
           aria-hidden="true"
         />

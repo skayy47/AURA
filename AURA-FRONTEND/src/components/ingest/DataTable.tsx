@@ -14,7 +14,7 @@ export function DataTable({ columns, rows }: Props) {
         <thead>
           <tr className="bg-surface2">
             {columns.map((col) => (
-              <th key={col} className="px-4 py-3 text-left text-[11px] font-bold
+              <th key={col} className="px-4 py-3 text-start text-[11px] font-bold
                                        tracking-widest uppercase text-text-m whitespace-nowrap">
                 {col}
               </th>

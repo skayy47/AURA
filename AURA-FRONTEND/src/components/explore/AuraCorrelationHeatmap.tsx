@@ -79,7 +79,7 @@ export function AuraCorrelationHeatmap({ data, onColumnClick }: Props) {
               r = {matrix[hover.i][hover.j].toFixed(3)}
             </span>
             {strengthLabel(matrix[hover.i][hover.j]) && (
-              <span className="ml-2 text-text-d">
+              <span className="ms-2 text-text-d">
                 ({strengthLabel(matrix[hover.i][hover.j])})
               </span>
             )}

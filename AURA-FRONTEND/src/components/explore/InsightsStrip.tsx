@@ -74,7 +74,7 @@ export function InsightsStrip({ profile }: Props) {
           transition={{ delay: i * 0.08 + 0.1, duration: 0.35 }}
           className="px-3 py-1.5 rounded-full bg-purple/10 border border-purple/20 text-xs text-purple-l font-geist-mono"
         >
-          <span className="text-cyan mr-1.5">✦</span>
+          <span className="text-cyan me-1.5">✦</span>
           {text}
         </motion.div>
       ))}
