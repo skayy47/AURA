@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURA Report — {{ dataset_name }}</title>
+  <style>
+    :root {
+      --bg: #040712;
+      --surface: #0a1022;
+      --surface2: #0e162e;
+      --purple: #6c3fe5;
+      --cyan: #22d3ee;
+      --blue: #3b82f6;
+      --text: #f1f5f9;
+      --text-m: #94a3b8;
+      --text-d: #475569;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0a1022 0%, #0e162e 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 32px 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-glyph {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      color: white;
+      letter-spacing: -1px;
+    }
+    .logo-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header-meta {
+      text-align: right;
+    }
+    .header-meta h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .header-meta p {
+      font-size: 11px;
+      color: var(--text-d);
+      font-family: monospace;
+    }
+
+    /* ── Sections ── */
+    .section {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-d);
+      margin-bottom: 16px;
+    }
+
+    /* ── Metric row ── */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    .metric {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .metric-value {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: monospace;
+      color: var(--text);
+    }
+    .metric-label {
+      font-size: 10px;
+      color: var(--text-d);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+    .metric.quality .metric-value {
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── Column table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    thead th {
+      background: var(--surface2);
+      color: var(--text-d);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    tbody td {
+      padding: 7px 12px;
+      color: var(--text-m);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tbody td:first-child { color: var(--text); font-family: monospace; }
+    .dtype-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-family: monospace;
+      background: rgba(108,63,229,0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(108,63,229,0.3);
+    }
+    .missing-bar-bg {
+      background: var(--surface2);
+      border-radius: 3px;
+      height: 6px;
+      width: 80px;
+      display: inline-block;
+      overflow: hidden;
+    }
+    .missing-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--amber);
+    }
+
+    /* ── Top pairs ── */
+    .pairs-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pair-chip {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-family: monospace;
+    }
+    .pair-positive {
+      background: rgba(108,63,229,0.12);
+      border: 1px solid rgba(108,63,229,0.35);
+      color: #a78bfa;
+    }
+    .pair-negative {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.35);
+      color: #fca5a5;
+    }
+
+    /* ── Cleaning log ── */
+    .log-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .log-item:last-child { border-bottom: none; }
+    .log-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .dot-ok { background: var(--green); }
+    .dot-warn { background: var(--amber); }
+    .dot-skip { background: var(--text-d); }
+    .log-step { font-family: monospace; font-size: 11px; color: var(--text); min-width: 160px; }
+    .log-detail { font-size: 11px; color: var(--text-m); }
+    .log-rows { font-family: monospace; font-size: 10px; color: var(--text-d); margin-left: auto; white-space: nowrap; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer p {
+      font-size: 10px;
+      color: var(--text-d);
+      font-family: monospace;
+    }
+    .footer-brand {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-glyph">A</div>
+      <div class="logo-name">AURA</div>
+    </div>
+    <div class="header-meta">
+      <h1>{{ dataset_name }}</h1>
+      <p>Generated {{ generated_at }}</p>
+    </div>
+  </div>
+
+  <!-- Summary metrics -->
+  <div class="section">
+    <div class="section-title">Dataset Summary</div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">{{ n_rows }}</div>
+        <div class="metric-label">Rows</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">{{ n_cols }}</div>
+        <div class="metric-label">Columns</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">{{ missing_total }}</div>
+        <div class="metric-label">Missing values</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">{{ memory_mb }} MB</div>
+        <div class="metric-label">In-memory</div>
+      </div>
+      {% if quality_score is not none %}
+      <div class="metric quality">
+        <div class="metric-value">{{ quality_score }}/100</div>
+        <div class="metric-label">Quality score</div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Column profiles -->
+  {% if columns %}
+  <div class="section">
+    <div class="section-title">Column Profiles</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Missing</th>
+          <th>Unique</th>
+          <th>Mean / Top</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for col in columns %}
+        <tr>
+          <td>{{ col.name }}</td>
+          <td><span class="dtype-badge">{{ col.dtype }}</span></td>
+          <td>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span>{{ col.missing_count }}</span>
+              {% if col.missing_pct is defined and col.missing_pct > 0 %}
+              <span class="missing-bar-bg">
+                <span class="missing-bar-fill" style="width:{{ [col.missing_pct, 100] | min }}%"></span>
+              </span>
+              {% endif %}
+            </div>
+          </td>
+          <td>{{ col.n_unique if col.n_unique is defined else "—" }}</td>
+          <td style="font-family:monospace;font-size:11px;">
+            {% if col.mean is defined and col.mean is not none %}
+              {{ "%.3f"|format(col.mean) }}
+            {% elif col.top_value is defined and col.top_value %}
+              {{ col.top_value[:32] }}
+            {% else %}—{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <!-- Top correlation pairs -->
+  {% if top_pairs %}
+  <div class="section">
+    <div class="section-title">Top Correlation Pairs</div>
+    <div class="pairs-grid">
+      {% for p in top_pairs %}
+      <div class="pair-chip {{ 'pair-positive' if p.r >= 0 else 'pair-negative' }}">
+        {{ p.col_a }} × {{ p.col_b }} &nbsp;·&nbsp; r = {{ "%.2f"|format(p.r) }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Cleaning log -->
+  {% if cleaning_log %}
+  <div class="section">
+    <div class="section-title">Cleaning Pipeline Log</div>
+    {% for entry in cleaning_log %}
+    <div class="log-item">
+      <div class="log-dot {{ 'dot-ok' if entry.status == 'ok' else ('dot-warn' if entry.status == 'warn' else 'dot-skip') }}"></div>
+      <div class="log-step">{{ entry.step }}</div>
+      <div class="log-detail">{{ entry.detail or "—" }}</div>
+      {% if entry.rows_changed is defined and entry.rows_changed %}
+      <div class="log-rows">{{ entry.rows_changed }} rows</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>AURA Universal Data Engine</p>
+    <div class="footer-brand">AURA</div>
+    <p>{{ generated_at }}</p>
+  </div>
+
+</body>
+</html>
