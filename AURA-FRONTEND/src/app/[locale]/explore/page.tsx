@@ -15,6 +15,7 @@ import { AuraHistogram } from "@/components/explore/AuraHistogram";
 import { AuraScatter } from "@/components/explore/AuraScatter";
 import { AuraMissingHeatmap } from "@/components/explore/AuraMissingHeatmap";
 import { AuraColumnProfile } from "@/components/explore/AuraColumnProfile";
+import { ExportPDFButton } from "@/components/explore/ExportPDFButton";
 import { fetchExplore } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import type { ChartRecommendation, ColumnProfile } from "@/lib/types";
@@ -154,7 +155,8 @@ export default function ExplorePage() {
             </div>
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-white/[0.06]">
+          <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
+            <ExportPDFButton sessionId={sessionId} />
             <NeonButton onClick={() => router.push("/ai-chat")}>
               {t("nextChat")}
             </NeonButton>
