@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import ingest, clean, explore, ai, export, samples
+from api.routes import ingest, clean, explore, ai, export, samples, billing
 
 app = FastAPI(title="AURA API", version="3.0.0")
 
@@ -29,6 +29,7 @@ app.include_router(explore.router, prefix="/api")
 app.include_router(ai.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
 app.include_router(samples.router, prefix="/api")
+app.include_router(billing.router, prefix="/api")
 
 @app.get("/health")
 def health(): return {"status": "ok", "version": "3.0.0"}
