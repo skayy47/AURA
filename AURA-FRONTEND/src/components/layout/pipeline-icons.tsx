@@ -2,9 +2,10 @@ interface IconProps {
   size?: number;
   color?: string;
   strokeWidth?: number;
+  className?: string;
 }
 
-const base = (size: number, strokeWidth: number, color: string) => ({
+const base = (size: number, strokeWidth: number, color: string, className?: string) => ({
   width: size,
   height: size,
   viewBox: "0 0 24 24",
@@ -14,11 +15,12 @@ const base = (size: number, strokeWidth: number, color: string) => ({
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
   "aria-hidden": true as const,
+  ...(className ? { className } : {}),
 });
 
-export function Upload({ size = 24, color = "currentColor", strokeWidth = 2 }: IconProps) {
+export function Upload({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
   return (
-    <svg {...base(size, strokeWidth, color)}>
+    <svg {...base(size, strokeWidth, color, className)}>
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
       <polyline points="17 8 12 3 7 8" />
       <line x1="12" x2="12" y1="3" y2="15" />
@@ -26,9 +28,9 @@ export function Upload({ size = 24, color = "currentColor", strokeWidth = 2 }: I
   );
 }
 
-export function Sparkles({ size = 24, color = "currentColor", strokeWidth = 2 }: IconProps) {
+export function Sparkles({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
   return (
-    <svg {...base(size, strokeWidth, color)}>
+    <svg {...base(size, strokeWidth, color, className)}>
       <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" />
       <path d="M5 3v4" />
       <path d="M19 17v4" />
@@ -38,9 +40,9 @@ export function Sparkles({ size = 24, color = "currentColor", strokeWidth = 2 }:
   );
 }
 
-export function BarChart3({ size = 24, color = "currentColor", strokeWidth = 2 }: IconProps) {
+export function BarChart3({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
   return (
-    <svg {...base(size, strokeWidth, color)}>
+    <svg {...base(size, strokeWidth, color, className)}>
       <path d="M3 3v18h18" />
       <path d="M18 17V9" />
       <path d="M13 17V5" />
@@ -49,9 +51,9 @@ export function BarChart3({ size = 24, color = "currentColor", strokeWidth = 2 }
   );
 }
 
-export function Bot({ size = 24, color = "currentColor", strokeWidth = 2 }: IconProps) {
+export function Bot({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
   return (
-    <svg {...base(size, strokeWidth, color)}>
+    <svg {...base(size, strokeWidth, color, className)}>
       <path d="M12 8V4H8" />
       <rect width="16" height="12" x="4" y="8" rx="2" />
       <path d="M2 14h2" />
@@ -62,9 +64,9 @@ export function Bot({ size = 24, color = "currentColor", strokeWidth = 2 }: Icon
   );
 }
 
-export function FileText({ size = 24, color = "currentColor", strokeWidth = 2 }: IconProps) {
+export function FileText({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
   return (
-    <svg {...base(size, strokeWidth, color)}>
+    <svg {...base(size, strokeWidth, color, className)}>
       <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
       <polyline points="14 2 14 8 20 8" />
       <line x1="16" x2="8" y1="13" y2="13" />
@@ -74,10 +76,27 @@ export function FileText({ size = 24, color = "currentColor", strokeWidth = 2 }:
   );
 }
 
-export function Check({ size = 24, color = "currentColor", strokeWidth = 2.5 }: IconProps) {
+export function Check({ size = 24, color = "currentColor", strokeWidth = 2.5, className }: IconProps) {
   return (
-    <svg {...base(size, strokeWidth, color)}>
+    <svg {...base(size, strokeWidth, color, className)}>
       <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+export function CheckCircle({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
+  return (
+    <svg {...base(size, strokeWidth, color, className)}>
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  );
+}
+
+export function AuraLogo({ size = 24, color = "currentColor", strokeWidth = 2, className }: IconProps) {
+  return (
+    <svg {...base(size, strokeWidth, color, className)}>
+      <path d="M12 2L2 22h4l2-5h8l2 5h4L12 2zm-2 11l2-5 2 5h-4z" />
     </svg>
   );
 }
