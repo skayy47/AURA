@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from api.deps import get_session
+from api.deps import get_session, update_session
 from engines.exploration import profile_dataframe, recommend_charts
 
 router = APIRouter()
@@ -21,6 +21,7 @@ async def explore(session_id: str):
 
     profile = profile_dataframe(df)
     recommendations = recommend_charts(df, profile)
+    update_session(session_id, {"explore_profile": profile})
 
     return {
         "session_id": session_id,
