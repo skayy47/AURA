@@ -1,0 +1,51 @@
+order_id,customer_id,country,city,category,product_name,quantity,unit_price_usd,total_usd,payment_method,delivery_days,rating,is_returned
+ORD-0001,CUST-1142,Saudi Arabia,Riyadh,Electronics,Smartphone X12,1,899.00,899.00,Credit Card,3,5,False
+ORD-0002,CUST-2381,UAE,Dubai,Fashion,Abaya Embroidered,2,120.00,240.00,Apple Pay,2,4,False
+ORD-0003,CUST-0872,Egypt,Cairo,Home & Kitchen,Coffee Machine,1,185.50,185.50,Cash on Delivery,5,3,False
+ORD-0004,CUST-3290,Morocco,Casablanca,Electronics,Tablet 10in,1,399.99,399.99,Credit Card,4,4,False
+ORD-0005,CUST-1142,Saudi Arabia,Riyadh,Beauty,Oud Perfume Set,3,65.00,195.00,Credit Card,2,5,False
+ORD-0006,CUST-4501,Jordan,Amman,Books,Arabic Literature Vol 1-5,1,78.00,78.00,Cash on Delivery,6,5,False
+ORD-0007,CUST-2381,UAE,Dubai,Electronics,Smartwatch Pro,1,299.00,299.00,Apple Pay,1,4,False
+ORD-0008,CUST-5612,Kuwait,Kuwait City,Home & Kitchen,Air Fryer XL,1,129.99,129.99,Credit Card,3,4,False
+ORD-0009,CUST-0872,Egypt,Cairo,Fashion,Men Jalabiya,4,35.00,140.00,Cash on Delivery,7,3,True
+ORD-0010,CUST-6823,Qatar,Doha,Electronics,Laptop Ultra 14,1,1249.00,1249.00,Credit Card,2,5,False
+ORD-0011,CUST-1534,Bahrain,Manama,Beauty,Skincare Bundle,2,89.50,179.00,Credit Card,3,4,False
+ORD-0012,CUST-3290,Morocco,Rabat,Sports,Running Shoes,1,95.00,95.00,Credit Card,5,4,False
+ORD-0013,CUST-7934,Oman,Muscat,Home & Kitchen,Smart Vacuum Robot,1,349.00,349.00,Credit Card,3,5,False
+ORD-0014,CUST-4501,Jordan,Irbid,Electronics,Wireless Earbuds,2,79.99,159.98,Cash on Delivery,8,3,False
+ORD-0015,CUST-2381,UAE,Abu Dhabi,Fashion,Designer Sneakers,1,185.00,185.00,Apple Pay,1,5,False
+ORD-0016,CUST-8045,Lebanon,Beirut,Books,Self Help Arabic,3,22.00,66.00,Cash on Delivery,10,4,False
+ORD-0017,CUST-1142,Saudi Arabia,Jeddah,Sports,Yoga Mat Premium,2,45.00,90.00,Credit Card,3,4,False
+ORD-0018,CUST-5612,Kuwait,Hawalli,Electronics,Smart TV 55in,1,699.00,699.00,Credit Card,5,5,False
+ORD-0019,CUST-6823,Qatar,Al Wakrah,Beauty,Argan Oil Hair Set,1,55.00,55.00,Credit Card,2,5,False
+ORD-0020,CUST-0872,Egypt,Alexandria,Home & Kitchen,Blender Pro,1,75.50,75.50,Cash on Delivery,6,3,True
+ORD-0021,CUST-9156,Tunisia,Tunis,Fashion,Summer Dress Collection,3,48.00,144.00,Credit Card,4,4,False
+ORD-0022,CUST-3290,Morocco,Marrakech,Sports,Bicycle Mountain,1,420.00,420.00,Credit Card,7,5,False
+ORD-0023,CUST-7934,Oman,Salalah,Electronics,Smartphone X12,1,899.00,899.00,Credit Card,4,4,False
+ORD-0024,CUST-1534,Bahrain,Riffa,Books,Business Arabic,2,35.00,70.00,Credit Card,3,5,False
+ORD-0025,CUST-4501,Jordan,Zarqa,Home & Kitchen,Pressure Cooker,1,65.00,65.00,Cash on Delivery,8,3,False
+ORD-0026,CUST-2381,UAE,Sharjah,Beauty,Rose Water Premium,4,18.00,72.00,Apple Pay,2,4,False
+ORD-0027,CUST-8045,Lebanon,Tripoli,Electronics,Wireless Router,1,89.00,89.00,Cash on Delivery,9,3,False
+ORD-0028,CUST-6823,Qatar,Doha,Sports,Gym Gloves Set,2,28.00,56.00,Credit Card,2,4,False
+ORD-0029,CUST-1142,Saudi Arabia,Dammam,Home & Kitchen,Stand Mixer,1,245.00,245.00,Credit Card,3,5,False
+ORD-0030,CUST-9156,Tunisia,Sfax,Fashion,Traditional Kaftan,2,95.00,190.00,Credit Card,5,5,False
+ORD-0031,CUST-0872,Egypt,Cairo,Electronics,Gaming Console,1,499.00,499.00,Cash on Delivery,7,4,False
+ORD-0032,CUST-5612,Kuwait,Salmiya,Beauty,Makeup Kit Pro,1,135.00,135.00,Credit Card,2,4,False
+ORD-0033,CUST-7934,Oman,Muscat,Books,Quran Translation Set,1,45.00,45.00,Credit Card,3,5,False
+ORD-0034,CUST-3290,Morocco,Fes,Sports,Football Boots,1,110.00,110.00,Credit Card,4,4,False
+ORD-0035,CUST-4501,Jordan,Amman,Electronics,Tablet 10in,2,399.99,799.98,Cash on Delivery,9,3,True
+ORD-0036,CUST-2381,UAE,Dubai,Home & Kitchen,Espresso Machine,1,320.00,320.00,Apple Pay,2,5,False
+ORD-0037,CUST-1534,Bahrain,Manama,Sports,Swimming Goggles,3,22.00,66.00,Credit Card,3,4,False
+ORD-0038,CUST-6823,Qatar,Doha,Fashion,Luxury Thobe,1,280.00,280.00,Credit Card,2,5,False
+ORD-0039,CUST-8045,Lebanon,Beirut,Electronics,Laptop Ultra 14,1,1249.00,1249.00,Cash on Delivery,12,2,True
+ORD-0040,CUST-9156,Tunisia,Tunis,Beauty,Jasmine Perfume,2,42.00,84.00,Credit Card,4,5,False
+ORD-0041,CUST-1142,Saudi Arabia,Riyadh,Electronics,Smart Speaker,1,149.00,149.00,Credit Card,2,4,False
+ORD-0042,CUST-0872,Egypt,Giza,Home & Kitchen,Rice Cooker,1,55.00,55.00,Cash on Delivery,6,4,False
+ORD-0043,CUST-5612,Kuwait,Kuwait City,Fashion,Leather Wallet,3,38.00,114.00,Credit Card,3,4,False
+ORD-0044,CUST-7934,Oman,Nizwa,Sports,Hiking Backpack,1,85.00,85.00,Credit Card,5,5,False
+ORD-0045,CUST-3290,Morocco,Agadir,Electronics,Wireless Earbuds,2,79.99,159.98,Credit Card,4,4,False
+ORD-0046,CUST-2381,UAE,Dubai,Books,Arabic Cookbook,2,32.00,64.00,Apple Pay,1,5,False
+ORD-0047,CUST-4501,Jordan,Aqaba,Beauty,Natural Soap Bundle,4,15.00,60.00,Cash on Delivery,10,4,False
+ORD-0048,CUST-6823,Qatar,Al Rayyan,Home & Kitchen,Smart Thermostat,1,189.00,189.00,Credit Card,3,5,False
+ORD-0049,CUST-1534,Bahrain,Muharraq,Sports,Yoga Mat Premium,1,45.00,45.00,Credit Card,2,4,False
+ORD-0050,CUST-9156,Tunisia,Sousse,Electronics,Action Camera,1,299.00,299.00,Credit Card,5,4,False
