@@ -118,7 +118,6 @@ export interface ExploreData {
   session_id: string;
   profile: DatasetProfile;
   recommendations: ChartRecommendation[];
-  // backward-compat
   numeric_cols: string[];
   categorical_cols: string[];
   datetime_cols: string[];
@@ -139,10 +138,16 @@ export interface AuraStore {
   cleanResult: CleanResult | null;
   exploreData: ExploreData | null;
   chatHistory: Message[];
+  firstRun: boolean;
+  provider: string;
+  temperature: number;
   setSession: (sessionId: string) => void;
   setIngest: (meta: Meta, preview: Array<any>, warnings?: string[]) => void;
   setClean: (result: CleanResult) => void;
   setExplore: (data: ExploreData) => void;
   addMessage: (message: Message) => void;
+  setFirstRun: (firstRun: boolean) => void;
+  setProvider: (provider: string) => void;
+  setTemperature: (temperature: number) => void;
   reset: () => void;
 }

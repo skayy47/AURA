@@ -645,3 +645,129 @@ html {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(108, 63, 237, 0.55);
 }
+
+/* ---------------------------------------------------------------
+   V5 — Landing utilities (perspective, gradient text, bento, grain)
+---------------------------------------------------------------- */
+
+.perspective-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.text-aurora-gradient {
+  background: linear-gradient(115deg, #8b5cf6 0%, #22d3ee 55%, #3b82f6 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.heading-display {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.75rem, 6.2vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.heading-display-lg {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+}
+
+.eyebrow-mono {
+  font-family: 'Geist Mono', 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-d);
+}
+
+.bento-card {
+  position: relative;
+  border: 1px solid rgba(108, 63, 237, 0.16);
+  background: linear-gradient(180deg, rgba(14, 22, 46, 0.55), rgba(7, 12, 26, 0.55));
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  transition: border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.bento-card:hover {
+  border-color: rgba(34, 211, 238, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px -16px rgba(34, 211, 238, 0.4);
+}
+.bento-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1200px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(108, 63, 237, 0.12), transparent 40%);
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+.bento-card:hover::before {
+  opacity: 1;
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+.divider-aurora {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(108, 63, 237, 0.45), rgba(34, 211, 238, 0.45), transparent);
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+/* Reveal-on-scroll baseline (used with framer-motion whileInView) */
+.lift-on-hover {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lift-on-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* Pulsing aurora pill — used for "MOST POPULAR" / final CTA */
+.pulse-pill {
+  background: linear-gradient(120deg, #6c3fed, #22d3ee, #3b82f6, #6c3fed);
+  background-size: 200% 200%;
+  animation: aurora-shift 6s ease-in-out infinite;
+}
+
+/* Marquee track — used by tech stack / numbered list */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-pill,
+  .marquee-track {
+    animation: none !important;
+  }
+}
