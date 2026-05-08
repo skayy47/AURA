@@ -9,6 +9,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![Claude](https://img.shields.io/badge/Claude-Sonnet_4.6-7C3AED)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?logo=framer&logoColor=white)
 ![i18n](https://img.shields.io/badge/i18n-EN_%7C_AR-6C3FE5)
 ![License](https://img.shields.io/badge/License-MIT-10B981)
 
@@ -16,16 +17,23 @@
 
 ## What is AURA?
 
-AURA is a full-stack data platform that takes you from a raw file upload to AI-powered insights in minutes. Upload any structured dataset, auto-clean it with an 8-step pipeline, explore interactive charts, ask Claude or GPT-4o about it in natural language, and export a branded PDF report — or a clean CSV/Excel/JSON/Parquet file.
+AURA is a full-stack data platform that takes you from a raw file upload to AI-powered insights in **five minutes**. Upload any structured dataset, auto-clean it with an 8-step pipeline, explore interactive charts, ask Claude or GPT-4o about it in natural language, and export a branded PDF report — or a clean CSV/Excel/JSON/Parquet file.
 
-**V4 ships four GTM features:**
+No sign-up. No database. No storage. In-memory, session-scoped, and gone in 4 hours.
 
-| Feature | What it is |
-|---------|------------|
-| 🌐 **Arabic UI + RTL** | Full EN ↔ AR toggle. Tailwind logical props, mirrored charts, Arabic numerics via `Intl.NumberFormat`. |
-| 📄 **PDF Report Export** | Playwright renders a branded dark-theme PDF — summary metrics, column profiles, correlation pairs, cleaning log. |
-| 🗂️ **Sample Datasets** | Three pre-loaded real-world CSVs (sales, climate, MENA orders) — no upload needed to try AURA. |
-| 💳 **Stripe Billing** | Checkout, portal, and webhook endpoints. Free / Pro ($29) / Team ($99) tiers with `<ProGate>` component. |
+---
+
+## What's New in V5
+
+| Feature | Details |
+|---------|---------|
+| 🤖 **3D Robot Landing** | `<AuraBot>` enters with a spring-driven 3D entry — `rotateX -45°→0°`, `scale 0.7→1`. Mouse parallax adds ±10° tilt as you move the cursor across the hero. |
+| 🔁 **Scroll-Triggered Handoff** | When the hero scrolls out of view, the robot transitions via `layoutId` into the global `<BotOrb>` chat button in the bottom-right corner. One continuous visual thread from landing to app. |
+| 🎨 **Aurora Theme** | New "Luminal Void" palette — `#6c3fed` purple · `#22d3ee` cyan · `#3b82f6` blue. Gradient text, bento cards, grain overlay, divider lines, pulse-pill badges. |
+| 📐 **11-Section Landing** | Hero · Pain Points · Live Demo Strip · Bento Steps · Sample Datasets · Output Preview · Tech Stack · Pricing · Final CTA · FAQ · Footer — fully i18n'd in EN + AR. |
+| 🌊 **Data Constellation** | Orbiting data-particle animation (`<DataConstellation>`) surrounds the robot in the hero for visual depth. |
+| ✍️ **Typewriter / Sweep FX** | `<OutputPreview>` reveals the clean CSV with a typewriter effect, the AI chat with a cursor blink, and a PDF mockup with animated mini-charts. |
+| 🎯 **Live Demo Strip** | Side-by-side messy vs. clean CSV diff with a 5-step animated cleaning log. No backend needed — pure front-end demo. |
 
 ---
 
@@ -37,7 +45,7 @@ AURA is a full-stack data platform that takes you from a raw file upload to AI-p
 │  Next.js 14 · React 18   │                        │  FastAPI · Uvicorn       │
 │  next-intl v4 (EN/AR)    │ ◀───────────────────── │  Pandas · Anthropic SDK  │
 │  Tailwind · Zustand       │       JSON / stream    │  Playwright · Jinja2     │
-│  Framer Motion · Recharts│                        │  Stripe SDK              │
+│  Framer Motion 12 (3D)   │                        │  Stripe SDK              │
 └──────────────────────────┘                        └──────────────────────────┘
 ```
 
@@ -91,7 +99,7 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:3000** — the marketing landing page. Click "Try with sample data" to load a pre-built dataset instantly, or upload your own CSV.
+Open **http://localhost:3000** — the marketing landing page. Click **"Try with sample data"** to load a pre-built dataset instantly, or upload your own CSV.
 
 Backend health: **http://localhost:8000/health** · Interactive API docs: **http://localhost:8000/docs**
 
@@ -139,11 +147,27 @@ Full OpenAPI schema: **http://localhost:8000/docs**
 
 ---
 
+## Landing Page — V5 Sections
+
+| # | Component | Description |
+|---|-----------|-------------|
+| 01 | `HeroV5` | Asymmetric grid — `<RobotStage>` left, headline + CTAs right. 3D robot entry + mouse parallax. |
+| 02 | `PainPoints` | 4 conversational pain statements that scroll-stagger into view. |
+| 03 | `LiveDemoStrip` | Side-by-side messy ↔ clean CSV diff with animated 5-step cleaning log. |
+| 04 | `BentoSteps` | Bento grid showing all 5 pipeline steps. Center cell has a live mini-chart preview. |
+| 05 | `SamplesScroll` | 3 sample datasets as numbered stress-test cards. Loads directly from backend. |
+| 06 | `OutputPreview` | Mockups of the 3 artifacts — clean CSV (typewriter), AI chat (cursor blink), PDF report. |
+| 07 | `TechStack` | Reverse-numbered tech stack with logo icons. |
+| 08 | `PricingV5` | Free · Pro · Team tiers. Pro card elevated. Pulse-pill "Most Popular" badge. |
+| 09 | `FinalCTA` | Full-width aurora gradient panel. "NO SIGN-UP · NO STORAGE · BACK IN FIVE MINUTES". |
+| 10 | `FooterV5` | 4-column footer — Product, Resources, Company, Contact. Aurora divider + MIT byline. |
+
+---
+
 ## Arabic / RTL Support
 
-AURA ships full bilingual support via **next-intl v4**. Switch languages with the EN | عربي toggle in the top bar — it preserves your current page and session.
+AURA ships full bilingual support via **next-intl v4**. Switch languages with the **EN | عربي** toggle in the top bar — it preserves your current page and session.
 
-Technical details:
 - Locale prefix routing: `/en/*` · `/ar/*`
 - Tailwind logical properties throughout (`ms-`, `ps-`, `start-`, `border-s`, etc.)
 - `<html dir="rtl">` set by `[locale]/layout.tsx`
@@ -214,23 +238,93 @@ AURA/
 │
 ├── AURA-FRONTEND/
 │   ├── src/app/[locale]/          Locale-prefixed App Router routes
-│   │   ├── page.tsx               Marketing landing page
+│   │   ├── page.tsx               V5 landing page (11 sections)
 │   │   ├── ingest/ clean/
 │   │   ├── explore/               + Export PDF button
 │   │   ├── ai-chat/ docs/
 │   │   ├── pricing/               Pricing tiers + Stripe checkout
 │   │   └── billing/success|cancel
 │   ├── src/components/
-│   │   ├── explore/ExportPDFButton.tsx
-│   │   └── ui/ProGate.tsx         Tier-gated feature overlay
-│   ├── src/lib/tier.ts            useTier() hook (free/pro/team)
+│   │   ├── ai/
+│   │   │   ├── AuraBot.tsx        SVG robot — 6 states, framer-motion internal anims
+│   │   │   ├── DataConstellation  Orbiting particle visualization
+│   │   │   ├── BotMiniAvatar.tsx  Compact robot for chat headers
+│   │   │   └── SettingsPopover    AI model / temperature settings panel
+│   │   ├── landing/               11 V5 landing sections
+│   │   │   ├── RobotStage.tsx     3D choreography wrapper (entry + parallax + handoff)
+│   │   │   ├── HeroV5.tsx
+│   │   │   ├── PainPoints.tsx
+│   │   │   ├── LiveDemoStrip.tsx
+│   │   │   ├── BentoSteps.tsx
+│   │   │   ├── SamplesScroll.tsx
+│   │   │   ├── OutputPreview.tsx
+│   │   │   ├── TechStack.tsx
+│   │   │   ├── PricingV5.tsx
+│   │   │   ├── FinalCTA.tsx
+│   │   │   └── FooterV5.tsx
+│   │   ├── layout/
+│   │   │   ├── BotOrb.tsx         Global fixed chat-trigger button (scroll handoff target)
+│   │   │   └── DatasetPill.tsx    Fixed bottom-left dataset status indicator
+│   │   └── ui/
+│   │       └── ProGate.tsx        Tier-gated feature overlay
+│   ├── src/styles/globals.css     Aurora design system tokens + utility classes
+│   ├── src/lib/
+│   │   ├── store.ts               Zustand store — session, tier, firstRun, provider
+│   │   └── tier.ts                useTier() hook (free/pro/team)
 │   ├── src/i18n/                  next-intl routing + navigation
-│   ├── messages/en.json           English strings (~140 keys)
+│   ├── messages/en.json           English strings (~220 keys)
 │   └── messages/ar.json           Arabic translations
 │
 ├── tests/                         Pytest suites
 └── LICENSE                        MIT
 ```
+
+---
+
+## Design System — "Luminal Void"
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--bg` | `#040712` | App background |
+| `--surface` | `#0A1022` | Cards |
+| `--aurora-purple` | `#6C3FE5` | Primary accent |
+| `--aurora-cyan` | `#22D3EE` | Secondary accent |
+| `--aurora-blue` | `#3B82F6` | Tertiary accent |
+| `--text` | `#F1F5F9` | Primary text |
+| `--text-m` | `#94A3B8` | Muted text |
+| `--green` | `#10B981` | Success / quality |
+| `--amber` | `#F59E0B` | Warnings |
+
+Key CSS utilities in `globals.css`:
+
+| Class | Purpose |
+|-------|---------|
+| `.text-aurora-gradient` | Multi-stop purple→cyan→blue gradient text |
+| `.heading-display` | Bricolage Grotesque, `clamp(2.75rem, 8vw, 6.5rem)` |
+| `.eyebrow-mono` | Geist Mono, `0.7rem`, uppercase, wide tracking — for `[0N]` section labels |
+| `.bento-card` | Purple border, backdrop blur, hover lift + glow |
+| `.grain-overlay` | SVG noise texture at 4.5% opacity |
+| `.divider-aurora` | 1px aurora-gradient horizontal line |
+| `.pulse-pill` | Animated gradient badge (aurora-shift keyframe) |
+| `.perspective-stage` | CSS 3D context (`perspective: 1400px`) for robot |
+
+---
+
+## Tech Stack
+
+**Frontend**
+- Next.js 14 (App Router) · React 18 · TypeScript 5
+- next-intl v4.11 (EN/AR, locale routing, RTL)
+- Tailwind CSS 3.4 — Luminal Void tokens + logical properties
+- Zustand 5 · Framer Motion 12.38 (3D springs, scroll-driven) · Recharts 3
+
+**Backend**
+- FastAPI 0.111 · Uvicorn · Pydantic 2
+- Pandas 2.2 · NumPy · OpenPyXL · PyArrow
+- Anthropic SDK (Claude Sonnet 4.6) · OpenAI SDK
+- Playwright 1.45 + Jinja2 3.1 (PDF rendering)
+- Stripe 9.9 (billing)
+- Tesseract + Poppler (OCR) · Whisper · librosa · OpenCV
 
 ---
 
@@ -243,39 +337,9 @@ python -m pytest ../tests -v
 
 ---
 
-## Tech Stack
-
-**Frontend**
-- Next.js 14 (App Router) · React 18 · TypeScript 5
-- next-intl v4.11 (EN/AR, locale routing, RTL)
-- Tailwind CSS 3.4 — Luminal Void tokens + logical properties
-- Zustand 5 · Framer Motion 12 · Recharts 3
-
-**Backend**
-- FastAPI 0.111 · Uvicorn · Pydantic 2
-- Pandas 2.2 · NumPy · OpenPyXL · PyArrow
-- Anthropic SDK (Claude Sonnet 4.6) · OpenAI SDK
-- Playwright 1.45 + Jinja2 3.1 (PDF rendering)
-- Stripe 9.9 (billing)
-- Tesseract + Poppler (OCR) · Whisper · librosa · OpenCV
-
-**Design System — "Luminal Void"**
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--bg` | `#040712` | App background |
-| `--surface` | `#0A1022` | Cards |
-| `--aurora-purple` | `#6C3FE5` | Primary accent |
-| `--aurora-cyan` | `#22D3EE` | Secondary accent |
-| `--text` | `#F1F5F9` | Primary text |
-| `--green` | `#10B981` | Success / quality |
-| `--amber` | `#F59E0B` | Warnings |
-
----
-
 ## Legacy Streamlit App
 
-The original Streamlit V2.1 is preserved at the repo root (`app.py`, `pages/`, `engines/`, `state/`, `utils/`). It is not the recommended path — Next.js + FastAPI is the canonical V3/V4 stack. Run it with `streamlit run app.py` for reference.
+The original Streamlit V2.1 is preserved at the repo root (`app.py`, `pages/`, `engines/`, `state/`, `utils/`). It is not the recommended path — Next.js + FastAPI is the canonical V5 stack. Run it with `streamlit run app.py` for reference.
 
 ---
 
