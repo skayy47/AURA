@@ -11,27 +11,31 @@
    Luminal Void Design Tokens
 ---------------------------------------------------------------- */
 :root {
-  --bg: #040712;
-  --surface: #0a1022;
-  --surface2: #0e162e;
-  --sidebar: #070c1a;
-  --border: #1e2a50;
-  --border-accent: rgba(108, 63, 229, 0.4);
-  --purple: #6c3fed;
-  --purple-l: #8b5cf6;
-  --blue: #3b82f6;
-  --cyan: #22d3ee;
-  --green: #10b981;
+  /* ── Superintelligence 2045 palette ─────────────────────────── */
+  --bg: #030712;
+  --bg-2: #050816;
+  --bg-3: #0a0b0f;
+  --surface: #070d1c;
+  --surface2: #0b1426;
+  --sidebar: #050a16;
+  --border: #16233f;
+  --border-accent: rgba(0, 229, 255, 0.32);
+  --purple: #8b5cf6;       /* neural violet */
+  --purple-l: #a78bfa;
+  --blue: #3b82f6;         /* quantum blue */
+  --cyan: #00e5ff;         /* intelligence cyan */
+  --mint: #00ffb2;         /* energy mint */
+  --green: #00ffb2;
   --amber: #f59e0b;
-  --text: #f1f5f9;
+  --text: #f8fafc;
   --text-m: #94a3b8;
-  --text-d: #475569;
+  --text-d: #4a5878;
 
-  /* Aurora/gradient tokens */
-  --aurora-purple: #6c3fed;
-  --aurora-cyan: #22d3ee;
+  /* Aurora/gradient tokens map onto the new identity */
+  --aurora-purple: #8b5cf6;
+  --aurora-cyan: #00e5ff;
   --aurora-blue: #3b82f6;
-  --aurora-pink: #ec4899;
+  --aurora-pink: #00ffb2;
 }
 
 * {
@@ -257,6 +261,91 @@ html {
     radial-gradient(ellipse at 80% 0%, rgba(34, 211, 238, 0.18), transparent 55%),
     radial-gradient(ellipse at 50% 90%, rgba(59, 130, 246, 0.22), transparent 60%),
     linear-gradient(180deg, #030610 0%, #040712 60%, #020409 100%);
+}
+
+/* ===============================================================
+   IntelligenceField — superintelligence 2045 background system
+=============================================================== */
+.if-root {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+}
+.if-base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(140% 120% at 50% -10%, #0a0b0f 0%, #050816 45%, #030712 100%);
+}
+.if-aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.if-aurora-1 {
+  top: -18%; left: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.42) 0%, transparent 68%);
+  animation: if-drift-1 34s ease-in-out infinite;
+}
+.if-aurora-2 {
+  top: 18%; right: -16%;
+  width: 55vw; height: 55vw;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.40) 0%, transparent 68%);
+  animation: if-drift-2 46s ease-in-out infinite;
+}
+.if-aurora-3 {
+  bottom: -24%; left: 28%;
+  width: 62vw; height: 62vw;
+  background: radial-gradient(circle, rgba(0, 255, 178, 0.26) 0%, transparent 70%);
+  animation: if-drift-3 40s ease-in-out infinite;
+}
+.if-fog {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background:
+    radial-gradient(60% 50% at 70% 30%, rgba(59, 130, 246, 0.10), transparent 70%),
+    radial-gradient(50% 60% at 25% 75%, rgba(0, 229, 255, 0.08), transparent 70%);
+  animation: if-fog-pulse 16s ease-in-out infinite;
+}
+.if-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+.if-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(3, 7, 18, 0.55) 100%);
+}
+
+@keyframes if-drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(6%, 5%, 0) scale(1.12); }
+}
+@keyframes if-drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(-7%, 4%, 0) scale(0.95); }
+}
+@keyframes if-drift-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(4%, -6%, 0) scale(1.1); }
+}
+@keyframes if-fog-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .if-aurora, .if-fog { animation: none; }
+  .if-canvas { display: none; }
 }
 
 .aura-bg-blob {

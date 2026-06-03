@@ -5,7 +5,7 @@ import { Providers } from "./providers";
 import { TopBar } from "@/components/layout/TopBar";
 import { DatasetPill } from "@/components/layout/DatasetPill";
 import { BotOrb } from "@/components/layout/BotOrb";
-import { AuroraBackground } from "@/components/background/AuroraBackground";
+import { IntelligenceField } from "@/components/background/IntelligenceField";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default async function LocaleLayout({
     >
       <body className="text-text">
         <NextIntlClientProvider messages={messages}>
-          <AuroraBackground />
+          <IntelligenceField />
           <Providers>
             <TopBar />
             <DatasetPill />

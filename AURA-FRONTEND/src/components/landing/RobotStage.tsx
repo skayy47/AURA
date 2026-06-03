@@ -24,6 +24,9 @@ export function RobotStage({ state = "idle", size = 280 }: RobotStageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [docked, setDocked] = useState(false);
+  // Drop-in entry should play ONCE. After the first dock/undock cycle, the robot
+  // glides back to its hero spot via the shared layoutId — never re-drops.
+  const hasEntered = useRef(false);
 
   // Mouse parallax — damped springs feed rotation values
   const mx = useMotionValue(0);
@@ -44,17 +47,33 @@ export function RobotStage({ state = "idle", size = 280 }: RobotStageProps) {
     return () => window.removeEventListener("mousemove", handle);
   }, [mx, my, reduce]);
 
-  // Sentinel-driven dock/undock — when sentinel leaves the viewport, robot becomes fixed
+  // Scroll-threshold dock/undock — monotonic, so it ALWAYS returns on scroll-up.
+  // (The old IntersectionObserver watched the robot's own container, which
+  // collapsed once docked and could never re-intersect → robot got stuck docked.)
   useEffect(() => {
-    const node = sentinelRef.current;
-    if (!node) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setDocked(!entry.isIntersecting),
-      { threshold: 0, rootMargin: "-30% 0px 0px 0px" }
-    );
-    obs.observe(node);
-    return () => obs.disconnect();
-  }, []);
+    let ticking = false;
+    const compute = () => {
+      ticking = false;
+      const anchor = containerRef.current;
+      const top = anchor ? anchor.getBoundingClientRect().top + window.scrollY : 0;
+      // Dock once the hero robot has scrolled ~60% out of view; undock below it.
+      const threshold = top + (size * 0.6);
+      setDocked(window.scrollY > threshold);
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(compute);
+      }
+    };
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [size]);
 
   return (
     <div ref={containerRef} className="relative w-full">
@@ -63,9 +82,16 @@ export function RobotStage({ state = "idle", size = 280 }: RobotStageProps) {
         {!docked && (
           <motion.div
             layoutId="aura-mascot"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: -120, rotateX: -45, scale: 0.7 }}
+            initial={
+              hasEntered.current
+                ? false
+                : reduce
+                ? { opacity: 0 }
+                : { opacity: 0, y: -120, rotateX: -45, scale: 0.7 }
+            }
             animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
             transition={{ type: "spring", stiffness: 80, damping: 16, mass: 1.1 }}
+            onAnimationComplete={() => { hasEntered.current = true; }}
             style={reduce ? undefined : { rotateX, rotateY, transformStyle: "preserve-3d" }}
             className="will-change-transform"
             aria-hidden={false}

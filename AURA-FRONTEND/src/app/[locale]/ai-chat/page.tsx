@@ -4,13 +4,14 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { AuraLoader } from "@/components/ui/AuraLoader";
-import { GlowCard } from "@/components/ui/GlowCard";
 import { ChatBubble } from "@/components/ai/ChatBubble";
 import { ChatInput } from "@/components/ai/ChatInput";
 import { AuraBot, type BotState } from "@/components/ai/AuraBot";
 import { IntelPanel } from "@/components/ai/IntelPanel";
+// GlowCard removed from suggestions — replaced with clean glass cards
 import { streamAsk } from "@/lib/api";
 import { useStore } from "@/lib/store";
+import { Link } from "@/i18n/navigation";
 
 import { SettingsPopover } from "@/components/ai/SettingsPopover";
 
@@ -140,6 +141,15 @@ export default function AiChatPage() {
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              href="/docs"
+              className="inline-flex items-center gap-1.5 text-[0.74rem] font-semibold text-text rounded-lg px-3 py-1.5 bg-gradient-to-r from-cyan/15 to-purple/15 border border-cyan/30 hover:border-cyan/60 hover:from-cyan/25 hover:to-purple/25 transition-colors"
+            >
+              Export report
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
             {(loading || streamedResponse) && (
               <span className="text-[0.72rem] font-medium text-aurora-cyan flex items-center gap-1.5">
                 <motion.span
@@ -183,26 +193,28 @@ export default function AiChatPage() {
                 {t("rowColSummary", { rows: meta.n_rows.toLocaleString(), cols: meta.n_cols })}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-[640px] w-full">
-                {heroSuggestions.map((s, i) => (
-                  <motion.button
-                    key={i}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
-                    onClick={() => handleSend(s.question)}
-                    className="text-left group"
-                  >
-                    <GlowCard
-                      accent={s.accent}
-                      intensity="low"
-                      innerClassName="!p-4 min-h-[88px] flex items-center transition-colors group-hover:!bg-[rgba(14,22,46,0.95)]"
+                {heroSuggestions.map((s, i) => {
+                  const dot =
+                    s.accent === "cyan" ? "#00e5ff" : s.accent === "blue" ? "#3b82f6" : "#8b5cf6";
+                  return (
+                    <motion.button
+                      key={i}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
+                      onClick={() => handleSend(s.question)}
+                      className="group text-left rounded-xl p-4 min-h-[84px] flex items-start gap-2.5 bg-[rgba(11,20,38,0.7)] border border-border hover:border-cyan/45 hover:bg-[rgba(11,20,38,0.95)] transition-colors duration-200 cursor-pointer"
                     >
-                      <p className="text-[0.85rem] leading-snug text-text font-medium">
+                      <span
+                        className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+                        style={{ backgroundColor: dot, boxShadow: `0 0 8px ${dot}` }}
+                      />
+                      <p className="text-[0.85rem] leading-snug text-text font-medium group-hover:text-white">
                         {s.question}
                       </p>
-                    </GlowCard>
-                  </motion.button>
-                ))}
+                    </motion.button>
+                  );
+                })}
               </div>
             </motion.div>
           ) : (
