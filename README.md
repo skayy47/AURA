@@ -100,11 +100,15 @@ Open **http://localhost:3000** → click **"Try with sample data"** to load a pr
 
 All backend secrets live in `AURA-BACKEND/.env` (gitignored — never commit):
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ANTHROPIC_API_KEY` | For Claude | [console.anthropic.com](https://console.anthropic.com/) |
-| `OPENAI_API_KEY` | For GPT-4o | [platform.openai.com](https://platform.openai.com/) |
-| `ALLOWED_ORIGINS` | CORS | Comma-separated frontend URLs (e.g. `https://your-frontend.vercel.app`) |
+AURA is **multi-provider, free-first**: it defaults to **Groq (free)** and falls
+back across whatever keys are present. Claude / OpenAI are optional paid upgrades.
+
+| Variable | Tier | Description |
+|----------|------|-------------|
+| `GROQ_API_KEY` | **Free · default** | [console.groq.com](https://console.groq.com/keys) — Llama 3.3 70B |
+| `OPENAI_API_KEY` | Paid · optional | [platform.openai.com](https://platform.openai.com/) — GPT-4o mini |
+| `ANTHROPIC_API_KEY` | Paid · optional | [console.anthropic.com](https://console.anthropic.com/) — Claude Sonnet 4.6 |
+| `ALLOWED_ORIGINS` | — | Comma-separated frontend URLs (e.g. `https://your-frontend.vercel.app`) |
 | `STRIPE_SECRET_KEY` | Billing | Stripe dashboard → Developers → API keys |
 | `STRIPE_WEBHOOK_SECRET` | Billing | Stripe dashboard → Webhooks |
 | `STRIPE_PRICE_PRO_MONTHLY` | Billing | Price ID from Stripe products |
@@ -130,7 +134,8 @@ git remote add space https://huggingface.co/spaces/<your-username>/aura-backend
 git push space main
 ```
 
-Set Space secrets: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `ALLOWED_ORIGINS`, `PORT=7860`.
+Set Space secrets: `GROQ_API_KEY` (free — the only one needed for working AI),
+`ALLOWED_ORIGINS`, `PORT=7860`. Optionally add `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`.
 
 ### Frontend — Vercel
 

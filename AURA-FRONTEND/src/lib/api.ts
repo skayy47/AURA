@@ -65,7 +65,7 @@ export async function fetchAnalysis(
 export async function* streamAsk(
   sessionId: string,
   question: string,
-  provider: 'claude' | 'openai'
+  provider: 'groq' | 'claude' | 'openai'
 ): AsyncGenerator<string> {
   const response = await fetch(`${API_URL}/api/ask`, {
     method: 'POST',

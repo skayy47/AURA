@@ -49,24 +49,38 @@ export function SettingsPopover({ isOpen, onClose }: Props) {
         </h3>
 
         <div className="mb-5">
-          <label className="block text-[0.75rem] text-text-m mb-2">Provider</label>
+          <label className="block text-[0.75rem] text-text-m mb-2">Model provider</label>
           <div className="space-y-2">
-            {["Claude", "OpenAI", "Ollama (local)"].map((p) => {
-              const val = p.split(" ")[0];
-              return (
-                <label key={p} className="flex items-center gap-2 text-sm text-text cursor-pointer">
-                  <input
-                    type="radio"
-                    name="provider"
-                    value={val}
-                    checked={provider === val}
-                    onChange={(e) => setProvider(e.target.value)}
-                    className="accent-purple"
-                  />
-                  {p}
-                </label>
-              );
-            })}
+            {[
+              { id: "groq", label: "Groq · Llama 3.3 70B", tier: "Free" },
+              { id: "openai", label: "OpenAI · GPT-4o mini", tier: "Paid" },
+              { id: "claude", label: "Claude · Sonnet 4.6", tier: "Paid" },
+            ].map((p) => (
+              <label
+                key={p.id}
+                className="flex items-center gap-2.5 text-sm text-text cursor-pointer rounded-lg px-2 py-1.5 hover:bg-white/[0.03] transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="provider"
+                  value={p.id}
+                  checked={provider === p.id}
+                  onChange={(e) => setProvider(e.target.value)}
+                  className="accent-cyan"
+                />
+                <span className="flex-1">{p.label}</span>
+                <span
+                  className={
+                    "text-[0.6rem] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded " +
+                    (p.tier === "Free"
+                      ? "text-mint bg-[rgba(0,255,178,0.12)]"
+                      : "text-text-d bg-white/[0.05]")
+                  }
+                >
+                  {p.tier}
+                </span>
+              </label>
+            ))}
           </div>
         </div>
 
@@ -107,7 +121,7 @@ export function SettingsPopover({ isOpen, onClose }: Props) {
         <div className="pt-3 border-t border-border">
           <button
             onClick={() => {
-              setProvider("Claude");
+              setProvider("groq");
               setTemperature(0.7);
             }}
             className="text-[0.75rem] text-text-d hover:text-text-m underline transition-colors"

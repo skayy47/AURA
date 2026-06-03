@@ -3,9 +3,16 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from api.deps import get_session, update_session
 from api.models import AskRequest
-from engines.ai_insights import ask_ai, AIProvider
+from engines.ai_insights import ask_ai, coerce_provider, available_providers
 
 router = APIRouter()
+
+
+@router.get("/ai/providers")
+def list_providers():
+    """Report which AI providers are configured (free Groq + paid Claude/OpenAI)."""
+    return {"providers": available_providers()}
+
 
 @router.post("/ask")
 async def ask(req: AskRequest):
@@ -17,7 +24,7 @@ async def ask(req: AskRequest):
         if df is None:
             raise HTTPException(status_code=422, detail="No dataset in session")
 
-        provider = AIProvider.CLAUDE if req.provider == "claude" else AIProvider.OPENAI
+        provider = coerce_provider(req.provider)
 
         # Add user message to history
         history = sess.get("chat_history", [])
@@ -26,9 +33,14 @@ async def ask(req: AskRequest):
 
         def generate():
             full_response = ""
-            for chunk in ask_ai(df, req.question, provider, stream=True):
-                full_response += chunk
-                yield f"data: {json.dumps({'chunk': chunk})}\n\n"
+            try:
+                for chunk in ask_ai(df, req.question, provider, stream=True):
+                    full_response += chunk
+                    yield f"data: {json.dumps({'chunk': chunk})}\n\n"
+            except Exception as exc:
+                msg = f"⚠️ AI is unavailable right now: {exc}"
+                full_response = msg
+                yield f"data: {json.dumps({'chunk': msg})}\n\n"
             # Save final response
             history.append({"role": "assistant", "content": full_response})
             update_session(req.session_id, {"chat_history": history})

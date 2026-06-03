@@ -16,9 +16,9 @@ import { Link } from "@/i18n/navigation";
 import { SettingsPopover } from "@/components/ai/SettingsPopover";
 
 const PROVIDER_BADGE: Record<string, { label: string; color: string }> = {
-  claude:  { label: "Claude",  color: "#8B5CF6" },
-  openai:  { label: "OpenAI",  color: "#10B981" },
-  ollama:  { label: "Ollama",  color: "#F59E0B" },
+  groq:    { label: "Groq · Free", color: "#00FFB2" },
+  claude:  { label: "Claude",      color: "#8B5CF6" },
+  openai:  { label: "OpenAI",      color: "#3B82F6" },
 };
 
 function buildHeroSuggestions(meta: any): { question: string; accent: "purple" | "cyan" | "blue" }[] {
@@ -44,7 +44,9 @@ export default function AiChatPage() {
   const [botState, setBotState] = useState<BotState>("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const rawProvider = useStore((s) => s.provider).toLowerCase();
-  const currentProvider = (rawProvider === "openai" ? "openai" : "claude") as "claude" | "openai";
+  const currentProvider = (
+    ["groq", "claude", "openai"].includes(rawProvider) ? rawProvider : "groq"
+  ) as "groq" | "claude" | "openai";
 
   const endRef = useRef<HTMLDivElement>(null);
   const messageRefs = useRef<Record<number, HTMLDivElement | null>>({});
