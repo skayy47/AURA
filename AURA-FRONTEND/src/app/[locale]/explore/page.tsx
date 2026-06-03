@@ -16,7 +16,7 @@ import { AuraScatter } from "@/components/explore/AuraScatter";
 import { AuraMissingHeatmap } from "@/components/explore/AuraMissingHeatmap";
 import { AuraColumnProfile } from "@/components/explore/AuraColumnProfile";
 import { ExportPDFButton } from "@/components/explore/ExportPDFButton";
-import { fetchExplore } from "@/lib/api";
+import { fetchExplore, fetchAnalysis, type AnalysisInsight } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import type { ChartRecommendation, ColumnProfile } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -39,6 +39,7 @@ export default function ExplorePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedColumn, setSelectedColumn] = useState<ColumnProfile | null>(null);
+  const [insights, setInsights] = useState<AnalysisInsight[]>([]);
 
   useEffect(() => {
     if (sessionId && !exploreData && !loading) {
@@ -49,6 +50,14 @@ export default function ExplorePage() {
         .finally(() => setLoading(false));
     }
   }, [sessionId, exploreData]);
+
+  useEffect(() => {
+    if (sessionId) {
+      fetchAnalysis(sessionId)
+        .then((res) => setInsights(res.insights ?? []))
+        .catch(() => null);
+    }
+  }, [sessionId]);
 
   if (!meta || !sessionId) return <EmptyState />;
 
@@ -94,6 +103,42 @@ export default function ExplorePage() {
               index={3}
             />
           </div>
+
+          {insights.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="aura-card p-6"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan" style={{ boxShadow: "0 0 8px var(--cyan)" }} />
+                <h3 className="font-bricolage font-bold text-text text-lg">AI Analyst — Key Findings</h3>
+                <span className="text-[0.7rem] text-text-d ml-1">ranked by impact</span>
+              </div>
+              <div className="space-y-2.5">
+                {insights.map((f, i) => {
+                  const sev = f.severity === 3
+                    ? { bar: "#fb7185", tag: "Critical", cls: "text-[#fb7185] bg-[rgba(251,113,133,0.12)]" }
+                    : f.severity === 2
+                    ? { bar: "#00e5ff", tag: "Notable", cls: "text-cyan bg-[rgba(0,229,255,0.12)]" }
+                    : { bar: "#4a5878", tag: "Minor", cls: "text-text-m bg-white/[0.05]" };
+                  return (
+                    <div key={i} className="flex gap-3 items-start p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                      <span className="w-1 self-stretch rounded-full shrink-0" style={{ background: sev.bar }} />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-semibold text-text">{f.title}</h4>
+                        <p className="text-xs text-text-m mt-0.5 leading-relaxed">{f.detail}</p>
+                      </div>
+                      <span className={cn("text-[0.6rem] font-bold tracking-wide uppercase px-2 py-0.5 rounded-md shrink-0", sev.cls)}>
+                        {sev.tag}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
 
           <InsightsStrip profile={profile} />
 

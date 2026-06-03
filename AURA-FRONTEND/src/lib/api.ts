@@ -45,6 +45,23 @@ export async function fetchExplore(sessionId: string): Promise<ExploreData> {
   return response.json();
 }
 
+export interface AnalysisInsight {
+  kind: string;
+  severity: number;
+  title: string;
+  detail: string;
+}
+
+export async function fetchAnalysis(
+  sessionId: string
+): Promise<{ insights: AnalysisInsight[]; quality?: { score: number } }> {
+  const response = await fetch(`${API_URL}/api/analyze/${sessionId}`);
+  if (!response.ok) {
+    throw new Error(`Analysis failed: ${response.statusText}`);
+  }
+  return response.json();
+}
+
 export async function* streamAsk(
   sessionId: string,
   question: string,
