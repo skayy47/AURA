@@ -1,6 +1,6 @@
 # ⚡ AURA — Universal Data Engine
 
-> Ingest · Clean · Explore · AI Insights · Export · Arabic UI · PDF Reports
+> **Ingest · Clean · Explore · AI Insights · Export** — from raw CSV to boardroom PDF in five minutes.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
@@ -9,31 +9,25 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![Claude](https://img.shields.io/badge/Claude-Sonnet_4.6-7C3AED)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?logo=framer&logoColor=white)
 ![i18n](https://img.shields.io/badge/i18n-EN_%7C_AR-6C3FE5)
+[![CI](https://github.com/skayy47/AURA/actions/workflows/ci.yml/badge.svg)](https://github.com/skayy47/AURA/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/License-MIT-10B981)
 
----
+AURA is a full-stack data platform that takes you from a raw file upload to AI-powered insights in minutes. Upload any structured dataset, auto-clean it with an 8-step pipeline, explore interactive charts, ask Claude or GPT-4o in natural language, and export a branded PDF report — all through a bilingual (EN/AR) production-grade interface.
 
-## What is AURA?
-
-AURA is a full-stack data platform that takes you from a raw file upload to AI-powered insights in **five minutes**. Upload any structured dataset, auto-clean it with an 8-step pipeline, explore interactive charts, ask Claude or GPT-4o about it in natural language, and export a branded PDF report — or a clean CSV/Excel/JSON/Parquet file.
-
-No sign-up. No database. No storage. In-memory, session-scoped, and gone in 4 hours.
+**No sign-up. No database. In-memory, session-scoped.**
 
 ---
 
-## What's New in V5
+## What it does
 
-| Feature | Details |
-|---------|---------|
-| 🤖 **3D Robot Landing** | `<AuraBot>` enters with a spring-driven 3D entry — `rotateX -45°→0°`, `scale 0.7→1`. Mouse parallax adds ±10° tilt as you move the cursor across the hero. |
-| 🔁 **Scroll-Triggered Handoff** | When the hero scrolls out of view, the robot transitions via `layoutId` into the global `<BotOrb>` chat button in the bottom-right corner. One continuous visual thread from landing to app. |
-| 🎨 **Aurora Theme** | New "Luminal Void" palette — `#6c3fed` purple · `#22d3ee` cyan · `#3b82f6` blue. Gradient text, bento cards, grain overlay, divider lines, pulse-pill badges. |
-| 📐 **11-Section Landing** | Hero · Pain Points · Live Demo Strip · Bento Steps · Sample Datasets · Output Preview · Tech Stack · Pricing · Final CTA · FAQ · Footer — fully i18n'd in EN + AR. |
-| 🌊 **Data Constellation** | Orbiting data-particle animation (`<DataConstellation>`) surrounds the robot in the hero for visual depth. |
-| ✍️ **Typewriter / Sweep FX** | `<OutputPreview>` reveals the clean CSV with a typewriter effect, the AI chat with a cursor blink, and a PDF mockup with animated mini-charts. |
-| 🎯 **Live Demo Strip** | Side-by-side messy vs. clean CSV diff with a 5-step animated cleaning log. No backend needed — pure front-end demo. |
+| Step | Route | Capability |
+|------|-------|-----------|
+| 📂 **Ingest** | `/ingest` | CSV · XLSX · JSON · Parquet · TSV — encoding auto-detected, type inference, 5-row preview |
+| 🧼 **Clean** | `/clean` | 8-step pipeline: normalize names, drop empty cols, clean strings, promote types, dedupe, impute, flag outliers, quality score |
+| 🔍 **Explore** | `/explore` | Auto-generated histograms, scatter, correlation heatmap, missing-value map, column profiles |
+| 🤖 **AI Chat** | `/ai-chat` | Claude Sonnet 4.6 or GPT-4o with SSE streaming — full dataset context injected |
+| 📄 **Export** | `/docs` | CSV · XLSX · JSON · Parquet · **branded PDF report** (Playwright + Jinja2) |
 
 ---
 
@@ -42,29 +36,31 @@ No sign-up. No database. No storage. In-memory, session-scoped, and gone in 4 ho
 ```
 ┌──────────────────────────┐      REST + SSE        ┌──────────────────────────┐
 │  AURA-FRONTEND (3000)    │ ─────────────────────▶ │  AURA-BACKEND (8000)     │
-│  Next.js 14 · React 18   │                        │  FastAPI · Uvicorn       │
+│  Next.js 14 · App Router │                        │  FastAPI 0.111 · Uvicorn │
 │  next-intl v4 (EN/AR)    │ ◀───────────────────── │  Pandas · Anthropic SDK  │
-│  Tailwind · Zustand       │       JSON / stream    │  Playwright · Jinja2     │
+│  Tailwind · Zustand       │       JSON / stream    │  Playwright + Jinja2     │
 │  Framer Motion 12 (3D)   │                        │  Stripe SDK              │
 └──────────────────────────┘                        └──────────────────────────┘
 ```
 
-- All data, AI, and rendering happen on the backend — the frontend is a pure client.
-- Sessions are UUID-keyed, in-memory, 4-hour TTL (no database required).
-- AI responses stream over SSE for token-by-token rendering.
+- All data, AI, and rendering happen on the **backend** — the frontend is a pure client.
+- Sessions are UUID-keyed, **in-memory**, 4-hour TTL (no database required).
+- AI responses **stream over SSE** for token-by-token rendering.
 - Locale is part of the URL path: `/en/ingest` · `/ar/ingest`.
+- CORS origins are env-driven via `ALLOWED_ORIGINS`.
 
 ---
 
-## Pipeline
+## V5 Highlights
 
-| Step | Route | What it does |
-|------|-------|--------------|
-| 📂 **Ingest** | `/ingest` | CSV · XLSX · JSON · Parquet · TSV — encoding auto-detected, type inference, 5-row preview |
-| 🧼 **Clean** | `/clean` | 8-step pipeline: normalize names, drop empty cols, clean strings, promote types, dedupe, impute, flag outliers, quality score |
-| 🔍 **Explore** | `/explore` | Auto-generated histograms, scatter plots, correlation heatmap, missing-value map, column profiles |
-| 🤖 **AI Chat** | `/ai-chat` | Claude Sonnet 4.6 or GPT-4o with SSE streaming — full dataset context injected |
-| 📄 **Docs** | `/docs` | Export to CSV · XLSX · JSON · Parquet · **PDF report** |
+| Feature | Details |
+|---------|---------|
+| 🤖 **3D Robot Landing** | `<AuraBot>` enters with spring-driven 3D choreography — `rotateX -45°→0°`, `scale 0.7→1`. Mouse parallax adds ±10° tilt. |
+| 🔁 **Scroll-Triggered Handoff** | Robot transitions via Framer Motion `layoutId` from hero into the persistent `<BotOrb>` chat button — one continuous visual thread. |
+| 🎨 **Aurora "Luminal Void" Theme** | `#6c3fed` purple · `#22d3ee` cyan · `#3b82f6` blue — gradient text, bento cards, grain overlay, pulse-pill badges. |
+| 📐 **11-Section Landing** | Hero · Pain Points · Live Demo Strip · Bento Steps · Samples · Output Preview · Tech Stack · Pricing · FAQ · Final CTA · Footer — fully i18n'd EN/AR. |
+| 🌍 **Full Arabic UI** | RTL layout, Arabic translations for all 220+ string keys via next-intl v4. |
+| 🧪 **E2E CI** | GitHub Actions: ruff · black · pytest (backend) + tsc · next build (frontend) + Playwright smoke (boots both services). |
 
 ---
 
@@ -72,136 +68,100 @@ No sign-up. No database. No storage. In-memory, session-scoped, and gone in 4 ho
 
 Requires Python 3.11+ and Node 18+.
 
-**1. Clone and set up environment**
 ```bash
 git clone https://github.com/skayy47/AURA
 cd AURA
 
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # macOS / Linux
-
-cp AURA-BACKEND/.env.example AURA-BACKEND/.env  # add your API keys
-```
-
-**2. Start the backend (terminal 1)**
-```bash
+# --- Backend ---
 cd AURA-BACKEND
-pip install -r requirements.txt
-playwright install chromium      # for PDF export
-uvicorn main:app --reload --port 8000
-```
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+# source .venv/bin/activate     # macOS / Linux
 
-**3. Start the frontend (terminal 2)**
-```bash
+pip install -r requirements.txt
+playwright install chromium     # for PDF export only
+cp ../.env.example AURA-BACKEND/.env  # fill in API keys
+uvicorn main:app --reload --port 8000
+
+# --- Frontend (new terminal) ---
 cd AURA-FRONTEND
 npm install
 npm run dev
 ```
 
-Open **http://localhost:3000** — the marketing landing page. Click **"Try with sample data"** to load a pre-built dataset instantly, or upload your own CSV.
+Open **http://localhost:3000** → click **"Try with sample data"** to load a pre-built MENA dataset, or upload your own CSV.
 
-Backend health: **http://localhost:8000/health** · Interactive API docs: **http://localhost:8000/docs**
+> **Health check:** http://localhost:8000/health
+> **API docs:** http://localhost:8000/docs
 
 ---
 
 ## Environment Variables
 
-Backend reads from `AURA-BACKEND/.env`:
+All backend secrets live in `AURA-BACKEND/.env` (gitignored — never commit):
 
 | Variable | Required | Description |
-|---|---|---|
+|----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | For Claude | [console.anthropic.com](https://console.anthropic.com/) |
-| `OPENAI_API_KEY` | For GPT-4o | [platform.openai.com](https://platform.openai.com/api-keys) |
-| `STRIPE_SECRET_KEY` | For billing | Stripe dashboard → Developers → API keys |
-| `STRIPE_WEBHOOK_SECRET` | For webhooks | Stripe dashboard → Webhooks |
-| `STRIPE_PRICE_PRO_MONTHLY` | For Pro tier | Price ID from Stripe products |
-| `STRIPE_PRICE_TEAM_MONTHLY` | For Team tier | Price ID from Stripe products |
-| `FRONTEND_URL` | For redirects | Defaults to `http://localhost:3000` |
-| `POPPLER_PATH` | For PDF OCR | Windows only — path to Poppler `bin/` |
-| `DEBUG` | No | `1` to enable debug logging |
+| `OPENAI_API_KEY` | For GPT-4o | [platform.openai.com](https://platform.openai.com/) |
+| `ALLOWED_ORIGINS` | CORS | Comma-separated frontend URLs (e.g. `https://your-frontend.vercel.app`) |
+| `STRIPE_SECRET_KEY` | Billing | Stripe dashboard → Developers → API keys |
+| `STRIPE_WEBHOOK_SECRET` | Billing | Stripe dashboard → Webhooks |
+| `STRIPE_PRICE_PRO_MONTHLY` | Billing | Price ID from Stripe products |
+| `STRIPE_PRICE_TEAM_MONTHLY` | Billing | Price ID from Stripe products |
+| `FRONTEND_URL` | Redirects | Defaults to `http://localhost:3000` |
+| `PORT` | Deploy | Hosting port (default `8000`; HF Spaces requires `7860`) |
 
-Frontend reads `NEXT_PUBLIC_API_URL` from `AURA-FRONTEND/.env.local` (defaults to `http://localhost:8000`).
-
----
-
-## REST API
-
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| `GET` | `/health` | Liveness probe |
-| `POST` | `/api/ingest` | Multipart upload → `{session_id, meta, preview}` |
-| `POST` | `/api/clean` | Run 8-step cleaning pipeline |
-| `GET` | `/api/explore/{session_id}` | Profile + chart recommendations |
-| `POST` | `/api/ask` | AI chat (SSE stream) |
-| `GET` | `/api/export/{session_id}/{format}` | Download cleaned dataset |
-| `POST` | `/api/export/pdf` | Generate branded PDF report |
-| `GET` | `/api/samples` | List 3 sample dataset slugs |
-| `GET` | `/api/samples/{slug}/download` | Download sample CSV |
-| `POST` | `/api/samples/{slug}/load` | Load sample into session |
-| `POST` | `/api/billing/checkout` | Create Stripe Checkout Session |
-| `POST` | `/api/billing/portal` | Create Stripe Customer Portal session |
-| `POST` | `/api/billing/webhook` | Receive Stripe webhook events |
-
-Full OpenAPI schema: **http://localhost:8000/docs**
+> **Billing note:** Stripe checkout is fully wired. Entitlement persistence (linking a completed payment to a session tier) is the next planned milestone.
 
 ---
 
-## Landing Page — V5 Sections
+## Deployment
 
-| # | Component | Description |
-|---|-----------|-------------|
-| 01 | `HeroV5` | Asymmetric grid — `<RobotStage>` left, headline + CTAs right. 3D robot entry + mouse parallax. |
-| 02 | `PainPoints` | 4 conversational pain statements that scroll-stagger into view. |
-| 03 | `LiveDemoStrip` | Side-by-side messy ↔ clean CSV diff with animated 5-step cleaning log. |
-| 04 | `BentoSteps` | Bento grid showing all 5 pipeline steps. Center cell has a live mini-chart preview. |
-| 05 | `SamplesScroll` | 3 sample datasets as numbered stress-test cards. Loads directly from backend. |
-| 06 | `OutputPreview` | Mockups of the 3 artifacts — clean CSV (typewriter), AI chat (cursor blink), PDF report. |
-| 07 | `TechStack` | Reverse-numbered tech stack with logo icons. |
-| 08 | `PricingV5` | Free · Pro · Team tiers. Pro card elevated. Pulse-pill "Most Popular" badge. |
-| 09 | `FinalCTA` | Full-width aurora gradient panel. "NO SIGN-UP · NO STORAGE · BACK IN FIVE MINUTES". |
-| 10 | `FooterV5` | 4-column footer — Product, Resources, Company, Contact. Aurora divider + MIT byline. |
+AURA has a **monorepo** — backend and frontend deploy independently.
 
----
+### Backend — Hugging Face Spaces (Docker, free)
 
-## Arabic / RTL Support
+A `Dockerfile` is included at the repo root. The image bakes in Playwright/Chromium so PDF export works cold. See [`deploy/huggingface.md`](deploy/huggingface.md) for the full runbook.
 
-AURA ships full bilingual support via **next-intl v4**. Switch languages with the **EN | عربي** toggle in the top bar — it preserves your current page and session.
+```bash
+# Add the Space as a remote and push
+git remote add space https://huggingface.co/spaces/<your-username>/aura-backend
+git push space main
+```
 
-- Locale prefix routing: `/en/*` · `/ar/*`
-- Tailwind logical properties throughout (`ms-`, `ps-`, `start-`, `border-s`, etc.)
-- `<html dir="rtl">` set by `[locale]/layout.tsx`
-- Recharts Y-axis mirrored (`orientation="right"`) in RTL mode
-- `Intl.NumberFormat(locale)` for all numeric display in charts
+Set Space secrets: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `ALLOWED_ORIGINS`, `PORT=7860`.
 
----
+### Frontend — Vercel
 
-## PDF Report Export
+Set the **root directory** to `AURA-FRONTEND` and add one env var:
 
-Click **Export PDF** on the Explore page. The backend:
+```
+NEXT_PUBLIC_API_URL=https://<your-username>-aura-backend.hf.space
+```
 
-1. Builds a report context from the session profile + cleaning log
-2. Renders `templates/report.html.j2` (Jinja2 dark-themed template)
-3. Converts to PDF via Playwright Chromium (headless)
-4. Streams `application/pdf` back to the browser
-
-The report includes: summary metrics, full column profiles table, top correlation pairs, and the cleaning pipeline log.
-
-**Requires:** `playwright install chromium` after `pip install -r requirements.txt`.
+`NEXT_PUBLIC_*` vars are **baked at build time** — a change requires a redeploy.
 
 ---
 
-## Sample Datasets
+## CI / CD
 
-Three real-world datasets are pre-loaded at `AURA-BACKEND/static/samples/`:
+`.github/workflows/ci.yml` runs on every push to `main`:
 
-| Slug | Title | Rows | Notable issues |
-|------|-------|------|---------------|
-| `sales-mess` | Sales Pipeline (messy) | 40 | Duplicate rows, outlier price, missing fields |
-| `climate-sensors` | MENA Climate Sensors | 44 | Time series, sensor outlier, one missing temp |
-| `mena-orders` | MENA E-Commerce Orders | 50 | Clean — good for category / bar chart exploration |
+| Job | Steps |
+|-----|-------|
+| **backend** | ruff lint · black format check · pytest |
+| **frontend** | TypeScript type check · `next build` |
+| **e2e smoke** | Playwright: boots both services, hits `/health` (main only) |
+| **deploy gate** | All jobs must pass |
 
-Load via `POST /api/samples/{slug}/load` or click **Load & Explore** on the landing page.
+---
+
+## Tech Stack
+
+**Frontend:** Next.js 14 · React 18 · TypeScript 5 · next-intl v4 (EN/AR RTL) · Tailwind 3.4 · Zustand 5 · Framer Motion 12.38 · Recharts 3
+
+**Backend:** FastAPI 0.111 · Uvicorn · Pydantic 2.7 · Pandas 2.2 · Anthropic SDK · OpenAI SDK 1.35 · Playwright + Jinja2 (PDF) · Stripe 9.9 · OpenCV-headless · Whisper · librosa
 
 ---
 
@@ -210,136 +170,32 @@ Load via `POST /api/samples/{slug}/load` or click **Load & Explore** on the land
 ```
 AURA/
 ├── AURA-BACKEND/
-│   ├── main.py                    CORS + router registration
-│   ├── api/
-│   │   ├── deps.py                In-memory session store (UUID → state, 4h TTL)
-│   │   ├── models.py              Pydantic schemas
-│   │   └── routes/
-│   │       ├── ingest.py          POST /api/ingest
-│   │       ├── clean.py           POST /api/clean
-│   │       ├── explore.py         GET  /api/explore/{sid}
-│   │       ├── ai.py              POST /api/ask (SSE)
-│   │       ├── export.py          GET  /api/export/{sid}/{fmt} + POST /api/export/pdf
-│   │       ├── samples.py         GET/POST /api/samples/*
-│   │       └── billing.py         POST /api/billing/{checkout,portal,webhook}
-│   ├── engines/                   Pure-Python domain logic
-│   │   ├── ingestion.py           V3.3 IngestResult + FileMeta
-│   │   ├── cleaning.py            V3.4 8-cleaner orchestrator + quality score
-│   │   ├── exploration.py         V3.5 profile_dataframe + recommend_charts
-│   │   ├── ai_insights.py         Claude + OpenAI streaming
-│   │   ├── ocr.py                 Tesseract + Poppler
-│   │   └── audio_video.py         Whisper + librosa + OpenCV
-│   ├── services/
-│   │   ├── pdf_renderer.py        Playwright + Jinja2 PDF renderer
-│   │   └── billing.py             Stripe checkout / portal / webhook
-│   ├── templates/
-│   │   └── report.html.j2         Dark-theme PDF report template
-│   └── static/samples/            Pre-loaded CSV datasets
-│
+│   ├── api/routes/        ingest · clean · explore · ai · export · billing · samples
+│   ├── engines/           ingestion · cleaning · exploration · ai_insights · ocr · audio_video
+│   ├── services/          billing (Stripe) · pdf_renderer (Playwright + Jinja2)
+│   ├── state/session.py   UUID-keyed in-memory store (4h TTL)
+│   ├── utils/             config · helpers · exporters
+│   └── main.py            FastAPI entry point
 ├── AURA-FRONTEND/
-│   ├── src/app/[locale]/          Locale-prefixed App Router routes
-│   │   ├── page.tsx               V5 landing page (11 sections)
-│   │   ├── ingest/ clean/
-│   │   ├── explore/               + Export PDF button
-│   │   ├── ai-chat/ docs/
-│   │   ├── pricing/               Pricing tiers + Stripe checkout
-│   │   └── billing/success|cancel
-│   ├── src/components/
-│   │   ├── ai/
-│   │   │   ├── AuraBot.tsx        SVG robot — 6 states, framer-motion internal anims
-│   │   │   ├── DataConstellation  Orbiting particle visualization
-│   │   │   ├── BotMiniAvatar.tsx  Compact robot for chat headers
-│   │   │   └── SettingsPopover    AI model / temperature settings panel
-│   │   ├── landing/               11 V5 landing sections
-│   │   │   ├── RobotStage.tsx     3D choreography wrapper (entry + parallax + handoff)
-│   │   │   ├── HeroV5.tsx
-│   │   │   ├── PainPoints.tsx
-│   │   │   ├── LiveDemoStrip.tsx
-│   │   │   ├── BentoSteps.tsx
-│   │   │   ├── SamplesScroll.tsx
-│   │   │   ├── OutputPreview.tsx
-│   │   │   ├── TechStack.tsx
-│   │   │   ├── PricingV5.tsx
-│   │   │   ├── FinalCTA.tsx
-│   │   │   └── FooterV5.tsx
-│   │   ├── layout/
-│   │   │   ├── BotOrb.tsx         Global fixed chat-trigger button (scroll handoff target)
-│   │   │   └── DatasetPill.tsx    Fixed bottom-left dataset status indicator
-│   │   └── ui/
-│   │       └── ProGate.tsx        Tier-gated feature overlay
-│   ├── src/styles/globals.css     Aurora design system tokens + utility classes
-│   ├── src/lib/
-│   │   ├── store.ts               Zustand store — session, tier, firstRun, provider
-│   │   └── tier.ts                useTier() hook (free/pro/team)
-│   ├── src/i18n/                  next-intl routing + navigation
-│   ├── messages/en.json           English strings (~220 keys)
-│   └── messages/ar.json           Arabic translations
-│
-├── tests/                         Pytest suites
-└── LICENSE                        MIT
+│   ├── src/app/[locale]/  landing · ingest · clean · explore · ai-chat · docs · pricing · billing
+│   ├── src/components/    ai · background · clean · explore · ingest · landing · layout · ui
+│   ├── src/lib/           api client · Zustand store · tier hook · types
+│   └── messages/          en.json · ar.json (~220 keys each)
+├── tests/                 pytest suites
+├── Dockerfile             backend image (Playwright baked in)
+├── .github/workflows/     ci.yml
+└── LICENSE
 ```
 
 ---
 
-## Design System — "Luminal Void"
+## Roadmap
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--bg` | `#040712` | App background |
-| `--surface` | `#0A1022` | Cards |
-| `--aurora-purple` | `#6C3FE5` | Primary accent |
-| `--aurora-cyan` | `#22D3EE` | Secondary accent |
-| `--aurora-blue` | `#3B82F6` | Tertiary accent |
-| `--text` | `#F1F5F9` | Primary text |
-| `--text-m` | `#94A3B8` | Muted text |
-| `--green` | `#10B981` | Success / quality |
-| `--amber` | `#F59E0B` | Warnings |
-
-Key CSS utilities in `globals.css`:
-
-| Class | Purpose |
-|-------|---------|
-| `.text-aurora-gradient` | Multi-stop purple→cyan→blue gradient text |
-| `.heading-display` | Bricolage Grotesque, `clamp(2.75rem, 8vw, 6.5rem)` |
-| `.eyebrow-mono` | Geist Mono, `0.7rem`, uppercase, wide tracking — for `[0N]` section labels |
-| `.bento-card` | Purple border, backdrop blur, hover lift + glow |
-| `.grain-overlay` | SVG noise texture at 4.5% opacity |
-| `.divider-aurora` | 1px aurora-gradient horizontal line |
-| `.pulse-pill` | Animated gradient badge (aurora-shift keyframe) |
-| `.perspective-stage` | CSS 3D context (`perspective: 1400px`) for robot |
-
----
-
-## Tech Stack
-
-**Frontend**
-- Next.js 14 (App Router) · React 18 · TypeScript 5
-- next-intl v4.11 (EN/AR, locale routing, RTL)
-- Tailwind CSS 3.4 — Luminal Void tokens + logical properties
-- Zustand 5 · Framer Motion 12.38 (3D springs, scroll-driven) · Recharts 3
-
-**Backend**
-- FastAPI 0.111 · Uvicorn · Pydantic 2
-- Pandas 2.2 · NumPy · OpenPyXL · PyArrow
-- Anthropic SDK (Claude Sonnet 4.6) · OpenAI SDK
-- Playwright 1.45 + Jinja2 3.1 (PDF rendering)
-- Stripe 9.9 (billing)
-- Tesseract + Poppler (OCR) · Whisper · librosa · OpenCV
-
----
-
-## Tests
-
-```bash
-cd AURA-BACKEND
-python -m pytest ../tests -v
-```
-
----
-
-## Legacy Streamlit App
-
-The original Streamlit V2.1 is preserved at the repo root (`app.py`, `pages/`, `engines/`, `state/`, `utils/`). It is not the recommended path — Next.js + FastAPI is the canonical V5 stack. Run it with `streamlit run app.py` for reference.
+| Version | Status | What's in it |
+|---------|--------|-------------|
+| **v5.0** | ✅ Shipped | 3D landing, aurora theme, bilingual UI, Stripe checkout, E2E CI |
+| **v5.1** | 🔜 Planned | Entitlement persistence; externalize session state (Redis) for multi-worker support |
+| **v6.0** | 💡 Future | Live deployed demo; agent mode (multi-step analysis plans) |
 
 ---
 
@@ -349,4 +205,4 @@ MIT — see [LICENSE](LICENSE)
 
 ---
 
-*Built by [SKAY](https://github.com/skayy47) · Powered by Claude*
+*Built by [Oussama Skia (SKAY)](https://github.com/skayy47) · Powered by Claude*

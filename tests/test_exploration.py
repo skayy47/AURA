@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import pandas as pd
-import plotly.graph_objects as go
 
 from engines.exploration import (
     get_basic_info,
@@ -46,6 +45,7 @@ def test_get_numeric_summary_empty() -> None:
 
 def test_plot_histogram_returns_figure() -> None:
     """plot_histogram returns a Plotly Figure."""
+    import plotly.graph_objects as go
     df = _numeric_df()
     fig = plot_histogram(df, "x")
     assert isinstance(fig, go.Figure)
@@ -53,6 +53,7 @@ def test_plot_histogram_returns_figure() -> None:
 
 def test_plot_correlation_heatmap() -> None:
     """plot_correlation_heatmap returns a Plotly Figure for numeric data."""
+    import plotly.graph_objects as go
     df = _numeric_df()
     fig = plot_correlation_heatmap(df)
     assert isinstance(fig, go.Figure)
