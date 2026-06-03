@@ -28,7 +28,9 @@ async def export(session_id: str, format: str):
         raise HTTPException(status_code=400, detail=f"Unsupported format: {format}")
     try:
         sess = get_session(session_id)
-        df = sess.get("cleaned_df") or sess.get("raw_df")
+        df = sess.get("cleaned_df")
+        if df is None:
+            df = sess.get("raw_df")
         data = EXPORTERS[format](df)
         return Response(
             content=data,
@@ -37,6 +39,39 @@ async def export(session_id: str, format: str):
         )
     except KeyError:
         raise HTTPException(status_code=404, detail="Session not found")
+
+
+@router.get("/analyze/{session_id}")
+async def analyze_session(session_id: str):
+    """Run (and cache) the expert auto-analysis for a session → ranked insights."""
+    try:
+        sess = get_session(session_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    if sess.get("analysis"):
+        return sess["analysis"]
+
+    df = sess.get("cleaned_df")
+    if df is None:
+        df = sess.get("raw_df")
+    if df is None:
+        raise HTTPException(status_code=422, detail="No dataset in session — run ingest first")
+
+    try:
+        profile = sess.get("explore_profile")
+        if not profile:
+            from engines.exploration import profile_dataframe
+            profile = profile_dataframe(df)
+            sess["explore_profile"] = profile
+        from engines.analysis import analyze
+        name = (sess.get("meta") or {}).get("name") or "dataset"
+        result = analyze(df, profile, meta_name=name)
+        sess["analysis"] = result
+        return result
+    except Exception as exc:
+        logger.exception("Analysis failed")
+        raise HTTPException(status_code=500, detail=f"Analysis error: {exc}") from exc
 
 
 class PDFRequest(BaseModel):
@@ -54,7 +89,9 @@ async def export_pdf(body: PDFRequest):
     profile = sess.get("explore_profile")
     if not profile:
         # Build a minimal profile from the cleaned/raw df on-the-fly
-        df = sess.get("cleaned_df") or sess.get("raw_df")
+        df = sess.get("cleaned_df")
+        if df is None:
+            df = sess.get("raw_df")
         if df is None:
             raise HTTPException(status_code=422, detail="No dataset in session — run ingest first")
         try:

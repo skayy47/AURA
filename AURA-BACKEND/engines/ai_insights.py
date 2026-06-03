@@ -68,6 +68,96 @@ def ask_ai(
         raise ValueError(f"Unknown provider: {provider}")
 
 
+def executive_summary(payload: dict, provider: AIProvider = AIProvider.CLAUDE) -> dict:
+    """Generate a structured executive summary from a compact stats *payload*.
+
+    Sends ONLY aggregated stats (never raw rows) → cheap, safe, fast.
+    Returns {headline, summary, findings[], recommendations[]}.
+    Falls back to a deterministic summary if no API key or on any failure.
+    """
+    import json
+
+    system = (
+        "You are a senior data analyst writing the executive summary of a Data "
+        "Intelligence Report. You receive aggregated statistics about a dataset "
+        "(never raw rows). Write for a business decision-maker: precise, confident, "
+        "no fluff. Respond ONLY with minified JSON, no markdown, in this exact shape: "
+        '{"headline": "<=10 words", "summary": "2-3 sentences", '
+        '"findings": ["3-5 short bullet strings"], '
+        '"recommendations": ["2-4 short action bullets"]}'
+    )
+    user = f"Dataset statistics:\n{json.dumps(payload, default=str)}"
+
+    # Try providers in order (preferred first), self-healing if one is out of
+    # credit / unconfigured. Only fall back to deterministic if ALL fail.
+    order: list[AIProvider] = (
+        [AIProvider.OPENAI, AIProvider.CLAUDE]
+        if provider == AIProvider.OPENAI
+        else [AIProvider.CLAUDE, AIProvider.OPENAI]
+    )
+    last_exc: Exception | None = None
+    for prov in order:
+        if prov == AIProvider.CLAUDE and not os.getenv("ANTHROPIC_API_KEY"):
+            continue
+        if prov == AIProvider.OPENAI and not os.getenv("OPENAI_API_KEY"):
+            continue
+        try:
+            if prov == AIProvider.CLAUDE:
+                raw = "".join(_ask_claude(system, user, stream=False))
+            else:
+                raw = "".join(_ask_openai(system, user, stream=False))
+            raw = raw.strip()
+            if "```" in raw:
+                raw = raw.split("```")[1]
+                if raw.lstrip().startswith("json"):
+                    raw = raw.lstrip()[4:]
+            s, e = raw.find("{"), raw.rfind("}")
+            data = json.loads(raw[s:e + 1])
+            return {
+                "headline": str(data.get("headline", ""))[:120],
+                "summary": str(data.get("summary", "")),
+                "findings": [str(f) for f in (data.get("findings") or [])][:5],
+                "recommendations": [str(r) for r in (data.get("recommendations") or [])][:4],
+                "by_ai": True,
+            }
+        except Exception as exc:
+            last_exc = exc
+            logger.warning("Exec summary via %s failed: %s", prov.value, exc)
+
+    logger.warning("Executive summary fell back to deterministic (last: %s)", last_exc)
+    return _deterministic_summary(payload)
+
+
+def _deterministic_summary(payload: dict) -> dict:
+    """Build a respectable summary from the payload without an LLM."""
+    rows = payload.get("rows", "—")
+    cols = payload.get("columns", "—")
+    q = payload.get("quality_score", "—")
+    insights = payload.get("top_insights", [])
+    findings = [i["title"] for i in insights[:5]] or ["No major anomalies detected."]
+    recs: list[str] = []
+    if payload.get("missing_pct", 0) >= 5:
+        recs.append("Investigate the source of missing values before modeling.")
+    if payload.get("trend"):
+        recs.append(f"Monitor the {payload['trend']['measure']} trend going forward.")
+    if payload.get("correlations"):
+        c = payload["correlations"][0]
+        recs.append(f"Explore the {c['a']}–{c['b']} relationship for predictive value.")
+    if not recs:
+        recs.append("Dataset is clean and ready for modeling or BI.")
+    return {
+        "headline": f"{rows} rows × {cols} columns · quality {q}/100",
+        "summary": (
+            f"This dataset contains {rows} records across {cols} columns with a quality "
+            f"score of {q}/100. The analysis surfaced {len(insights)} notable patterns "
+            "across correlations, segments, and data-quality dimensions."
+        ),
+        "findings": findings,
+        "recommendations": recs[:4],
+        "by_ai": False,
+    }
+
+
 def _ask_claude(
     system_prompt: str, user_message: str, stream: bool
 ) -> Generator[str, None, None]:

@@ -40,36 +40,83 @@ async def render_pdf(context: dict) -> bytes:
     return pdf_bytes
 
 
+def _get_df(session: dict):
+    """Safely fetch the working DataFrame (cleaned preferred), avoiding
+    the `df or df` truth-value trap on DataFrames."""
+    df = session.get("cleaned_df")
+    if df is None:
+        df = session.get("raw_df")
+    return df
+
+
 def build_report_context(session: dict, profile: dict) -> dict:
-    """Assemble the Jinja2 template context from a session + explore profile dict."""
+    """Assemble the Data Intelligence Report context: expert analysis + an
+    LLM executive summary + chart-ready data + column appendix."""
     from datetime import datetime, timezone
 
     meta = session.get("meta", {})
     cleaning_log = session.get("cleaning_log", [])
+    dataset_name = meta.get("name") or session.get("file_name", "dataset")
 
-    quality_score: int | None = None
-    for entry in reversed(cleaning_log):
-        if isinstance(entry, dict) and entry.get("step") == "SchemaValidator":
-            detail = entry.get("detail", "")
-            if "Quality score:" in detail:
-                try:
-                    quality_score = int(detail.split("Quality score:")[-1].strip().split("/")[0])
-                except ValueError:
-                    pass
+    # ── Expert analysis (defensive) ─────────────────────────────
+    analysis: dict = {}
+    exec_summary: dict = {}
+    df = _get_df(session)
+    if df is not None:
+        try:
+            from engines.analysis import analyze
+            analysis = analyze(df, profile, meta_name=dataset_name)
+        except Exception as exc:
+            logger.warning("Analysis failed during report build: %s", exc)
+        try:
+            from engines.ai_insights import executive_summary
+            if analysis.get("llm_payload"):
+                exec_summary = executive_summary(analysis["llm_payload"])
+        except Exception as exc:
+            logger.warning("Exec summary failed: %s", exc)
+
+    quality = analysis.get("quality", {})
+    quality_score = quality.get("score")
+
+    # ── Column appendix (map profile → template-friendly shape) ──
+    columns = []
+    for c in profile.get("columns", []):
+        top_vals = c.get("top_values") or []
+        columns.append({
+            "name": c.get("name"),
+            "dtype": c.get("dtype"),
+            "kind": c.get("kind"),
+            "missing_count": c.get("n_missing", 0),
+            "missing_pct": c.get("missing_pct", 0),
+            "n_unique": c.get("n_unique"),
+            "mean": c.get("mean"),
+            "top_value": top_vals[0]["value"] if top_vals else None,
+        })
+
+    # ── Chart data (rendered as CSS bars in the template) ───────
+    # Primary numeric histogram
+    histogram = None
+    for c in profile.get("columns", []):
+        if c.get("kind") == "numeric" and c.get("histogram"):
+            histogram = {"column": c["name"], "bins": c["histogram"]}
             break
 
-    top_pairs = (profile.get("correlation") or {}).get("top_pairs", [])[:5]
-    columns = profile.get("columns", [])
-
     return {
-        "dataset_name": meta.get("name") or session.get("file_name", "dataset"),
+        "dataset_name": dataset_name,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "n_rows": profile.get("n_rows", meta.get("n_rows", "—")),
         "n_cols": profile.get("n_cols", meta.get("n_cols", "—")),
-        "missing_total": profile.get("missing_total", meta.get("missing_total", "—")),
+        "missing_total": profile.get("missing_total", "—"),
         "memory_mb": round(profile.get("memory_mb", 0), 2),
         "quality_score": quality_score,
+        "quality": quality,
+        "exec_summary": exec_summary,
+        "insights": analysis.get("insights", []),
+        "correlations": analysis.get("correlations", []),
+        "segments": analysis.get("segments"),
+        "trends": analysis.get("trends"),
+        "histogram": histogram,
         "columns": columns,
-        "top_pairs": top_pairs,
+        "top_pairs": (profile.get("correlation") or {}).get("top_pairs", [])[:6],
         "cleaning_log": cleaning_log,
     }

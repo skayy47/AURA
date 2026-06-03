@@ -11,7 +11,9 @@ router = APIRouter()
 async def ask(req: AskRequest):
     try:
         sess = get_session(req.session_id)
-        df = sess.get("cleaned_df") or sess.get("raw_df")
+        df = sess.get("cleaned_df")
+        if df is None:
+            df = sess.get("raw_df")
         if df is None:
             raise HTTPException(status_code=422, detail="No dataset in session")
 
