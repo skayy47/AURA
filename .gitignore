@@ -97,3 +97,9 @@ out/
 
 # --- JS/TS test coverage ---
 coverage/
+
+# Local dev scaffolding / prompt drafts (keep out of the public repo)
+.superpowers/
+PROMPT_*.md
+GOLDEN_PROMPT_*.xml
+data/samples/aura_test_full.csv
