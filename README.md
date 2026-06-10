@@ -166,7 +166,7 @@ NEXT_PUBLIC_API_URL=https://<your-username>-aura-backend.hf.space
 
 **Frontend:** Next.js 14 · React 18 · TypeScript 5 · next-intl v4 (EN/AR RTL) · Tailwind 3.4 · Zustand 5 · Framer Motion 12.38 · Recharts 3
 
-**Backend:** FastAPI 0.111 · Uvicorn · Pydantic 2.7 · Pandas 2.2 · Anthropic SDK · OpenAI SDK 1.35 · Playwright + Jinja2 (PDF) · Stripe 9.9 · OpenCV-headless · Whisper · librosa
+**Backend:** FastAPI 0.111 · Uvicorn · Pydantic 2.7 · Pandas 2.2 · Plotly · Groq / OpenAI / Anthropic SDKs · Playwright + Jinja2 (PDF report) · Stripe 9.9
 
 ---
 
@@ -176,7 +176,7 @@ NEXT_PUBLIC_API_URL=https://<your-username>-aura-backend.hf.space
 AURA/
 ├── AURA-BACKEND/
 │   ├── api/routes/        ingest · clean · explore · ai · export · billing · samples
-│   ├── engines/           ingestion · cleaning · exploration · ai_insights · ocr · audio_video
+│   ├── engines/           ingestion · cleaning · exploration · analysis · ai_insights
 │   ├── services/          billing (Stripe) · pdf_renderer (Playwright + Jinja2)
 │   ├── state/session.py   UUID-keyed in-memory store (4h TTL)
 │   ├── utils/             config · helpers · exporters

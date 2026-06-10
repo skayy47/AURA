@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 const STACK = [
-  { n: "05", name: "Next.js 14",  tag: "frontend"  },
-  { n: "04", name: "FastAPI",     tag: "backend"   },
-  { n: "03", name: "pandas",      tag: "compute"   },
-  { n: "02", name: "Whisper",     tag: "audio"     },
-  { n: "01", name: "Claude",      tag: "intel"     },
+  { n: "05", name: "Next.js 14",  tag: "frontend" },
+  { n: "04", name: "FastAPI",     tag: "backend"  },
+  { n: "03", name: "pandas",      tag: "compute"  },
+  { n: "02", name: "Groq",        tag: "free ai"  },
+  { n: "01", name: "Claude",      tag: "intel"    },
 ];
 
 export function TechStack() {

@@ -1,21 +1,14 @@
 # AURA Backend — HF Spaces / Railway / Render compatible
-# Bakes Playwright + Chromium at build time for PDF export cold starts.
+# Bakes Playwright + Chromium at build time for the PDF report.
 # Set PORT=7860 on HF Spaces; defaults to 8000 for local docker run.
 
 FROM python:3.11-slim
 
-# System deps: Playwright/Chromium + PDF (Poppler) + OCR (Tesseract) + OpenCV
+# System deps for Chromium (Playwright renders the Data Intelligence Report).
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    # Chromium for Playwright PDF rendering
     libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 \
     libxdamage1 libxrandr2 libgbm1 libxkbcommon0 libpango-1.0-0 \
     libcairo2 libasound2 libxshmfence1 \
-    # Poppler for pdf2image
-    poppler-utils \
-    # Tesseract for OCR
-    tesseract-ocr \
-    # OpenCV system deps
-    libgl1 libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

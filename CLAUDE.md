@@ -60,7 +60,6 @@ AURA/
 │   │   ├── exploration.py        profile_dataframe() + recommend_charts() (Plotly)
 │   │   ├── analysis.py           analyze() → ranked insights, segments, trends, quality
 │   │   ├── ai_insights.py        multi-provider chat + executive_summary() (free-first)
-│   │   ├── ocr.py · audio_video.py
 │   ├── services/
 │   │   ├── pdf_renderer.py       build_report_context() + render_pdf() (Jinja2→Playwright)
 │   │   └── billing.py            Stripe checkout (entitlement persistence = roadmap)
