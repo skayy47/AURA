@@ -2,7 +2,6 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { AuraBot, type BotState } from "./AuraBot";
-import { GlowCard } from "@/components/ui/GlowCard";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -149,27 +148,28 @@ export function IntelPanel({ botState, onSuggestionClick, onHistoryClick, onBotC
               Suggested Questions
             </p>
             <div className="space-y-2">
-              {suggestions.map((q, i) => (
-                <motion.button
-                  key={i}
-                  initial={{ opacity: 0, x: -6 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15 + i * 0.06, duration: 0.3 }}
-                  onClick={() => !disabled && onSuggestionClick(q)}
-                  disabled={disabled}
-                  className="w-full text-start disabled:opacity-50 disabled:cursor-not-allowed group"
-                >
-                  <GlowCard
-                    accent={i % 3 === 0 ? "purple" : i % 3 === 1 ? "cyan" : "blue"}
-                    intensity="low"
-                    innerClassName="!p-3 transition-colors group-hover:!bg-[rgba(14,22,46,0.95)]"
+              {suggestions.map((q, i) => {
+                const dot = i % 3 === 0 ? "#8b5cf6" : i % 3 === 1 ? "#00e5ff" : "#3b82f6";
+                return (
+                  <motion.button
+                    key={i}
+                    initial={{ opacity: 0, x: -6 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.15 + i * 0.06, duration: 0.3 }}
+                    onClick={() => !disabled && onSuggestionClick(q)}
+                    disabled={disabled}
+                    className="group w-full text-start flex items-start gap-2 rounded-xl p-3 bg-[rgba(11,20,38,0.7)] border border-border hover:border-cyan/45 hover:bg-[rgba(11,20,38,0.95)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    <p className="text-[0.78rem] leading-snug text-text font-medium">
+                    <span
+                      className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: dot, boxShadow: `0 0 6px ${dot}` }}
+                    />
+                    <p className="text-[0.78rem] leading-snug text-text font-medium group-hover:text-white">
                       {q}
                     </p>
-                  </GlowCard>
-                </motion.button>
-              ))}
+                  </motion.button>
+                );
+              })}
             </div>
           </section>
         )}
