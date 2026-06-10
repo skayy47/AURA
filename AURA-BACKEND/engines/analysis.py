@@ -8,12 +8,12 @@ defensive and degrades independently.
 Public entry point:
     analyze(df, profile) -> dict
 """
+
 from __future__ import annotations
 
 import logging
 from typing import Any
 
-import numpy as np
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 
@@ -27,6 +27,7 @@ _TOP_INSIGHTS = 8
 # Data quality
 # ---------------------------------------------------------------------------
 
+
 def _quality(df: pd.DataFrame, profile: dict) -> dict[str, Any]:
     n_rows = int(df.shape[0])
     n_cols = int(df.shape[1])
@@ -39,8 +40,10 @@ def _quality(df: pd.DataFrame, profile: dict) -> dict[str, Any]:
 
     constant_cols = [str(c) for c in df.columns if df[c].nunique(dropna=False) <= 1]
     high_card = [
-        str(c) for c in df.columns
-        if df[c].nunique(dropna=True) > 0.9 * n_rows and n_rows > 20
+        str(c)
+        for c in df.columns
+        if df[c].nunique(dropna=True) > 0.9 * n_rows
+        and n_rows > 20
         and not is_numeric_dtype(df[c])
     ]
 
@@ -77,6 +80,7 @@ def _quality(df: pd.DataFrame, profile: dict) -> dict[str, Any]:
 # Outliers (IQR)
 # ---------------------------------------------------------------------------
 
+
 def _outliers(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for col in profile.get("numeric_cols", []):
@@ -91,11 +95,13 @@ def _outliers(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
             lo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr
             n_out = int(((s < lo) | (s > hi)).sum())
             if n_out > 0:
-                out.append({
-                    "column": str(col),
-                    "count": n_out,
-                    "pct": round(n_out / len(s) * 100, 1),
-                })
+                out.append(
+                    {
+                        "column": str(col),
+                        "count": n_out,
+                        "pct": round(n_out / len(s) * 100, 1),
+                    }
+                )
         except Exception as exc:
             logger.warning("Outlier calc failed for %s: %s", col, exc)
     return sorted(out, key=lambda x: x["pct"], reverse=True)[:5]
@@ -104,6 +110,7 @@ def _outliers(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # Categorical dominance
 # ---------------------------------------------------------------------------
+
 
 def _dominance(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
@@ -116,11 +123,13 @@ def _dominance(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
             top_label, top_count = str(vc.index[0]), int(vc.iloc[0])
             share = round(top_count / n * 100, 1)
             if share >= 60 and df[col].nunique() > 1:
-                out.append({
-                    "column": str(col),
-                    "value": top_label,
-                    "share": share,
-                })
+                out.append(
+                    {
+                        "column": str(col),
+                        "value": top_label,
+                        "share": share,
+                    }
+                )
         except Exception as exc:
             logger.warning("Dominance calc failed for %s: %s", col, exc)
     return sorted(out, key=lambda x: x["share"], reverse=True)[:3]
@@ -129,6 +138,7 @@ def _dominance(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # Segment driver — best categorical × primary numeric
 # ---------------------------------------------------------------------------
+
 
 def _segments(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
     numeric = profile.get("numeric_cols", [])
@@ -148,10 +158,17 @@ def _segments(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
         return None
 
     try:
-        grp = df.groupby(best_cat, observed=True)[y].mean().dropna().sort_values(ascending=False)
+        grp = (
+            df.groupby(best_cat, observed=True)[y]
+            .mean()
+            .dropna()
+            .sort_values(ascending=False)
+        )
         if grp.empty:
             return None
-        bars = [{"label": str(i), "value": float(round(v, 3))} for i, v in grp.items()][:8]
+        bars = [{"label": str(i), "value": float(round(v, 3))} for i, v in grp.items()][
+            :8
+        ]
         top_label, top_val = str(grp.index[0]), float(grp.iloc[0])
         bot_label, bot_val = str(grp.index[-1]), float(grp.iloc[-1])
         spread = round((top_val - bot_val) / abs(bot_val) * 100, 1) if bot_val else None
@@ -172,6 +189,7 @@ def _segments(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
 # Trend — datetime × primary numeric
 # ---------------------------------------------------------------------------
 
+
 def _trends(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
     datetime_cols = profile.get("datetime_cols", [])
     numeric = profile.get("numeric_cols", [])
@@ -190,7 +208,9 @@ def _trends(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
             return None
         first, last = float(series.iloc[0]), float(series.iloc[-1])
         change = round((last - first) / abs(first) * 100, 1) if first else None
-        direction = "rising" if last > first else ("falling" if last < first else "flat")
+        direction = (
+            "rising" if last > first else ("falling" if last < first else "flat")
+        )
         points = [
             {"x": str(idx.date()), "value": float(round(v, 3))}
             for idx, v in series.items()
@@ -211,6 +231,7 @@ def _trends(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
 # Insight ranking
 # ---------------------------------------------------------------------------
 
+
 def _build_insights(
     quality: dict,
     outliers: list,
@@ -221,69 +242,105 @@ def _build_insights(
 ) -> list[dict[str, Any]]:
     items: list[dict[str, Any]] = []
 
-    if trends and trends.get("change_pct") is not None and abs(trends["change_pct"]) >= 10:
+    if (
+        trends
+        and trends.get("change_pct") is not None
+        and abs(trends["change_pct"]) >= 10
+    ):
         sev = 3 if abs(trends["change_pct"]) >= 40 else 2
-        items.append({
-            "kind": "trend", "severity": sev, "icon": "trend",
-            "title": f"{trends['measure']} is {trends['direction']} over time",
-            "detail": f"{trends['measure']} changed {trends['change_pct']:+.0f}% across the "
-                      f"{trends['date_col']} timeline.",
-        })
+        items.append(
+            {
+                "kind": "trend",
+                "severity": sev,
+                "icon": "trend",
+                "title": f"{trends['measure']} is {trends['direction']} over time",
+                "detail": f"{trends['measure']} changed {trends['change_pct']:+.0f}% across the "
+                f"{trends['date_col']} timeline.",
+            }
+        )
 
     for c in correlations[:3]:
         strength = abs(c["r"])
         sev = 3 if strength >= 0.7 else 2
         rel = "positively" if c["r"] >= 0 else "negatively"
-        items.append({
-            "kind": "correlation", "severity": sev, "icon": "link",
-            "title": f"{c['col_a']} and {c['col_b']} move together",
-            "detail": f"{c['col_a']} is {rel} correlated with {c['col_b']} (r = {c['r']:+.2f}). "
-                      f"{'Strong' if strength >= 0.7 else 'Moderate'} relationship worth modeling.",
-        })
+        items.append(
+            {
+                "kind": "correlation",
+                "severity": sev,
+                "icon": "link",
+                "title": f"{c['col_a']} and {c['col_b']} move together",
+                "detail": f"{c['col_a']} is {rel} correlated with {c['col_b']} (r = {c['r']:+.2f}). "
+                f"{'Strong' if strength >= 0.7 else 'Moderate'} relationship worth modeling.",
+            }
+        )
 
-    if segments and segments.get("spread_pct") is not None and abs(segments["spread_pct"]) >= 25:
-        items.append({
-            "kind": "segment", "severity": 2, "icon": "segment",
-            "title": f"{segments['dimension']} drives {segments['measure']}",
-            "detail": f"'{segments['top']['label']}' averages {segments['top']['value']:.2f} vs "
-                      f"'{segments['bottom']['label']}' at {segments['bottom']['value']:.2f} — a "
-                      f"{abs(segments['spread_pct']):.0f}% gap across {segments['dimension']}.",
-        })
+    if (
+        segments
+        and segments.get("spread_pct") is not None
+        and abs(segments["spread_pct"]) >= 25
+    ):
+        items.append(
+            {
+                "kind": "segment",
+                "severity": 2,
+                "icon": "segment",
+                "title": f"{segments['dimension']} drives {segments['measure']}",
+                "detail": f"'{segments['top']['label']}' averages {segments['top']['value']:.2f} vs "
+                f"'{segments['bottom']['label']}' at {segments['bottom']['value']:.2f} — a "
+                f"{abs(segments['spread_pct']):.0f}% gap across {segments['dimension']}.",
+            }
+        )
 
     if quality["missing_hotspots"]:
         h = quality["missing_hotspots"][0]
         if h["pct"] >= 5:
             sev = 3 if h["pct"] >= 30 else 2
-            items.append({
-                "kind": "missing", "severity": sev, "icon": "missing",
-                "title": f"'{h['column']}' has {h['pct']:.0f}% missing values",
-                "detail": "Imputed during cleaning, but high missingness can bias analysis — "
-                          "verify the source.",
-            })
+            items.append(
+                {
+                    "kind": "missing",
+                    "severity": sev,
+                    "icon": "missing",
+                    "title": f"'{h['column']}' has {h['pct']:.0f}% missing values",
+                    "detail": "Imputed during cleaning, but high missingness can bias analysis — "
+                    "verify the source.",
+                }
+            )
 
     for o in outliers[:2]:
         if o["pct"] >= 1:
-            items.append({
-                "kind": "outliers", "severity": 2 if o["pct"] >= 5 else 1, "icon": "outlier",
-                "title": f"'{o['column']}' contains {o['count']} outliers",
-                "detail": f"{o['pct']:.0f}% of values fall outside 1.5×IQR — possible data errors "
-                          "or genuine extremes.",
-            })
+            items.append(
+                {
+                    "kind": "outliers",
+                    "severity": 2 if o["pct"] >= 5 else 1,
+                    "icon": "outlier",
+                    "title": f"'{o['column']}' contains {o['count']} outliers",
+                    "detail": f"{o['pct']:.0f}% of values fall outside 1.5×IQR — possible data errors "
+                    "or genuine extremes.",
+                }
+            )
 
     for d in dominance[:1]:
-        items.append({
-            "kind": "dominant", "severity": 1, "icon": "dominant",
-            "title": f"'{d['column']}' is dominated by one value",
-            "detail": f"'{d['value']}' accounts for {d['share']:.0f}% of rows — limited variance "
-                      "in this dimension.",
-        })
+        items.append(
+            {
+                "kind": "dominant",
+                "severity": 1,
+                "icon": "dominant",
+                "title": f"'{d['column']}' is dominated by one value",
+                "detail": f"'{d['value']}' accounts for {d['share']:.0f}% of rows — limited variance "
+                "in this dimension.",
+            }
+        )
 
     if quality["duplicate_rows"] > 0:
-        items.append({
-            "kind": "duplicates", "severity": 1, "icon": "duplicate",
-            "title": f"{quality['duplicate_rows']} duplicate rows removed",
-            "detail": f"{quality['duplicate_pct']:.0f}% of rows were exact duplicates.",
-        })
+        items.append(
+            {
+                "kind": "duplicates",
+                "severity": 1,
+                "icon": "duplicate",
+                "title": f"{quality['duplicate_rows']} duplicate rows removed",
+                "detail": f"{quality['duplicate_pct']:.0f}% of rows were exact duplicates.",
+            }
+        )
 
     items.sort(key=lambda x: x["severity"], reverse=True)
     return items[:_TOP_INSIGHTS]
@@ -292,6 +349,7 @@ def _build_insights(
 # ---------------------------------------------------------------------------
 # LLM payload (compact, no raw rows)
 # ---------------------------------------------------------------------------
+
 
 def _llm_payload(
     meta_name: str,
@@ -310,7 +368,9 @@ def _llm_payload(
         "quality_score": quality["score"],
         "missing_pct": quality["missing_pct"],
         "duplicate_rows": quality["duplicate_rows"],
-        "top_insights": [{"title": i["title"], "detail": i["detail"]} for i in insights],
+        "top_insights": [
+            {"title": i["title"], "detail": i["detail"]} for i in insights
+        ],
         "correlations": [
             {"a": c["col_a"], "b": c["col_b"], "r": c["r"]} for c in correlations[:5]
         ],
@@ -321,12 +381,17 @@ def _llm_payload(
                 "top": segments["top"],
                 "bottom": segments["bottom"],
             }
-            if segments else None
+            if segments
+            else None
         ),
         "trend": (
-            {"measure": trends["measure"], "direction": trends["direction"],
-             "change_pct": trends["change_pct"]}
-            if trends else None
+            {
+                "measure": trends["measure"],
+                "direction": trends["direction"],
+                "change_pct": trends["change_pct"],
+            }
+            if trends
+            else None
         ),
     }
 
@@ -335,22 +400,34 @@ def _llm_payload(
 # Public entry point
 # ---------------------------------------------------------------------------
 
-def analyze(df: pd.DataFrame, profile: dict, meta_name: str = "dataset") -> dict[str, Any]:
+
+def analyze(
+    df: pd.DataFrame, profile: dict, meta_name: str = "dataset"
+) -> dict[str, Any]:
     """Run the full expert analysis over a profiled DataFrame."""
     quality = _quality(df, profile)
     outliers = _outliers(df, profile)
     correlations = [
-        p for p in (profile.get("correlation") or {}).get("top_pairs", [])
+        p
+        for p in (profile.get("correlation") or {}).get("top_pairs", [])
         if abs(p.get("r", 0)) >= 0.3
     ]
     dominance = _dominance(df, profile)
     segments = _segments(df, profile)
     trends = _trends(df, profile)
 
-    insights = _build_insights(quality, outliers, correlations, dominance, segments, trends)
+    insights = _build_insights(
+        quality, outliers, correlations, dominance, segments, trends
+    )
     payload = _llm_payload(
-        meta_name, int(df.shape[0]), int(df.shape[1]),
-        quality, insights, correlations, segments, trends,
+        meta_name,
+        int(df.shape[0]),
+        int(df.shape[1]),
+        quality,
+        insights,
+        correlations,
+        segments,
+        trends,
     )
 
     return {

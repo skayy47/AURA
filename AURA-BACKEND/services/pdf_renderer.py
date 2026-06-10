@@ -1,4 +1,5 @@
 """PDF report renderer — Jinja2 → HTML → Playwright PDF."""
+
 from __future__ import annotations
 
 import logging
@@ -65,11 +66,13 @@ def build_report_context(session: dict, profile: dict) -> dict:
     if df is not None:
         try:
             from engines.analysis import analyze
+
             analysis = analyze(df, profile, meta_name=dataset_name)
         except Exception as exc:
             logger.warning("Analysis failed during report build: %s", exc)
         try:
             from engines.ai_insights import executive_summary
+
             if analysis.get("llm_payload"):
                 exec_summary = executive_summary(analysis["llm_payload"])
         except Exception as exc:
@@ -82,16 +85,18 @@ def build_report_context(session: dict, profile: dict) -> dict:
     columns = []
     for c in profile.get("columns", []):
         top_vals = c.get("top_values") or []
-        columns.append({
-            "name": c.get("name"),
-            "dtype": c.get("dtype"),
-            "kind": c.get("kind"),
-            "missing_count": c.get("n_missing", 0),
-            "missing_pct": c.get("missing_pct", 0),
-            "n_unique": c.get("n_unique"),
-            "mean": c.get("mean"),
-            "top_value": top_vals[0]["value"] if top_vals else None,
-        })
+        columns.append(
+            {
+                "name": c.get("name"),
+                "dtype": c.get("dtype"),
+                "kind": c.get("kind"),
+                "missing_count": c.get("n_missing", 0),
+                "missing_pct": c.get("missing_pct", 0),
+                "n_unique": c.get("n_unique"),
+                "mean": c.get("mean"),
+                "top_value": top_vals[0]["value"] if top_vals else None,
+            }
+        )
 
     # ── Chart data (rendered as CSS bars in the template) ───────
     # Primary numeric histogram

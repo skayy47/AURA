@@ -1,4 +1,5 @@
 """Billing routes — Stripe checkout, portal, webhook."""
+
 from __future__ import annotations
 
 import logging
@@ -15,7 +16,7 @@ _FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
 
 class CheckoutRequest(BaseModel):
-    tier: str          # "pro" | "team"
+    tier: str  # "pro" | "team"
     locale: str = "en"
 
 
@@ -33,7 +34,7 @@ async def create_checkout(body: CheckoutRequest):
         raise HTTPException(503, detail="Billing service unavailable")
 
     success_url = f"{_FRONTEND_URL}/{body.locale}/billing/success?session_id={{CHECKOUT_SESSION_ID}}"
-    cancel_url  = f"{_FRONTEND_URL}/{body.locale}/billing/cancel"
+    cancel_url = f"{_FRONTEND_URL}/{body.locale}/billing/cancel"
 
     try:
         url = create_checkout_session(body.tier, success_url, cancel_url)
@@ -77,7 +78,7 @@ async def stripe_webhook(request: Request):
     except ImportError:
         raise HTTPException(503, detail="Billing service unavailable")
 
-    payload    = await request.body()
+    payload = await request.body()
     sig_header = request.headers.get("stripe-signature", "")
 
     try:

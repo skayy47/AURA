@@ -10,6 +10,7 @@ differ). Claude uses the Anthropic SDK. Resolution is resilient: if the requeste
 provider has no key, we fall back to the best *configured* provider (free first),
 and the executive summary degrades to a deterministic summary if none are usable.
 """
+
 from __future__ import annotations
 
 import json
@@ -44,27 +45,36 @@ class AIProvider(str, Enum):
 @dataclass(frozen=True)
 class ProviderSpec:
     label: str
-    tier: str          # "free" | "paid"
+    tier: str  # "free" | "paid"
     env_var: str
     model: str
-    kind: str          # "openai_compat" | "anthropic"
+    kind: str  # "openai_compat" | "anthropic"
     base_url: str | None = None
 
 
 # Single source of truth for provider config. Order = preference (free first).
 PROVIDERS: dict[AIProvider, ProviderSpec] = {
     AIProvider.GROQ: ProviderSpec(
-        label="Groq · Llama 3.3 70B", tier="free", env_var="GROQ_API_KEY",
-        model="llama-3.3-70b-versatile", kind="openai_compat",
+        label="Groq · Llama 3.3 70B",
+        tier="free",
+        env_var="GROQ_API_KEY",
+        model="llama-3.3-70b-versatile",
+        kind="openai_compat",
         base_url="https://api.groq.com/openai/v1",
     ),
     AIProvider.OPENAI: ProviderSpec(
-        label="OpenAI · GPT-4o mini", tier="paid", env_var="OPENAI_API_KEY",
-        model="gpt-4o-mini", kind="openai_compat",
+        label="OpenAI · GPT-4o mini",
+        tier="paid",
+        env_var="OPENAI_API_KEY",
+        model="gpt-4o-mini",
+        kind="openai_compat",
     ),
     AIProvider.CLAUDE: ProviderSpec(
-        label="Claude · Sonnet 4.6", tier="paid", env_var="ANTHROPIC_API_KEY",
-        model="claude-sonnet-4-6", kind="anthropic",
+        label="Claude · Sonnet 4.6",
+        tier="paid",
+        env_var="ANTHROPIC_API_KEY",
+        model="claude-sonnet-4-6",
+        kind="anthropic",
     ),
 }
 
@@ -75,6 +85,7 @@ _DEFAULT_ORDER = [AIProvider.GROQ, AIProvider.OPENAI, AIProvider.CLAUDE]
 # Provider resolution
 # ---------------------------------------------------------------------------
 
+
 def is_configured(provider: AIProvider) -> bool:
     """True if the provider's API key is present in the environment."""
     return bool(os.getenv(PROVIDERS[provider].env_var, "").strip())
@@ -83,7 +94,12 @@ def is_configured(provider: AIProvider) -> bool:
 def available_providers() -> list[dict]:
     """List providers with config status — handy for the frontend / diagnostics."""
     return [
-        {"id": p.value, "label": s.label, "tier": s.tier, "configured": is_configured(p)}
+        {
+            "id": p.value,
+            "label": s.label,
+            "tier": s.tier,
+            "configured": is_configured(p),
+        }
         for p, s in PROVIDERS.items()
     ]
 
@@ -96,7 +112,9 @@ def resolve_provider(requested: AIProvider | None) -> AIProvider:
     for p in _DEFAULT_ORDER:
         if is_configured(p):
             if requested and p != requested:
-                logger.info("Provider %s not configured — falling back to %s", requested, p)
+                logger.info(
+                    "Provider %s not configured — falling back to %s", requested, p
+                )
             return p
     raise ValueError(
         "No AI provider is configured. Set a free GROQ_API_KEY "
@@ -118,6 +136,7 @@ def coerce_provider(value: str | AIProvider | None) -> AIProvider:
 # Prompt building
 # ---------------------------------------------------------------------------
 
+
 def _build_system_prompt(df: pd.DataFrame) -> str:
     n_rows, n_cols = df.shape
     cols = ", ".join(map(str, df.columns.tolist()))
@@ -129,13 +148,16 @@ def _build_system_prompt(df: pd.DataFrame) -> str:
     )
 
 
-def _truncate_df(df: pd.DataFrame, max_rows: int = 60, max_cols: int = 15) -> pd.DataFrame:
+def _truncate_df(
+    df: pd.DataFrame, max_rows: int = 60, max_cols: int = 15
+) -> pd.DataFrame:
     return df.iloc[:max_rows, :max_cols]
 
 
 # ---------------------------------------------------------------------------
 # Unified call layer
 # ---------------------------------------------------------------------------
+
 
 def _stream_provider(
     provider: AIProvider, system_prompt: str, user_message: str, stream: bool
@@ -179,14 +201,18 @@ def _stream_anthropic(
     client = anthropic.Anthropic(api_key=os.getenv(spec.env_var, ""))
     if stream:
         with client.messages.stream(
-            model=spec.model, max_tokens=1024, system=system_prompt,
+            model=spec.model,
+            max_tokens=1024,
+            system=system_prompt,
             messages=[{"role": "user", "content": user_message}],
         ) as mgr:
             for text in mgr.text_stream:
                 yield text
     else:
         resp = client.messages.create(
-            model=spec.model, max_tokens=1024, system=system_prompt,
+            model=spec.model,
+            max_tokens=1024,
+            system=system_prompt,
             messages=[{"role": "user", "content": user_message}],
         )
         yield resp.content[0].text  # type: ignore[index]
@@ -195,6 +221,7 @@ def _stream_anthropic(
 # ---------------------------------------------------------------------------
 # Public: dataset chat
 # ---------------------------------------------------------------------------
+
 
 def ask_ai(
     df: pd.DataFrame,
@@ -247,18 +274,22 @@ def executive_summary(payload: dict, provider: AIProvider = AIProvider.GROQ) -> 
         if not is_configured(prov):
             continue
         try:
-            raw = "".join(_stream_provider(prov, _SUMMARY_SYSTEM, user, stream=False)).strip()
+            raw = "".join(
+                _stream_provider(prov, _SUMMARY_SYSTEM, user, stream=False)
+            ).strip()
             if "```" in raw:
                 raw = raw.split("```")[1]
                 if raw.lstrip().startswith("json"):
                     raw = raw.lstrip()[4:]
             s, e = raw.find("{"), raw.rfind("}")
-            data = json.loads(raw[s:e + 1])
+            data = json.loads(raw[s : e + 1])
             return {
                 "headline": str(data.get("headline", ""))[:120],
                 "summary": str(data.get("summary", "")),
                 "findings": [str(f) for f in (data.get("findings") or [])][:5],
-                "recommendations": [str(r) for r in (data.get("recommendations") or [])][:4],
+                "recommendations": [
+                    str(r) for r in (data.get("recommendations") or [])
+                ][:4],
                 "provider": PROVIDERS[prov].label,
                 "by_ai": True,
             }
@@ -304,6 +335,7 @@ def _deterministic_summary(payload: dict) -> dict:
 # ---------------------------------------------------------------------------
 # Legacy shim
 # ---------------------------------------------------------------------------
+
 
 def ask_gpt_about_dataframe(df: pd.DataFrame, question: str, api_key: str) -> str:
     """Legacy wrapper — prefer ask_ai()."""

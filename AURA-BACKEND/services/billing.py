@@ -1,4 +1,5 @@
 """Stripe billing service — checkout, webhook, portal."""
+
 from __future__ import annotations
 
 import logging
@@ -8,11 +9,15 @@ from functools import lru_cache
 logger = logging.getLogger(__name__)
 
 # Price IDs come from your Stripe dashboard — set these in .env
-PRICE_PRO_MONTHLY  = os.getenv("STRIPE_PRICE_PRO_MONTHLY",  "price_pro_monthly_placeholder")
-PRICE_TEAM_MONTHLY = os.getenv("STRIPE_PRICE_TEAM_MONTHLY", "price_team_monthly_placeholder")
+PRICE_PRO_MONTHLY = os.getenv(
+    "STRIPE_PRICE_PRO_MONTHLY", "price_pro_monthly_placeholder"
+)
+PRICE_TEAM_MONTHLY = os.getenv(
+    "STRIPE_PRICE_TEAM_MONTHLY", "price_team_monthly_placeholder"
+)
 
 TIER_PRICES = {
-    "pro":  PRICE_PRO_MONTHLY,
+    "pro": PRICE_PRO_MONTHLY,
     "team": PRICE_TEAM_MONTHLY,
 }
 
@@ -75,7 +80,10 @@ def handle_webhook(payload: bytes, sig_header: str) -> dict:
 
     if event_type == "checkout.session.completed":
         _on_checkout_completed(event["data"]["object"])
-    elif event_type in ("customer.subscription.deleted", "customer.subscription.updated"):
+    elif event_type in (
+        "customer.subscription.deleted",
+        "customer.subscription.updated",
+    ):
         _on_subscription_changed(event["data"]["object"])
 
     return {"received": True}
@@ -87,7 +95,8 @@ def _on_checkout_completed(session: dict) -> None:
     subscription_id = session.get("subscription")
     logger.info(
         "Checkout completed: customer=%s subscription=%s",
-        customer_id, subscription_id,
+        customer_id,
+        subscription_id,
     )
     # TODO: look up user by session metadata, set tier = "pro" | "team"
 

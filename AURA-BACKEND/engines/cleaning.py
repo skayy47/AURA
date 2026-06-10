@@ -19,6 +19,7 @@ Public surface:
     CleaningOrchestrator      - runs the team
     clean_dataframe(df, cfg)  - legacy wrapper (Streamlit compat)
 """
+
 from __future__ import annotations
 
 import logging
@@ -41,11 +42,12 @@ logger = logging.getLogger(__name__)
 # Config + Report
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class CleaningConfig:
     rename_columns: bool = True
     normalize_strings: bool = True
-    detect_dates: bool = True      # controls the full TypePromoter
+    detect_dates: bool = True  # controls the full TypePromoter
     remove_empty_cols: bool = True
     fill_missing: bool = True
     drop_duplicates: bool = True
@@ -63,30 +65,33 @@ class CleaningReport:
         rows_changed: int = 0,
         status: str = "ok",
     ) -> None:
-        self.steps.append({
-            "step": step,
-            "affected_columns": list(affected),
-            "detail": detail,
-            "rows_changed": int(rows_changed),
-            "status": status,
-        })
+        self.steps.append(
+            {
+                "step": step,
+                "affected_columns": list(affected),
+                "detail": detail,
+                "rows_changed": int(rows_changed),
+                "status": status,
+            }
+        )
 
 
 # ---------------------------------------------------------------------------
 # Base
 # ---------------------------------------------------------------------------
 
+
 class BaseCleaner(ABC):
     name: str
 
     @abstractmethod
-    def run(self, df: pd.DataFrame, report: CleaningReport) -> pd.DataFrame:
-        ...
+    def run(self, df: pd.DataFrame, report: CleaningReport) -> pd.DataFrame: ...
 
 
 # ---------------------------------------------------------------------------
 # 1. ColumnNormalizer
 # ---------------------------------------------------------------------------
+
 
 class ColumnNormalizer(BaseCleaner):
     name = "Column Normalizer"
@@ -114,9 +119,8 @@ class ColumnNormalizer(BaseCleaner):
         df.columns = new_cols
         changed = [(o, n) for o, n in zip(original, new_cols) if o != n]
         examples = ", ".join(f"{o}→{n}" for o, n in changed[:3])
-        detail = (
-            f"Renamed {len(changed)} column(s) to snake_case."
-            + (f" Examples: {examples}" if changed else " All columns already clean.")
+        detail = f"Renamed {len(changed)} column(s) to snake_case." + (
+            f" Examples: {examples}" if changed else " All columns already clean."
         )
         report.log(self.name, [n for _, n in changed], detail)
         return df
@@ -133,6 +137,7 @@ class ColumnNormalizer(BaseCleaner):
 # 2. EmptyDropper
 # ---------------------------------------------------------------------------
 
+
 class EmptyDropper(BaseCleaner):
     name = "Empty Dropper"
 
@@ -148,7 +153,9 @@ class EmptyDropper(BaseCleaner):
             return df
 
         null_rate_cols = df.isnull().mean()
-        cols_to_drop = null_rate_cols[null_rate_cols >= self.col_threshold].index.tolist()
+        cols_to_drop = null_rate_cols[
+            null_rate_cols >= self.col_threshold
+        ].index.tolist()
         df = df.drop(columns=cols_to_drop)
 
         if df.shape[1] > 0:
@@ -173,6 +180,7 @@ class EmptyDropper(BaseCleaner):
 # 3. StringCleaner
 # ---------------------------------------------------------------------------
 
+
 class StringCleaner(BaseCleaner):
     name = "String Cleaner"
 
@@ -185,12 +193,17 @@ class StringCleaner(BaseCleaner):
         for col in df.select_dtypes(include=["object", "string"]).columns:
             before = df[col].copy()
             cleaned = (
-                df[col].astype(str)
-                .str.strip()
-                .str.replace(self._ws, " ", regex=True)
+                df[col].astype(str).str.strip().str.replace(self._ws, " ", regex=True)
             )
             cleaned = cleaned.replace(
-                {"nan": pd.NA, "None": pd.NA, "NaT": pd.NA, "": pd.NA, "null": pd.NA, "NULL": pd.NA}
+                {
+                    "nan": pd.NA,
+                    "None": pd.NA,
+                    "NaT": pd.NA,
+                    "": pd.NA,
+                    "null": pd.NA,
+                    "NULL": pd.NA,
+                }
             )
             df[col] = cleaned
             if not before.equals(df[col]):
@@ -198,7 +211,8 @@ class StringCleaner(BaseCleaner):
 
         detail = (
             f"Stripped whitespace and normalized null strings in {len(affected)} column(s)."
-            if affected else "No string normalization needed."
+            if affected
+            else "No string normalization needed."
         )
         report.log(self.name, affected, detail)
         return df
@@ -207,6 +221,7 @@ class StringCleaner(BaseCleaner):
 # ---------------------------------------------------------------------------
 # 4. TypePromoter
 # ---------------------------------------------------------------------------
+
 
 class TypePromoter(BaseCleaner):
     name = "Type Promoter"
@@ -237,7 +252,12 @@ class TypePromoter(BaseCleaner):
                     **{k: False for k in self._bool_falsy},
                 }
                 df[col] = (
-                    df[col].astype("object").astype(str).str.lower().str.strip().map(bool_map)
+                    df[col]
+                    .astype("object")
+                    .astype(str)
+                    .str.lower()
+                    .str.strip()
+                    .map(bool_map)
                 )
                 promoted[str(col)] = "→ bool"
                 continue
@@ -270,7 +290,11 @@ class TypePromoter(BaseCleaner):
             # Category for low-cardinality strings
             try:
                 n_unique = series.nunique()
-                if n_unique > 0 and n_unique <= 100 and n_unique / max(len(series), 1) < 0.05:
+                if (
+                    n_unique > 0
+                    and n_unique <= 100
+                    and n_unique / max(len(series), 1) < 0.05
+                ):
                     df[col] = df[col].astype("category")
                     promoted[str(col)] = "→ category"
             except Exception:
@@ -281,7 +305,8 @@ class TypePromoter(BaseCleaner):
             examples += f" ... +{len(promoted) - 5} more"
         detail = (
             f"Promoted {len(promoted)} column(s): {examples}"
-            if promoted else "No type promotions needed."
+            if promoted
+            else "No type promotions needed."
         )
         report.log(self.name, list(promoted.keys()), detail)
         return df
@@ -290,6 +315,7 @@ class TypePromoter(BaseCleaner):
 # ---------------------------------------------------------------------------
 # 5. DuplicateHandler
 # ---------------------------------------------------------------------------
+
 
 class DuplicateHandler(BaseCleaner):
     name = "Duplicate Handler"
@@ -307,9 +333,7 @@ class DuplicateHandler(BaseCleaner):
         if str_cols:
             normalized = df.copy()
             for c in str_cols:
-                normalized[c] = (
-                    normalized[c].astype(str).str.lower().str.strip()
-                )
+                normalized[c] = normalized[c].astype(str).str.lower().str.strip()
             dup_mask = normalized.duplicated(keep="first")
             near_removed = int(dup_mask.sum())
             if near_removed:
@@ -327,6 +351,7 @@ class DuplicateHandler(BaseCleaner):
 # ---------------------------------------------------------------------------
 # 6. MissingValueImputer
 # ---------------------------------------------------------------------------
+
 
 class MissingValueImputer(BaseCleaner):
     name = "Missing Value Imputer"
@@ -402,6 +427,7 @@ class MissingValueImputer(BaseCleaner):
 # 7. OutlierFlagger
 # ---------------------------------------------------------------------------
 
+
 class OutlierFlagger(BaseCleaner):
     name = "Outlier Flagger"
     IQR_MULTIPLIER = 3.0
@@ -453,6 +479,7 @@ class OutlierFlagger(BaseCleaner):
 # 8. SchemaValidator
 # ---------------------------------------------------------------------------
 
+
 class SchemaValidator(BaseCleaner):
     name = "Schema Validator"
 
@@ -463,9 +490,7 @@ class SchemaValidator(BaseCleaner):
         missing_rate = float(df.isnull().sum().sum() / denom) if denom > 0 else 0.0
         dup_rate = float(df.duplicated().sum() / n_rows) if n_rows > 0 else 0.0
 
-        object_rate = (
-            df.select_dtypes(include="object").shape[1] / max(n_cols, 1)
-        )
+        object_rate = df.select_dtypes(include="object").shape[1] / max(n_cols, 1)
 
         score = 100.0
         score -= min(missing_rate * 200, 40)
@@ -488,12 +513,12 @@ class SchemaValidator(BaseCleaner):
 # ---------------------------------------------------------------------------
 
 _CONFIG_MAP = {
-    "Column Normalizer":       "rename_columns",
-    "Empty Dropper":           "remove_empty_cols",
-    "String Cleaner":          "normalize_strings",
-    "Type Promoter":           "detect_dates",   # proxy — covers full type promotion
-    "Duplicate Handler":       "drop_duplicates",
-    "Missing Value Imputer":   "fill_missing",
+    "Column Normalizer": "rename_columns",
+    "Empty Dropper": "remove_empty_cols",
+    "String Cleaner": "normalize_strings",
+    "Type Promoter": "detect_dates",  # proxy — covers full type promotion
+    "Duplicate Handler": "drop_duplicates",
+    "Missing Value Imputer": "fill_missing",
 }
 
 
@@ -533,7 +558,10 @@ class CleaningOrchestrator:
             except Exception as exc:  # never hard-crash the pipeline
                 logger.exception("[%s] failed: %s", cleaner.name, exc)
                 report.log(
-                    cleaner.name, [], f"SKIPPED due to error: {exc}", status="error",
+                    cleaner.name,
+                    [],
+                    f"SKIPPED due to error: {exc}",
+                    status="error",
                 )
 
         return df, report
@@ -549,6 +577,7 @@ class CleaningOrchestrator:
 # ---------------------------------------------------------------------------
 # Legacy wrapper — keeps the Streamlit app importing `clean_dataframe`
 # ---------------------------------------------------------------------------
+
 
 def clean_dataframe(
     df: pd.DataFrame,

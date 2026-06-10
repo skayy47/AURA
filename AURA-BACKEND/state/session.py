@@ -4,6 +4,7 @@ Note: Streamlit session management is NOT used in the FastAPI backend.
 See api/deps.py for the actual session store (in-memory dict with UUID keys).
 This module is deprecated and kept for backwards compatibility only.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

@@ -1,4 +1,5 @@
 """Sample dataset catalogue — GET /api/samples, GET /api/samples/{slug}/download, POST /api/samples/{slug}/load."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -78,12 +79,15 @@ def load_sample(slug: str) -> dict:
 
     result = load_file_bytes(path.read_bytes(), meta["file"])
     session_id = new_session()
-    update_session(session_id, {
-        "raw_df": result.df,
-        "meta": result.meta.__dict__,
-        "ingest_warnings": result.warnings,
-        "file_name": meta["file"],
-    })
+    update_session(
+        session_id,
+        {
+            "raw_df": result.df,
+            "meta": result.meta.__dict__,
+            "ingest_warnings": result.warnings,
+            "file_name": meta["file"],
+        },
+    )
 
     preview = result.df.head(20).fillna("").astype(str).to_dict(orient="records")
     return {

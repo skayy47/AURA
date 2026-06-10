@@ -1,9 +1,11 @@
 """Pydantic request/response models for the AURA API."""
+
 from __future__ import annotations
 
 from typing import Any
 
 from pydantic import BaseModel
+
 
 class FileMeta(BaseModel):
     name: str
@@ -33,7 +35,7 @@ class IngestResponse(BaseModel):
     session_id: str
     meta: FileMeta
     warnings: list[str] = []
-    preview: list[dict[str, Any]]   # first 5 rows as records
+    preview: list[dict[str, Any]]  # first 5 rows as records
 
 
 class CleaningConfigRequest(BaseModel):
@@ -57,7 +59,7 @@ class CleanResponse(BaseModel):
 
 class ExploreResponse(BaseModel):
     session_id: str
-    profile: dict[str, Any]         # per-column stats
+    profile: dict[str, Any]  # per-column stats
     numeric_cols: list[str]
     categorical_cols: list[str]
     datetime_cols: list[str]
@@ -67,9 +69,9 @@ class ExploreResponse(BaseModel):
 class AskRequest(BaseModel):
     session_id: str
     question: str
-    provider: str = "claude"        # "claude" | "openai"
+    provider: str = "claude"  # "claude" | "openai"
 
 
 class ExportRequest(BaseModel):
     session_id: str
-    format: str                     # "csv" | "xlsx" | "json" | "parquet"
+    format: str  # "csv" | "xlsx" | "json" | "parquet"

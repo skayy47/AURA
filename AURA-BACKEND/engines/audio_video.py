@@ -1,4 +1,5 @@
 """Audio and video processing engine — transcription, features, frame extraction."""
+
 from __future__ import annotations
 
 from utils.helpers import get_logger
@@ -44,9 +45,7 @@ def extract_audio_features(audio_file_path: str) -> dict:
     }
 
 
-def extract_frames_from_video(
-    video_file_path: str, n_frames: int = 6
-) -> list:
+def extract_frames_from_video(video_file_path: str, n_frames: int = 6) -> list:
     """
     Sample *n_frames* evenly-spaced frames from a video using OpenCV.
 

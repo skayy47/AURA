@@ -1,4 +1,5 @@
 """Export routes — CSV/Excel/JSON/Parquet + PDF report."""
+
 from __future__ import annotations
 
 import logging
@@ -35,7 +36,9 @@ async def export(session_id: str, format: str):
         return Response(
             content=data,
             media_type=MIME[format],
-            headers={"Content-Disposition": f"attachment; filename=aura_export.{format}"},
+            headers={
+                "Content-Disposition": f"attachment; filename=aura_export.{format}"
+            },
         )
     except KeyError:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -56,15 +59,19 @@ async def analyze_session(session_id: str):
     if df is None:
         df = sess.get("raw_df")
     if df is None:
-        raise HTTPException(status_code=422, detail="No dataset in session — run ingest first")
+        raise HTTPException(
+            status_code=422, detail="No dataset in session — run ingest first"
+        )
 
     try:
         profile = sess.get("explore_profile")
         if not profile:
             from engines.exploration import profile_dataframe
+
             profile = profile_dataframe(df)
             sess["explore_profile"] = profile
         from engines.analysis import analyze
+
         name = (sess.get("meta") or {}).get("name") or "dataset"
         result = analyze(df, profile, meta_name=name)
         sess["analysis"] = result
@@ -93,17 +100,25 @@ async def export_pdf(body: PDFRequest):
         if df is None:
             df = sess.get("raw_df")
         if df is None:
-            raise HTTPException(status_code=422, detail="No dataset in session — run ingest first")
+            raise HTTPException(
+                status_code=422, detail="No dataset in session — run ingest first"
+            )
         try:
             from engines.exploration import profile_dataframe
+
             profile = profile_dataframe(df)
-            logger.info("Built on-the-fly profile for PDF export (session %s)", body.session_id)
+            logger.info(
+                "Built on-the-fly profile for PDF export (session %s)", body.session_id
+            )
         except Exception as exc:
             logger.exception("Profile failed during PDF export")
-            raise HTTPException(status_code=500, detail=f"Profiling error: {exc}") from exc
+            raise HTTPException(
+                status_code=500, detail=f"Profiling error: {exc}"
+            ) from exc
 
     try:
         from services.pdf_renderer import build_report_context, render_pdf
+
         context = build_report_context(sess, profile)
         pdf_bytes = await render_pdf(context)
     except RuntimeError as exc:

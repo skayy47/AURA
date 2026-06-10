@@ -9,6 +9,7 @@ Legacy (kept for Streamlit compat):
     plot_histogram, plot_boxplot, plot_correlation_heatmap, plot_missing_heatmap,
     plot_value_counts, plot_timeseries
 """
+
 from __future__ import annotations
 
 import logging
@@ -74,12 +75,14 @@ def _numeric_histogram(series: pd.Series, bins: int = _HIST_BINS) -> list[dict]:
     for i, c in enumerate(counts):
         lo = edges[i]
         hi = edges[i + 1]
-        out.append({
-            "bin": f"{lo:.2f}–{hi:.2f}",
-            "lo": float(lo),
-            "hi": float(hi),
-            "count": int(c),
-        })
+        out.append(
+            {
+                "bin": f"{lo:.2f}–{hi:.2f}",
+                "lo": float(lo),
+                "hi": float(hi),
+                "count": int(c),
+            }
+        )
     return out
 
 
@@ -111,8 +114,12 @@ def _profile_column(series: pd.Series) -> dict[str, Any]:
                 profile["max"] = float(non_null.max())
                 profile["p25"] = float(non_null.quantile(0.25))
                 profile["p75"] = float(non_null.quantile(0.75))
-                profile["skewness"] = float(non_null.skew()) if len(non_null) > 2 else 0.0
-                profile["kurtosis"] = float(non_null.kurtosis()) if len(non_null) > 3 else 0.0
+                profile["skewness"] = (
+                    float(non_null.skew()) if len(non_null) > 2 else 0.0
+                )
+                profile["kurtosis"] = (
+                    float(non_null.kurtosis()) if len(non_null) > 3 else 0.0
+                )
                 profile["histogram"] = _numeric_histogram(non_null)
             except Exception as exc:
                 logger.warning("Numeric stats failed for %s: %s", series.name, exc)
@@ -144,16 +151,18 @@ def profile_dataframe(df: pd.DataFrame) -> dict[str, Any]:
             profiles.append(_profile_column(df[col]))
         except Exception as exc:
             logger.warning("Could not profile column %s: %s", col, exc)
-            profiles.append({
-                "name": str(col),
-                "dtype": str(df[col].dtype),
-                "kind": "unknown",
-                "n_missing": int(df[col].isna().sum()),
-                "missing_pct": 0.0,
-                "n_unique": 0,
-                "top_values": [],
-                "error": str(exc),
-            })
+            profiles.append(
+                {
+                    "name": str(col),
+                    "dtype": str(df[col].dtype),
+                    "kind": "unknown",
+                    "n_missing": int(df[col].isna().sum()),
+                    "missing_pct": 0.0,
+                    "n_unique": 0,
+                    "top_values": [],
+                    "error": str(exc),
+                }
+            )
 
     numeric_cols = df.select_dtypes(include="number").columns.tolist()
     categorical_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
@@ -170,11 +179,13 @@ def profile_dataframe(df: pd.DataFrame) -> dict[str, Any]:
                     r = corr.iloc[i, j]
                     if pd.isna(r):
                         continue
-                    pairs.append({
-                        "col_a": str(cols[i]),
-                        "col_b": str(cols[j]),
-                        "r": float(round(r, 4)),
-                    })
+                    pairs.append(
+                        {
+                            "col_a": str(cols[i]),
+                            "col_b": str(cols[j]),
+                            "r": float(round(r, 4)),
+                        }
+                    )
             pairs.sort(key=lambda x: abs(x["r"]), reverse=True)
             # corr.to_dict(orient="split") → {"index":..., "columns":..., "data":[[...]]}
             correlation = {
@@ -244,14 +255,16 @@ def recommend_charts(
                 v = row[yc]
                 entry[yc] = float(v) if pd.notna(v) else None
             points.append(entry)
-        recs.append({
-            "type": "timeseries",
-            "x": x_col,
-            "y": y_cols,
-            "points": points,
-            "rationale": f"Temporal trend: {x_col} vs {', '.join(y_cols)}",
-            "priority": 10,
-        })
+        recs.append(
+            {
+                "type": "timeseries",
+                "x": x_col,
+                "y": y_cols,
+                "points": points,
+                "rationale": f"Temporal trend: {x_col} vs {', '.join(y_cols)}",
+                "priority": 10,
+            }
+        )
 
     # Strong-correlation scatter plots
     for pair in top_pairs[:3]:
@@ -259,27 +272,30 @@ def recommend_charts(
             sub = df[[pair["col_a"], pair["col_b"]]].dropna()
             sub = _sample_points(sub)
             points = [
-                {"x": float(a), "y": float(b)}
-                for a, b in sub.itertuples(index=False)
+                {"x": float(a), "y": float(b)} for a, b in sub.itertuples(index=False)
             ]
-            recs.append({
-                "type": "scatter",
-                "x": pair["col_a"],
-                "y": pair["col_b"],
-                "r": pair["r"],
-                "points": points,
-                "rationale": f"Strong correlation r={pair['r']:.2f}",
-                "priority": 9,
-            })
+            recs.append(
+                {
+                    "type": "scatter",
+                    "x": pair["col_a"],
+                    "y": pair["col_b"],
+                    "r": pair["r"],
+                    "points": points,
+                    "rationale": f"Strong correlation r={pair['r']:.2f}",
+                    "priority": 9,
+                }
+            )
 
     # Primary numeric histogram
     if numeric:
-        recs.append({
-            "type": "histogram",
-            "column": numeric[0],
-            "rationale": "Primary numeric distribution",
-            "priority": 8,
-        })
+        recs.append(
+            {
+                "type": "histogram",
+                "column": numeric[0],
+                "rationale": "Primary numeric distribution",
+                "priority": 8,
+            }
+        )
 
     # Categorical breakdown — top-20 mean of y by x
     if categorical and numeric:
@@ -294,32 +310,38 @@ def recommend_charts(
             ]
         except Exception:
             bars = []
-        recs.append({
-            "type": "bar_grouped",
-            "x": x_col,
-            "y": y_col,
-            "bars": bars,
-            "rationale": f"Mean {y_col} by {x_col}",
-            "priority": 7,
-        })
+        recs.append(
+            {
+                "type": "bar_grouped",
+                "x": x_col,
+                "y": y_col,
+                "bars": bars,
+                "rationale": f"Mean {y_col} by {x_col}",
+                "priority": 7,
+            }
+        )
 
     # Correlation heatmap if 4+ numeric columns
     if len(numeric) >= 4:
-        recs.append({
-            "type": "heatmap_corr",
-            "columns": numeric,
-            "rationale": f"Correlation matrix: {len(numeric)} numeric columns",
-            "priority": 6,
-        })
+        recs.append(
+            {
+                "type": "heatmap_corr",
+                "columns": numeric,
+                "rationale": f"Correlation matrix: {len(numeric)} numeric columns",
+                "priority": 6,
+            }
+        )
 
     # Secondary numeric histogram
     if len(numeric) >= 2:
-        recs.append({
-            "type": "histogram",
-            "column": numeric[1],
-            "rationale": "Secondary numeric distribution",
-            "priority": 5,
-        })
+        recs.append(
+            {
+                "type": "histogram",
+                "column": numeric[1],
+                "rationale": "Secondary numeric distribution",
+                "priority": 5,
+            }
+        )
 
     return sorted(recs, key=lambda x: x["priority"], reverse=True)
 
@@ -444,9 +466,7 @@ def plot_missing_heatmap(df: pd.DataFrame) -> go.Figure:
     return _themed(fig)
 
 
-def plot_value_counts(
-    df: pd.DataFrame, column: str, top_n: int = 20
-) -> go.Figure:
+def plot_value_counts(df: pd.DataFrame, column: str, top_n: int = 20) -> go.Figure:
     """Return a horizontal bar chart of the top N value counts for *column*."""
     counts = df[column].value_counts().head(top_n).reset_index()
     counts.columns = [column, "count"]
@@ -461,9 +481,7 @@ def plot_value_counts(
     return _themed(fig)
 
 
-def plot_timeseries(
-    df: pd.DataFrame, date_col: str, value_col: str
-) -> go.Figure:
+def plot_timeseries(df: pd.DataFrame, date_col: str, value_col: str) -> go.Figure:
     """Return a line chart of *value_col* over *date_col*."""
     fig = px.line(
         df.sort_values(date_col),

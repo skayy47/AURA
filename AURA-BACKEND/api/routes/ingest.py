@@ -37,12 +37,15 @@ async def ingest(
         raise HTTPException(status_code=500, detail=f"Unexpected error: {exc}")
 
     sid = new_session()
-    update_session(sid, {
-        "raw_df": result.df,
-        "meta": asdict(result.meta),
-        "ingest_warnings": result.warnings,
-        "file_name": result.meta.name,
-    })
+    update_session(
+        sid,
+        {
+            "raw_df": result.df,
+            "meta": asdict(result.meta),
+            "ingest_warnings": result.warnings,
+            "file_name": result.meta.name,
+        },
+    )
 
     preview_df = result.df.head(max_preview_rows)
     # Replace NaN with None so JSON serialization emits null, not "NaN"

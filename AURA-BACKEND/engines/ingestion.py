@@ -15,6 +15,7 @@ Design goals:
     - Object column promotion to numeric/datetime/bool/category
     - Structured logging + warnings list for UI surfacing
 """
+
 from __future__ import annotations
 
 import csv
@@ -39,6 +40,7 @@ _ENCODING_FALLBACKS = ("utf-8", "utf-8-sig", "latin-1", "cp1252")
 # ---------------------------------------------------------------------------
 # Public types
 # ---------------------------------------------------------------------------
+
 
 @dataclass
 class FileMeta:
@@ -75,6 +77,7 @@ class IngestResult:
 # Public entry points
 # ---------------------------------------------------------------------------
 
+
 def load_file_bytes(
     contents: bytes,
     filename: str,
@@ -86,7 +89,9 @@ def load_file_bytes(
         ValueError: for unsupported formats, oversized files, or parse errors.
     """
     if len(contents) > _MAX_BYTES:
-        raise ValueError(f"File is {len(contents) / 1024 / 1024:.1f} MB — limit is 200 MB.")
+        raise ValueError(
+            f"File is {len(contents) / 1024 / 1024:.1f} MB — limit is 200 MB."
+        )
 
     size_kb = round(len(contents) / 1024, 2)
     suffix = Path(filename.lower()).suffix
@@ -139,7 +144,11 @@ def load_file_bytes(
 
     logger.info(
         "Ingest %s — %s — %d rows x %d cols — %.1f KB",
-        filename, fmt, meta.n_rows, meta.n_cols, size_kb,
+        filename,
+        fmt,
+        meta.n_rows,
+        meta.n_cols,
+        size_kb,
     )
 
     return IngestResult(df=df, meta=meta, warnings=warnings)
@@ -166,10 +175,12 @@ def load_file(file: Any) -> tuple[pd.DataFrame, dict]:
 # Loaders
 # ---------------------------------------------------------------------------
 
+
 def _detect_encoding(raw: bytes) -> str:
     """Detect encoding from the first 50 KB using chardet."""
     try:
         import chardet
+
         sample = raw[:50_000]
         result = chardet.detect(sample)
         return result.get("encoding") or "utf-8"
@@ -278,7 +289,9 @@ def _load_json(buf: io.BytesIO) -> pd.DataFrame:
     except Exception:
         pass
 
-    raise ValueError("Could not parse JSON. Expected an array of objects or a valid orient.")
+    raise ValueError(
+        "Could not parse JSON. Expected an array of objects or a valid orient."
+    )
 
 
 def _flatten_dict_cols(df: pd.DataFrame) -> pd.DataFrame:
@@ -334,7 +347,10 @@ def _promote_types(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
             lower = series.astype(str).str.lower().str.strip()
             if lower.isin(_BOOL_TRUTHY | _BOOL_FALSY).mean() > 0.95:
                 df[col] = lower.map(
-                    {**{k: True for k in _BOOL_TRUTHY}, **{k: False for k in _BOOL_FALSY}}
+                    {
+                        **{k: True for k in _BOOL_TRUTHY},
+                        **{k: False for k in _BOOL_FALSY},
+                    }
                 )
                 continue
         except Exception:
@@ -343,7 +359,11 @@ def _promote_types(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
         # Category — low cardinality relative to size
         try:
             n_unique = series.nunique()
-            if n_unique > 0 and n_unique <= 50 and n_unique / max(len(series), 1) < 0.05:
+            if (
+                n_unique > 0
+                and n_unique <= 50
+                and n_unique / max(len(series), 1) < 0.05
+            ):
                 df[col] = df[col].astype("category")
         except Exception:
             continue
@@ -354,6 +374,7 @@ def _promote_types(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
 # ---------------------------------------------------------------------------
 # Profiling (single vectorized pass)
 # ---------------------------------------------------------------------------
+
 
 def _profile(
     df: pd.DataFrame,
@@ -375,7 +396,9 @@ def _profile(
 
     numeric_cols = df.select_dtypes(include="number").columns.tolist()
     datetime_cols = df.select_dtypes(include="datetime").columns.tolist()
-    object_cols = df.select_dtypes(include=["object", "category", "bool"]).columns.tolist()
+    object_cols = df.select_dtypes(
+        include=["object", "category", "bool"]
+    ).columns.tolist()
 
     estimated_date_cols = [str(c) for c in datetime_cols]
     # Detect date-like object columns we didn't promote
@@ -394,7 +417,8 @@ def _profile(
 
     # ID-like columns = cardinality equals row count
     estimated_id_cols = [
-        str(c) for c in df.columns
+        str(c)
+        for c in df.columns
         if n_rows > 0 and df[c].nunique(dropna=False) == n_rows
     ]
 
@@ -402,7 +426,8 @@ def _profile(
     estimated_cat_cols = [
         str(c) for c in df.select_dtypes(include=["category"]).columns
     ] + [
-        str(c) for c in object_cols
+        str(c)
+        for c in object_cols
         if str(c) not in estimated_date_cols
         and str(c) not in estimated_id_cols
         and df[c].nunique(dropna=True) <= 50

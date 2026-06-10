@@ -3,7 +3,6 @@ from __future__ import annotations
 import os
 from dotenv import load_dotenv
 
-
 # Load the environment from .env file
 load_dotenv()
 

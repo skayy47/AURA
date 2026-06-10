@@ -35,15 +35,20 @@ async def clean(req: CleaningConfigRequest):
     orchestrator = CleaningOrchestrator()
     cleaned_df, report = orchestrator.clean(raw_df.copy(), config)
 
-    update_session(req.session_id, {
-        "cleaned_df": cleaned_df,
-        "cleaning_log": report.steps,
-    })
+    update_session(
+        req.session_id,
+        {
+            "cleaned_df": cleaned_df,
+            "cleaning_log": report.steps,
+        },
+    )
 
     rows_after, cols_after = cleaned_df.shape
     return CleanResponse(
         session_id=req.session_id,
-        rows_before=rows_before, rows_after=rows_after,
-        cols_before=cols_before, cols_after=cols_after,
+        rows_before=rows_before,
+        rows_after=rows_after,
+        cols_before=cols_before,
+        cols_after=cols_after,
         log=report.steps,
     )

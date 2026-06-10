@@ -1,16 +1,19 @@
 """AURA FastAPI backend — entry point."""
+
 from __future__ import annotations
 
 import os
 
 from dotenv import load_dotenv
-
-# Load local .env if present (no-op in prod where env vars are set directly).
-load_dotenv()
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from api.routes import ingest, clean, explore, ai, export, samples, billing
+
+# Load local .env if present (no-op in prod where env vars are set directly).
+# Safe here: route/engine imports above read env only at request time, and the
+# CORS origins below are read after this call.
+load_dotenv()
 
 app = FastAPI(title="AURA API", version="5.0.0")
 
@@ -38,5 +41,7 @@ app.include_router(export.router, prefix="/api")
 app.include_router(samples.router, prefix="/api")
 app.include_router(billing.router, prefix="/api")
 
+
 @app.get("/health")
-def health(): return {"status": "ok", "version": "5.0.0"}
+def health():
+    return {"status": "ok", "version": "5.0.0"}
