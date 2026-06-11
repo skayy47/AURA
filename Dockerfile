@@ -17,9 +17,9 @@ WORKDIR /app
 COPY AURA-BACKEND/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers into the image (bakes Chromium — no cold-start download)
-RUN pip install --no-cache-dir playwright && \
-    playwright install chromium --with-deps
+# Bake Chromium into the image (no cold-start download). System deps are already
+# installed above — do NOT use --with-deps (apt lists were purged in the deps layer).
+RUN playwright install chromium
 
 # Copy backend source
 COPY AURA-BACKEND/ ./
