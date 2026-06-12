@@ -1,70 +1,156 @@
-# ⚡ AURA — Universal Data Engine
+<div align="center">
 
-> **Ingest · Clean · Explore · AI Insights · Export** — from raw CSV to boardroom PDF in five minutes.
+# AURA — Universal Data Engine
 
-![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38BDF8?logo=tailwindcss&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
-![Claude](https://img.shields.io/badge/Claude-Sonnet_4.6-7C3AED)
-![i18n](https://img.shields.io/badge/i18n-EN_%7C_AR-6C3FE5)
+### Raw data in. Intelligence out.
+
+**A full-stack data intelligence platform that ingests any messy file, cleans and profiles it automatically, lets you interrogate it through streaming AI chat, and delivers a branded Data Intelligence Report — all in a five-step pipeline.**
+
+[![GitHub](https://img.shields.io/badge/GitHub-skayy47%2FAURA-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/skayy47/AURA)
+[![Python](https://img.shields.io/badge/Python-3.11-3776ab?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+![i18n](https://img.shields.io/badge/i18n-EN_%7C_AR_RTL-6C3FE5?style=for-the-badge)
 [![CI](https://github.com/skayy47/AURA/actions/workflows/ci.yml/badge.svg)](https://github.com/skayy47/AURA/actions/workflows/ci.yml)
-![License](https://img.shields.io/badge/License-MIT-10B981)
 
-AURA is a full-stack data platform that takes you from a raw file upload to AI-powered insights in minutes. Upload any structured dataset, auto-clean it with an 8-step pipeline, explore interactive charts, ask Claude or GPT-4o in natural language, and export a branded PDF report — all through a bilingual (EN/AR) production-grade interface.
-
-**No sign-up. No database. In-memory, session-scoped.**
+</div>
 
 ---
 
-## What it does
+## What AURA does
 
-| Step | Route | Capability |
-|------|-------|-----------|
-| 📂 **Ingest** | `/ingest` | CSV · XLSX · JSON · Parquet · TSV — encoding auto-detected, type inference, 5-row preview |
-| 🧼 **Clean** | `/clean` | 8-step pipeline: normalize names, drop empty cols, clean strings, promote types, dedupe, impute, flag outliers, quality score |
-| 🔍 **Explore** | `/explore` | Auto-generated histograms, scatter, correlation heatmap, missing-value map, column profiles |
-| 🤖 **AI Chat** | `/ai-chat` | Claude Sonnet 4.6 or GPT-4o with SSE streaming — full dataset context injected |
-| 📄 **Export** | `/docs` | CSV · XLSX · JSON · Parquet · **branded PDF report** (Playwright + Jinja2) |
+You drop a CSV, Excel, JSON, or Parquet file:
+
+| Step | Route | What actually happens |
+|---|---|---|
+| 📂 **Ingest** | `/ingest` | Auto-detected encoding, type inference, 200 MB guard, 5-row preview |
+| 🧼 **Clean** | `/clean` | 8-step pipeline — normalize names, coerce types, dedupe, impute, outlier flags. Every change logged, diff shown. |
+| 🔍 **Explore** | `/explore` | Auto-generated Plotly charts: histograms, scatter, correlation heatmap, missing-value map, per-column profiles |
+| 🤖 **AI Chat** | `/ai-chat` | Ask questions in natural language — streamed token-by-token. Claude, GPT-4o, or Groq (free default). AI never sees raw rows. |
+| 📄 **Export** | `/docs` | CSV · XLSX · JSON · Parquet · branded **PDF Data Intelligence Report** (real headless render, not a screenshot) |
+
+**No sign-up. No database. In-memory, session-scoped (4h TTL).**
+
+---
+
+## Why it's technically interesting
+
+### 1 · Multi-provider AI with free-first cascade
+
+A single `PROVIDERS` registry is the source of truth for all AI integrations. `resolve_provider()` tries Groq (free) first, then OpenAI, then Claude — whichever is configured. Groq and OpenAI share one call path (OpenAI-compatible `base_url`); Claude uses the Anthropic SDK. Adding a new provider is one dictionary entry, nothing else.
+
+`executive_summary()` (called during PDF generation) cascades further: if no LLM is reachable, it builds a deterministic textual summary from the stats payload so **the PDF always renders** — even with no API keys configured.
+
+---
+
+### 2 · Ranked insight engine — above raw stats
+
+`/api/analyze` is not a describe() wrapper. It runs a scoring pass that surfaces things like:
+
+- High-cardinality string columns that should not be treated as categories
+- Columns with |skew| > 2 that invalidate mean-based analysis
+- Columns with >20% nulls flagged as structural data quality issues  
+- Numeric pairs with |r| > 0.7 surfaced as correlation candidates
+
+Each observation is ranked. The UI shows the top three with actionable framing. The endpoint result is cached after the first call — subsequent chart renders don't re-run the analysis.
+
+---
+
+### 3 · Real PDF generation (headless Chromium, not a screenshot)
+
+`POST /api/export/pdf` calls `pdf_renderer.py`:
+
+1. `build_report_context()` assembles the stats payload, ranked insights, and chart SVG specs into a Jinja2 context dict.
+2. The `report.html.j2` template is rendered to an HTML string in memory.
+3. Playwright's `page.set_content()` + `page.pdf()` renders it via headless Chromium.
+
+The output is a paginated, fully styled PDF with the AURA brand, dataset summary, insight section, and chart thumbnails. It works because Chromium does the layout. The `Dockerfile` bakes in Playwright + Chromium so it works cold on any host.
+
+---
+
+### 4 · SSE streaming end-to-end (FastAPI → Next.js)
+
+The AI chat endpoint streams tokens from the model through to the browser with zero polling:
+
+```
+FastAPI async generator → StreamingResponse(media_type="text/event-stream")
+    → Next.js fetch() + ReadableStream
+        → Zustand store (token append)
+            → React component (live bubble render)
+```
+
+This works across all three AI providers — each has a different SDK streaming API; `ai_insights.py` normalizes them into a single async generator interface.
+
+---
+
+### 5 · Bilingual interface (EN / AR RTL) — production-grade i18n
+
+Every string in the app is keyed through `next-intl v4`. The URL path carries the locale: `/en/explore` · `/ar/explore`. Arabic flips the entire layout to RTL including sidebar, data tables, chart labels, and form fields. 220+ translation keys, maintained in `messages/en.json` and `messages/ar.json`.
+
+This is not a "toggle language" demo — it's a proper RTL-aware layout with bidirectional Tailwind utilities throughout.
 
 ---
 
 ## Architecture
 
 ```
-┌──────────────────────────┐      REST + SSE        ┌──────────────────────────┐
-│  AURA-FRONTEND (3000)    │ ─────────────────────▶ │  AURA-BACKEND (8000)     │
-│  Next.js 14 · App Router │                        │  FastAPI 0.111 · Uvicorn │
-│  next-intl v4 (EN/AR)    │ ◀───────────────────── │  Pandas · Anthropic SDK  │
-│  Tailwind · Zustand       │       JSON / stream    │  Playwright + Jinja2     │
-│  Framer Motion 12 (3D)   │                        │  Stripe SDK              │
-└──────────────────────────┘                        └──────────────────────────┘
+  File Upload (CSV / TSV / XLSX / JSON / Parquet)
+       │
+       ▼
+  ┌────────────────────────────────────────────────────────────────────┐
+  │  AURA-BACKEND  (FastAPI v5.0 · Python 3.11 · Uvicorn)             │
+  │                                                                    │
+  │  POST /api/ingest   → engines/ingestion.py  → IngestResult        │
+  │  POST /api/clean    → engines/cleaning.py   → (df, log)           │
+  │  GET  /api/explore  → engines/exploration.py → Plotly JSON specs  │
+  │  GET  /api/analyze  → engines/analysis.py   → ranked insights     │
+  │  POST /api/ask      → engines/ai_insights.py → SSE token stream   │
+  │  POST /api/export/pdf → services/pdf_renderer.py                  │
+  │                         (Jinja2 → Playwright → PDF bytes)         │
+  │                                                                    │
+  │  api/deps.py   UUID session store · 4h TTL · in-memory            │
+  └──────────────────┬─────────────────────────────────────────────────┘
+                     │ REST + SSE
+                     ▼
+  ┌────────────────────────────────────────────────────────────────────┐
+  │  AURA-FRONTEND  (Next.js 14 App Router · TypeScript · Tailwind)   │
+  │                                                                    │
+  │  /[locale]/ingest   upload + session init                         │
+  │  /[locale]/clean    cleaning config + live diff view              │
+  │  /[locale]/explore  5-tab Plotly explorer                         │
+  │  /[locale]/ai-chat  streaming chat interface                      │
+  │  /[locale]/docs     inline documentation                          │
+  │  /[locale]/pricing  tier overview + Stripe checkout               │
+  │                                                                    │
+  │  lib/api.ts    typed REST + SSE client                            │
+  │  lib/store.ts  Zustand session state                              │
+  │  next-intl     EN / AR RTL routing + layout                       │
+  └────────────────────────────────────────────────────────────────────┘
 ```
 
-- All data, AI, and rendering happen on the **backend** — the frontend is a pure client.
-- Sessions are UUID-keyed, **in-memory**, 4-hour TTL (no database required).
-- AI responses **stream over SSE** for token-by-token rendering.
-- Locale is part of the URL path: `/en/ingest` · `/ar/ingest`.
-- CORS origins are env-driven via `ALLOWED_ORIGINS`.
+---
+
+## Tech stack
+
+| Layer | Technology | Why |
+|---|---|---|
+| **Backend** | FastAPI 0.111 + Python 3.11 | Async, typed, OpenAPI auto-docs |
+| **Data** | Pandas 2.2 + Plotly | Industry standard; Plotly specs ship to the frontend as JSON |
+| **AI** | Groq (free default) / OpenAI / Claude | Single registry; free-first cascade; zero lock-in |
+| **PDF** | Playwright + Jinja2 | Real headless Chromium render — paginated, styled, not a screenshot |
+| **Insights** | Custom `analysis.py` | Ranked, actionable observations — not just `df.describe()` |
+| **Frontend** | Next.js 14 App Router + TypeScript | Full-stack TypeScript; locale-aware SSR routing |
+| **State** | Zustand 5 | Lightweight, no boilerplate |
+| **Styling** | Tailwind 3.4 + Framer Motion 12 | Dark "Luminal Void" palette (`#00E5FF` / `#8B5CF6` on `#030712`) |
+| **i18n** | next-intl v4 | EN + AR RTL — 220+ keys, bidirectional layout |
+| **Billing** | Stripe SDK | Checkout flow wired; entitlement persistence is v5.1 |
+| **Testing** | pytest + ruff + black / tsc + Next build | Quality gates enforced in CI on both stacks |
+| **Deploy** | HF Spaces Docker (backend) + Vercel (frontend) | Free-tier hosting; Dockerfile bakes Playwright+Chromium |
 
 ---
 
-## V5 Highlights
-
-| Feature | Details |
-|---------|---------|
-| 🤖 **3D Robot Landing** | `<AuraBot>` enters with spring-driven 3D choreography — `rotateX -45°→0°`, `scale 0.7→1`. Mouse parallax adds ±10° tilt. |
-| 🔁 **Scroll-Triggered Handoff** | Robot transitions via Framer Motion `layoutId` from hero into the persistent `<BotOrb>` chat button — one continuous visual thread. |
-| 🎨 **Aurora "Luminal Void" Theme** | `#6c3fed` purple · `#22d3ee` cyan · `#3b82f6` blue — gradient text, bento cards, grain overlay, pulse-pill badges. |
-| 📐 **11-Section Landing** | Hero · Pain Points · Live Demo Strip · Bento Steps · Samples · Output Preview · Tech Stack · Pricing · FAQ · Final CTA · Footer — fully i18n'd EN/AR. |
-| 🌍 **Full Arabic UI** | RTL layout, Arabic translations for all 220+ string keys via next-intl v4. |
-| 🧪 **E2E CI** | GitHub Actions: ruff · black · pytest (backend) + tsc · next build (frontend) + Playwright smoke (boots both services). |
-
----
-
-## Quick Start
+## Quick start
 
 Requires Python 3.11+ and Node 18+.
 
@@ -79,73 +165,89 @@ python -m venv .venv
 # source .venv/bin/activate     # macOS / Linux
 
 pip install -r requirements.txt
-playwright install chromium     # for PDF export only
-cp ../.env.example AURA-BACKEND/.env  # fill in API keys
-uvicorn main:app --reload --port 8000
+playwright install chromium     # PDF export only — skip if you don't need it
 
+cp ../.env.example AURA-BACKEND/.env
+# → edit .env, set GROQ_API_KEY at minimum (free, no card required)
+
+uvicorn main:app --reload --port 8000
+# API: http://localhost:8000 · Docs: http://localhost:8000/docs
+```
+
+```bash
 # --- Frontend (new terminal) ---
 cd AURA-FRONTEND
 npm install
 npm run dev
+# → http://localhost:3000
 ```
 
-Open **http://localhost:3000** → click **"Try with sample data"** to load a pre-built MENA dataset, or upload your own CSV.
-
-> **Health check:** http://localhost:8000/health
-> **API docs:** http://localhost:8000/docs
+Click **"Try with sample data"** on the landing page to load a pre-built MENA dataset with no upload needed.
 
 ---
 
-## Environment Variables
+## Environment variables
 
-All backend secrets live in `AURA-BACKEND/.env` (gitignored — never commit):
+All backend secrets live in `AURA-BACKEND/.env` (gitignored — never committed).
 
-AURA is **multi-provider, free-first**: it defaults to **Groq (free)** and falls
-back across whatever keys are present. Claude / OpenAI are optional paid upgrades.
+AURA is **free-first**: it defaults to **Groq** and cascades to whatever paid keys are present. Only `GROQ_API_KEY` is needed for working AI.
 
 | Variable | Tier | Description |
-|----------|------|-------------|
+|---|---|---|
 | `GROQ_API_KEY` | **Free · default** | [console.groq.com](https://console.groq.com/keys) — Llama 3.3 70B |
-| `OPENAI_API_KEY` | Paid · optional | [platform.openai.com](https://platform.openai.com/) — GPT-4o mini |
-| `ANTHROPIC_API_KEY` | Paid · optional | [console.anthropic.com](https://console.anthropic.com/) — Claude Sonnet 4.6 |
-| `ALLOWED_ORIGINS` | — | Comma-separated frontend URLs (e.g. `https://your-frontend.vercel.app`) |
+| `OPENAI_API_KEY` | Paid · optional | GPT-4o mini upgrade |
+| `ANTHROPIC_API_KEY` | Paid · optional | Claude Sonnet 4.6 upgrade |
+| `ALLOWED_ORIGINS` | — | Comma-separated CORS origins (e.g. `https://your-frontend.vercel.app`) |
 | `STRIPE_SECRET_KEY` | Billing | Stripe dashboard → Developers → API keys |
 | `STRIPE_WEBHOOK_SECRET` | Billing | Stripe dashboard → Webhooks |
 | `STRIPE_PRICE_PRO_MONTHLY` | Billing | Price ID from Stripe products |
 | `STRIPE_PRICE_TEAM_MONTHLY` | Billing | Price ID from Stripe products |
 | `FRONTEND_URL` | Redirects | Defaults to `http://localhost:3000` |
-| `PORT` | Deploy | Hosting port (default `8000`; HF Spaces requires `7860`) |
+| `PORT` | Deploy | `8000` local · `7860` on HF Spaces |
 
-> **Billing note:** Stripe checkout is fully wired. Entitlement persistence (linking a completed payment to a session tier) is the next planned milestone.
+---
+
+## Quality gates
+
+Both stacks must pass before merge:
+
+```bash
+# Backend
+cd AURA-BACKEND
+ruff check . --select E,F,W --ignore E501
+black --check .
+pytest ../tests -q
+
+# Frontend
+cd AURA-FRONTEND
+npx tsc --noEmit
+npm run build
+```
 
 ---
 
 ## Deployment
 
-AURA has a **monorepo** — backend and frontend deploy independently.
+### Backend → Hugging Face Spaces (Docker, free)
 
-### Backend — Hugging Face Spaces (Docker, free)
-
-A `Dockerfile` is included at the repo root. The image bakes in Playwright/Chromium so PDF export works cold. See [`deploy/huggingface.md`](deploy/huggingface.md) for the full runbook.
+The `Dockerfile` at repo root bakes in Playwright + Chromium — PDF export works cold on the Space with no extra setup.
 
 ```bash
-# Add the Space as a remote and push
-git remote add space https://huggingface.co/spaces/<your-username>/aura-backend
+git remote add space https://huggingface.co/spaces/<username>/aura-backend
 git push space main
 ```
 
-Set Space secrets: `GROQ_API_KEY` (free — the only one needed for working AI),
-`ALLOWED_ORIGINS`, `PORT=7860`. Optionally add `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`.
+Set Space secrets: `GROQ_API_KEY`, `ALLOWED_ORIGINS`, `PORT=7860`.
 
-### Frontend — Vercel
+### Frontend → Vercel
 
-Set the **root directory** to `AURA-FRONTEND` and add one env var:
+Set root directory to `AURA-FRONTEND`. Add one env var:
 
 ```
-NEXT_PUBLIC_API_URL=https://<your-username>-aura-backend.hf.space
+NEXT_PUBLIC_API_URL=https://<username>-aura-backend.hf.space
 ```
 
-`NEXT_PUBLIC_*` vars are **baked at build time** — a change requires a redeploy.
+`NEXT_PUBLIC_*` vars are baked at build time — a change requires a redeploy.
 
 ---
 
@@ -154,42 +256,50 @@ NEXT_PUBLIC_API_URL=https://<your-username>-aura-backend.hf.space
 `.github/workflows/ci.yml` runs on every push to `main`:
 
 | Job | Steps |
-|-----|-------|
-| **backend** | ruff lint · black format check · pytest |
+|---|---|
+| **backend** | ruff lint · black check · pytest |
 | **frontend** | TypeScript type check · `next build` |
-| **e2e smoke** | Playwright: boots both services, hits `/health` (main only) |
+| **e2e smoke** | Playwright: boots both services, hits `/health` |
 | **deploy gate** | All jobs must pass |
 
 ---
 
-## Tech Stack
-
-**Frontend:** Next.js 14 · React 18 · TypeScript 5 · next-intl v4 (EN/AR RTL) · Tailwind 3.4 · Zustand 5 · Framer Motion 12.38 · Recharts 3
-
-**Backend:** FastAPI 0.111 · Uvicorn · Pydantic 2.7 · Pandas 2.2 · Plotly · Groq / OpenAI / Anthropic SDKs · Playwright + Jinja2 (PDF report) · Stripe 9.9
-
----
-
-## Project Structure
+## Project structure
 
 ```
 AURA/
 ├── AURA-BACKEND/
-│   ├── api/routes/        ingest · clean · explore · ai · export · billing · samples
-│   ├── engines/           ingestion · cleaning · exploration · analysis · ai_insights
-│   ├── services/          billing (Stripe) · pdf_renderer (Playwright + Jinja2)
-│   ├── state/session.py   UUID-keyed in-memory store (4h TTL)
-│   ├── utils/             config · helpers · exporters
-│   └── main.py            FastAPI entry point
+│   ├── main.py                     FastAPI app + CORS + load_dotenv
+│   ├── api/
+│   │   ├── deps.py                 UUID session store (4h TTL, in-memory)
+│   │   ├── models.py               Pydantic request / response contracts
+│   │   └── routes/                 ingest · clean · explore · ai · export · samples · billing
+│   ├── engines/
+│   │   ├── ingestion.py            load_file_bytes() → IngestResult
+│   │   ├── cleaning.py             clean_dataframe() → (df, log) + quality score
+│   │   ├── exploration.py          profile_dataframe() + Plotly chart specs
+│   │   ├── analysis.py             ranked insights, segments, trends (cached)
+│   │   └── ai_insights.py          multi-provider chat + executive_summary()
+│   ├── services/
+│   │   ├── pdf_renderer.py         Jinja2 + Playwright → PDF bytes
+│   │   └── billing.py              Stripe checkout session
+│   ├── templates/report.html.j2    Data Intelligence Report template
+│   └── static/samples/             3 MENA demo datasets (no upload required)
+│
 ├── AURA-FRONTEND/
-│   ├── src/app/[locale]/  landing · ingest · clean · explore · ai-chat · docs · pricing · billing
-│   ├── src/components/    ai · background · clean · explore · ingest · landing · layout · ui
-│   ├── src/lib/           api client · Zustand store · tier hook · types
-│   └── messages/          en.json · ar.json (~220 keys each)
-├── tests/                 pytest suites
-├── Dockerfile             backend image (Playwright baked in)
-├── .github/workflows/     ci.yml
-└── LICENSE
+│   └── src/
+│       ├── app/[locale]/           landing · ingest · clean · explore · ai-chat · docs · pricing
+│       ├── components/             ai · background · clean · explore · landing · layout · ui
+│       └── lib/
+│           ├── api.ts              Typed REST + SSE client
+│           ├── store.ts            Zustand session state
+│           └── tier.ts             Feature-gate logic
+│
+├── tests/                          pytest suites (ingestion · cleaning · exploration)
+├── messages/                       en.json · ar.json (~220 keys each)
+├── Dockerfile                      Backend image (Playwright + Chromium baked)
+├── .github/workflows/ci.yml        Full CI pipeline
+└── .env.example                    Environment variable template
 ```
 
 ---
@@ -197,17 +307,28 @@ AURA/
 ## Roadmap
 
 | Version | Status | What's in it |
-|---------|--------|-------------|
-| **v5.0** | ✅ Shipped | 3D landing, aurora theme, bilingual UI, Stripe checkout, E2E CI |
-| **v5.1** | 🔜 Planned | Entitlement persistence; externalize session state (Redis) for multi-worker support |
-| **v6.0** | 💡 Future | Live deployed demo; agent mode (multi-step analysis plans) |
+|---|---|---|
+| **v5.0** | ✅ Shipped | 3D landing, bilingual EN/AR RTL, Stripe checkout, E2E CI, PDF report, ranked insight engine |
+| **v5.1** | 🔜 Planned | Entitlement persistence; Redis session store for multi-worker support |
+| **v6.0** | 💡 Future | Live public demo URL; agent mode (multi-step analysis plans) |
 
 ---
 
-## License
+## Security
 
-MIT — see [LICENSE](LICENSE)
+- API keys are never committed — `.env` is gitignored, only `.env.example` ships.
+- Keys are lazy-initialized at request time — `pytest` and `next build` pass with zero env vars.
+- No database — sessions are in-memory with a 4h TTL. No user data persists between restarts.
+- CORS is env-driven via `ALLOWED_ORIGINS` — no hardcoded wildcards in production.
 
 ---
 
-*Built by [Oussama Skia (SKAY)](https://github.com/skayy47) · Powered by Claude*
+<div align="center">
+
+Built by **[Oussama Skia (SKAY)](https://github.com/skayy47)** — AI Engineer · Data Scientist
+
+*AURA demonstrates full-stack AI product engineering: typed REST APIs, SSE streaming, real PDF generation,*  
+*multi-provider AI orchestration, bilingual RTL UI, and a production-grade CI/CD pipeline.*  
+*Not a notebook export — a deployable data product.*
+
+</div>
