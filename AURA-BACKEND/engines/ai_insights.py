@@ -139,17 +139,70 @@ def coerce_provider(value: str | AIProvider | None) -> AIProvider:
 
 def _build_system_prompt(df: pd.DataFrame) -> str:
     n_rows, n_cols = df.shape
-    cols = ", ".join(map(str, df.columns.tolist()))
-    dtypes = ", ".join(f"{c}: {t}" for c, t in df.dtypes.items())
-    return (
-        f"You are AURA's AI data analyst. The user uploaded a dataset with {n_rows} rows "
-        f"and {n_cols} columns. Columns: {cols}. Dtypes: {dtypes}. "
-        "Answer concisely and accurately using markdown."
+
+    dtype_lines = "\n".join(f"  {c}: {t}" for c, t in df.dtypes.items())
+
+    null_counts = df.isnull().sum()
+    nulls_present = null_counts[null_counts > 0]
+    if not nulls_present.empty:
+        null_section = "Columns with missing values (full dataset):\n" + "\n".join(
+            f"  {c}: {v:,} missing ({v / n_rows * 100:.1f}%)"
+            for c, v in nulls_present.items()
+        )
+    else:
+        null_section = "Missing values: 0 across all columns (clean dataset)."
+
+    num_df = df.select_dtypes(include="number")
+    if not num_df.empty:
+        desc = num_df.describe().round(4)
+        stat_lines = []
+        for col in desc.columns:
+            s = desc[col]
+            stat_lines.append(
+                f"  {col}: count={int(s['count'])}, min={s['min']:.4g}, "
+                f"mean={s['mean']:.4g}, max={s['max']:.4g}, std={s['std']:.4g}"
+            )
+        numeric_section = (
+            "Numeric column statistics (computed on full dataset):\n"
+            + "\n".join(stat_lines)
+        )
+    else:
+        numeric_section = "No numeric columns detected."
+
+    cat_df = df.select_dtypes(include=["object", "category"])
+    cat_parts: list[str] = []
+    for col in list(cat_df.columns)[:5]:
+        vc = cat_df[col].value_counts().head(3)
+        vc_str = ", ".join(f'"{k}"({v})' for k, v in vc.items())
+        cat_parts.append(f"  {col}: {vc_str}")
+    cat_section = (
+        "Top values per categorical column:\n" + "\n".join(cat_parts)
+    ) if cat_parts else ""
+
+    sections = [
+        f"You are AURA AI — a sharp, direct data analyst. "
+        f"The user uploaded a dataset: **{n_rows:,} rows × {n_cols} columns**.",
+        f"Column types:\n{dtype_lines}",
+        null_section,
+        numeric_section,
+    ]
+    if cat_section:
+        sections.append(cat_section)
+
+    sections.append(
+        "RULES:\n"
+        "- The statistics above are computed on the FULL dataset. Answer DIRECTLY from them.\n"
+        "- NEVER say 'I would need to run code' or 'without the actual data' — you HAVE it.\n"
+        "- Be specific and numerical. Name actual columns and cite real values from above.\n"
+        "- Format with markdown: bold key figures, use bullet lists, code blocks for any code.\n"
+        "- Be concise and insight-driven. No filler, no preamble."
     )
+
+    return "\n\n".join(sections)
 
 
 def _truncate_df(
-    df: pd.DataFrame, max_rows: int = 60, max_cols: int = 15
+    df: pd.DataFrame, max_rows: int = 10, max_cols: int = 12
 ) -> pd.DataFrame:
     return df.iloc[:max_rows, :max_cols]
 
