@@ -335,11 +335,19 @@ def _classify_column(series: pd.Series, col_profile: dict, n: int) -> dict[str, 
 
     name_is_id = bool(_ID_RE.search(name_norm))
     name_is_geo = bool(_GEO_RE.search(name_norm))
+    # A strong measure name (price, salary, amount, sales…) overrides the
+    # uniqueness test: a high-cardinality continuous quantity is not a key,
+    # even when its values happen to be near-unique whole numbers.
+    strong_measure = _name_weight(name_norm, _MEASURE_WEIGHTS) >= 2.0
 
     # 4. Unique object / numeric key — row_id, fully-unique columns
     if kind == "id":
         return _role(IDENTIFIER, 0.97, "every value is unique", name_norm)
-    if is_numeric_dtype(series) and _is_id_like_numeric(series, n_unique, n):
+    if (
+        is_numeric_dtype(series)
+        and not strong_measure
+        and _is_id_like_numeric(series, n_unique, n)
+    ):
         return _role(IDENTIFIER, 0.9, "monotonic / unique integer key", name_norm)
 
     # 5. Geo wins over id-name (postal_code matches both "code" and "postal")
