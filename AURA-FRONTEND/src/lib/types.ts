@@ -88,16 +88,44 @@ export interface CorrelationMatrix {
 }
 
 export interface ChartRecommendation {
-  type: "timeseries" | "scatter" | "histogram" | "bar_grouped" | "heatmap_corr";
+  type: "timeseries" | "scatter" | "histogram" | "bar_grouped" | "heatmap_corr" | "donut";
   priority: number;
   rationale: string;
+  title?: string;
   column?: string;
   columns?: string[];
   x?: string;
   y?: string | string[];
+  split?: string | null;
   r?: number;
   points?: Array<Record<string, any>>;
+  series?: Array<{ name: string; points: Array<{ x: string; value: number }> }>;
   bars?: Array<{ label: string; value: number }>;
+  segments?: Array<{ label: string; value: number; pct: number }>;
+}
+
+export type SemanticRole =
+  | "identifier" | "measure" | "dimension" | "temporal"
+  | "geo" | "boolean" | "text" | "constant";
+
+export interface Semantics {
+  roles: Record<string, { role: SemanticRole; confidence: number; reason: string }>;
+  by_role: Record<string, string[]>;
+  primary_measures: string[];
+  primary_dimensions: string[];
+  segmentable_cols: string[];
+  primary_temporal: string | null;
+  measure_cols: string[];
+  dimension_cols: string[];
+  temporal_cols: string[];
+  geo_cols: string[];
+  id_cols: string[];
+  text_cols: string[];
+  archetype: string;
+  archetype_label: string;
+  archetype_blurb: string;
+  domain: string | null;
+  domain_confidence: number;
 }
 
 export interface DatasetProfile {
@@ -117,6 +145,7 @@ export interface DatasetProfile {
 export interface ExploreData {
   session_id: string;
   profile: DatasetProfile;
+  semantics?: Semantics;
   recommendations: ChartRecommendation[];
   numeric_cols: string[];
   categorical_cols: string[];

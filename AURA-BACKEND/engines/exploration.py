@@ -229,119 +229,227 @@ def _sample_points(df_sub: pd.DataFrame, limit: int = _MAX_POINTS) -> pd.DataFra
     return df_sub.sample(n=limit, random_state=42).sort_index()
 
 
+def _resample_rule(span_days: int) -> str:
+    if span_days <= 0:
+        return "D"
+    if span_days <= 120:
+        return "D"
+    if span_days <= 730:
+        return "W"
+    return "ME"
+
+
+def _timeseries_points(
+    df: pd.DataFrame, x_col: str, y_col: str, by: str | None = None, max_groups: int = 4
+) -> dict[str, Any]:
+    """Resampled line data. If *by* is given, returns the top categories as
+    separate series so the trend is split by the most important dimension."""
+    sub = df[[x_col, y_col] + ([by] if by else [])].dropna(subset=[x_col, y_col])
+    if sub.empty:
+        return {"points": [], "series": []}
+    sub = sub.sort_values(x_col).set_index(x_col)
+    span = (sub.index.max() - sub.index.min()).days
+    rule = _resample_rule(span)
+
+    if by:
+        top = sub[by].value_counts().head(max_groups).index.tolist()
+        series: list[dict[str, Any]] = []
+        index_set: list[str] = []
+        for g in top:
+            s = sub[sub[by] == g][y_col].resample(rule).mean().dropna()
+            pts = [
+                {"x": str(i.date()), "value": float(round(v, 3))} for i, v in s.items()
+            ][:60]
+            series.append({"name": str(g), "points": pts})
+            index_set = [p["x"] for p in pts] or index_set
+        return {"series": series, "by": by}
+
+    s = sub[y_col].resample(rule).mean().dropna()
+    points = [{"x": str(i.date()), "value": float(round(v, 3))} for i, v in s.items()][
+        :80
+    ]
+    return {"points": points, "series": []}
+
+
+def _ranked_bars(
+    df: pd.DataFrame, dim: str, measure: str, how: str = "mean", top: int = 12
+) -> list[dict[str, Any]]:
+    try:
+        grp = df.groupby(dim, observed=True)[measure]
+        agg = (grp.mean() if how == "mean" else grp.sum()).dropna()
+        agg = agg.reindex(agg.abs().sort_values(ascending=False).index).head(top)
+        return [{"label": str(i), "value": float(round(v, 4))} for i, v in agg.items()]
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Bar agg failed for %s by %s: %s", measure, dim, exc)
+        return []
+
+
+def _composition(df: pd.DataFrame, dim: str, top: int = 8) -> list[dict[str, Any]]:
+    vc = df[dim].value_counts().head(top)
+    total = max(int(df[dim].notna().sum()), 1)
+    return [
+        {"label": str(i), "value": int(v), "pct": round(v / total * 100, 1)}
+        for i, v in vc.items()
+    ]
+
+
 def recommend_charts(
     df: pd.DataFrame,
     profile: dict[str, Any],
+    semantics: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """Rank charts by usefulness and embed the data needed to render them."""
-    numeric = profile.get("numeric_cols", [])
-    categorical = profile.get("categorical_cols", [])
-    datetime_cols = profile.get("datetime_cols", [])
-    correlation = profile.get("correlation") or {}
-    top_pairs = correlation.get("top_pairs", [])
+    """Recommend a *data-dependent* set of charts driven by semantic roles.
+
+    The mix adapts to the dataset's archetype: a time-series leads with trend
+    lines, a segmented table with comparison bars, a numeric table with
+    distributions and correlations. Identifiers (row_id) are never charted as
+    measures. Each rec embeds the exact data the frontend needs to render.
+    """
+    if semantics is None:
+        from engines.semantics import infer_semantics
+
+        semantics = infer_semantics(df, profile)
+
+    measures: list[str] = semantics.get("primary_measures", [])
+    segmentable: list[str] = semantics.get("segmentable_cols", [])
+    temporal: str | None = semantics.get("primary_temporal")
+    col_by_name = {c["name"]: c for c in profile.get("columns", [])}
+    measure_set = set(semantics.get("measure_cols", []))
+    top_pairs = [
+        p
+        for p in (profile.get("correlation") or {}).get("top_pairs", [])
+        if p.get("col_a") in measure_set and p.get("col_b") in measure_set
+    ]
 
     recs: list[dict[str, Any]] = []
+    primary = measures[0] if measures else None
 
-    # Time series — datetime vs top numerics
-    if datetime_cols and numeric:
-        x_col = datetime_cols[0]
-        y_cols = numeric[:3]
-        sub = df[[x_col, *y_cols]].dropna(subset=[x_col]).sort_values(x_col)
-        sub = _sample_points(sub)
-        points = []
-        for _, row in sub.iterrows():
-            entry: dict[str, Any] = {"x": pd.Timestamp(row[x_col]).isoformat()}
-            for yc in y_cols:
-                v = row[yc]
-                entry[yc] = float(v) if pd.notna(v) else None
-            points.append(entry)
-        recs.append(
-            {
-                "type": "timeseries",
-                "x": x_col,
-                "y": y_cols,
-                "points": points,
-                "rationale": f"Temporal trend: {x_col} vs {', '.join(y_cols)}",
-                "priority": 10,
-            }
+    # 1. Trend line — headline when the data is temporal
+    if temporal and primary:
+        split = (
+            segmentable[0]
+            if (segmentable and df[segmentable[0]].nunique() <= 6)
+            else None
         )
-
-    # Strong-correlation scatter plots
-    for pair in top_pairs[:3]:
-        if abs(pair["r"]) > 0.5:
-            sub = df[[pair["col_a"], pair["col_b"]]].dropna()
-            sub = _sample_points(sub)
-            points = [
-                {"x": float(a), "y": float(b)} for a, b in sub.itertuples(index=False)
-            ]
+        ts = _timeseries_points(df, temporal, primary, by=split)
+        if ts.get("points") or ts.get("series"):
+            rationale = f"How {primary} moves over {temporal}" + (
+                f", split by {split}" if split else ""
+            )
             recs.append(
                 {
-                    "type": "scatter",
-                    "x": pair["col_a"],
-                    "y": pair["col_b"],
-                    "r": pair["r"],
-                    "points": points,
-                    "rationale": f"Strong correlation r={pair['r']:.2f}",
-                    "priority": 9,
+                    "type": "timeseries",
+                    "title": f"{primary} over {temporal}",
+                    "x": temporal,
+                    "y": primary,
+                    "split": split,
+                    "points": ts.get("points", []),
+                    "series": ts.get("series", []),
+                    "rationale": rationale,
+                    "priority": (
+                        100 if semantics.get("archetype") == "timeseries" else 78
+                    ),
                 }
             )
 
-    # Primary numeric histogram
-    if numeric:
+    # 2. Segment comparison bars — measure by the best slice columns
+    for idx, dim in enumerate(segmentable[:2]):
+        if not primary:
+            break
+        bars = _ranked_bars(df, dim, primary, how="mean")
+        if len(bars) >= 2:
+            recs.append(
+                {
+                    "type": "bar_grouped",
+                    "title": f"{primary} by {dim}",
+                    "x": dim,
+                    "y": primary,
+                    "bars": bars,
+                    "rationale": f"Average {primary} across {dim} — where the gaps are",
+                    "priority": 90 - idx * 6,
+                }
+            )
+
+    # 3. Scatter — genuine measure↔measure relationships
+    for pair in top_pairs[:2]:
+        if abs(pair["r"]) >= 0.4:
+            sub = _sample_points(df[[pair["col_a"], pair["col_b"]]].dropna())
+            points = [
+                {"x": float(a), "y": float(b)} for a, b in sub.itertuples(index=False)
+            ]
+            if points:
+                strength = "Strong" if abs(pair["r"]) >= 0.7 else "Moderate"
+                recs.append(
+                    {
+                        "type": "scatter",
+                        "title": f"{pair['col_a']} × {pair['col_b']}",
+                        "x": pair["col_a"],
+                        "y": pair["col_b"],
+                        "r": pair["r"],
+                        "points": points,
+                        "rationale": f"{strength} link (r={pair['r']:.2f}) worth modeling",
+                        "priority": 84,
+                    }
+                )
+
+    # 4. Composition donut — share of a low-cardinality dimension
+    donut_dim = next((d for d in segmentable if 2 <= df[d].nunique() <= 8), None)
+    if donut_dim:
+        recs.append(
+            {
+                "type": "donut",
+                "title": f"Composition by {donut_dim}",
+                "x": donut_dim,
+                "segments": _composition(df, donut_dim),
+                "rationale": f"How records split across {donut_dim}",
+                "priority": 70,
+            }
+        )
+
+    # 5. Distribution of the primary measure (flag skew)
+    if primary and col_by_name.get(primary, {}).get("histogram"):
+        skew = col_by_name[primary].get("skewness", 0) or 0
+        shape = (
+            "right-skewed — a few large values stretch the tail"
+            if skew > 1
+            else "left-skewed" if skew < -1 else "roughly symmetric"
+        )
         recs.append(
             {
                 "type": "histogram",
-                "column": numeric[0],
-                "rationale": "Primary numeric distribution",
-                "priority": 8,
+                "title": f"Distribution — {primary}",
+                "column": primary,
+                "rationale": f"Spread of {primary} ({shape})",
+                "priority": 66,
             }
         )
 
-    # Categorical breakdown — top-20 mean of y by x
-    if categorical and numeric:
-        x_col = categorical[0]
-        y_col = numeric[0]
-        try:
-            agg = df.groupby(x_col, observed=True)[y_col].mean().dropna()
-            agg = agg.sort_values(ascending=False).head(20)
-            bars = [
-                {"label": str(idx), "value": float(round(val, 4))}
-                for idx, val in agg.items()
-            ]
-        except Exception:
-            bars = []
-        recs.append(
-            {
-                "type": "bar_grouped",
-                "x": x_col,
-                "y": y_col,
-                "bars": bars,
-                "rationale": f"Mean {y_col} by {x_col}",
-                "priority": 7,
-            }
-        )
-
-    # Correlation heatmap if 4+ numeric columns
-    if len(numeric) >= 4:
+    # 6. Correlation heatmap when there are several real measures
+    if len(measure_set) >= 3:
+        ordered = [m for m in measures if m in measure_set]
         recs.append(
             {
                 "type": "heatmap_corr",
-                "columns": numeric,
-                "rationale": f"Correlation matrix: {len(numeric)} numeric columns",
-                "priority": 6,
+                "title": "Correlation matrix",
+                "columns": ordered or list(measure_set),
+                "rationale": f"Pairwise correlation across {len(measure_set)} measures",
+                "priority": 58,
             }
         )
 
-    # Secondary numeric histogram
-    if len(numeric) >= 2:
-        recs.append(
-            {
-                "type": "histogram",
-                "column": numeric[1],
-                "rationale": "Secondary numeric distribution",
-                "priority": 5,
-            }
-        )
+    # 7. Second distribution — only if we'd otherwise be thin on charts
+    if len(measures) >= 2 and len(recs) < 4:
+        second = measures[1]
+        if col_by_name.get(second, {}).get("histogram"):
+            recs.append(
+                {
+                    "type": "histogram",
+                    "title": f"Distribution — {second}",
+                    "column": second,
+                    "rationale": f"Spread of {second}",
+                    "priority": 50,
+                }
+            )
 
     return sorted(recs, key=lambda x: x["priority"], reverse=True)
 

@@ -137,7 +137,7 @@ def coerce_provider(value: str | AIProvider | None) -> AIProvider:
 # ---------------------------------------------------------------------------
 
 
-def _build_system_prompt(df: pd.DataFrame) -> str:
+def _build_system_prompt(df: pd.DataFrame, semantics: dict | None = None) -> str:
     n_rows, n_cols = df.shape
 
     dtype_lines = "\n".join(f"  {c}: {t}" for c, t in df.dtypes.items())
@@ -176,8 +176,10 @@ def _build_system_prompt(df: pd.DataFrame) -> str:
         vc_str = ", ".join(f'"{k}"({v})' for k, v in vc.items())
         cat_parts.append(f"  {col}: {vc_str}")
     cat_section = (
-        "Top values per categorical column:\n" + "\n".join(cat_parts)
-    ) if cat_parts else ""
+        ("Top values per categorical column:\n" + "\n".join(cat_parts))
+        if cat_parts
+        else ""
+    )
 
     sections = [
         f"You are AURA AI — a sharp, direct data analyst. "
@@ -189,13 +191,47 @@ def _build_system_prompt(df: pd.DataFrame) -> str:
     if cat_section:
         sections.append(cat_section)
 
+    id_rule = ""
+    if semantics:
+        arch = semantics.get("archetype_label")
+        domain = semantics.get("domain")
+        measures = semantics.get("measure_cols") or []
+        dims = semantics.get("dimension_cols") or []
+        temporal = semantics.get("temporal_cols") or []
+        ids = semantics.get("id_cols") or []
+        geo = semantics.get("geo_cols") or []
+        role_lines = [
+            f"Dataset shape: {arch}" + (f" · domain: {domain}" if domain else "")
+        ]
+        if measures:
+            role_lines.append(
+                f"Measures (real quantities to analyze): {', '.join(measures)}"
+            )
+        if dims:
+            role_lines.append(f"Dimensions (slice/compare by these): {', '.join(dims)}")
+        if temporal:
+            role_lines.append(f"Time columns: {', '.join(temporal)}")
+        if geo:
+            role_lines.append(f"Geographic columns: {', '.join(geo)}")
+        if ids:
+            role_lines.append(f"Identifier/key columns: {', '.join(ids)}")
+        sections.append(
+            "Semantic column roles (already inferred):\n"
+            + "\n".join(f"  {ln}" for ln in role_lines)
+        )
+        if ids:
+            id_rule = (
+                f"\n- Columns {', '.join(ids)} are IDENTIFIERS (keys). NEVER treat them as "
+                "measures — no trends, outliers, averages, or correlations on identifiers."
+            )
+
     sections.append(
         "RULES:\n"
         "- The statistics above are computed on the FULL dataset. Answer DIRECTLY from them.\n"
         "- NEVER say 'I would need to run code' or 'without the actual data' — you HAVE it.\n"
         "- Be specific and numerical. Name actual columns and cite real values from above.\n"
         "- Format with markdown: bold key figures, use bullet lists, code blocks for any code.\n"
-        "- Be concise and insight-driven. No filler, no preamble."
+        "- Be concise and insight-driven. No filler, no preamble." + id_rule
     )
 
     return "\n\n".join(sections)
@@ -281,14 +317,17 @@ def ask_ai(
     question: str,
     provider: AIProvider = AIProvider.GROQ,
     stream: bool = True,
+    semantics: dict | None = None,
 ) -> Generator[str, None, None]:
     """Ask a provider about *df* and yield streamed text chunks.
 
     Resolves to the best configured provider (free first) if the requested one
-    has no key. Raises ValueError if none are configured.
+    has no key. Raises ValueError if none are configured. When *semantics* is
+    supplied, the system prompt is grounded in column roles so the model never
+    treats an identifier like ``row_id`` as a measure.
     """
     resolved = resolve_provider(provider)
-    system_prompt = _build_system_prompt(df)
+    system_prompt = _build_system_prompt(df, semantics)
     sample = _truncate_df(df).to_string()
     user_message = f"Dataset sample:\n\n{sample}\n\nQuestion: {question}"
     yield from _stream_provider(resolved, system_prompt, user_message, stream)
@@ -383,6 +422,95 @@ def _deterministic_summary(payload: dict) -> dict:
         "provider": "Deterministic",
         "by_ai": False,
     }
+
+
+# ---------------------------------------------------------------------------
+# Public: data-specific suggested questions (deterministic, grounded)
+# ---------------------------------------------------------------------------
+
+
+def suggested_questions(analysis: dict, semantics: dict | None = None) -> list[str]:
+    """Build 4-6 questions DERIVED from the real findings for this dataset.
+
+    Deterministic (instant, free, never hallucinated) and grounded in the
+    actual trend/segment/correlation/quality results — so the chips reference
+    real measures and dimensions, never an identifier like ``row_id``.
+    """
+    sem = semantics or analysis.get("semantics") or {}
+    trends = analysis.get("trends")
+    segments = analysis.get("segments")
+    correlations = analysis.get("correlations", [])
+    quality = analysis.get("quality", {})
+    outliers = analysis.get("outliers", [])
+    dominance = analysis.get("dominance", [])
+    measures = sem.get("primary_measures", [])
+    domain = sem.get("domain")
+
+    ranked: list[tuple[int, str]] = []
+
+    if trends and trends.get("change_pct") is not None:
+        pct = abs(trends["change_pct"])
+        ranked.append(
+            (
+                100,
+                f"What's driving the {pct:.0f}% {trends['direction']} trend in {trends['measure']}?",
+            )
+        )
+    if segments and segments.get("top") and segments.get("bottom"):
+        ranked.append(
+            (
+                92,
+                f"Why does {segments['top']['label']} outperform "
+                f"{segments['bottom']['label']} in {segments['measure']}?",
+            )
+        )
+    if correlations:
+        c = correlations[0]
+        ranked.append(
+            (
+                85,
+                f"What explains the relationship between {c['col_a']} and {c['col_b']}?",
+            )
+        )
+    if measures:
+        ranked.append((68, f"Which columns are most predictive of {measures[0]}?"))
+    hotspots = quality.get("missing_hotspots", [])
+    if hotspots and hotspots[0].get("pct", 0) >= 5:
+        h = hotspots[0]
+        ranked.append(
+            (
+                64,
+                f"How should I handle the {h['pct']:.0f}% missing values in {h['column']}?",
+            )
+        )
+    if outliers and outliers[0].get("pct", 0) >= 2:
+        ranked.append(
+            (
+                60,
+                f"Are the outliers in {outliers[0]['column']} data errors or genuine extremes?",
+            )
+        )
+    if quality.get("score") is not None and quality["score"] < 90:
+        ranked.append((50, "What should I clean or fix before modeling this data?"))
+    if dominance:
+        d0 = dominance[0]
+        ranked.append(
+            (46, f"Does {d0['value']} dominating {d0['column']} bias the analysis?")
+        )
+
+    label = f"{domain} " if domain else ""
+    ranked.append((40, f"Give me the 3 biggest takeaways from this {label}dataset."))
+
+    ranked.sort(key=lambda x: x[0], reverse=True)
+    out: list[str] = []
+    seen: set[str] = set()
+    for _, q in ranked:
+        if q not in seen:
+            seen.add(q)
+            out.append(q)
+        if len(out) >= 6:
+            break
+    return out
 
 
 # ---------------------------------------------------------------------------

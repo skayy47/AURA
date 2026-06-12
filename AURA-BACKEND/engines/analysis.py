@@ -17,6 +17,8 @@ from typing import Any
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 
+from engines.semantics import infer_semantics
+
 logger = logging.getLogger(__name__)
 
 # Insight severity: 3 = critical, 2 = notable, 1 = minor
@@ -81,9 +83,9 @@ def _quality(df: pd.DataFrame, profile: dict) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-def _outliers(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
+def _outliers(df: pd.DataFrame, measure_cols: list[str]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
-    for col in profile.get("numeric_cols", []):
+    for col in measure_cols:
         try:
             s = df[col].dropna()
             if len(s) < 8:
@@ -140,22 +142,18 @@ def _dominance(df: pd.DataFrame, profile: dict) -> list[dict[str, Any]]:
 # ---------------------------------------------------------------------------
 
 
-def _segments(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
-    numeric = profile.get("numeric_cols", [])
-    categorical = profile.get("categorical_cols", [])
-    if not numeric or not categorical:
+def _segments(df: pd.DataFrame, sem: dict) -> dict[str, Any] | None:
+    measures = sem.get("primary_measures") or []
+    segmentable = sem.get("segmentable_cols") or []
+    if not measures or not segmentable:
         return None
 
-    y = numeric[0]
-    # Pick a categorical with 2..12 distinct groups (meaningful segmentation)
-    best_cat = None
-    for c in categorical:
-        k = df[c].nunique(dropna=True)
-        if 2 <= k <= 12:
-            best_cat = c
-            break
-    if best_cat is None:
-        return None
+    y = measures[0]
+    # Prefer a slice column with 2..12 groups; fall back to the best available.
+    best_cat = next(
+        (c for c in segmentable if 2 <= df[c].nunique(dropna=True) <= 12),
+        segmentable[0],
+    )
 
     try:
         grp = (
@@ -190,12 +188,12 @@ def _segments(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
 # ---------------------------------------------------------------------------
 
 
-def _trends(df: pd.DataFrame, profile: dict) -> dict[str, Any] | None:
-    datetime_cols = profile.get("datetime_cols", [])
-    numeric = profile.get("numeric_cols", [])
-    if not datetime_cols or not numeric:
+def _trends(df: pd.DataFrame, sem: dict) -> dict[str, Any] | None:
+    x = sem.get("primary_temporal")
+    measures = sem.get("primary_measures") or []
+    if not x or not measures:
         return None
-    x, y = datetime_cols[0], numeric[0]
+    y = measures[0]
     try:
         sub = df[[x, y]].dropna().sort_values(x)
         if len(sub) < 6:
@@ -402,19 +400,32 @@ def _llm_payload(
 
 
 def analyze(
-    df: pd.DataFrame, profile: dict, meta_name: str = "dataset"
+    df: pd.DataFrame,
+    profile: dict,
+    meta_name: str = "dataset",
+    semantics: dict | None = None,
 ) -> dict[str, Any]:
-    """Run the full expert analysis over a profiled DataFrame."""
+    """Run the full expert analysis over a profiled DataFrame.
+
+    Driven by semantic roles so trends/segments/outliers/correlations use real
+    *measures* (sales, profit) — never identifiers like ``row_id``.
+    """
+    sem = semantics or infer_semantics(df, profile)
+    measures = set(sem.get("measure_cols", []))
+
     quality = _quality(df, profile)
-    outliers = _outliers(df, profile)
+    outliers = _outliers(df, sem.get("measure_cols", []))
+    # Only correlations between genuine measures — drop id/geo noise.
     correlations = [
         p
         for p in (profile.get("correlation") or {}).get("top_pairs", [])
         if abs(p.get("r", 0)) >= 0.3
+        and p.get("col_a") in measures
+        and p.get("col_b") in measures
     ]
     dominance = _dominance(df, profile)
-    segments = _segments(df, profile)
-    trends = _trends(df, profile)
+    segments = _segments(df, sem)
+    trends = _trends(df, sem)
 
     insights = _build_insights(
         quality, outliers, correlations, dominance, segments, trends
@@ -429,6 +440,8 @@ def analyze(
         segments,
         trends,
     )
+    payload["archetype"] = sem.get("archetype_label")
+    payload["domain"] = sem.get("domain")
 
     return {
         "quality": quality,
@@ -438,5 +451,6 @@ def analyze(
         "segments": segments,
         "trends": trends,
         "insights": insights,
+        "semantics": sem,
         "llm_payload": payload,
     }

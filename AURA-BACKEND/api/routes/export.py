@@ -71,9 +71,14 @@ async def analyze_session(session_id: str):
             profile = profile_dataframe(df)
             sess["explore_profile"] = profile
         from engines.analysis import analyze
+        from engines.ai_insights import suggested_questions
 
         name = (sess.get("meta") or {}).get("name") or "dataset"
-        result = analyze(df, profile, meta_name=name)
+        semantics = sess.get("semantics")
+        result = analyze(df, profile, meta_name=name, semantics=semantics)
+        result["suggested_questions"] = suggested_questions(
+            result, result.get("semantics")
+        )
         sess["analysis"] = result
         return result
     except Exception as exc:

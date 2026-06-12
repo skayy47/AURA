@@ -13,12 +13,15 @@ import { InsightsStrip } from "@/components/explore/InsightsStrip";
 import { AuraCorrelationHeatmap } from "@/components/explore/AuraCorrelationHeatmap";
 import { AuraHistogram } from "@/components/explore/AuraHistogram";
 import { AuraScatter } from "@/components/explore/AuraScatter";
+import { AuraLineChart } from "@/components/explore/AuraLineChart";
+import { AuraDonut } from "@/components/explore/AuraDonut";
+import { AuraBar } from "@/components/explore/AuraBar";
 import { AuraMissingHeatmap } from "@/components/explore/AuraMissingHeatmap";
 import { AuraColumnProfile } from "@/components/explore/AuraColumnProfile";
 import { ExportPDFButton } from "@/components/explore/ExportPDFButton";
 import { fetchExplore, fetchAnalysis, type AnalysisInsight } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import type { ChartRecommendation, ColumnProfile } from "@/lib/types";
+import type { ChartRecommendation, ColumnProfile, Semantics } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useRouter } from "@/i18n/navigation";
 
@@ -63,6 +66,7 @@ export default function ExplorePage() {
 
   const profile = exploreData?.profile;
   const recommendations = exploreData?.recommendations ?? [];
+  const semantics = exploreData?.semantics;
 
   return (
     <div>
@@ -103,6 +107,8 @@ export default function ExplorePage() {
               index={3}
             />
           </div>
+
+          {semantics && <ArchetypeBanner semantics={semantics} />}
 
           {insights.length > 0 && (
             <motion.div
@@ -218,6 +224,49 @@ export default function ExplorePage() {
   );
 }
 
+function ArchetypeBanner({ semantics }: { semantics: Semantics }) {
+  const chips: Array<{ label: string; n: number; color: string }> = [
+    { label: "measures", n: semantics.measure_cols?.length ?? 0, color: "#8B5CF6" },
+    { label: "dimensions", n: semantics.dimension_cols?.length ?? 0, color: "#3B82F6" },
+    { label: "temporal", n: semantics.temporal_cols?.length ?? 0, color: "#22D3EE" },
+    { label: "geo", n: semantics.geo_cols?.length ?? 0, color: "#00FFB2" },
+    { label: "identifiers", n: semantics.id_cols?.length ?? 0, color: "#EC4899" },
+  ].filter((x) => x.n > 0);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 }}
+      className="aura-card p-5 flex flex-col md:flex-row md:items-center gap-4"
+    >
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="w-1.5 h-1.5 rounded-full bg-purple" style={{ boxShadow: "0 0 8px var(--purple)" }} />
+          <h3 className="font-bricolage font-bold text-text text-lg">{semantics.archetype_label}</h3>
+          {semantics.domain && (
+            <span className="text-[0.65rem] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md text-cyan bg-[rgba(0,229,255,0.12)]">
+              {semantics.domain}
+            </span>
+          )}
+        </div>
+        <p className="text-sm text-text-m mt-1">{semantics.archetype_blurb}</p>
+      </div>
+      <div className="flex items-center gap-2 flex-wrap shrink-0">
+        {chips.map((chip) => (
+          <span
+            key={chip.label}
+            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs border border-white/[0.06] bg-white/[0.02]"
+          >
+            <span className="font-geist-mono font-bold tabular-nums" style={{ color: chip.color }}>{chip.n}</span>
+            <span className="text-text-d">{chip.label}</span>
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 interface ChartTileProps {
   rec: ChartRecommendation;
   profile: import("@/lib/types").DatasetProfile;
@@ -226,55 +275,58 @@ interface ChartTileProps {
 
 function ChartTile({ rec, profile, delay }: ChartTileProps) {
   const fullWidth: React.CSSProperties = { gridColumn: "1 / -1" };
+  const wrap = (node: React.ReactNode, full = false) => (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay }}
+      style={full ? fullWidth : undefined}
+    >
+      {node}
+    </motion.div>
+  );
+  const title = rec.title ?? rec.rationale;
 
   switch (rec.type) {
     case "heatmap_corr": {
       if (!profile.correlation) return null;
-      return (
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} style={fullWidth}>
-          <AuraCorrelationHeatmap data={profile.correlation} />
-        </motion.div>
-      );
+      return wrap(<AuraCorrelationHeatmap data={profile.correlation} />, true);
     }
     case "histogram": {
-      const colName = rec.column ?? "";
-      const col = profile.columns.find((c) => c.name === colName);
+      const col = profile.columns.find((c) => c.name === rec.column);
       if (!col?.histogram?.length) return null;
-      return (
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
-          <AuraHistogram title={`Distribution — ${colName}`} subtitle={rec.rationale} data={col.histogram} />
-        </motion.div>
-      );
+      return wrap(<AuraHistogram title={title} subtitle={rec.rationale} data={col.histogram} />);
     }
     case "scatter": {
       const points = (rec.points ?? []) as Array<{ x: number; y: number }>;
       if (!points.length) return null;
-      return (
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
-          <AuraScatter title={`${rec.x} × ${rec.y}`} subtitle={rec.rationale} xLabel={rec.x ?? "x"} yLabel={(rec.y as string) ?? "y"} points={points} />
-        </motion.div>
+      return wrap(
+        <AuraScatter
+          title={title}
+          subtitle={rec.rationale}
+          xLabel={rec.x ?? "x"}
+          yLabel={(rec.y as string) ?? "y"}
+          points={points}
+        />
       );
     }
     case "bar_grouped": {
       const bars = rec.bars ?? [];
       if (!bars.length) return null;
-      const binData = bars.map((b) => ({ bin: b.label, lo: 0, hi: 0, count: b.value }));
-      return (
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
-          <AuraHistogram title={`${rec.y} by ${rec.x}`} subtitle={rec.rationale} data={binData} />
-        </motion.div>
-      );
+      return wrap(<AuraBar title={title} subtitle={rec.rationale} bars={bars} />);
+    }
+    case "donut": {
+      const segments = rec.segments ?? [];
+      if (!segments.length) return null;
+      return wrap(<AuraDonut title={title} subtitle={rec.rationale} segments={segments} />);
     }
     case "timeseries": {
-      const points = (rec.points ?? []) as Array<Record<string, any>>;
-      if (!points.length) return null;
-      const yCols = Array.isArray(rec.y) ? rec.y : [rec.y as string];
-      const firstY = yCols[0];
-      const simplified = points.map((p) => ({ bin: String(p.x).slice(0, 10), lo: 0, hi: 0, count: Number(p[firstY]) || 0 }));
-      return (
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} style={fullWidth}>
-          <AuraHistogram title={`${firstY} over ${rec.x}`} subtitle={rec.rationale} data={simplified} />
-        </motion.div>
+      const points = (rec.points ?? []) as Array<{ x: string; value: number }>;
+      const series = rec.series ?? [];
+      if (!points.length && !series.length) return null;
+      return wrap(
+        <AuraLineChart title={title} subtitle={rec.rationale} points={points} series={series} />,
+        true
       );
     }
     default:

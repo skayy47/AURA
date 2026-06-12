@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface IntelPanelProps {
   botState: BotState;
+  suggestions: string[];
   onSuggestionClick: (q: string) => void;
   onHistoryClick: (index: number) => void;
   onBotClick?: () => void;
@@ -28,31 +29,6 @@ function parseQualityScore(detail: string | undefined): number | null {
   return m ? Math.round(parseFloat(m[1])) : null;
 }
 
-function buildSuggestions(meta: any, exploreData: any): string[] {
-  const numericCols: string[] = meta?.estimated_numeric_cols ?? [];
-  const firstNumeric = numericCols[0];
-
-  const topPair = exploreData?.profile?.correlation?.top_pairs?.[0];
-
-  const suggestions: string[] = [];
-  suggestions.push("What columns have the most missing values?");
-
-  if (topPair && Math.abs(topPair.r) >= 0.3) {
-    suggestions.push(`Why is ${topPair.col_a} correlated with ${topPair.col_b}?`);
-  } else {
-    suggestions.push("Show me correlations above 0.7");
-  }
-
-  if (firstNumeric) {
-    suggestions.push(`Are there outliers in ${firstNumeric}?`);
-  } else {
-    suggestions.push("Which columns look most problematic?");
-  }
-
-  suggestions.push("Summarize this dataset in 3 sentences");
-  return suggestions;
-}
-
 function MicroMetric({ label, value, color, index }: { label: string; value: string; color: string; index: number }) {
   return (
     <motion.div
@@ -71,8 +47,8 @@ function MicroMetric({ label, value, color, index }: { label: string; value: str
   );
 }
 
-export function IntelPanel({ botState, onSuggestionClick, onHistoryClick, onBotClick, disabled }: IntelPanelProps) {
-  const { meta, cleanResult, exploreData, chatHistory } = useStore();
+export function IntelPanel({ botState, suggestions, onSuggestionClick, onHistoryClick, onBotClick, disabled }: IntelPanelProps) {
+  const { meta, cleanResult, chatHistory } = useStore();
 
   const qualityScore = useMemo(() => {
     const log = cleanResult?.log ?? [];
@@ -81,8 +57,6 @@ export function IntelPanel({ botState, onSuggestionClick, onHistoryClick, onBotC
     );
     return parseQualityScore(validatorEntry?.detail);
   }, [cleanResult]);
-
-  const suggestions = useMemo(() => buildSuggestions(meta, exploreData), [meta, exploreData]);
 
   const userMessages = useMemo(() => {
     return chatHistory
@@ -142,7 +116,7 @@ export function IntelPanel({ botState, onSuggestionClick, onHistoryClick, onBotC
           )}
         </section>
 
-        {userMessages.length > 0 && (
+        {suggestions.length > 0 && (
           <section>
             <p className="font-bricolage font-bold text-[0.65rem] tracking-[0.15em] uppercase text-text-m mb-3">
               Suggested Questions

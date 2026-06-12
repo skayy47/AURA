@@ -123,6 +123,34 @@
 
     .footer { padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
     .footer p { font-size: 9.5px; color: var(--text-d); font-family: monospace; }
+
+    /* Cover archetype */
+    .cover-arch { display: inline-flex; align-items: center; gap: 7px; margin-top: 10px;
+      font-size: 11px; color: var(--text-m); }
+    .cover-arch .badge-dom { font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); border-radius: 999px; padding: 2px 9px; }
+
+    /* Dataset DNA */
+    .dna { display: flex; flex-wrap: wrap; gap: 10px; }
+    .dna-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+      padding: 11px 14px; min-width: 150px; flex: 1; }
+    .dna-head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+    .dna-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dna-label { font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-d); }
+    .dna-count { margin-left: auto; font-size: 13px; font-weight: 700; font-family: monospace; }
+    .dna-cols { font-size: 10.5px; color: var(--text-m); font-family: monospace; line-height: 1.5; }
+
+    /* SVG chart cards */
+    .svg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .svg-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; page-break-inside: avoid; }
+    .svg-box.full { grid-column: 1 / -1; }
+    .svg-title { font-size: 12px; font-weight: 650; color: var(--text); margin-bottom: 2px; }
+    .svg-sub { font-size: 10px; color: var(--text-d); margin-bottom: 10px; }
+    .svg-box svg { display: block; width: 100%; height: auto; }
+
+    /* Print hygiene */
+    .section, .finding, .metric, .chart-box { page-break-inside: avoid; }
   </style>
 </head>
 <body>
@@ -140,6 +168,12 @@
       <h1>{{ dataset_name }}</h1>
       <p>{{ n_rows }} rows · {{ n_cols }} cols</p>
       <p>Generated {{ generated_at }}</p>
+      {% if archetype %}
+      <div class="cover-arch">
+        <span>{{ archetype }}</span>
+        {% if domain %}<span class="badge-dom">{{ domain }}</span>{% endif %}
+      </div>
+      {% endif %}
     </div>
   </div>
 
@@ -166,6 +200,26 @@
       {% endif %}
     </div>
   </div>
+
+  <!-- Dataset DNA — semantic column roles -->
+  {% if role_summary %}
+  <div class="section">
+    <div class="section-title">Dataset DNA — Column Roles</div>
+    {% if archetype_blurb %}<p style="color: var(--text-m); font-size: 12px; margin-bottom: 14px;">{{ archetype_blurb }}</p>{% endif %}
+    <div class="dna">
+      {% for r in role_summary %}
+      <div class="dna-card">
+        <div class="dna-head">
+          <span class="dna-dot" style="background: {{ r.color }};"></span>
+          <span class="dna-label">{{ r.label }}</span>
+          <span class="dna-count" style="color: {{ r.color }};">{{ r.cols|length }}</span>
+        </div>
+        <div class="dna-cols">{{ r.cols[:6]|join(", ") }}{% if r.cols|length > 6 %} +{{ r.cols|length - 6 }} more{% endif %}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
 
   <!-- Data Quality scorecard -->
   {% if quality %}
@@ -214,35 +268,18 @@
   </div>
   {% endif %}
 
-  <!-- Charts -->
-  {% if histogram or segments %}
+  <!-- Visual Analysis — bespoke charts rendered as inline SVG -->
+  {% if charts %}
   <div class="section">
     <div class="section-title">Visual Analysis</div>
-    <div class="chart-grid">
-      {% if histogram %}
-      <div class="chart-box">
-        <div class="chart-h">Distribution — {{ histogram.column }}</div>
-        {% set maxc = histogram.bins | map(attribute='count') | max %}
-        <div class="hist">
-          {% for b in histogram.bins %}
-          <div class="bar" style="height: {{ (b.count / maxc * 100) if maxc else 0 }}%;" title="{{ b.bin }}: {{ b.count }}"></div>
-          {% endfor %}
-        </div>
+    <div class="svg-grid">
+      {% for chart in charts %}
+      <div class="svg-box{% if chart.full %} full{% endif %}">
+        <div class="svg-title">{{ chart.title }}</div>
+        {% if chart.rationale %}<div class="svg-sub">{{ chart.rationale }}</div>{% endif %}
+        {{ chart.svg | safe }}
       </div>
-      {% endif %}
-      {% if segments %}
-      <div class="chart-box">
-        <div class="chart-h">{{ segments.measure }} by {{ segments.dimension }}</div>
-        {% set maxv = segments.bars | map(attribute='value') | map('abs') | max %}
-        {% for s in segments.bars %}
-        <div class="seg-row">
-          <span class="lbl">{{ s.label }}</span>
-          <div class="track"><div class="fill" style="width: {{ (s.value|abs / maxv * 100) if maxv else 0 }}%;"></div></div>
-          <span class="val">{{ "%.1f"|format(s.value) }}</span>
-        </div>
-        {% endfor %}
-      </div>
-      {% endif %}
+      {% endfor %}
     </div>
   </div>
   {% endif %}

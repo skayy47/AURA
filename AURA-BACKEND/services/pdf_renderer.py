@@ -62,12 +62,17 @@ def build_report_context(session: dict, profile: dict) -> dict:
     # ── Expert analysis (defensive) ─────────────────────────────
     analysis: dict = {}
     exec_summary: dict = {}
+    charts: list[dict] = []
+    semantics: dict = session.get("semantics") or {}
     df = _get_df(session)
     if df is not None:
         try:
             from engines.analysis import analyze
 
-            analysis = analyze(df, profile, meta_name=dataset_name)
+            analysis = analyze(
+                df, profile, meta_name=dataset_name, semantics=semantics or None
+            )
+            semantics = analysis.get("semantics") or semantics
         except Exception as exc:
             logger.warning("Analysis failed during report build: %s", exc)
         try:
@@ -77,6 +82,24 @@ def build_report_context(session: dict, profile: dict) -> dict:
                 exec_summary = executive_summary(analysis["llm_payload"])
         except Exception as exc:
             logger.warning("Exec summary failed: %s", exc)
+        # ── Bespoke charts → inline SVG (always renders) ─────────
+        try:
+            from engines.exploration import recommend_charts
+            from services.svg_charts import FULL_WIDTH, chart_to_svg
+
+            for rec in recommend_charts(df, profile, semantics or None):
+                svg = chart_to_svg(rec, profile)
+                if svg:
+                    charts.append(
+                        {
+                            "title": rec.get("title") or rec.get("rationale"),
+                            "rationale": rec.get("rationale"),
+                            "svg": svg,
+                            "full": rec.get("type") in FULL_WIDTH,
+                        }
+                    )
+        except Exception as exc:
+            logger.warning("Chart SVG build failed: %s", exc)
 
     quality = analysis.get("quality", {})
     quality_score = quality.get("score")
@@ -106,6 +129,36 @@ def build_report_context(session: dict, profile: dict) -> dict:
             histogram = {"column": c["name"], "bins": c["histogram"]}
             break
 
+    # ── Dataset DNA — semantic role breakdown for the cover/overview ──
+    role_summary = [
+        {
+            "label": "Measures",
+            "cols": semantics.get("measure_cols", []),
+            "color": "#8b5cf6",
+        },
+        {
+            "label": "Dimensions",
+            "cols": semantics.get("dimension_cols", []),
+            "color": "#3b82f6",
+        },
+        {
+            "label": "Temporal",
+            "cols": semantics.get("temporal_cols", []),
+            "color": "#00e5ff",
+        },
+        {
+            "label": "Geographic",
+            "cols": semantics.get("geo_cols", []),
+            "color": "#00ffb2",
+        },
+        {
+            "label": "Identifiers",
+            "cols": semantics.get("id_cols", []),
+            "color": "#ec4899",
+        },
+    ]
+    role_summary = [r for r in role_summary if r["cols"]]
+
     return {
         "dataset_name": dataset_name,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
@@ -121,7 +174,12 @@ def build_report_context(session: dict, profile: dict) -> dict:
         "segments": analysis.get("segments"),
         "trends": analysis.get("trends"),
         "histogram": histogram,
+        "charts": charts,
         "columns": columns,
+        "archetype": semantics.get("archetype_label"),
+        "archetype_blurb": semantics.get("archetype_blurb"),
+        "domain": semantics.get("domain"),
+        "role_summary": role_summary,
         "top_pairs": (profile.get("correlation") or {}).get("top_pairs", [])[:6],
         "cleaning_log": cleaning_log,
     }

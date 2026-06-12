@@ -25,6 +25,7 @@ async def ask(req: AskRequest):
             raise HTTPException(status_code=422, detail="No dataset in session")
 
         provider = coerce_provider(req.provider)
+        semantics = sess.get("semantics")
 
         # Add user message to history
         history = sess.get("chat_history", [])
@@ -34,7 +35,9 @@ async def ask(req: AskRequest):
         def generate():
             full_response = ""
             try:
-                for chunk in ask_ai(df, req.question, provider, stream=True):
+                for chunk in ask_ai(
+                    df, req.question, provider, stream=True, semantics=semantics
+                ):
                     full_response += chunk
                     yield f"data: {json.dumps({'chunk': chunk})}\n\n"
             except Exception as exc:

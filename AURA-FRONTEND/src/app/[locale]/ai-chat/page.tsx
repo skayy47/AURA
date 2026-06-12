@@ -9,7 +9,7 @@ import { ChatInput } from "@/components/ai/ChatInput";
 import { AuraBot, type BotState } from "@/components/ai/AuraBot";
 import { IntelPanel } from "@/components/ai/IntelPanel";
 // GlowCard removed from suggestions — replaced with clean glass cards
-import { streamAsk } from "@/lib/api";
+import { streamAsk, fetchAnalysis } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { Link } from "@/i18n/navigation";
 
@@ -21,20 +21,12 @@ const PROVIDER_BADGE: Record<string, { label: string; color: string }> = {
   openai:  { label: "OpenAI",      color: "#3B82F6" },
 };
 
-function buildHeroSuggestions(meta: any): { question: string; accent: "purple" | "cyan" | "blue" }[] {
-  const numericCols: string[] = meta?.estimated_numeric_cols ?? [];
-  const firstNumeric = numericCols[0];
-  return [
-    { question: "What columns have the most missing values?", accent: "purple" },
-    {
-      question: firstNumeric
-        ? `Are there outliers in ${firstNumeric}?`
-        : "Which columns look most problematic?",
-      accent: "cyan",
-    },
-    { question: "Summarize this dataset in 3 sentences", accent: "blue" },
-  ];
-}
+const ACCENTS = ["purple", "cyan", "blue"] as const;
+const FALLBACK_QUESTIONS = [
+  "Give me the 3 biggest takeaways from this dataset.",
+  "What data quality issues should I worry about?",
+  "Which columns are most worth analyzing?",
+];
 
 export default function AiChatPage() {
   const t = useTranslations("ai");
@@ -43,6 +35,7 @@ export default function AiChatPage() {
   const [streamedResponse, setStreamedResponse] = useState("");
   const [botState, setBotState] = useState<BotState>("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const rawProvider = useStore((s) => s.provider).toLowerCase();
   const currentProvider = (
     ["groq", "claude", "openai"].includes(rawProvider) ? rawProvider : "groq"
@@ -57,6 +50,14 @@ export default function AiChatPage() {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [chatHistory.length, streamedResponse]);
+
+  // Data-specific suggested questions, derived server-side from the analysis.
+  useEffect(() => {
+    if (!sessionId) return;
+    fetchAnalysis(sessionId)
+      .then((res) => setSuggestions(res.suggested_questions ?? []))
+      .catch(() => setSuggestions([]));
+  }, [sessionId]);
 
   const handleSend = useCallback(async (question: string) => {
     if (!sessionId) return;
@@ -116,13 +117,18 @@ export default function AiChatPage() {
   }
 
   const isEmpty = chatHistory.length === 0 && !streamedResponse && !loading;
-  const heroSuggestions = buildHeroSuggestions(meta);
+  const questionList = suggestions.length > 0 ? suggestions : FALLBACK_QUESTIONS;
+  const heroSuggestions = questionList.slice(0, 3).map((question, i) => ({
+    question,
+    accent: ACCENTS[i % ACCENTS.length],
+  }));
   const provider = PROVIDER_BADGE[rawProvider] || PROVIDER_BADGE["claude"];
 
   return (
     <div className="flex gap-6 h-[calc(100vh-4rem)] -mx-2">
       <IntelPanel
         botState={botState}
+        suggestions={questionList}
         onSuggestionClick={handleSend}
         onHistoryClick={scrollToMessage}
         onBotClick={triggerWave}
