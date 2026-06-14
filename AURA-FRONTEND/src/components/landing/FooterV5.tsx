@@ -32,7 +32,7 @@ export function FooterV5() {
           {/* Minimal links */}
           <div className="flex flex-col gap-3 pt-1">
             <a
-              href="https://github.com/skayy47/AURA"
+              href="https://github.com/skayy47"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 text-sm text-text-m hover:text-cyan transition-colors duration-200"
