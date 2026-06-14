@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { AuraLoader } from "@/components/ui/AuraLoader";
@@ -22,14 +22,10 @@ const PROVIDER_BADGE: Record<string, { label: string; color: string }> = {
 };
 
 const ACCENTS = ["purple", "cyan", "blue"] as const;
-const FALLBACK_QUESTIONS = [
-  "Give me the 3 biggest takeaways from this dataset.",
-  "What data quality issues should I worry about?",
-  "Which columns are most worth analyzing?",
-];
 
 export default function AiChatPage() {
   const t = useTranslations("ai");
+  const locale = useLocale();
   const { sessionId, meta, chatHistory, addMessage } = useStore();
   const [loading, setLoading] = useState(false);
   const [streamedResponse, setStreamedResponse] = useState("");
@@ -54,10 +50,10 @@ export default function AiChatPage() {
   // Data-specific suggested questions, derived server-side from the analysis.
   useEffect(() => {
     if (!sessionId) return;
-    fetchAnalysis(sessionId)
+    fetchAnalysis(sessionId, locale)
       .then((res) => setSuggestions(res.suggested_questions ?? []))
       .catch(() => setSuggestions([]));
-  }, [sessionId]);
+  }, [sessionId, locale]);
 
   const handleSend = useCallback(async (question: string) => {
     if (!sessionId) return;
@@ -69,7 +65,7 @@ export default function AiChatPage() {
     try {
       let fullText = "";
       let firstChunk = true;
-      for await (const chunk of streamAsk(sessionId, question, currentProvider)) {
+      for await (const chunk of streamAsk(sessionId, question, currentProvider, locale)) {
         if (firstChunk) {
           setBotState("speaking");
           firstChunk = false;
@@ -87,14 +83,14 @@ export default function AiChatPage() {
         transitionTimer.current = setTimeout(() => setBotState("idle"), 1800);
       }
     } catch (e: any) {
-      addMessage({ role: "assistant", content: `Something went wrong. Try rephrasing? (${e.message})`, ts: Date.now() });
+      addMessage({ role: "assistant", content: `${t("error")} (${e.message})`, ts: Date.now() });
       setBotState("error");
       if (transitionTimer.current) clearTimeout(transitionTimer.current);
       transitionTimer.current = setTimeout(() => setBotState("idle"), 2000);
     } finally {
       setLoading(false);
     }
-  }, [sessionId, addMessage, currentProvider]);
+  }, [sessionId, addMessage, currentProvider, locale, t]);
 
   const scrollToMessage = useCallback((index: number) => {
     const el = messageRefs.current[index];
@@ -117,7 +113,10 @@ export default function AiChatPage() {
   }
 
   const isEmpty = chatHistory.length === 0 && !streamedResponse && !loading;
-  const questionList = suggestions.length > 0 ? suggestions : FALLBACK_QUESTIONS;
+  const questionList =
+    suggestions.length > 0
+      ? suggestions
+      : [t("fallbackQ1"), t("fallbackQ2"), t("fallbackQ3")];
   const heroSuggestions = questionList.slice(0, 3).map((question, i) => ({
     question,
     accent: ACCENTS[i % ACCENTS.length],
@@ -153,7 +152,7 @@ export default function AiChatPage() {
               href="/docs"
               className="inline-flex items-center gap-1.5 text-[0.74rem] font-semibold text-text rounded-lg px-3 py-1.5 bg-gradient-to-r from-cyan/15 to-purple/15 border border-cyan/30 hover:border-cyan/60 hover:from-cyan/25 hover:to-purple/25 transition-colors"
             >
-              Export report
+              {t("exportReport")}
               <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
@@ -241,7 +240,7 @@ export default function AiChatPage() {
                 <div className="flex items-start gap-3 mb-5">
                   <div className="shrink-0" style={{ width: 32 }} />
                   <div className="bg-surface2 border border-border rounded-2xl rounded-bl-[4px] px-4 py-3">
-                    <AuraLoader size="sm" label="Thinking" />
+                    <AuraLoader size="sm" label={t("thinking")} />
                   </div>
                 </div>
               )}

@@ -36,7 +36,12 @@ async def ask(req: AskRequest):
             full_response = ""
             try:
                 for chunk in ask_ai(
-                    df, req.question, provider, stream=True, semantics=semantics
+                    df,
+                    req.question,
+                    provider,
+                    stream=True,
+                    semantics=semantics,
+                    language=req.language,
                 ):
                     full_response += chunk
                     yield f"data: {json.dumps({'chunk': chunk})}\n\n"

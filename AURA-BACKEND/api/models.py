@@ -70,6 +70,7 @@ class AskRequest(BaseModel):
     session_id: str
     question: str
     provider: str = "claude"  # "claude" | "openai"
+    language: str = "en"  # UI locale ("en" | "fr") — drives the AI response language
 
 
 class ExportRequest(BaseModel):

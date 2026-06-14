@@ -44,7 +44,6 @@ function regression(points: Point[]) {
 
 export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) {
   const locale = useLocale();
-  const isRTL = locale === "ar";
   const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 3 });
 
   const reg = useMemo(() => regression(points), [points]);
@@ -75,9 +74,7 @@ export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) 
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart
-            margin={isRTL
-              ? { top: 6, right: 0, bottom: 6, left: 6 }
-              : { top: 6, right: 6, bottom: 6, left: 0 }}
+            margin={{ top: 6, right: 6, bottom: 6, left: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#1E2A50" />
             <XAxis
@@ -99,7 +96,7 @@ export function AuraScatter({ title, subtitle, xLabel, yLabel, points }: Props) 
               tickLine={false}
               axisLine={false}
               width={40}
-              orientation={isRTL ? "right" : "left"}
+              orientation="left"
               tickFormatter={(v: number) => fmt.format(v)}
             />
             <ZAxis range={[30, 30]} />

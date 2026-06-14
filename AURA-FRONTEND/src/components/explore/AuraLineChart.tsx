@@ -36,7 +36,6 @@ const PALETTE = ["#8B5CF6", "#22D3EE", "#3B82F6", "#00FFB2", "#F59E0B"];
 
 export function AuraLineChart({ title, subtitle, points = [], series = [] }: Props) {
   const locale = useLocale();
-  const isRTL = locale === "ar";
   const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 2, notation: "compact" });
   const multi = series.length > 0;
 
@@ -70,7 +69,7 @@ export function AuraLineChart({ title, subtitle, points = [], series = [] }: Pro
         <ResponsiveContainer width="100%" height="100%">
           <Chart
             data={data as object[]}
-            margin={isRTL ? { top: 8, right: -16, left: 4, bottom: 0 } : { top: 8, right: 4, left: -16, bottom: 0 }}
+            margin={{ top: 8, right: 4, left: -16, bottom: 0 }}
           >
             <defs>
               <linearGradient id="lineArea" x1="0" y1="0" x2="0" y2="1">
@@ -94,7 +93,7 @@ export function AuraLineChart({ title, subtitle, points = [], series = [] }: Pro
               tickLine={false}
               axisLine={false}
               width={44}
-              orientation={isRTL ? "right" : "left"}
+              orientation="left"
               tickFormatter={(v: number) => fmt.format(v)}
             />
             <Tooltip

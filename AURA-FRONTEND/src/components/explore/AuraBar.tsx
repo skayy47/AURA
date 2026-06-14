@@ -25,7 +25,6 @@ interface Props {
 
 export function AuraBar({ title, subtitle, bars }: Props) {
   const locale = useLocale();
-  const isRTL = locale === "ar";
   const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
   const compact = new Intl.NumberFormat(locale, { maximumFractionDigits: 1, notation: "compact" });
   const hasNegative = bars.some((b) => b.value < 0);
@@ -44,7 +43,7 @@ export function AuraBar({ title, subtitle, bars }: Props) {
           <BarChart
             layout="vertical"
             data={bars}
-            margin={isRTL ? { top: 0, right: 8, left: 8, bottom: 0 } : { top: 0, right: 36, left: 8, bottom: 0 }}
+            margin={{ top: 0, right: 36, left: 8, bottom: 0 }}
           >
             <defs>
               <linearGradient id="barPos" x1="0" y1="0" x2="1" y2="0">
@@ -59,7 +58,6 @@ export function AuraBar({ title, subtitle, bars }: Props) {
               fontSize={10}
               tickLine={false}
               axisLine={false}
-              reversed={isRTL}
               tickFormatter={(v: number) => compact.format(v)}
             />
             <YAxis
@@ -70,7 +68,7 @@ export function AuraBar({ title, subtitle, bars }: Props) {
               tickLine={false}
               axisLine={false}
               width={104}
-              orientation={isRTL ? "right" : "left"}
+              orientation="left"
               tickFormatter={(v: string) => (v.length > 14 ? v.slice(0, 13) + "…" : v)}
             />
             <Tooltip
@@ -91,7 +89,7 @@ export function AuraBar({ title, subtitle, bars }: Props) {
               ))}
               <LabelList
                 dataKey="value"
-                position={isRTL ? "left" : "right"}
+                position="right"
                 formatter={(v: number) => compact.format(v)}
                 style={{ fill: "#94A3B8", fontSize: 10, fontFamily: "Geist Mono, monospace" }}
               />

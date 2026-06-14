@@ -45,15 +45,25 @@ async def export(session_id: str, format: str):
 
 
 @router.get("/analyze/{session_id}")
-async def analyze_session(session_id: str):
-    """Run (and cache) the expert auto-analysis for a session → ranked insights."""
+async def analyze_session(session_id: str, lang: str = "en"):
+    """Run (and cache) the expert auto-analysis for a session → ranked insights.
+
+    The heavy analysis is cached per session; the suggested questions are rebuilt
+    on every request so they always match the requested UI language (``lang``).
+    """
     try:
         sess = get_session(session_id)
     except KeyError:
         raise HTTPException(status_code=404, detail="Session not found")
 
+    from engines.ai_insights import suggested_questions
+
     if sess.get("analysis"):
-        return sess["analysis"]
+        result = sess["analysis"]
+        result["suggested_questions"] = suggested_questions(
+            result, result.get("semantics"), language=lang
+        )
+        return result
 
     df = sess.get("cleaned_df")
     if df is None:
@@ -71,15 +81,14 @@ async def analyze_session(session_id: str):
             profile = profile_dataframe(df)
             sess["explore_profile"] = profile
         from engines.analysis import analyze
-        from engines.ai_insights import suggested_questions
 
         name = (sess.get("meta") or {}).get("name") or "dataset"
         semantics = sess.get("semantics")
         result = analyze(df, profile, meta_name=name, semantics=semantics)
-        result["suggested_questions"] = suggested_questions(
-            result, result.get("semantics")
-        )
         sess["analysis"] = result
+        result["suggested_questions"] = suggested_questions(
+            result, result.get("semantics"), language=lang
+        )
         return result
     except Exception as exc:
         logger.exception("Analysis failed")

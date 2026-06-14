@@ -1,6 +1,5 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLocale } from "next-intl";
 import { AuraHistogram } from "./AuraHistogram";
 import type { ColumnProfile, DatasetProfile } from "@/lib/types";
 
@@ -42,8 +41,7 @@ function topCorrelationsFor(col: string, profile: DatasetProfile): Array<{ other
 }
 
 export function AuraColumnProfile({ column, profile, onClose }: Props) {
-  const locale = useLocale();
-  const offscreen = locale === "ar" ? "-100%" : "100%";
+  const offscreen = "100%";
 
   return (
     <AnimatePresence>

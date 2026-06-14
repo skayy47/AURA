@@ -137,7 +137,29 @@ def coerce_provider(value: str | AIProvider | None) -> AIProvider:
 # ---------------------------------------------------------------------------
 
 
-def _build_system_prompt(df: pd.DataFrame, semantics: dict | None = None) -> str:
+_LANGUAGE_NAMES = {"en": "English", "fr": "French"}
+
+
+def _language_directive(language: str | None) -> str:
+    """A system-prompt rule forcing the model to answer in the UI language.
+
+    Empty for English (the default). Column names, code, and numbers are kept
+    verbatim so the analysis stays accurate.
+    """
+    code = (language or "en").strip().lower()[:2]
+    name = _LANGUAGE_NAMES.get(code)
+    if not name or code == "en":
+        return ""
+    return (
+        f"\n- ALWAYS respond in {name}. Write the ENTIRE answer in {name} — "
+        f"headings, bullet points, and prose. Keep column names, code, and "
+        f"numeric values exactly as they appear in the data."
+    )
+
+
+def _build_system_prompt(
+    df: pd.DataFrame, semantics: dict | None = None, language: str = "en"
+) -> str:
     n_rows, n_cols = df.shape
 
     dtype_lines = "\n".join(f"  {c}: {t}" for c, t in df.dtypes.items())
@@ -231,7 +253,9 @@ def _build_system_prompt(df: pd.DataFrame, semantics: dict | None = None) -> str
         "- NEVER say 'I would need to run code' or 'without the actual data' — you HAVE it.\n"
         "- Be specific and numerical. Name actual columns and cite real values from above.\n"
         "- Format with markdown: bold key figures, use bullet lists, code blocks for any code.\n"
-        "- Be concise and insight-driven. No filler, no preamble." + id_rule
+        "- Be concise and insight-driven. No filler, no preamble."
+        + id_rule
+        + _language_directive(language)
     )
 
     return "\n\n".join(sections)
@@ -318,6 +342,7 @@ def ask_ai(
     provider: AIProvider = AIProvider.GROQ,
     stream: bool = True,
     semantics: dict | None = None,
+    language: str = "en",
 ) -> Generator[str, None, None]:
     """Ask a provider about *df* and yield streamed text chunks.
 
@@ -327,7 +352,7 @@ def ask_ai(
     treats an identifier like ``row_id`` as a measure.
     """
     resolved = resolve_provider(provider)
-    system_prompt = _build_system_prompt(df, semantics)
+    system_prompt = _build_system_prompt(df, semantics, language)
     sample = _truncate_df(df).to_string()
     user_message = f"Dataset sample:\n\n{sample}\n\nQuestion: {question}"
     yield from _stream_provider(resolved, system_prompt, user_message, stream)
@@ -429,13 +454,17 @@ def _deterministic_summary(payload: dict) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def suggested_questions(analysis: dict, semantics: dict | None = None) -> list[str]:
+def suggested_questions(
+    analysis: dict, semantics: dict | None = None, language: str = "en"
+) -> list[str]:
     """Build 4-6 questions DERIVED from the real findings for this dataset.
 
     Deterministic (instant, free, never hallucinated) and grounded in the
     actual trend/segment/correlation/quality results — so the chips reference
-    real measures and dimensions, never an identifier like ``row_id``.
+    real measures and dimensions, never an identifier like ``row_id``. Localized
+    to the UI language ("en" default, "fr" supported) so the chips match locale.
     """
+    is_fr = (language or "en").strip().lower().startswith("fr")
     sem = semantics or analysis.get("semantics") or {}
     trends = analysis.get("trends")
     segments = analysis.get("segments")
@@ -446,21 +475,30 @@ def suggested_questions(analysis: dict, semantics: dict | None = None) -> list[s
     measures = sem.get("primary_measures", [])
     domain = sem.get("domain")
 
+    direction_fr = {"rising": "à la hausse", "falling": "à la baisse", "flat": "stable"}
+
     ranked: list[tuple[int, str]] = []
 
     if trends and trends.get("change_pct") is not None:
         pct = abs(trends["change_pct"])
+        d = trends["direction"]
         ranked.append(
             (
                 100,
-                f"What's driving the {pct:.0f}% {trends['direction']} trend in {trends['measure']}?",
+                f"Qu'est-ce qui explique la tendance {direction_fr.get(d, d)} de "
+                f"{pct:.0f} % de {trends['measure']} ?"
+                if is_fr
+                else f"What's driving the {pct:.0f}% {d} trend in {trends['measure']}?",
             )
         )
     if segments and segments.get("top") and segments.get("bottom"):
         ranked.append(
             (
                 92,
-                f"Why does {segments['top']['label']} outperform "
+                f"Pourquoi {segments['top']['label']} surpasse-t-il "
+                f"{segments['bottom']['label']} pour {segments['measure']} ?"
+                if is_fr
+                else f"Why does {segments['top']['label']} outperform "
                 f"{segments['bottom']['label']} in {segments['measure']}?",
             )
         )
@@ -469,37 +507,69 @@ def suggested_questions(analysis: dict, semantics: dict | None = None) -> list[s
         ranked.append(
             (
                 85,
-                f"What explains the relationship between {c['col_a']} and {c['col_b']}?",
+                f"Qu'est-ce qui explique la relation entre {c['col_a']} et {c['col_b']} ?"
+                if is_fr
+                else f"What explains the relationship between {c['col_a']} and {c['col_b']}?",
             )
         )
     if measures:
-        ranked.append((68, f"Which columns are most predictive of {measures[0]}?"))
+        ranked.append(
+            (
+                68,
+                f"Quelles colonnes sont les plus prédictives de {measures[0]} ?"
+                if is_fr
+                else f"Which columns are most predictive of {measures[0]}?",
+            )
+        )
     hotspots = quality.get("missing_hotspots", [])
     if hotspots and hotspots[0].get("pct", 0) >= 5:
         h = hotspots[0]
         ranked.append(
             (
                 64,
-                f"How should I handle the {h['pct']:.0f}% missing values in {h['column']}?",
+                f"Comment gérer les {h['pct']:.0f} % de valeurs manquantes dans {h['column']} ?"
+                if is_fr
+                else f"How should I handle the {h['pct']:.0f}% missing values in {h['column']}?",
             )
         )
     if outliers and outliers[0].get("pct", 0) >= 2:
         ranked.append(
             (
                 60,
-                f"Are the outliers in {outliers[0]['column']} data errors or genuine extremes?",
+                f"Les valeurs aberrantes de {outliers[0]['column']} sont-elles "
+                f"des erreurs ou de vrais extrêmes ?"
+                if is_fr
+                else f"Are the outliers in {outliers[0]['column']} data errors or genuine extremes?",
             )
         )
     if quality.get("score") is not None and quality["score"] < 90:
-        ranked.append((50, "What should I clean or fix before modeling this data?"))
+        ranked.append(
+            (
+                50,
+                "Que dois-je nettoyer ou corriger avant de modéliser ces données ?"
+                if is_fr
+                else "What should I clean or fix before modeling this data?",
+            )
+        )
     if dominance:
         d0 = dominance[0]
         ranked.append(
-            (46, f"Does {d0['value']} dominating {d0['column']} bias the analysis?")
+            (
+                46,
+                f"La domination de {d0['value']} dans {d0['column']} biaise-t-elle l'analyse ?"
+                if is_fr
+                else f"Does {d0['value']} dominating {d0['column']} bias the analysis?",
+            )
         )
 
-    label = f"{domain} " if domain else ""
-    ranked.append((40, f"Give me the 3 biggest takeaways from this {label}dataset."))
+    if is_fr:
+        label = f" {domain}" if domain else ""
+        ranked.append(
+            (40, f"Donne-moi les 3 enseignements majeurs de ce jeu de données{label}.")
+        )
+    else:
+        label = f"{domain} " if domain else ""
+        ranked.append((40, f"Give me the 3 biggest takeaways from this {label}dataset."))
 
     ranked.sort(key=lambda x: x[0], reverse=True)
     out: list[str] = []

@@ -11,7 +11,6 @@ interface Props {
 
 export function AuraHistogram({ title, subtitle, data }: Props) {
   const locale = useLocale();
-  const isRTL = locale === "ar";
   const total = data.reduce((a, b) => a + b.count, 0) || 1;
 
   const fmt = new Intl.NumberFormat(locale);
@@ -27,9 +26,7 @@ export function AuraHistogram({ title, subtitle, data }: Props) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
-            margin={isRTL
-              ? { top: 4, right: -16, left: 4, bottom: 0 }
-              : { top: 4, right: 4, left: -16, bottom: 0 }}
+            margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
           >
             <defs>
               <linearGradient id="histGradient" x1="0" y1="0" x2="0" y2="1">
@@ -52,7 +49,7 @@ export function AuraHistogram({ title, subtitle, data }: Props) {
               tickLine={false}
               axisLine={false}
               width={40}
-              orientation={isRTL ? "right" : "left"}
+              orientation="left"
               tickFormatter={(v: number) => fmt.format(v)}
             />
             <Tooltip

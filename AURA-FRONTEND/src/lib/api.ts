@@ -53,13 +53,14 @@ export interface AnalysisInsight {
 }
 
 export async function fetchAnalysis(
-  sessionId: string
+  sessionId: string,
+  locale = 'en'
 ): Promise<{
   insights: AnalysisInsight[];
   quality?: { score: number };
   suggested_questions?: string[];
 }> {
-  const response = await fetch(`${API_URL}/api/analyze/${sessionId}`);
+  const response = await fetch(`${API_URL}/api/analyze/${sessionId}?lang=${locale}`);
   if (!response.ok) {
     throw new Error(`Analysis failed: ${response.statusText}`);
   }
@@ -69,7 +70,8 @@ export async function fetchAnalysis(
 export async function* streamAsk(
   sessionId: string,
   question: string,
-  provider: 'groq' | 'claude' | 'openai'
+  provider: 'groq' | 'claude' | 'openai',
+  locale = 'en'
 ): AsyncGenerator<string> {
   const response = await fetch(`${API_URL}/api/ask`, {
     method: 'POST',
@@ -78,6 +80,7 @@ export async function* streamAsk(
       session_id: sessionId,
       question,
       provider,
+      language: locale,
     }),
   });
 

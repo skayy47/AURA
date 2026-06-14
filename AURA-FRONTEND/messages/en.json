@@ -56,7 +56,12 @@
     "placeholder": "Ask anything about your data...",
     "thinking": "Analyzing...",
     "analyzed": "I've analyzed your data. Ask me anything.",
-    "rowColSummary": "{rows} rows across {cols} columns. Cleaned. Profiled. Ready for questions."
+    "rowColSummary": "{rows} rows across {cols} columns. Cleaned. Profiled. Ready for questions.",
+    "error": "Something went wrong. Try rephrasing?",
+    "exportReport": "Export report",
+    "fallbackQ1": "Give me the 3 biggest takeaways from this dataset.",
+    "fallbackQ2": "What data quality issues should I worry about?",
+    "fallbackQ3": "Which columns are most worth analyzing?"
   },
   "docs": {
     "title": "Export & Documentation",
@@ -90,7 +95,7 @@
     "ctaSecondary": "Upload your own",
     "loading": "Loading…",
     "byline": "Built by SKAY · Powered by Claude",
-    "heroTrustline": "BUILT BY SKAY · POWERED BY CLAUDE · MENA-FIRST",
+    "heroTrustline": "BUILT BY SKAY · POWERED BY CLAUDE",
 
     "painEyebrow": "WHO HASN'T BEEN HERE?",
     "painTitle": "Sound familiar?",
