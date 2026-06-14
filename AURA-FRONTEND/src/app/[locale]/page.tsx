@@ -7,7 +7,6 @@ import { BentoSteps } from "@/components/landing/BentoSteps";
 import { SamplesScroll } from "@/components/landing/SamplesScroll";
 import { OutputPreview } from "@/components/landing/OutputPreview";
 import { TechStack } from "@/components/landing/TechStack";
-import { PricingV5 } from "@/components/landing/PricingV5";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { FooterV5 } from "@/components/landing/FooterV5";
 
@@ -23,7 +22,6 @@ export default function LandingPage() {
       <SamplesScroll />
       <OutputPreview />
       <TechStack />
-      <PricingV5 />
       <FinalCTA />
       <FooterV5 />
     </div>

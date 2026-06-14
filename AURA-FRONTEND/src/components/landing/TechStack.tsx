@@ -7,8 +7,8 @@ const STACK = [
   { n: "05", name: "Next.js 14",  tag: "frontend" },
   { n: "04", name: "FastAPI",     tag: "backend"  },
   { n: "03", name: "pandas",      tag: "compute"  },
-  { n: "02", name: "Groq",        tag: "free ai"  },
-  { n: "01", name: "Claude",      tag: "intel"    },
+  { n: "02", name: "Groq",        tag: "fallback"  },
+  { n: "01", name: "Gemini",      tag: "primary ai" },
 ];
 
 export function TechStack() {
