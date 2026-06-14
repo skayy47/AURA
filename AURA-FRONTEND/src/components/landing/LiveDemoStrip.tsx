@@ -22,13 +22,13 @@ const CLEAN_ROWS = [
   { id: "004", customer: "Omar Said",     date: "2026-02-15", amount: 189.50, status: "delivered" },
 ];
 
-const CLEAN_LOG = [
-  { tag: "[01]", text: "trimmed whitespace · 8 cells" },
-  { tag: "[02]", text: "parsed 3 date formats → ISO 8601" },
-  { tag: "[03]", text: "removed 1 duplicate row (id 001)" },
-  { tag: "[04]", text: "normalized status enum · Title→lower" },
-  { tag: "[05]", text: "extracted numeric from currency strings" },
-];
+const CLEAN_LOG_KEYS = [
+  { tag: "[01]", key: "cleanLog1" },
+  { tag: "[02]", key: "cleanLog2" },
+  { tag: "[03]", key: "cleanLog3" },
+  { tag: "[04]", key: "cleanLog4" },
+  { tag: "[05]", key: "cleanLog5" },
+] as const;
 
 export function LiveDemoStrip() {
   const t = useTranslations("landing");
@@ -204,7 +204,7 @@ export function LiveDemoStrip() {
             transition={{ delay: 0.2, duration: 0.4 }}
             className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 max-w-5xl mx-auto"
           >
-            {CLEAN_LOG.map((step, i) => (
+            {CLEAN_LOG_KEYS.map((step, i) => (
               <motion.li
                 key={i}
                 initial={{ opacity: 0, y: 8 }}
@@ -212,7 +212,7 @@ export function LiveDemoStrip() {
                 transition={{ delay: 0.25 + i * 0.06 }}
                 className="font-geist-mono text-[0.7rem] text-text-m px-3 py-2 rounded-md border border-white/[0.06] bg-surface/40"
               >
-                <span className="text-cyan">{step.tag}</span> {step.text}
+                <span className="text-cyan">{step.tag}</span> {t(step.key)}
               </motion.li>
             ))}
           </motion.ul>
