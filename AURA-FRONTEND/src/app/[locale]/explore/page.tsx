@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { PipelineRoad } from "@/components/layout/PipelineRoad";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -37,6 +37,7 @@ const kindColor: Record<string, string> = {
 
 export default function ExplorePage() {
   const t = useTranslations("explore");
+  const locale = useLocale();
   const router = useRouter();
   const { sessionId, meta, exploreData, setExplore } = useStore();
   const [loading, setLoading] = useState(false);
@@ -56,11 +57,11 @@ export default function ExplorePage() {
 
   useEffect(() => {
     if (sessionId) {
-      fetchAnalysis(sessionId)
+      fetchAnalysis(sessionId, locale)
         .then((res) => setInsights(res.insights ?? []))
         .catch(() => null);
     }
-  }, [sessionId]);
+  }, [sessionId, locale]);
 
   if (!meta || !sessionId) return <EmptyState />;
 
@@ -79,7 +80,7 @@ export default function ExplorePage() {
 
       {loading && (
         <div className="flex justify-center py-16">
-          <AuraLoader label="Analyzing" />
+          <AuraLoader label={t("analysisTitle")} />
         </div>
       )}
 
@@ -119,16 +120,16 @@ export default function ExplorePage() {
             >
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan" style={{ boxShadow: "0 0 8px var(--cyan)" }} />
-                <h3 className="font-bricolage font-bold text-text text-lg">AI Analyst — Key Findings</h3>
-                <span className="text-[0.7rem] text-text-d ml-1">ranked by impact</span>
+                <h3 className="font-bricolage font-bold text-text text-lg">{t("analysisTitle")}</h3>
+                <span className="text-[0.7rem] text-text-d ml-1">{t("analysisRankSub")}</span>
               </div>
               <div className="space-y-2.5">
                 {insights.map((f, i) => {
                   const sev = f.severity === 3
-                    ? { bar: "#fb7185", tag: "Critical", cls: "text-[#fb7185] bg-[rgba(251,113,133,0.12)]" }
+                    ? { bar: "#fb7185", tag: t("severityCritical"), cls: "text-[#fb7185] bg-[rgba(251,113,133,0.12)]" }
                     : f.severity === 2
-                    ? { bar: "#00e5ff", tag: "Notable", cls: "text-cyan bg-[rgba(0,229,255,0.12)]" }
-                    : { bar: "#4a5878", tag: "Minor", cls: "text-text-m bg-white/[0.05]" };
+                    ? { bar: "#00e5ff", tag: t("severityNotable"), cls: "text-cyan bg-[rgba(0,229,255,0.12)]" }
+                    : { bar: "#4a5878", tag: t("severityMinor"), cls: "text-text-m bg-white/[0.05]" };
                   return (
                     <div key={i} className="flex gap-3 items-start p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
                       <span className="w-1 self-stretch rounded-full shrink-0" style={{ background: sev.bar }} />
@@ -225,12 +226,13 @@ export default function ExplorePage() {
 }
 
 function ArchetypeBanner({ semantics }: { semantics: Semantics }) {
+  const t = useTranslations("explore");
   const chips: Array<{ label: string; n: number; color: string }> = [
-    { label: "measures", n: semantics.measure_cols?.length ?? 0, color: "#8B5CF6" },
-    { label: "dimensions", n: semantics.dimension_cols?.length ?? 0, color: "#3B82F6" },
-    { label: "temporal", n: semantics.temporal_cols?.length ?? 0, color: "#22D3EE" },
-    { label: "geo", n: semantics.geo_cols?.length ?? 0, color: "#00FFB2" },
-    { label: "identifiers", n: semantics.id_cols?.length ?? 0, color: "#EC4899" },
+    { label: t("chips.measures"), n: semantics.measure_cols?.length ?? 0, color: "#8B5CF6" },
+    { label: t("chips.dimensions"), n: semantics.dimension_cols?.length ?? 0, color: "#3B82F6" },
+    { label: t("chips.temporal"), n: semantics.temporal_cols?.length ?? 0, color: "#22D3EE" },
+    { label: t("chips.geo"), n: semantics.geo_cols?.length ?? 0, color: "#00FFB2" },
+    { label: t("chips.identifiers"), n: semantics.id_cols?.length ?? 0, color: "#EC4899" },
   ].filter((x) => x.n > 0);
 
   return (

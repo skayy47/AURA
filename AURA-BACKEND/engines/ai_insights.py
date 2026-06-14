@@ -37,6 +37,7 @@ QUICK_PROMPTS: list[str] = [
 class AIProvider(str, Enum):
     """Supported AI providers."""
 
+    GEMINI = "gemini"
     GROQ = "groq"
     CLAUDE = "claude"
     OPENAI = "openai"
@@ -53,7 +54,16 @@ class ProviderSpec:
 
 
 # Single source of truth for provider config. Order = preference (free first).
+# Gemini Flash leads: 15 RPM free tier, excellent bilingual (EN/FR) quality.
 PROVIDERS: dict[AIProvider, ProviderSpec] = {
+    AIProvider.GEMINI: ProviderSpec(
+        label="Gemini · Flash 2.0",
+        tier="free",
+        env_var="GOOGLE_API_KEY",
+        model="gemini-2.0-flash",
+        kind="openai_compat",
+        base_url="https://generativelanguage.googleapis.com/openai/",
+    ),
     AIProvider.GROQ: ProviderSpec(
         label="Groq · Llama 3.3 70B",
         tier="free",
@@ -78,7 +88,7 @@ PROVIDERS: dict[AIProvider, ProviderSpec] = {
     ),
 }
 
-_DEFAULT_ORDER = [AIProvider.GROQ, AIProvider.OPENAI, AIProvider.CLAUDE]
+_DEFAULT_ORDER = [AIProvider.GEMINI, AIProvider.GROQ, AIProvider.OPENAI, AIProvider.CLAUDE]
 
 
 # ---------------------------------------------------------------------------

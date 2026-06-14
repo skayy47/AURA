@@ -58,8 +58,10 @@ async def analyze_session(session_id: str, lang: str = "en"):
 
     from engines.ai_insights import suggested_questions
 
-    if sess.get("analysis"):
-        result = sess["analysis"]
+    # Cache analysis per language so FR and EN both get localized insights.
+    cache_key = f"analysis_{lang}"
+    if sess.get(cache_key):
+        result = sess[cache_key]
         result["suggested_questions"] = suggested_questions(
             result, result.get("semantics"), language=lang
         )
@@ -84,8 +86,8 @@ async def analyze_session(session_id: str, lang: str = "en"):
 
         name = (sess.get("meta") or {}).get("name") or "dataset"
         semantics = sess.get("semantics")
-        result = analyze(df, profile, meta_name=name, semantics=semantics)
-        sess["analysis"] = result
+        result = analyze(df, profile, meta_name=name, semantics=semantics, language=lang)
+        sess[cache_key] = result
         result["suggested_questions"] = suggested_questions(
             result, result.get("semantics"), language=lang
         )

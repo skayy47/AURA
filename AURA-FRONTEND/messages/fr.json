@@ -19,6 +19,10 @@
     "title": "Importation des données",
     "subtitle": "Importez et validez votre jeu de données — CSV, Excel, JSON, Parquet, TSV",
     "dropzone": "Déposez votre fichier ici, ou cliquez pour parcourir",
+    "dropHere": "Déposez votre fichier ici",
+    "browseFiles": "Parcourir",
+    "limitNote": "Limite 200 Mo · CSV · XLS · XLSX · JSON · PARQUET · TSV",
+    "processingFile": "Traitement du fichier",
     "trySamples": "Essayer avec des données d'exemple",
     "fileTooBig": "Le fichier dépasse la limite de 100 Mo",
     "unsupportedFormat": "Format de fichier non pris en charge",
@@ -39,7 +43,20 @@
     "subtitle": "Standardisez les colonnes, imputez les valeurs manquantes et gérez les anomalies",
     "rowsLabel": "Lignes",
     "colsLabel": "Colonnes",
-    "nextExplore": "Suivant : Explorer les données"
+    "nextExplore": "Suivant : Explorer les données",
+    "configTitle": "Configuration du nettoyage",
+    "runBtn": "Lancer le pipeline de nettoyage",
+    "cleaning": "Nettoyage",
+    "auditTitle": "Journal d'audit du nettoyage",
+    "noSteps": "Aucune étape de nettoyage enregistrée.",
+    "options": {
+      "rename_columns": "renommer les colonnes",
+      "normalize_strings": "normaliser les chaînes",
+      "detect_dates": "détecter les dates",
+      "remove_empty_cols": "supprimer les colonnes vides",
+      "fill_missing": "imputer les valeurs manquantes",
+      "drop_duplicates": "supprimer les doublons"
+    }
   },
   "explore": {
     "title": "Exploration des données",
@@ -49,7 +66,33 @@
     "topRLabel": "|r| max",
     "memoryLabel": "En mémoire",
     "columnsHeading": "Colonnes · cliquez pour inspecter",
-    "nextChat": "Suivant : Chat IA"
+    "nextChat": "Suivant : Chat IA",
+    "analysisTitle": "Analyste IA — Résultats clés",
+    "analysisRankSub": "classés par impact",
+    "severityCritical": "Critique",
+    "severityNotable": "Notable",
+    "severityMinor": "Mineur",
+    "chips": {
+      "measures": "mesures",
+      "dimensions": "dimensions",
+      "temporal": "temporel",
+      "geo": "géo",
+      "identifiers": "identifiants"
+    }
+  },
+  "bot": {
+    "idle": "Je suis là si vous avez besoin de moi.",
+    "ingestLoaded": "Données chargées. J'ai trouvé {n} problème(s) — nettoyons ça.",
+    "ingestReady": "Jeu de données chargé ! Prêt pour le nettoyage.",
+    "ingestProcessing": "Traitement du fichier en cours...",
+    "cleanDone": "Qualité : {score} %. Prêt pour l'analyse.",
+    "cleanReady": "Données nettoyées. Qualité : {score} %",
+    "cleanRunPrompt": "Cliquez sur « Lancer le pipeline » pour corriger les valeurs manquantes et normaliser les colonnes.",
+    "cleanRunning": "Exécution de 8 étapes de nettoyage...",
+    "exploreReady": "J'ai profilé {n} colonnes et trouvé {corr} corrélations.",
+    "exploreReady2": "Graphiques prêts. Cliquez sur une colonne.",
+    "exploreProfiling": "Profilage des données...",
+    "docsReady": "Téléchargez vos données nettoyées dans le format souhaité."
   },
   "ai": {
     "title": "Chat IA",

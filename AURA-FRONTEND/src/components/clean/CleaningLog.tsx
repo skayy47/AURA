@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Check } from "@/components/layout/pipeline-icons";
 import { cn } from "@/lib/utils";
@@ -24,15 +25,16 @@ const statusClass: Record<Status, string> = {
 };
 
 export function CleaningLog({ log }: Props) {
+  const t = useTranslations("clean");
+
   if (!log || log.length === 0) {
     return (
       <div className="aura-card p-6">
-        <p className="text-sm text-text-d">No cleaning steps recorded.</p>
+        <p className="text-sm text-text-d">{t("noSteps")}</p>
       </div>
     );
   }
 
-  // Extract quality score from last SchemaValidator entry if present
   const validator = log.find((e) => e.step === "Schema Validator");
   const scoreMatch = validator?.detail.match(/Quality score: ([\d.]+)\/100/);
   const score = scoreMatch ? parseFloat(scoreMatch[1]) : null;
@@ -41,7 +43,7 @@ export function CleaningLog({ log }: Props) {
     <div className="aura-card p-6 space-y-5">
       <div className="flex items-baseline justify-between">
         <h3 className="text-lg font-bricolage font-bold text-text">
-          Cleaning Audit Trail
+          {t("auditTitle")}
         </h3>
         {score !== null && (
           <div className="flex items-baseline gap-2">

@@ -1,4 +1,5 @@
 "use client";
+import { useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import type { DatasetProfile } from "@/lib/types";
 
@@ -6,62 +7,74 @@ interface Props {
   profile: DatasetProfile;
 }
 
-function buildInsights(profile: DatasetProfile): string[] {
+function buildInsights(profile: DatasetProfile, isFr: boolean): string[] {
   const insights: string[] = [];
 
-  // Strongest correlation
   const top = profile.correlation?.top_pairs?.[0];
   if (top && Math.abs(top.r) >= 0.3) {
-    const strength = Math.abs(top.r) > 0.7 ? "Strong" : Math.abs(top.r) > 0.4 ? "Moderate" : "Weak";
-    insights.push(
-      `${strength} signal: ${top.col_a} × ${top.col_b} (r=${top.r.toFixed(2)})`
-    );
+    if (isFr) {
+      const strength = Math.abs(top.r) > 0.7 ? "Fort" : Math.abs(top.r) > 0.4 ? "Modéré" : "Faible";
+      insights.push(`${strength} signal : ${top.col_a} × ${top.col_b} (r=${top.r.toFixed(2)})`);
+    } else {
+      const strength = Math.abs(top.r) > 0.7 ? "Strong" : Math.abs(top.r) > 0.4 ? "Moderate" : "Weak";
+      insights.push(`${strength} signal: ${top.col_a} × ${top.col_b} (r=${top.r.toFixed(2)})`);
+    }
   }
 
-  // Missing data
   const totalCells = profile.n_rows * profile.n_cols;
   if (totalCells > 0 && profile.missing_total > 0) {
     const pct = (profile.missing_total / totalCells) * 100;
-    insights.push(
-      `${pct.toFixed(1)}% of cells missing — ${profile.missing_total.toLocaleString()} null values`
-    );
+    if (isFr) {
+      insights.push(`${pct.toFixed(1)} % des cellules manquantes — ${profile.missing_total.toLocaleString()} valeurs nulles`);
+    } else {
+      insights.push(`${pct.toFixed(1)}% of cells missing — ${profile.missing_total.toLocaleString()} null values`);
+    }
   }
 
-  // Date range
   const dateCol = profile.columns.find((c) => c.kind === "datetime" && c.date_range_days !== undefined);
   if (dateCol && dateCol.date_min && dateCol.date_max) {
     const dmin = dateCol.date_min.slice(0, 10);
     const dmax = dateCol.date_max.slice(0, 10);
-    insights.push(
-      `${dateCol.date_range_days} days of data — ${dmin} → ${dmax}`
-    );
+    if (isFr) {
+      insights.push(`${dateCol.date_range_days} jours de données — ${dmin} → ${dmax}`);
+    } else {
+      insights.push(`${dateCol.date_range_days} days of data — ${dmin} → ${dmax}`);
+    }
   }
 
-  // Duplicates
   if (profile.duplicate_rows > 0) {
-    insights.push(
-      `${profile.duplicate_rows.toLocaleString()} duplicate row${profile.duplicate_rows !== 1 ? "s" : ""} detected`
-    );
+    if (isFr) {
+      insights.push(`${profile.duplicate_rows.toLocaleString()} doublon${profile.duplicate_rows !== 1 ? "s" : ""} détecté${profile.duplicate_rows !== 1 ? "s" : ""}`);
+    } else {
+      insights.push(`${profile.duplicate_rows.toLocaleString()} duplicate row${profile.duplicate_rows !== 1 ? "s" : ""} detected`);
+    }
   }
 
-  // ID columns
   const idCols = profile.columns.filter((c) => c.kind === "id");
   if (idCols.length) {
-    insights.push(
-      `${idCols.length} ID-like column${idCols.length !== 1 ? "s" : ""}: ${idCols.slice(0, 2).map(c => c.name).join(", ")}${idCols.length > 2 ? "…" : ""}`
-    );
+    const names = idCols.slice(0, 2).map((c) => c.name).join(", ") + (idCols.length > 2 ? "…" : "");
+    if (isFr) {
+      insights.push(`${idCols.length} colonne${idCols.length !== 1 ? "s" : ""} identifiant : ${names}`);
+    } else {
+      insights.push(`${idCols.length} ID-like column${idCols.length !== 1 ? "s" : ""}: ${names}`);
+    }
   }
 
-  // Memory
   if (profile.memory_mb > 0.001) {
-    insights.push(`In-memory size: ${profile.memory_mb.toFixed(2)} MB`);
+    if (isFr) {
+      insights.push(`Taille en mémoire : ${profile.memory_mb.toFixed(2)} Mo`);
+    } else {
+      insights.push(`In-memory size: ${profile.memory_mb.toFixed(2)} MB`);
+    }
   }
 
   return insights;
 }
 
 export function InsightsStrip({ profile }: Props) {
-  const insights = buildInsights(profile);
+  const locale = useLocale();
+  const isFr = locale.startsWith("fr");
+  const insights = buildInsights(profile, isFr);
   if (!insights.length) return null;
 
   return (

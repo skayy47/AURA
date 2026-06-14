@@ -1,5 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AuraLoader } from "@/components/ui/AuraLoader";
@@ -7,6 +8,7 @@ import { AuraLoader } from "@/components/ui/AuraLoader";
 interface Props { onFile: (f: File) => void; loading: boolean; }
 
 export function UploadZone({ onFile, loading }: Props) {
+  const t = useTranslations("ingest");
   const [drag, setDrag] = useState(false);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -31,7 +33,6 @@ export function UploadZone({ onFile, loading }: Props) {
       onDragLeave={() => setDrag(false)}
       onDrop={handleDrop}
     >
-      {/* Glow orb */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32
                       rounded-full bg-purple/10 blur-3xl pointer-events-none" />
 
@@ -39,7 +40,7 @@ export function UploadZone({ onFile, loading }: Props) {
         {loading ? (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             className="flex flex-col items-center gap-3">
-            <AuraLoader label="Processing file" />
+            <AuraLoader label={t("processingFile")} />
           </motion.div>
         ) : (
           <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -47,18 +48,16 @@ export function UploadZone({ onFile, loading }: Props) {
             <div className="w-14 h-14 rounded-full bg-surface2 border border-[rgba(90,60,200,0.5)]
                             flex items-center justify-center text-2xl">↑</div>
             <div>
-              <p className="text-text font-semibold text-lg">Drop your file here</p>
+              <p className="text-text font-semibold text-lg">{t("dropHere")}</p>
               <p className="text-text-d text-sm mt-1">or</p>
             </div>
             <label className="aura-btn-neon cursor-pointer">
-              <span>Browse Files</span>
+              <span>{t("browseFiles")}</span>
               <input type="file" className="hidden"
                 accept=".csv,.xlsx,.xls,.json,.parquet,.tsv"
                 onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); }} />
             </label>
-            <p className="text-text-d text-xs mt-1">
-              Limit 200 MB · CSV · XLS · XLSX · JSON · PARQUET · TSV
-            </p>
+            <p className="text-text-d text-xs mt-1">{t("limitNote")}</p>
           </motion.div>
         )}
       </AnimatePresence>

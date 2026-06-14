@@ -19,6 +19,10 @@
     "title": "Data Ingestion",
     "subtitle": "Upload and validate your dataset — CSV, Excel, JSON, Parquet, TSV",
     "dropzone": "Drop your file here, or click to browse",
+    "dropHere": "Drop your file here",
+    "browseFiles": "Browse Files",
+    "limitNote": "Limit 200 MB · CSV · XLS · XLSX · JSON · PARQUET · TSV",
+    "processingFile": "Processing file",
     "trySamples": "Try with sample data",
     "fileTooBig": "File exceeds the 100 MB limit",
     "unsupportedFormat": "Unsupported file format",
@@ -39,7 +43,20 @@
     "subtitle": "Standardize columns, impute missing values, and handle anomalies",
     "rowsLabel": "Rows",
     "colsLabel": "Columns",
-    "nextExplore": "Next: Explore Data"
+    "nextExplore": "Next: Explore Data",
+    "configTitle": "Cleaning Configuration",
+    "runBtn": "Run Cleaning Pipeline",
+    "cleaning": "Cleaning",
+    "auditTitle": "Cleaning Audit Trail",
+    "noSteps": "No cleaning steps recorded.",
+    "options": {
+      "rename_columns": "rename columns",
+      "normalize_strings": "normalize strings",
+      "detect_dates": "detect dates",
+      "remove_empty_cols": "remove empty cols",
+      "fill_missing": "fill missing",
+      "drop_duplicates": "drop duplicates"
+    }
   },
   "explore": {
     "title": "Data Exploration",
@@ -49,7 +66,33 @@
     "topRLabel": "Top |r|",
     "memoryLabel": "In-memory",
     "columnsHeading": "Columns · click to inspect",
-    "nextChat": "Next: AI Chat"
+    "nextChat": "Next: AI Chat",
+    "analysisTitle": "AI Analyst — Key Findings",
+    "analysisRankSub": "ranked by impact",
+    "severityCritical": "Critical",
+    "severityNotable": "Notable",
+    "severityMinor": "Minor",
+    "chips": {
+      "measures": "measures",
+      "dimensions": "dimensions",
+      "temporal": "temporal",
+      "geo": "geo",
+      "identifiers": "identifiers"
+    }
+  },
+  "bot": {
+    "idle": "I'm here if you need me.",
+    "ingestLoaded": "Data loaded. I found {n} issues — let's clean it.",
+    "ingestReady": "Dataset loaded! Ready to clean.",
+    "ingestProcessing": "Processing your file...",
+    "cleanDone": "Quality: {score}%. Ready for analysis.",
+    "cleanReady": "Data cleaned. Quality: {score}%",
+    "cleanRunPrompt": "Click 'Run Cleaning' to fix missing values and normalize columns.",
+    "cleanRunning": "Running 8 cleaning steps...",
+    "exploreReady": "I profiled {n} columns and found {corr} correlations.",
+    "exploreReady2": "Charts ready. Click any column.",
+    "exploreProfiling": "Profiling your data...",
+    "docsReady": "Download your clean data in any format."
   },
   "ai": {
     "title": "AI Chat",
