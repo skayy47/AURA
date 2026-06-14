@@ -11,7 +11,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-![i18n](https://img.shields.io/badge/i18n-EN_%7C_AR_RTL-6C3FE5?style=for-the-badge)
+![i18n](https://img.shields.io/badge/i18n-EN_%7C_FR-6C3FE5?style=for-the-badge)
 [![CI](https://github.com/skayy47/AURA/actions/workflows/ci.yml/badge.svg)](https://github.com/skayy47/AURA/actions/workflows/ci.yml)
 
 </div>
@@ -84,11 +84,11 @@ This works across all three AI providers — each has a different SDK streaming 
 
 ---
 
-### 5 · Bilingual interface (EN / AR RTL) — production-grade i18n
+### 5 · Bilingual interface (EN / FR) — production-grade i18n
 
-Every string in the app is keyed through `next-intl v4`. The URL path carries the locale: `/en/explore` · `/ar/explore`. Arabic flips the entire layout to RTL including sidebar, data tables, chart labels, and form fields. 220+ translation keys, maintained in `messages/en.json` and `messages/ar.json`.
+Every string in the app is keyed through `next-intl v4`. The URL path carries the locale: `/en/explore` · `/fr/explore`. A premium animated language toggle — Framer Motion shared-layout indicator, reduced-motion aware, keyboard-accessible — switches locale in place. 222 translation keys, maintained at parity in `messages/en.json` and `messages/fr.json`.
 
-This is not a "toggle language" demo — it's a proper RTL-aware layout with bidirectional Tailwind utilities throughout.
+It goes deeper than the UI chrome: when French is selected, **the AI answers in French too**. The chat system prompt and the data-grounded suggested questions are locale-aware, so the experience is French end-to-end — not just the labels.
 
 ---
 
@@ -125,7 +125,7 @@ This is not a "toggle language" demo — it's a proper RTL-aware layout with bid
   │                                                                    │
   │  lib/api.ts    typed REST + SSE client                            │
   │  lib/store.ts  Zustand session state                              │
-  │  next-intl     EN / AR RTL routing + layout                       │
+  │  next-intl     EN / FR routing + premium language toggle          │
   └────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -143,7 +143,7 @@ This is not a "toggle language" demo — it's a proper RTL-aware layout with bid
 | **Frontend** | Next.js 14 App Router + TypeScript | Full-stack TypeScript; locale-aware SSR routing |
 | **State** | Zustand 5 | Lightweight, no boilerplate |
 | **Styling** | Tailwind 3.4 + Framer Motion 12 | Dark "Luminal Void" palette (`#00E5FF` / `#8B5CF6` on `#030712`) |
-| **i18n** | next-intl v4 | EN + AR RTL — 220+ keys, bidirectional layout |
+| **i18n** | next-intl v4 | EN + FR — 222 keys at parity; premium toggle; locale-aware AI |
 | **Billing** | Stripe SDK | Checkout flow wired; entitlement persistence is v5.1 |
 | **Testing** | pytest + ruff + black / tsc + Next build | Quality gates enforced in CI on both stacks |
 | **Deploy** | HF Spaces Docker (backend) + Vercel (frontend) | Free-tier hosting; Dockerfile bakes Playwright+Chromium |
@@ -182,7 +182,7 @@ npm run dev
 # → http://localhost:3000
 ```
 
-Click **"Try with sample data"** on the landing page to load a pre-built MENA dataset with no upload needed.
+Click **"Try with sample data"** on the landing page to load a pre-built sample dataset with no upload needed.
 
 ---
 
@@ -296,7 +296,7 @@ AURA/
 │           └── tier.ts             Feature-gate logic
 │
 ├── tests/                          pytest suites (ingestion · cleaning · exploration)
-├── messages/                       en.json · ar.json (~220 keys each)
+├── messages/                       en.json · fr.json (222 keys each)
 ├── Dockerfile                      Backend image (Playwright + Chromium baked)
 ├── .github/workflows/ci.yml        Full CI pipeline
 └── .env.example                    Environment variable template
@@ -308,7 +308,7 @@ AURA/
 
 | Version | Status | What's in it |
 |---|---|---|
-| **v5.0** | ✅ Shipped | 3D landing, bilingual EN/AR RTL, Stripe checkout, E2E CI, PDF report, ranked insight engine |
+| **v5.0** | ✅ Shipped | 3D landing, bilingual EN/FR + locale-aware AI, Stripe checkout, E2E CI, PDF report, ranked insight engine |
 | **v5.1** | 🔜 Planned | Entitlement persistence; Redis session store for multi-worker support |
 | **v6.0** | 💡 Future | Live public demo URL; agent mode (multi-step analysis plans) |
 
@@ -325,10 +325,12 @@ AURA/
 
 <div align="center">
 
+**Part of a three-system portfolio:** [🎼 MAESTRO](https://github.com/skayy47/maestro) — multi-agent AI · [🧠 nexus](https://github.com/skayy47/nexus) — grounded RAG · 🔬 AURA
+
 Built by **[Oussama Skia (SKAY)](https://github.com/skayy47)** — AI Engineer · Data Scientist
 
 *AURA demonstrates full-stack AI product engineering: typed REST APIs, SSE streaming, real PDF generation,*  
-*multi-provider AI orchestration, bilingual RTL UI, and a production-grade CI/CD pipeline.*  
+*multi-provider AI orchestration, bilingual EN/FR UI with locale-aware answers, and a production-grade CI/CD pipeline.*  
 *Not a notebook export — a deployable data product.*
 
 </div>
