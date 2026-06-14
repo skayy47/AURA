@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import re
+
 from fastapi import APIRouter, HTTPException
 
 from api.deps import get_session, update_session
@@ -44,6 +48,24 @@ async def clean(req: CleaningConfigRequest):
     )
 
     rows_after, cols_after = cleaned_df.shape
+
+    # Extract quality score from the Schema Validator log entry.
+    quality_score: float | None = None
+    for step in report.steps:
+        m = re.search(r"Quality score:\s*([\d.]+)/100", step.get("detail", ""))
+        if m:
+            quality_score = float(m.group(1))
+            break
+
+    update_session(
+        req.session_id,
+        {
+            "cleaned_df": cleaned_df,
+            "cleaning_log": report.steps,
+            "quality_score": quality_score,
+        },
+    )
+
     return CleanResponse(
         session_id=req.session_id,
         rows_before=rows_before,
@@ -51,4 +73,5 @@ async def clean(req: CleaningConfigRequest):
         cols_before=cols_before,
         cols_after=cols_after,
         log=report.steps,
+        score=quality_score,
     )

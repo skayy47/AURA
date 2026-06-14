@@ -104,7 +104,17 @@
     "exportReport": "Exporter le rapport",
     "fallbackQ1": "Donne-moi les 3 enseignements majeurs de ce jeu de données.",
     "fallbackQ2": "Quels problèmes de qualité des données devrais-je surveiller ?",
-    "fallbackQ3": "Quelles colonnes méritent le plus d'être analysées ?"
+    "fallbackQ3": "Quelles colonnes méritent le plus d'être analysées ?",
+    "vitals": "Métriques du jeu de données",
+    "suggestions": "Questions suggérées",
+    "conversation": "Conversation",
+    "noDataset": "Aucun jeu de données chargé.",
+    "statusIdle": "En attente",
+    "statusListening": "À l'écoute...",
+    "statusThinking": "Analyse en cours...",
+    "statusSpeaking": "Réponse en cours...",
+    "statusCelebrate": "Compris.",
+    "statusError": "Récupération en cours"
   },
   "docs": {
     "title": "Export & documentation",

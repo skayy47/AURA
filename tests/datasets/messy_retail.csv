@@ -1,0 +1,681 @@
+Customer ID,  Product Name  ,Sale Amount ($),QUANTITY,Date,City,Rating,Return?
+C3365,,36.41,,Jan 15 2024,Marrakech,,
+C3289,Widget C,314.37,,2024/01/15,,5.0,
+C3730,WIDGET A,34.84,3.0,,,5.0,
+C7065,Widget A,360.43,,2024-01-15,Fes,,No
+C5831,Widget A,,9.0,15/01/2024,,,yes
+C3540,WIDGET A,217.62,,2024/01/15,Rabat,2.0,Yes
+C8528,Widget C,484.23,18.0,,,1.0,
+C9129,WIDGET A,322.54,15.0,15/01/2024,Marrakech,1.0,0
+C7522,Widget C,299.76,5.0,,Casablanca,1.0,
+C9513,widget a,89.73,11.0,,Marrakech,5.0,Yes
+C4236,Widget C,476.42,10.0,15/01/2024,Casablanca,,yes
+C1997,Widget A,,12.0,,,4.0,1
+C7591,WIDGET A,70.22,,Jan 15 2024,Rabat,5.0,yes
+C6041,Widget A,19.18,2.0,,,1.0,yes
+C4725,Widget B,182.73,6.0,,,4.0,
+C3344,widget a,83.92,2.0,15/01/2024,Marrakech,4.0,YES
+C1571,Widget A,171.4,8.0,2024/01/15,,5.0,1
+C2544,widget a,479.44,8.0,Jan 15 2024,Casablanca,5.0,0
+C6989,Widget A,431.64,19.0,2024/01/15,Rabat,,YES
+C3052,WIDGET A,222.86,13.0,2024-01-15,,4.0,1
+C9430,widget a,141.54,4.0,15/01/2024,Marrakech,3.0,
+C5259,,291.01,12.0,15/01/2024,Casablanca,,no
+C1752,Widget B,469.06,,,Casablanca,,0
+C6887,WIDGET A,,,15/01/2024,,5.0,Yes
+C7187,Widget B,434.54,2.0,15/01/2024,Marrakech,5.0,Yes
+C2615,Widget A,381.75,5.0,2024/01/15,Marrakech,2.0,no
+C8556,Widget A,254.31,10.0,2024/01/15,Marrakech,1.0,no
+C7639,Widget A,75.05,14.0,2024/01/15,Casablanca,2.0,yes
+C6369,,410.21,10.0,,,3.0,
+C2089,Widget C,327.23,18.0,,Rabat,2.0,Yes
+C5368,,387.48,4.0,15/01/2024,Marrakech,,Yes
+C9735,Widget C,368.33,19.0,,,3.0,1
+C3134,Widget A,126.83,5.0,Jan 15 2024,Casablanca,5.0,Yes
+C9422,Widget A,,14.0,,Fes,3.0,No
+C2744,Widget C,428.91,7.0,2024/01/15,Fes,,0
+C6456,Widget B,,13.0,2024-01-15,,3.0,0
+C4566,Widget B,92.97,1.0,,,1.0,0
+C1612,widget a,323.14,14.0,Jan 15 2024,Casablanca,1.0,yes
+C6770,Widget B,152.67,,Jan 15 2024,Marrakech,,No
+C5258,,323.13,7.0,15/01/2024,Marrakech,,yes
+C3831,WIDGET A,297.08,15.0,2024/01/15,,4.0,No
+C3092,Widget C,333.25,,,Marrakech,1.0,No
+C5395,Widget C,496.75,7.0,2024-01-15,Marrakech,2.0,0
+C1952,,142.27,12.0,15/01/2024,Rabat,3.0,No
+C6399,widget a,,11.0,2024-01-15,Fes,3.0,No
+C1836,,382.91,7.0,2024-01-15,Fes,3.0,yes
+C2889,Widget B,428.42,7.0,2024-01-15,Fes,3.0,No
+C5582,Widget C,402.24,9.0,15/01/2024,Fes,2.0,0
+C7671,widget a,,1.0,Jan 15 2024,,2.0,
+C4577,Widget A,,11.0,,,3.0,No
+C6657,Widget A,57.35,12.0,Jan 15 2024,Fes,,0
+C9384,WIDGET A,338.37,11.0,15/01/2024,,4.0,yes
+C6325,Widget B,,14.0,2024-01-15,Marrakech,1.0,no
+C7750,widget a,21.43,10.0,,Casablanca,3.0,
+C5302,widget a,453.83,7.0,2024-01-15,,4.0,1
+C3338,Widget C,458.94,16.0,2024/01/15,,,0
+C4282,Widget C,313.77,5.0,15/01/2024,Casablanca,2.0,no
+C4164,Widget B,232.66,1.0,2024/01/15,Rabat,,YES
+C5938,Widget B,415.1,6.0,,Rabat,4.0,yes
+C2359,,482.29,14.0,,Fes,3.0,1
+C7890,widget a,31.87,,2024-01-15,Rabat,3.0,
+C2372,,56.25,4.0,Jan 15 2024,,1.0,No
+C7353,,453.02,9.0,Jan 15 2024,Fes,1.0,YES
+C5248,WIDGET A,54.2,4.0,,,,yes
+C7638,WIDGET A,358.51,15.0,2024/01/15,,,1
+C2576,widget a,278.99,2.0,2024-01-15,Rabat,2.0,no
+C2884,Widget C,263.21,4.0,,Fes,3.0,no
+C3269,widget a,53.33,15.0,15/01/2024,Fes,2.0,no
+C8016,widget a,365.71,14.0,2024/01/15,Marrakech,,YES
+C3387,Widget C,303.0,5.0,2024-01-15,,5.0,No
+C4018,widget a,464.78,19.0,15/01/2024,Casablanca,,yes
+C2257,Widget A,243.09,2.0,2024-01-15,,5.0,Yes
+C3097,,456.65,4.0,2024-01-15,,5.0,no
+C8703,Widget A,96.03,5.0,,Marrakech,3.0,YES
+C2093,,105.93,10.0,2024-01-15,Rabat,4.0,1
+C9210,Widget C,474.74,10.0,2024/01/15,Casablanca,2.0,No
+C8472,WIDGET A,54.19,7.0,2024/01/15,Casablanca,3.0,0
+C9531,Widget B,122.09,5.0,2024-01-15,Rabat,2.0,no
+C6608,widget a,74.97,12.0,15/01/2024,,4.0,0
+C7156,WIDGET A,,8.0,Jan 15 2024,,,0
+C8570,Widget C,,17.0,15/01/2024,,2.0,Yes
+C7384,,,2.0,,Rabat,1.0,Yes
+C6052,widget a,77.67,17.0,2024-01-15,Rabat,2.0,YES
+C4789,Widget B,164.26,16.0,2024/01/15,,3.0,0
+C8741,,162.01,,Jan 15 2024,Fes,,yes
+C3845,Widget A,486.87,14.0,15/01/2024,Casablanca,,YES
+C6008,Widget A,293.54,,15/01/2024,,4.0,YES
+C1542,Widget B,172.06,17.0,2024/01/15,Casablanca,3.0,0
+C6811,Widget A,152.87,10.0,15/01/2024,Casablanca,,
+C2186,,162.91,2.0,2024/01/15,,3.0,YES
+C1507,Widget A,357.53,15.0,2024-01-15,,5.0,0
+C3668,Widget C,,3.0,15/01/2024,,5.0,YES
+C7026,widget a,313.69,17.0,Jan 15 2024,Rabat,,yes
+C8415,,237.9,16.0,15/01/2024,Casablanca,,YES
+C6378,,18.0,,2024-01-15,Marrakech,2.0,1
+C6885,Widget C,345.12,,15/01/2024,Fes,3.0,
+C3178,Widget B,363.44,2.0,Jan 15 2024,Casablanca,3.0,Yes
+C1960,widget a,94.22,9.0,,Fes,5.0,yes
+C2014,Widget A,326.44,5.0,2024/01/15,Casablanca,,No
+C1675,widget a,439.39,,,Marrakech,1.0,No
+C4124,Widget A,303.37,15.0,Jan 15 2024,Casablanca,1.0,No
+C7730,Widget C,335.93,,2024-01-15,Casablanca,5.0,
+C1541,widget a,351.85,1.0,2024-01-15,Rabat,,no
+C4119,WIDGET A,165.55,18.0,2024/01/15,Fes,1.0,
+C6406,Widget B,81.38,10.0,2024/01/15,,,YES
+C1536,Widget C,,14.0,,Casablanca,3.0,Yes
+C5912,Widget B,119.74,12.0,Jan 15 2024,Fes,3.0,no
+C4577,Widget C,345.06,6.0,,,4.0,1
+C9259,Widget A,358.89,16.0,15/01/2024,Rabat,,1
+C5466,widget a,,5.0,,,3.0,yes
+C5657,Widget C,477.33,16.0,2024-01-15,Marrakech,4.0,Yes
+C8651,Widget C,462.88,19.0,Jan 15 2024,Casablanca,,0
+C7566,Widget B,70.31,2.0,,Rabat,,YES
+C5931,,241.51,15.0,2024/01/15,Marrakech,2.0,0
+C6975,,108.47,13.0,15/01/2024,Fes,3.0,yes
+C4632,Widget A,,15.0,,Casablanca,4.0,No
+C7296,Widget B,285.19,,Jan 15 2024,Fes,,yes
+C3777,,351.58,18.0,,,,No
+C3822,widget a,489.05,,2024-01-15,Marrakech,1.0,YES
+C8455,Widget A,338.14,6.0,,Rabat,,YES
+C4737,Widget A,436.03,10.0,2024/01/15,,,No
+C5781,Widget C,124.07,17.0,2024-01-15,Fes,,no
+C2077,,118.55,13.0,15/01/2024,Marrakech,2.0,no
+C4092,Widget C,223.39,12.0,,,2.0,YES
+C6853,Widget A,441.33,7.0,2024/01/15,,5.0,0
+C5772,WIDGET A,24.36,3.0,2024-01-15,Casablanca,1.0,no
+C3721,WIDGET A,223.48,8.0,2024-01-15,Fes,2.0,yes
+C1268,,413.33,10.0,15/01/2024,Fes,,
+C5938,Widget B,92.84,2.0,15/01/2024,Rabat,5.0,0
+C4140,widget a,309.78,4.0,2024/01/15,Rabat,,
+C9292,Widget B,39.63,15.0,2024/01/15,Casablanca,3.0,No
+C1393,Widget C,10.13,,15/01/2024,Rabat,3.0,YES
+C7145,Widget B,162.86,5.0,15/01/2024,Rabat,3.0,0
+C4446,WIDGET A,403.79,2.0,2024-01-15,,4.0,
+C3408,Widget C,25.46,9.0,2024-01-15,,,No
+C7424,widget a,185.58,1.0,,Marrakech,1.0,yes
+C5631,Widget A,365.67,10.0,2024/01/15,,2.0,
+C1671,,187.72,2.0,2024/01/15,Fes,4.0,YES
+C6418,Widget C,242.01,,,,2.0,No
+C2606,Widget C,252.67,19.0,2024-01-15,Marrakech,3.0,No
+C8650,,454.44,9.0,15/01/2024,,2.0,
+C3171,Widget C,438.57,6.0,2024/01/15,,3.0,
+C8143,Widget A,,3.0,2024/01/15,,4.0,No
+C3961,,347.64,9.0,2024/01/15,Marrakech,2.0,YES
+C3836,Widget A,273.75,5.0,15/01/2024,Marrakech,4.0,1
+C1018,Widget C,180.49,5.0,2024-01-15,Casablanca,4.0,no
+C9275,,248.81,7.0,Jan 15 2024,Fes,,yes
+C5968,WIDGET A,440.5,,2024/01/15,Fes,3.0,1
+C2326,widget a,387.66,10.0,2024/01/15,Marrakech,1.0,Yes
+C1309,,286.2,8.0,2024-01-15,Rabat,4.0,No
+C3484,WIDGET A,91.92,9.0,2024/01/15,,,Yes
+C5433,,311.24,15.0,2024/01/15,,,
+C1304,widget a,251.52,2.0,15/01/2024,,1.0,No
+C4248,widget a,226.21,6.0,15/01/2024,Marrakech,2.0,0
+C3801,Widget B,472.2,7.0,2024-01-15,,3.0,no
+C8855,WIDGET A,496.35,8.0,2024-01-15,,3.0,Yes
+C4726,Widget C,475.92,1.0,Jan 15 2024,,1.0,YES
+C1940,widget a,370.74,5.0,15/01/2024,Marrakech,1.0,yes
+C3171,Widget C,301.44,5.0,2024/01/15,,5.0,no
+C8435,WIDGET A,163.12,18.0,Jan 15 2024,Fes,,
+C1113,WIDGET A,473.85,2.0,Jan 15 2024,Casablanca,3.0,1
+C2198,Widget C,230.53,,,Casablanca,2.0,Yes
+C1094,widget a,104.81,4.0,2024-01-15,Marrakech,3.0,Yes
+C1443,widget a,59.82,19.0,2024-01-15,,5.0,0
+C9314,Widget B,418.71,10.0,15/01/2024,,,1
+C9916,widget a,167.44,7.0,2024-01-15,Fes,2.0,no
+C7612,WIDGET A,384.28,18.0,2024/01/15,Fes,3.0,0
+C1826,WIDGET A,315.56,13.0,15/01/2024,,1.0,No
+C7284,Widget B,145.34,4.0,2024-01-15,Fes,1.0,No
+C7953,WIDGET A,426.08,14.0,2024-01-15,Marrakech,5.0,no
+C8070,Widget B,423.21,14.0,,Marrakech,4.0,0
+C7723,widget a,90.05,10.0,15/01/2024,Fes,2.0,
+C7247,,,1.0,Jan 15 2024,Rabat,3.0,yes
+C4980,,302.25,15.0,2024-01-15,,,YES
+C1553,Widget A,120.54,7.0,2024/01/15,,1.0,no
+C8413,Widget A,169.43,3.0,2024/01/15,Marrakech,4.0,
+C9330,Widget A,468.67,8.0,15/01/2024,,1.0,0
+C5500,widget a,91.9,10.0,,,3.0,No
+C4858,Widget C,237.89,3.0,15/01/2024,Fes,2.0,1
+C9258,widget a,150.98,5.0,,Casablanca,3.0,Yes
+C5080,Widget B,177.23,13.0,,Casablanca,3.0,YES
+C4335,widget a,,,Jan 15 2024,,3.0,yes
+C8978,Widget A,133.7,3.0,Jan 15 2024,Casablanca,,yes
+C9340,Widget A,382.93,5.0,,,1.0,yes
+C2840,,406.88,16.0,2024-01-15,Marrakech,,YES
+C3477,Widget B,,,Jan 15 2024,,,0
+C3815,Widget B,450.16,12.0,,Casablanca,1.0,YES
+C2436,widget a,72.64,8.0,15/01/2024,Marrakech,,0
+C8694,WIDGET A,255.77,15.0,15/01/2024,Casablanca,2.0,
+C9763,Widget B,415.07,,,Marrakech,4.0,No
+C5676,Widget C,,4.0,2024/01/15,Casablanca,4.0,0
+C7401,Widget B,492.58,16.0,Jan 15 2024,Rabat,1.0,No
+C4780,Widget B,299.89,7.0,2024-01-15,Rabat,4.0,Yes
+C9959,Widget B,480.21,8.0,2024-01-15,Fes,4.0,No
+C9590,WIDGET A,,14.0,,Casablanca,2.0,no
+C7744,Widget C,26.1,9.0,Jan 15 2024,Rabat,5.0,No
+C8997,widget a,181.47,9.0,,,,YES
+C2212,Widget C,,2.0,2024-01-15,Marrakech,1.0,YES
+C8985,WIDGET A,30.0,13.0,15/01/2024,Fes,4.0,1
+C4839,Widget B,129.89,3.0,2024-01-15,,,
+C2909,WIDGET A,492.58,8.0,2024-01-15,Fes,2.0,No
+C9380,Widget B,322.28,7.0,2024-01-15,,3.0,
+C8594,Widget C,199.59,13.0,Jan 15 2024,,5.0,0
+C2213,widget a,43.54,13.0,15/01/2024,Fes,2.0,Yes
+C6909,WIDGET A,378.84,13.0,2024-01-15,Marrakech,4.0,1
+C8937,WIDGET A,463.03,12.0,,Rabat,5.0,yes
+C7223,Widget A,372.06,6.0,Jan 15 2024,,3.0,Yes
+C5337,,62.62,7.0,Jan 15 2024,,5.0,1
+C1430,Widget C,268.27,17.0,2024/01/15,Rabat,,Yes
+C5463,Widget A,204.37,14.0,Jan 15 2024,Fes,2.0,No
+C6001,Widget A,452.5,14.0,2024-01-15,Rabat,3.0,1
+C8584,,382.34,17.0,Jan 15 2024,,,Yes
+C2966,,401.98,2.0,,Rabat,2.0,0
+C2858,Widget C,,1.0,2024/01/15,Casablanca,2.0,Yes
+C9343,Widget C,17.31,1.0,2024/01/15,,1.0,yes
+C8539,,380.9,10.0,Jan 15 2024,Fes,1.0,yes
+C6054,Widget B,318.49,14.0,15/01/2024,,5.0,No
+C5011,Widget A,75.03,19.0,Jan 15 2024,,5.0,YES
+C6555,WIDGET A,379.6,13.0,Jan 15 2024,Marrakech,5.0,No
+C2369,widget a,78.9,14.0,Jan 15 2024,Marrakech,1.0,No
+C3189,widget a,371.14,18.0,,,,no
+C5875,,358.24,,2024-01-15,Marrakech,2.0,no
+C4791,Widget B,,13.0,Jan 15 2024,Rabat,3.0,1
+C2602,,,13.0,15/01/2024,Fes,1.0,Yes
+C5764,Widget A,206.79,4.0,,Fes,5.0,No
+C6877,,255.76,9.0,2024-01-15,,5.0,Yes
+C8307,Widget B,482.52,1.0,2024-01-15,Casablanca,,0
+C6669,Widget B,,10.0,2024/01/15,Marrakech,1.0,YES
+C6503,widget a,,11.0,15/01/2024,Fes,3.0,No
+C6008,Widget B,,8.0,15/01/2024,,2.0,YES
+C2017,Widget B,258.98,10.0,Jan 15 2024,Rabat,5.0,0
+C4458,Widget C,411.99,13.0,,Fes,4.0,0
+C5056,Widget A,163.23,18.0,2024-01-15,Fes,,
+C5715,Widget B,238.11,8.0,Jan 15 2024,,5.0,No
+C3659,Widget A,60.64,14.0,15/01/2024,Marrakech,3.0,No
+C7695,Widget A,463.71,9.0,2024-01-15,Rabat,2.0,0
+C5849,WIDGET A,,18.0,Jan 15 2024,Fes,4.0,
+C3750,Widget A,141.65,11.0,,,4.0,No
+C5228,Widget C,293.57,15.0,15/01/2024,Casablanca,4.0,1
+C7388,WIDGET A,,6.0,15/01/2024,,5.0,YES
+C1200,widget a,,,2024-01-15,Fes,4.0,
+C4069,widget a,27.29,5.0,2024/01/15,,4.0,No
+C2867,WIDGET A,412.3,11.0,15/01/2024,Rabat,3.0,yes
+C3893,Widget B,148.12,4.0,Jan 15 2024,,3.0,YES
+C6940,Widget C,,12.0,2024-01-15,Casablanca,1.0,0
+C2920,Widget B,451.83,,2024/01/15,Fes,1.0,0
+C5898,Widget B,14.84,10.0,2024-01-15,Fes,5.0,no
+C4394,Widget B,275.96,10.0,2024-01-15,Rabat,1.0,yes
+C1479,Widget B,,16.0,2024-01-15,Casablanca,,No
+C8968,WIDGET A,405.6,2.0,2024/01/15,,,no
+C6378,widget a,113.56,,,Marrakech,1.0,
+C3674,Widget B,104.43,14.0,Jan 15 2024,,3.0,No
+C5528,Widget A,,18.0,2024-01-15,Rabat,,
+C9882,widget a,44.47,16.0,,Fes,3.0,yes
+C2351,Widget A,301.68,11.0,2024-01-15,Fes,2.0,Yes
+C8663,WIDGET A,120.88,6.0,15/01/2024,Marrakech,1.0,1
+C1017,,420.43,9.0,,Marrakech,,no
+C8776,,192.81,17.0,15/01/2024,Rabat,4.0,1
+C4018,Widget A,210.41,5.0,2024/01/15,Casablanca,1.0,
+C3664,Widget C,398.24,19.0,15/01/2024,,2.0,No
+C8016,Widget A,48.6,6.0,15/01/2024,Rabat,5.0,YES
+C2472,,,10.0,15/01/2024,Fes,,yes
+C2197,widget a,481.5,12.0,,Fes,3.0,no
+C5199,Widget A,326.94,6.0,Jan 15 2024,,,yes
+C9498,Widget C,45.49,3.0,,,,No
+C3982,Widget C,454.72,6.0,,Rabat,1.0,YES
+C5881,WIDGET A,68.83,1.0,2024/01/15,Casablanca,5.0,no
+C4580,Widget B,187.58,13.0,15/01/2024,,3.0,0
+C7824,Widget C,94.93,5.0,Jan 15 2024,Casablanca,3.0,no
+C9092,,362.32,9.0,15/01/2024,,2.0,YES
+C9790,WIDGET A,136.12,6.0,Jan 15 2024,,,1
+C3421,Widget C,,4.0,2024/01/15,,3.0,Yes
+C3363,Widget C,209.71,18.0,,Marrakech,2.0,no
+C9320,Widget C,146.62,7.0,2024/01/15,Marrakech,2.0,YES
+C6245,,393.36,,Jan 15 2024,Rabat,5.0,1
+C3951,,265.71,7.0,,Rabat,5.0,Yes
+C4065,WIDGET A,280.18,8.0,,Rabat,4.0,Yes
+C2587,widget a,85.0,5.0,15/01/2024,Rabat,2.0,0
+C1760,,457.18,19.0,2024-01-15,,5.0,0
+C4119,WIDGET A,177.7,12.0,Jan 15 2024,Marrakech,5.0,no
+C8140,,191.8,,2024/01/15,Fes,5.0,Yes
+C6934,,124.98,,15/01/2024,Fes,,yes
+C1108,Widget A,,19.0,,Casablanca,2.0,1
+C1401,Widget A,,,,,2.0,1
+C8818,Widget B,35.17,18.0,2024-01-15,Marrakech,,0
+C8141,Widget A,100.34,13.0,15/01/2024,Fes,1.0,YES
+C8150,Widget B,242.82,14.0,15/01/2024,Rabat,4.0,0
+C8755,Widget A,97.99,8.0,,Rabat,3.0,No
+C6744,,304.49,10.0,2024/01/15,Rabat,3.0,No
+C4038,WIDGET A,157.41,12.0,2024/01/15,Fes,1.0,yes
+C6319,Widget C,178.06,16.0,2024/01/15,,5.0,0
+C6777,WIDGET A,394.4,15.0,2024/01/15,Casablanca,2.0,
+C8610,Widget C,264.56,7.0,2024/01/15,Marrakech,,Yes
+C5783,Widget C,60.95,9.0,2024/01/15,Marrakech,,No
+C1501,widget a,189.09,7.0,,,,Yes
+C6601,Widget C,448.69,19.0,Jan 15 2024,,1.0,0
+C7626,Widget C,423.85,4.0,2024-01-15,,1.0,0
+C9509,widget a,381.12,12.0,Jan 15 2024,Rabat,,
+C2623,Widget A,422.55,5.0,2024/01/15,Rabat,4.0,No
+C8741,WIDGET A,50.3,3.0,,Marrakech,,YES
+C1183,Widget B,65.48,3.0,2024/01/15,Casablanca,,no
+C7573,Widget C,14.23,,15/01/2024,Marrakech,4.0,
+C3810,widget a,66.89,17.0,15/01/2024,Rabat,2.0,
+C2057,WIDGET A,,16.0,,Rabat,2.0,0
+C3944,Widget C,23.77,1.0,15/01/2024,,2.0,No
+C5966,Widget B,235.26,6.0,2024-01-15,Casablanca,3.0,yes
+C2733,Widget C,127.32,9.0,2024/01/15,Marrakech,1.0,0
+C5954,Widget C,417.09,,Jan 15 2024,,5.0,YES
+C7396,widget a,402.42,7.0,2024/01/15,Marrakech,3.0,YES
+C8883,widget a,384.17,18.0,Jan 15 2024,,4.0,Yes
+C6029,Widget C,,,2024/01/15,Casablanca,4.0,no
+C6412,Widget C,463.17,10.0,15/01/2024,Marrakech,,
+C9279,,,17.0,Jan 15 2024,Casablanca,5.0,no
+C1311,widget a,327.15,1.0,2024-01-15,Casablanca,2.0,
+C7854,Widget A,308.23,16.0,2024/01/15,Marrakech,1.0,no
+C9796,widget a,,9.0,Jan 15 2024,Rabat,3.0,0
+C8434,WIDGET A,369.26,13.0,15/01/2024,Casablanca,1.0,0
+C9304,Widget A,469.55,19.0,Jan 15 2024,,5.0,YES
+C9121,widget a,161.53,14.0,15/01/2024,,1.0,0
+C6300,Widget A,146.54,6.0,2024/01/15,Marrakech,2.0,Yes
+C8256,Widget A,135.47,16.0,Jan 15 2024,,5.0,yes
+C4275,WIDGET A,491.66,,2024/01/15,Casablanca,2.0,Yes
+C2063,Widget C,272.46,8.0,2024/01/15,,3.0,1
+C1763,WIDGET A,483.95,13.0,,,5.0,yes
+C2669,widget a,,9.0,,Marrakech,2.0,YES
+C7516,Widget B,150.26,17.0,15/01/2024,,2.0,0
+C4615,Widget B,295.27,5.0,Jan 15 2024,Rabat,,1
+C8301,WIDGET A,81.95,13.0,Jan 15 2024,,5.0,1
+C3988,Widget A,226.81,5.0,2024/01/15,Marrakech,,Yes
+C8117,widget a,224.22,,2024-01-15,Rabat,5.0,YES
+C8967,Widget A,290.39,18.0,,Casablanca,,yes
+C3941,Widget A,196.68,19.0,15/01/2024,,2.0,
+C5717,Widget B,230.29,15.0,Jan 15 2024,,3.0,yes
+C5828,widget a,438.7,13.0,15/01/2024,,3.0,1
+C8882,WIDGET A,94.29,9.0,Jan 15 2024,,,YES
+C4373,WIDGET A,461.71,6.0,15/01/2024,,2.0,yes
+C4484,,271.58,1.0,,Rabat,2.0,No
+C7979,Widget A,316.29,10.0,15/01/2024,Marrakech,1.0,yes
+C9157,Widget A,,15.0,15/01/2024,,,YES
+C1255,Widget B,76.9,16.0,2024-01-15,Fes,3.0,
+C1645,Widget B,,,2024/01/15,Rabat,,
+C9399,Widget B,,4.0,,Casablanca,5.0,yes
+C5009,Widget C,261.83,18.0,Jan 15 2024,,2.0,Yes
+C6031,,87.93,6.0,,,2.0,No
+C9109,Widget B,399.47,14.0,Jan 15 2024,Marrakech,2.0,YES
+C4572,Widget B,,15.0,2024/01/15,,,no
+C5046,Widget C,336.74,13.0,,,1.0,No
+C8623,widget a,95.52,8.0,2024/01/15,,4.0,No
+C7593,widget a,209.17,3.0,2024-01-15,,4.0,YES
+C7241,WIDGET A,470.22,10.0,,,,yes
+C4247,Widget C,99.83,2.0,2024-01-15,Rabat,3.0,No
+C7315,,89.52,12.0,2024-01-15,,5.0,no
+C8462,Widget B,352.39,6.0,15/01/2024,Fes,3.0,
+C9217,Widget B,273.84,,2024/01/15,Marrakech,5.0,0
+C6682,Widget C,106.34,11.0,,Rabat,3.0,yes
+C8845,widget a,310.18,5.0,Jan 15 2024,,1.0,0
+C8305,Widget A,468.65,,15/01/2024,,1.0,
+C7582,Widget C,428.32,2.0,Jan 15 2024,Rabat,,yes
+C5827,Widget A,8.23,17.0,2024/01/15,Marrakech,5.0,Yes
+C4913,Widget A,439.01,15.0,15/01/2024,,1.0,No
+C6737,WIDGET A,315.32,,15/01/2024,,4.0,0
+C8967,Widget C,,,15/01/2024,Marrakech,5.0,Yes
+C5757,WIDGET A,51.24,7.0,Jan 15 2024,,1.0,yes
+C7297,Widget A,,5.0,2024/01/15,,3.0,
+C6105,Widget A,19.37,,Jan 15 2024,Rabat,5.0,No
+C6837,widget a,96.39,,2024-01-15,Marrakech,2.0,no
+C7201,Widget A,337.27,11.0,15/01/2024,Casablanca,2.0,
+C1468,widget a,380.18,12.0,2024-01-15,Casablanca,3.0,0
+C2087,Widget A,137.0,16.0,15/01/2024,Fes,3.0,yes
+C1349,,369.85,11.0,Jan 15 2024,Casablanca,2.0,No
+C7916,Widget A,383.76,15.0,15/01/2024,Rabat,3.0,YES
+C9057,widget a,402.35,18.0,2024-01-15,Rabat,,yes
+C4196,Widget A,378.19,17.0,2024-01-15,Rabat,4.0,1
+C1681,widget a,21.17,8.0,2024/01/15,Rabat,4.0,1
+C1113,Widget C,446.69,10.0,Jan 15 2024,Fes,,no
+C5004,Widget B,283.58,16.0,,,,no
+C6792,,218.37,13.0,Jan 15 2024,Fes,,Yes
+C3998,Widget B,17.09,3.0,15/01/2024,,3.0,1
+C6522,WIDGET A,297.45,19.0,2024-01-15,Fes,5.0,
+C2381,,85.57,15.0,2024/01/15,,4.0,
+C7531,widget a,276.1,13.0,15/01/2024,Rabat,5.0,1
+C3973,Widget A,98.66,,Jan 15 2024,Rabat,4.0,1
+C9983,widget a,345.52,4.0,Jan 15 2024,Casablanca,5.0,
+C7924,,,17.0,2024-01-15,Fes,3.0,No
+C5152,Widget C,302.19,7.0,,Rabat,1.0,0
+C9516,Widget B,323.68,16.0,2024-01-15,Fes,1.0,Yes
+C9758,,200.65,2.0,2024/01/15,,,0
+C2774,Widget B,,11.0,2024-01-15,,,No
+C6199,widget a,265.64,3.0,,Marrakech,3.0,YES
+C6890,Widget A,,19.0,15/01/2024,,3.0,Yes
+C4220,Widget A,225.03,10.0,Jan 15 2024,Marrakech,1.0,Yes
+C9991,,396.9,17.0,2024-01-15,,5.0,1
+C7099,widget a,449.21,15.0,,,1.0,
+C7852,WIDGET A,,10.0,15/01/2024,Fes,,Yes
+C2767,WIDGET A,483.84,4.0,2024-01-15,,,0
+C9117,Widget A,80.8,9.0,15/01/2024,Fes,1.0,0
+C9695,Widget A,423.85,7.0,Jan 15 2024,Casablanca,1.0,1
+C9137,Widget C,265.29,5.0,15/01/2024,Marrakech,5.0,yes
+C4969,Widget C,73.51,7.0,15/01/2024,,2.0,
+C9406,widget a,314.54,5.0,2024-01-15,Fes,5.0,YES
+C1095,Widget A,70.0,16.0,2024/01/15,Rabat,1.0,No
+C2832,Widget B,444.31,18.0,15/01/2024,Rabat,,
+C6897,Widget A,408.91,4.0,,,3.0,yes
+C7953,widget a,328.89,5.0,Jan 15 2024,,,no
+C2082,Widget C,,1.0,2024/01/15,Rabat,4.0,No
+C3638,widget a,481.59,8.0,15/01/2024,Marrakech,4.0,no
+C1800,Widget C,427.32,12.0,2024-01-15,Casablanca,2.0,1
+C1933,,359.03,6.0,2024/01/15,Rabat,,
+C1211,widget a,185.86,11.0,2024/01/15,,,no
+C9921,Widget B,244.66,7.0,,Casablanca,,YES
+C8945,Widget C,172.34,1.0,2024/01/15,Fes,1.0,Yes
+C6476,Widget B,425.45,5.0,2024/01/15,Marrakech,3.0,No
+C1303,widget a,157.9,15.0,2024-01-15,Marrakech,,YES
+C7572,,122.96,17.0,,,5.0,Yes
+C5834,widget a,,9.0,2024-01-15,,2.0,yes
+C7986,widget a,203.58,12.0,2024/01/15,Casablanca,,Yes
+C5404,Widget A,313.37,,2024/01/15,Rabat,3.0,no
+C1076,,416.67,6.0,,Rabat,2.0,yes
+C9198,widget a,462.73,13.0,15/01/2024,Casablanca,5.0,yes
+C8916,Widget A,44.64,8.0,Jan 15 2024,Fes,4.0,no
+C9199,Widget A,28.36,1.0,2024-01-15,Marrakech,4.0,No
+C6953,widget a,,8.0,15/01/2024,Marrakech,3.0,0
+C9287,Widget C,406.0,4.0,,,,no
+C1640,Widget C,454.16,10.0,15/01/2024,,,
+C4599,,88.38,9.0,,Fes,5.0,No
+C3881,Widget C,146.45,9.0,2024-01-15,Fes,,Yes
+C5261,Widget A,,4.0,15/01/2024,Marrakech,4.0,no
+C1372,,290.03,18.0,15/01/2024,Marrakech,5.0,Yes
+C8430,widget a,206.81,3.0,,Fes,3.0,no
+C3689,,125.55,6.0,Jan 15 2024,Rabat,1.0,0
+C2081,WIDGET A,60.88,7.0,,Fes,5.0,
+C2779,Widget A,58.68,9.0,,Marrakech,,no
+C2029,WIDGET A,338.67,,Jan 15 2024,Marrakech,,No
+C7176,WIDGET A,361.61,19.0,2024/01/15,,,no
+C9294,Widget C,186.01,17.0,2024/01/15,Casablanca,4.0,yes
+C1753,Widget B,304.97,2.0,Jan 15 2024,,4.0,Yes
+C1264,Widget A,82.24,12.0,,Casablanca,2.0,0
+C8921,Widget A,15.37,10.0,Jan 15 2024,Marrakech,,1
+C4445,Widget B,,18.0,2024/01/15,,,yes
+C2084,Widget A,57.4,7.0,15/01/2024,,2.0,no
+C2754,Widget B,492.46,9.0,15/01/2024,,,no
+C7087,,121.83,18.0,15/01/2024,,1.0,no
+C1755,,71.39,9.0,2024-01-15,Marrakech,4.0,0
+C4622,Widget B,398.72,12.0,,Marrakech,2.0,1
+C9763,widget a,186.5,6.0,Jan 15 2024,Rabat,5.0,Yes
+C4877,Widget B,107.1,,2024/01/15,,3.0,No
+C2493,Widget A,,2.0,2024-01-15,Fes,4.0,
+C7829,Widget C,73.82,19.0,2024/01/15,Casablanca,5.0,no
+C4887,Widget A,44.55,,2024-01-15,Casablanca,,no
+C4580,Widget A,341.67,,2024/01/15,Casablanca,5.0,0
+C3305,Widget B,222.79,2.0,Jan 15 2024,Fes,2.0,0
+C7777,Widget B,78.48,2.0,2024-01-15,,,YES
+C5420,Widget B,397.26,14.0,15/01/2024,Marrakech,2.0,
+C5355,WIDGET A,14.47,15.0,2024-01-15,Rabat,3.0,YES
+C7901,Widget B,218.17,7.0,2024-01-15,Marrakech,2.0,
+C4265,WIDGET A,,2.0,,,,no
+C6936,Widget A,18.75,1.0,,Casablanca,1.0,No
+C2548,Widget B,277.58,18.0,,Fes,5.0,Yes
+C6145,Widget A,81.94,,2024-01-15,,3.0,YES
+C4857,Widget A,38.92,8.0,Jan 15 2024,,5.0,
+C5595,Widget B,241.99,5.0,2024/01/15,Rabat,3.0,no
+C4286,Widget C,422.6,14.0,15/01/2024,,1.0,1
+C2186,Widget A,245.39,17.0,Jan 15 2024,Casablanca,1.0,YES
+C9283,WIDGET A,44.43,13.0,15/01/2024,Marrakech,5.0,0
+C4622,,155.66,16.0,,Marrakech,4.0,0
+C7724,Widget C,225.82,17.0,15/01/2024,,1.0,1
+C9146,Widget C,144.17,6.0,15/01/2024,,2.0,yes
+C4991,Widget B,172.08,14.0,2024/01/15,Fes,3.0,no
+C8383,widget a,252.58,5.0,15/01/2024,,3.0,no
+C4950,WIDGET A,471.52,5.0,,,1.0,0
+C1582,Widget B,403.4,19.0,2024/01/15,Fes,3.0,YES
+C8939,Widget B,,7.0,,Fes,1.0,No
+C8563,Widget A,393.7,16.0,Jan 15 2024,Fes,2.0,yes
+C6093,,200.3,7.0,,Rabat,4.0,yes
+C8451,,408.78,,,Marrakech,,YES
+C7023,Widget A,,6.0,,Fes,1.0,0
+C8216,Widget B,341.1,1.0,2024-01-15,Casablanca,3.0,No
+C1510,Widget A,184.24,9.0,,Marrakech,2.0,1
+C8332,widget a,358.03,12.0,15/01/2024,Rabat,,YES
+C2928,,285.02,8.0,,Fes,5.0,No
+C9846,Widget C,311.19,,2024-01-15,Marrakech,,No
+C9695,WIDGET A,275.79,16.0,2024-01-15,Casablanca,3.0,No
+C1496,Widget A,32.62,8.0,2024/01/15,Fes,1.0,0
+C6864,,239.75,14.0,2024-01-15,Marrakech,3.0,No
+C4453,widget a,,2.0,15/01/2024,Fes,4.0,No
+C3293,Widget B,88.41,17.0,Jan 15 2024,,4.0,no
+C9714,widget a,240.42,15.0,15/01/2024,,,1
+C4612,Widget C,206.06,4.0,2024/01/15,Fes,4.0,no
+C5973,WIDGET A,28.73,10.0,2024/01/15,Fes,1.0,YES
+C3820,Widget C,72.93,15.0,2024/01/15,Rabat,1.0,yes
+C7139,Widget A,235.32,16.0,15/01/2024,,2.0,no
+C3271,Widget B,483.99,8.0,2024-01-15,Marrakech,,YES
+C4256,,245.77,3.0,2024-01-15,,5.0,1
+C7345,WIDGET A,,2.0,15/01/2024,,4.0,1
+C2906,WIDGET A,224.31,19.0,15/01/2024,Rabat,4.0,0
+C8061,Widget C,99.9,3.0,2024/01/15,,4.0,yes
+C9804,,15.49,7.0,,Marrakech,2.0,Yes
+C7335,Widget C,190.87,17.0,15/01/2024,Fes,4.0,Yes
+C4254,Widget A,460.15,19.0,Jan 15 2024,,4.0,1
+C2633,widget a,165.79,9.0,,Fes,1.0,no
+C6047,,187.42,13.0,Jan 15 2024,Fes,5.0,no
+C4941,,,10.0,15/01/2024,,4.0,1
+C3194,Widget B,369.77,3.0,Jan 15 2024,,,1
+C4303,Widget A,306.15,10.0,2024-01-15,Casablanca,2.0,
+C9701,Widget C,,,,Fes,4.0,
+C2519,,472.9,12.0,,Fes,,1
+C3325,Widget C,,11.0,2024-01-15,,5.0,1
+C4137,Widget C,149.54,16.0,15/01/2024,Fes,,
+C9224,Widget B,422.36,4.0,2024-01-15,Casablanca,1.0,No
+C4225,,467.93,11.0,,,4.0,
+C3625,Widget B,478.5,,,,,no
+C3676,Widget B,268.94,2.0,15/01/2024,,2.0,No
+C9521,,435.4,19.0,Jan 15 2024,Rabat,5.0,YES
+C4183,Widget A,95.94,15.0,2024/01/15,Casablanca,4.0,
+C4305,Widget A,,19.0,,Casablanca,4.0,No
+C4279,,380.3,9.0,,Marrakech,2.0,No
+C8847,Widget A,202.6,11.0,2024/01/15,Casablanca,3.0,1
+C7392,,126.37,2.0,Jan 15 2024,,2.0,1
+C6397,,381.03,4.0,2024/01/15,Fes,4.0,1
+C2918,widget a,218.14,2.0,2024/01/15,Rabat,,
+C2024,,489.41,,Jan 15 2024,Rabat,,0
+C1792,Widget B,428.03,8.0,15/01/2024,Marrakech,5.0,0
+C3660,Widget B,396.26,5.0,2024-01-15,Casablanca,1.0,Yes
+C8123,,170.23,15.0,Jan 15 2024,Marrakech,4.0,yes
+C7847,Widget C,357.27,12.0,,Fes,2.0,1
+C8040,,379.18,9.0,,Marrakech,3.0,0
+C7007,,207.68,8.0,Jan 15 2024,Marrakech,1.0,yes
+C5640,Widget C,51.82,11.0,,,2.0,YES
+C4204,WIDGET A,368.97,,2024-01-15,Marrakech,,No
+C7539,widget a,150.76,15.0,,Casablanca,,0
+C2757,Widget A,70.72,16.0,15/01/2024,Fes,4.0,YES
+C1616,widget a,26.13,4.0,15/01/2024,Rabat,3.0,Yes
+C8458,WIDGET A,,,15/01/2024,,5.0,YES
+C5269,Widget A,257.42,,15/01/2024,Casablanca,2.0,yes
+C6600,WIDGET A,,4.0,15/01/2024,,,no
+C9612,Widget C,283.88,17.0,Jan 15 2024,Marrakech,3.0,yes
+C7137,Widget A,448.22,8.0,2024-01-15,Marrakech,4.0,0
+C7878,widget a,300.97,3.0,15/01/2024,,5.0,0
+C5311,,,11.0,15/01/2024,,3.0,No
+C3866,widget a,119.97,8.0,2024-01-15,Rabat,,yes
+C4152,Widget C,222.43,,,,3.0,no
+C9106,Widget B,302.28,14.0,Jan 15 2024,Rabat,3.0,0
+C4439,Widget C,433.22,8.0,Jan 15 2024,Marrakech,4.0,yes
+C9401,Widget C,,11.0,Jan 15 2024,,1.0,1
+C1279,Widget B,228.7,2.0,15/01/2024,Casablanca,1.0,Yes
+C3634,,95.91,8.0,15/01/2024,Marrakech,2.0,
+C9492,widget a,355.15,1.0,2024-01-15,Casablanca,,yes
+C6218,widget a,475.53,6.0,,Fes,,yes
+C4298,Widget B,479.16,15.0,2024/01/15,Fes,2.0,1
+C2580,Widget C,497.85,,2024/01/15,Fes,4.0,YES
+C5346,Widget C,129.86,7.0,2024/01/15,,5.0,YES
+C9616,,419.28,14.0,,,3.0,
+C4214,Widget B,30.59,14.0,2024-01-15,Casablanca,5.0,no
+C5335,Widget C,12.44,15.0,2024/01/15,Rabat,4.0,YES
+C4196,Widget A,338.51,2.0,,Marrakech,,no
+C8746,Widget A,,6.0,,Marrakech,5.0,No
+C7169,Widget C,197.24,13.0,15/01/2024,Rabat,3.0,yes
+C6550,WIDGET A,11.16,6.0,Jan 15 2024,Fes,5.0,YES
+C7032,widget a,47.96,13.0,15/01/2024,Fes,4.0,Yes
+C4705,Widget C,108.28,18.0,2024-01-15,Marrakech,2.0,1
+C8291,WIDGET A,279.46,16.0,15/01/2024,,,YES
+C6521,Widget A,169.31,10.0,15/01/2024,Marrakech,4.0,1
+C1646,Widget B,284.11,4.0,,,2.0,0
+C4361,Widget A,326.24,7.0,Jan 15 2024,,,no
+C8865,,6.67,11.0,,,1.0,0
+C3292,widget a,424.61,15.0,,Fes,,1
+C9609,widget a,33.58,18.0,2024/01/15,Marrakech,1.0,No
+C8333,,437.16,17.0,Jan 15 2024,Casablanca,,yes
+C9900,Widget A,488.15,,Jan 15 2024,Fes,5.0,no
+C8178,Widget C,452.24,3.0,2024/01/15,Fes,5.0,Yes
+C2158,,273.38,3.0,15/01/2024,,4.0,YES
+C2717,Widget A,,5.0,Jan 15 2024,Fes,5.0,
+C5379,,90.48,,15/01/2024,,4.0,0
+C4224,Widget B,468.86,1.0,15/01/2024,,1.0,1
+C9450,widget a,16.55,19.0,15/01/2024,,5.0,No
+C8637,,277.98,7.0,2024-01-15,Rabat,2.0,0
+C7829,Widget C,233.29,3.0,,Rabat,4.0,No
+C9467,,399.46,11.0,,,5.0,no
+C1541,,373.79,3.0,2024/01/15,Casablanca,4.0,
+C7316,Widget B,,17.0,2024/01/15,,1.0,0
+C8831,Widget A,85.95,,Jan 15 2024,Casablanca,,No
+C9775,Widget C,398.17,18.0,Jan 15 2024,Marrakech,5.0,YES
+C8546,Widget C,,8.0,,,1.0,
+C8281,Widget C,53.45,13.0,2024-01-15,Casablanca,5.0,no
+C8020,widget a,367.78,3.0,2024-01-15,Casablanca,1.0,YES
+C2154,Widget C,260.27,1.0,,,1.0,no
+C4706,Widget C,159.43,,2024-01-15,,3.0,no
+C8881,Widget A,12.15,15.0,2024/01/15,,4.0,YES
+C6690,Widget A,363.41,1.0,15/01/2024,Marrakech,1.0,No
+C3340,Widget A,70.35,,2024/01/15,,1.0,
+C7442,Widget C,426.15,9.0,,,4.0,0
+C1234,widget a,135.97,12.0,Jan 15 2024,Marrakech,1.0,Yes
+C4569,Widget C,,1.0,2024-01-15,,5.0,No
+C7787,,145.7,17.0,Jan 15 2024,Rabat,2.0,1
+C8055,Widget A,352.62,11.0,2024-01-15,Marrakech,5.0,no
+C5582,Widget C,,10.0,,,4.0,1
+C3459,Widget C,174.79,12.0,15/01/2024,Casablanca,2.0,Yes
+C5468,Widget A,,16.0,,Marrakech,4.0,0
+C2652,Widget A,294.8,1.0,,Fes,2.0,Yes
+C9423,Widget C,291.89,1.0,15/01/2024,Fes,3.0,No
+C5657,Widget C,477.33,16.0,2024-01-15,Marrakech,4.0,Yes
+C8916,Widget A,44.64,8.0,Jan 15 2024,Fes,4.0,no
+C3292,widget a,424.61,15.0,,Fes,,1
+C9531,Widget B,122.09,5.0,2024-01-15,Rabat,2.0,no
+C4335,widget a,,,Jan 15 2024,,3.0,yes
+C8818,Widget B,35.17,18.0,2024-01-15,Marrakech,,0
+C4236,Widget C,476.42,10.0,15/01/2024,Casablanca,,yes
+C4950,WIDGET A,471.52,5.0,,,1.0,0
+C6608,widget a,74.97,12.0,15/01/2024,,4.0,0
+C7241,WIDGET A,470.22,10.0,,,,yes
+C3338,Widget C,458.94,16.0,2024/01/15,,,0
+C3822,widget a,489.05,,2024-01-15,Marrakech,1.0,YES
+C5466,widget a,,5.0,,,3.0,yes
+C6690,Widget A,363.41,1.0,15/01/2024,Marrakech,1.0,No
+C1349,,369.85,11.0,Jan 15 2024,Casablanca,2.0,No
+C3659,Widget A,60.64,14.0,15/01/2024,Marrakech,3.0,No
+C5368,,387.48,4.0,15/01/2024,Marrakech,,Yes
+C2966,,401.98,2.0,,Rabat,2.0,0
+C2840,,406.88,16.0,2024-01-15,Marrakech,,YES
+C6008,Widget A,293.54,,15/01/2024,,4.0,YES
+C3730,WIDGET A,34.84,3.0,,,5.0,
+C8881,Widget A,12.15,15.0,2024/01/15,,4.0,YES
+C9612,Widget C,283.88,17.0,Jan 15 2024,Marrakech,3.0,yes
+C3459,Widget C,174.79,12.0,15/01/2024,Casablanca,2.0,Yes
+C2087,Widget A,137.0,16.0,15/01/2024,Fes,3.0,yes
+C3866,widget a,119.97,8.0,2024-01-15,Rabat,,yes
+C3097,,456.65,4.0,2024-01-15,,5.0,no
+C7424,widget a,185.58,1.0,,Marrakech,1.0,yes
+C7169,Widget C,197.24,13.0,15/01/2024,Rabat,3.0,yes
+C8921,Widget A,15.37,10.0,Jan 15 2024,Marrakech,,1
+C5582,Widget C,,10.0,,,4.0,1
+C1443,widget a,59.82,19.0,2024-01-15,,5.0,0
+C6052,widget a,77.67,17.0,2024-01-15,Rabat,2.0,YES
+C8776,,192.81,17.0,15/01/2024,Rabat,4.0,1
+C4780,Widget B,299.89,7.0,2024-01-15,Rabat,4.0,Yes
+C5355,WIDGET A,14.47,15.0,2024-01-15,Rabat,3.0,YES
+C7145,Widget B,162.86,5.0,15/01/2024,Rabat,3.0,0
+C4279,,380.3,9.0,,Marrakech,2.0,No
+C7087,,121.83,18.0,15/01/2024,,1.0,no
+C3951,,265.71,7.0,,Rabat,5.0,Yes
+C6105,Widget A,19.37,,Jan 15 2024,Rabat,5.0,No
+C2089,Widget C,327.23,18.0,,Rabat,2.0,Yes
+C3325,Widget C,,11.0,2024-01-15,,5.0,1
+C2158,,273.38,3.0,15/01/2024,,4.0,YES
+C7187,Widget B,434.54,2.0,15/01/2024,Marrakech,5.0,Yes
+C8978,Widget A,133.7,3.0,Jan 15 2024,Casablanca,,yes
+C6093,,200.3,7.0,,Rabat,4.0,yes
+C6406,Widget B,81.38,10.0,2024/01/15,,,YES
+C5248,WIDGET A,54.2,4.0,,,,yes
+C7139,Widget A,235.32,16.0,15/01/2024,,2.0,no
+C2920,Widget B,451.83,,2024/01/15,Fes,1.0,0
+C1479,Widget B,,16.0,2024-01-15,Casablanca,,No
+C7730,Widget C,335.93,,2024-01-15,Casablanca,5.0,
+C8746,Widget A,,6.0,,Marrakech,5.0,No
+C1234,widget a,135.97,12.0,Jan 15 2024,Marrakech,1.0,Yes
+C8305,Widget A,468.65,,15/01/2024,,1.0,
+C5463,Widget A,204.37,14.0,Jan 15 2024,Fes,2.0,No
+C9916,widget a,167.44,7.0,2024-01-15,Fes,2.0,no
+C1671,,187.72,2.0,2024/01/15,Fes,4.0,YES
+C7744,Widget C,26.1,9.0,Jan 15 2024,Rabat,5.0,No
+C8472,WIDGET A,54.19,7.0,2024/01/15,Casablanca,3.0,0
+C9330,Widget A,468.67,8.0,15/01/2024,,1.0,0
+C8117,widget a,224.22,,2024-01-15,Rabat,5.0,YES
+C7137,Widget A,448.22,8.0,2024-01-15,Marrakech,4.0,0
+C4298,Widget B,479.16,15.0,2024/01/15,Fes,2.0,1
+C4018,widget a,464.78,19.0,15/01/2024,Casablanca,,yes
+C6521,Widget A,169.31,10.0,15/01/2024,Marrakech,4.0,1
+C3340,Widget A,70.35,,2024/01/15,,1.0,
+C7384,,,2.0,,Rabat,1.0,Yes
+C8434,WIDGET A,369.26,13.0,15/01/2024,Casablanca,1.0,0
+C3944,Widget C,23.77,1.0,15/01/2024,,2.0,No
+C8528,Widget C,484.23,18.0,,,1.0,
+C1640,Widget C,454.16,10.0,15/01/2024,,,
+C1113,Widget C,446.69,10.0,Jan 15 2024,Fes,,no
+C3689,,125.55,6.0,Jan 15 2024,Rabat,1.0,0
+C7878,widget a,300.97,3.0,15/01/2024,,5.0,0
+C9279,,,17.0,Jan 15 2024,Casablanca,5.0,no
+C5228,Widget C,293.57,15.0,15/01/2024,Casablanca,4.0,1
+C4705,Widget C,108.28,18.0,2024-01-15,Marrakech,2.0,1
+C2029,WIDGET A,338.67,,Jan 15 2024,Marrakech,,No

@@ -13,8 +13,8 @@ Full-stack: raw file → clean → explore → AI chat → branded Data Intellig
 No database; in-memory, session-scoped (4h TTL).
 
 **Stack:** FastAPI · Python 3.11 · Pandas · Plotly · Playwright+Jinja2 (PDF) ·
-multi-provider AI (Groq free-default / OpenAI / Claude) · Next.js 14 · React 18 ·
-TypeScript · Tailwind · Framer Motion · Zustand · next-intl (EN/AR RTL).
+multi-provider AI (Gemini Flash 2.0 free-default / Groq fallback / OpenAI / Claude) · Next.js 14 · React 18 ·
+TypeScript · Tailwind · Framer Motion · Zustand · next-intl (EN/FR).
 
 ---
 
@@ -79,11 +79,11 @@ AURA/
 
 ## AI provider system (engines/ai_insights.py)
 
-Single registry `PROVIDERS` = source of truth. **Groq (free) is the default**;
-OpenAI/Claude are paid. Groq+OpenAI share one OpenAI-compatible path (base_url
-differs); Claude uses the Anthropic SDK. `resolve_provider()` falls back to the
-best *configured* provider (free first); `executive_summary()` cascades to a
-deterministic summary if no provider is usable. Never send raw rows to the LLM
+Single registry `PROVIDERS` = source of truth. **Gemini Flash 2.0 (free) is the default**;
+Groq is the free fallback; OpenAI/Claude are paid. Resolution order: Gemini → Groq → OpenAI → Claude.
+Gemini + Groq + OpenAI share one OpenAI-compatible path (base_url differs); Claude uses the Anthropic SDK.
+`resolve_provider()` falls back to the best *configured* provider; `executive_summary()` cascades to a
+deterministic summary if none are usable. Never send raw rows to the LLM
 for the report — only the compact stats payload.
 
 To add a provider: one entry in `PROVIDERS`. Nothing else.
@@ -115,8 +115,9 @@ To add a provider: one entry in `PROVIDERS`. Nothing else.
 
 | Var | Tier | Purpose |
 |-----|------|---------|
-| `GROQ_API_KEY` | free · default | AI chat + report summaries (console.groq.com) |
-| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | paid · optional | upgrades |
+| `GOOGLE_API_KEY` | free · **primary** | Gemini Flash 2.0 — best bilingual EN/FR (aistudio.google.com) |
+| `GROQ_API_KEY` | free · fallback | Groq/Llama 3.3 70B — used if Gemini key absent (console.groq.com) |
+| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | paid · optional | paid tier upgrades |
 | `ALLOWED_ORIGINS` | — | comma-separated CORS origins |
 | `PORT` | deploy | 8000 local / 7860 HF Spaces |
 | `STRIPE_*` | optional | billing checkout |

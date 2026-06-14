@@ -10,7 +10,7 @@ export const useStore = create<AuraStore>((set) => ({
   exploreData: null,
   chatHistory: [],
   firstRun: true,
-  provider: 'groq',
+  provider: 'gemini',
   temperature: 0.7,
 
   setSession: (sessionId: string) => set({ sessionId }),
@@ -48,7 +48,7 @@ export const useStore = create<AuraStore>((set) => ({
       exploreData: null,
       chatHistory: [],
       firstRun: true,
-      provider: 'Claude',
+      provider: 'gemini',
       temperature: 0.7,
     }),
 }));

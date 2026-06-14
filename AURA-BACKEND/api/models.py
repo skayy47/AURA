@@ -55,6 +55,7 @@ class CleanResponse(BaseModel):
     cols_before: int
     cols_after: int
     log: list[dict[str, Any]]
+    score: float | None = None
 
 
 class ExploreResponse(BaseModel):

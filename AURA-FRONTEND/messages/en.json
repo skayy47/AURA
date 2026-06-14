@@ -104,7 +104,17 @@
     "exportReport": "Export report",
     "fallbackQ1": "Give me the 3 biggest takeaways from this dataset.",
     "fallbackQ2": "What data quality issues should I worry about?",
-    "fallbackQ3": "Which columns are most worth analyzing?"
+    "fallbackQ3": "Which columns are most worth analyzing?",
+    "vitals": "Dataset Vitals",
+    "suggestions": "Suggested Questions",
+    "conversation": "Conversation",
+    "noDataset": "No dataset loaded.",
+    "statusIdle": "Standing by",
+    "statusListening": "Listening...",
+    "statusThinking": "Analyzing...",
+    "statusSpeaking": "Responding...",
+    "statusCelebrate": "Got it.",
+    "statusError": "Recovering"
   },
   "docs": {
     "title": "Export & Documentation",

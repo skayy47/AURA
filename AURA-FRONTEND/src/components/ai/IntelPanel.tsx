@@ -1,6 +1,7 @@
 "use client";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { AuraBot, type BotState } from "./AuraBot";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -14,14 +15,7 @@ interface IntelPanelProps {
   disabled?: boolean;
 }
 
-const STATUS_LABEL: Record<BotState, string> = {
-  idle: "Standing by",
-  listening: "Listening...",
-  thinking: "Analyzing...",
-  speaking: "Responding...",
-  celebrate: "Got it.",
-  error: "Recovering",
-};
+// Status labels are now resolved from translations inside the component.
 
 function parseQualityScore(detail: string | undefined): number | null {
   if (!detail) return null;
@@ -48,7 +42,17 @@ function MicroMetric({ label, value, color, index }: { label: string; value: str
 }
 
 export function IntelPanel({ botState, suggestions, onSuggestionClick, onHistoryClick, onBotClick, disabled }: IntelPanelProps) {
+  const t = useTranslations("ai");
   const { meta, cleanResult, chatHistory } = useStore();
+
+  const STATUS_LABEL: Record<BotState, string> = {
+    idle: t("statusIdle"),
+    listening: t("statusListening"),
+    thinking: t("statusThinking"),
+    speaking: t("statusSpeaking"),
+    celebrate: t("statusCelebrate"),
+    error: t("statusError"),
+  };
 
   const qualityScore = useMemo(() => {
     const log = cleanResult?.log ?? [];
@@ -86,7 +90,7 @@ export function IntelPanel({ botState, suggestions, onSuggestionClick, onHistory
         <section>
           <div className="h-[2px] bg-gradient-to-r from-aurora-purple via-aurora-cyan to-transparent mb-3 rounded-full" />
           <p className="font-bricolage font-bold text-[0.65rem] tracking-[0.15em] uppercase text-text-m mb-3">
-            Dataset Vitals
+            {t("vitals")}
           </p>
 
           {meta ? (
@@ -112,14 +116,14 @@ export function IntelPanel({ botState, suggestions, onSuggestionClick, onHistory
               </p>
             </>
           ) : (
-            <p className="text-text-d text-xs">No dataset loaded.</p>
+            <p className="text-text-d text-xs">{t("noDataset")}</p>
           )}
         </section>
 
         {suggestions.length > 0 && (
           <section>
             <p className="font-bricolage font-bold text-[0.65rem] tracking-[0.15em] uppercase text-text-m mb-3">
-              Suggested Questions
+              {t("suggestions")}
             </p>
             <div className="space-y-2">
               {suggestions.map((q, i) => {
@@ -151,7 +155,7 @@ export function IntelPanel({ botState, suggestions, onSuggestionClick, onHistory
         {userMessages.length > 0 && (
           <section>
             <p className="font-bricolage font-bold text-[0.65rem] tracking-[0.15em] uppercase text-text-m mb-3">
-              Conversation
+              {t("conversation")}
             </p>
             <ul className="space-y-1">
               {userMessages.map(({ message, index }) => {

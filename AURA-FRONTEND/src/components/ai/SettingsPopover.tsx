@@ -52,6 +52,7 @@ export function SettingsPopover({ isOpen, onClose }: Props) {
           <label className="block text-[0.75rem] text-text-m mb-2">Model provider</label>
           <div className="space-y-2">
             {[
+              { id: "gemini", label: "Gemini · Flash 2.0", tier: "Free" },
               { id: "groq", label: "Groq · Llama 3.3 70B", tier: "Free" },
               { id: "openai", label: "OpenAI · GPT-4o mini", tier: "Paid" },
               { id: "claude", label: "Claude · Sonnet 4.6", tier: "Paid" },
@@ -121,7 +122,7 @@ export function SettingsPopover({ isOpen, onClose }: Props) {
         <div className="pt-3 border-t border-border">
           <button
             onClick={() => {
-              setProvider("groq");
+              setProvider("gemini");
               setTemperature(0.7);
             }}
             className="text-[0.75rem] text-text-d hover:text-text-m underline transition-colors"

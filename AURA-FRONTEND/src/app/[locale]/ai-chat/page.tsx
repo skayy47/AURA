@@ -16,9 +16,10 @@ import { Link } from "@/i18n/navigation";
 import { SettingsPopover } from "@/components/ai/SettingsPopover";
 
 const PROVIDER_BADGE: Record<string, { label: string; color: string }> = {
-  groq:    { label: "Groq · Free", color: "#00FFB2" },
-  claude:  { label: "Claude",      color: "#8B5CF6" },
-  openai:  { label: "OpenAI",      color: "#3B82F6" },
+  gemini:  { label: "Gemini · Flash 2.0", color: "#4285F4" },
+  groq:    { label: "Groq · Free",        color: "#00FFB2" },
+  claude:  { label: "Claude",             color: "#8B5CF6" },
+  openai:  { label: "OpenAI",             color: "#3B82F6" },
 };
 
 const ACCENTS = ["purple", "cyan", "blue"] as const;
@@ -31,11 +32,11 @@ export default function AiChatPage() {
   const [streamedResponse, setStreamedResponse] = useState("");
   const [botState, setBotState] = useState<BotState>("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[] | null>(null);
   const rawProvider = useStore((s) => s.provider).toLowerCase();
   const currentProvider = (
-    ["groq", "claude", "openai"].includes(rawProvider) ? rawProvider : "groq"
-  ) as "groq" | "claude" | "openai";
+    ["gemini", "groq", "claude", "openai"].includes(rawProvider) ? rawProvider : "gemini"
+  ) as "gemini" | "groq" | "claude" | "openai";
 
   const endRef = useRef<HTMLDivElement>(null);
   const messageRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -113,15 +114,18 @@ export default function AiChatPage() {
   }
 
   const isEmpty = chatHistory.length === 0 && !streamedResponse && !loading;
-  const questionList =
-    suggestions.length > 0
+  // null = still loading; [] = loaded but empty (use fallbacks); string[] = data-specific
+  const questionList: string[] =
+    suggestions && suggestions.length > 0
       ? suggestions
+      : suggestions === null
+      ? []
       : [t("fallbackQ1"), t("fallbackQ2"), t("fallbackQ3")];
   const heroSuggestions = questionList.slice(0, 3).map((question, i) => ({
     question,
     accent: ACCENTS[i % ACCENTS.length],
   }));
-  const provider = PROVIDER_BADGE[rawProvider] || PROVIDER_BADGE["claude"];
+  const provider = PROVIDER_BADGE[rawProvider] || PROVIDER_BADGE["gemini"];
 
   return (
     <div className="flex gap-6 h-[calc(100vh-4rem)] -mx-2">
@@ -199,30 +203,41 @@ export default function AiChatPage() {
               <p className="text-text-m text-sm mb-8">
                 {t("rowColSummary", { rows: meta.n_rows.toLocaleString(), cols: meta.n_cols })}
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-[640px] w-full">
-                {heroSuggestions.map((s, i) => {
-                  const dot =
-                    s.accent === "cyan" ? "#00e5ff" : s.accent === "blue" ? "#3b82f6" : "#8b5cf6";
-                  return (
-                    <motion.button
+              {suggestions === null ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-[640px] w-full">
+                  {[0, 1, 2].map((i) => (
+                    <div
                       key={i}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
-                      onClick={() => handleSend(s.question)}
-                      className="group text-left rounded-xl p-4 min-h-[84px] flex items-start gap-2.5 bg-[rgba(11,20,38,0.7)] border border-border hover:border-cyan/45 hover:bg-[rgba(11,20,38,0.95)] transition-colors duration-200 cursor-pointer"
-                    >
-                      <span
-                        className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                        style={{ backgroundColor: dot, boxShadow: `0 0 8px ${dot}` }}
-                      />
-                      <p className="text-[0.85rem] leading-snug text-text font-medium group-hover:text-white">
-                        {s.question}
-                      </p>
-                    </motion.button>
-                  );
-                })}
-              </div>
+                      className="rounded-xl min-h-[84px] bg-[rgba(11,20,38,0.7)] border border-border animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : heroSuggestions.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-[640px] w-full">
+                  {heroSuggestions.map((s, i) => {
+                    const dot =
+                      s.accent === "cyan" ? "#00e5ff" : s.accent === "blue" ? "#3b82f6" : "#8b5cf6";
+                    return (
+                      <motion.button
+                        key={i}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
+                        onClick={() => handleSend(s.question)}
+                        className="group text-left rounded-xl p-4 min-h-[84px] flex items-start gap-2.5 bg-[rgba(11,20,38,0.7)] border border-border hover:border-cyan/45 hover:bg-[rgba(11,20,38,0.95)] transition-colors duration-200 cursor-pointer"
+                      >
+                        <span
+                          className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+                          style={{ backgroundColor: dot, boxShadow: `0 0 8px ${dot}` }}
+                        />
+                        <p className="text-[0.85rem] leading-snug text-text font-medium group-hover:text-white">
+                          {s.question}
+                        </p>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              ) : null}
             </motion.div>
           ) : (
             <>
