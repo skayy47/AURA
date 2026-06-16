@@ -44,6 +44,7 @@ async def ingest(
             "meta": asdict(result.meta),
             "ingest_warnings": result.warnings,
             "file_name": result.meta.name,
+            "meta_name": result.meta.name,
         },
     )
 

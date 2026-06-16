@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes import ingest, clean, explore, ai, export, samples, billing
+from api.routes import ingest, clean, explore, analyze, ai, export, samples, billing
 
 # Load local .env if present (no-op in prod where env vars are set directly).
 # Safe here: route/engine imports above read env only at request time, and the
@@ -36,6 +36,7 @@ app.add_middleware(
 app.include_router(ingest.router, prefix="/api")
 app.include_router(clean.router, prefix="/api")
 app.include_router(explore.router, prefix="/api")
+app.include_router(analyze.router, prefix="/api")
 app.include_router(ai.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
 app.include_router(samples.router, prefix="/api")

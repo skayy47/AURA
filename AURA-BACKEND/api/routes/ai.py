@@ -49,6 +49,7 @@ async def ask(req: AskRequest):
 
         provider = coerce_provider(req.provider)
         semantics = sess.get("semantics")
+        analysis = sess.get(f"analysis_{req.language}") or sess.get("analysis_en")
 
         history = sess.get("chat_history", [])
         history.append({"role": "user", "content": req.question})
@@ -72,6 +73,7 @@ async def ask(req: AskRequest):
                         stream=True,
                         semantics=semantics,
                         language=req.language,
+                        analysis=analysis,
                     ):
                         full_response += chunk
                         yield f"data: {json.dumps({'chunk': chunk})}\n\n"

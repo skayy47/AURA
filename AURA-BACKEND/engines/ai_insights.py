@@ -168,7 +168,10 @@ def _language_directive(language: str | None) -> str:
 
 
 def _build_system_prompt(
-    df: pd.DataFrame, semantics: dict | None = None, language: str = "en"
+    df: pd.DataFrame,
+    semantics: dict | None = None,
+    language: str = "en",
+    analysis: dict | None = None,
 ) -> str:
     n_rows, n_cols = df.shape
 
@@ -257,10 +260,40 @@ def _build_system_prompt(
                 "measures — no trends, outliers, averages, or correlations on identifiers."
             )
 
+    if analysis:
+        finding_lines: list[str] = []
+        trends = analysis.get("trends")
+        if trends and trends.get("change_pct") is not None:
+            finding_lines.append(
+                f"Trend: {trends['measure']} is {trends['direction']} "
+                f"({trends['change_pct']:+.1f}% change across {trends.get('date_col', 'time')})"
+            )
+        segments = analysis.get("segments")
+        if segments and segments.get("spread_pct") is not None:
+            finding_lines.append(
+                f"Segment driver: {segments['dimension']} drives {segments['measure']} — "
+                f"top '{segments['top']['label']}' ({segments['top']['value']:.2f}) vs "
+                f"bottom '{segments['bottom']['label']}' ({segments['bottom']['value']:.2f}), "
+                f"{abs(segments['spread_pct']):.0f}% gap"
+            )
+        for c in (analysis.get("correlations") or [])[:4]:
+            finding_lines.append(
+                f"Correlation: {c['col_a']} × {c['col_b']} r={c['r']:+.2f}"
+            )
+        for ins in (analysis.get("insights") or [])[:6]:
+            finding_lines.append(f"Finding [{ins.get('kind','')}]: {ins.get('title','')} — {ins.get('detail','')}")
+        if finding_lines:
+            sections.append(
+                "AURA Pre-computed Findings (AUTHORITATIVE — these are computed from the FULL dataset. "
+                "Cite them directly. NEVER say a trend or relationship does not exist if it is listed here):\n"
+                + "\n".join(f"  • {ln}" for ln in finding_lines)
+            )
+
     sections.append(
         "RULES:\n"
         "- The statistics above are computed on the FULL dataset. Answer DIRECTLY from them.\n"
         "- NEVER say 'I would need to run code' or 'without the actual data' — you HAVE it.\n"
+        "- NEVER dispute the Pre-computed Findings above — they are authoritative AURA results.\n"
         "- Be specific and numerical. Name actual columns and cite real values from above.\n"
         "- Format with markdown: bold key figures, use bullet lists, code blocks for any code.\n"
         "- Be concise and insight-driven. No filler, no preamble."
@@ -353,6 +386,7 @@ def ask_ai(
     stream: bool = True,
     semantics: dict | None = None,
     language: str = "en",
+    analysis: dict | None = None,
 ) -> Generator[str, None, None]:
     """Ask a provider about *df* and yield streamed text chunks.
 
@@ -362,7 +396,7 @@ def ask_ai(
     treats an identifier like ``row_id`` as a measure.
     """
     resolved = resolve_provider(provider)
-    system_prompt = _build_system_prompt(df, semantics, language)
+    system_prompt = _build_system_prompt(df, semantics, language, analysis)
     sample = _truncate_df(df).to_string()
     user_message = f"Dataset sample:\n\n{sample}\n\nQuestion: {question}"
     yield from _stream_provider(resolved, system_prompt, user_message, stream)
