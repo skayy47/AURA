@@ -25,7 +25,10 @@ export const useStore = create<AuraStore>((set) => ({
       chatHistory: [],
     }),
 
-  setClean: (result: CleanResult) => set({ cleanResult: result }),
+  setClean: (result: CleanResult) => set((state) => ({
+    cleanResult: result,
+    meta: state.meta ? { ...state.meta, n_cols: result.cols_after } : state.meta,
+  })),
 
   setExplore: (data: ExploreData) => set({ exploreData: data }),
 
