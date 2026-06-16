@@ -50,12 +50,20 @@ async def clean(req: CleaningConfigRequest):
     rows_after, cols_after = cleaned_df.shape
 
     # Extract quality score from the Schema Validator log entry.
-    quality_score: float | None = None
+    quality_score: float = 0.0
     for step in report.steps:
         m = re.search(r"Quality score:\s*([\d.]+)/100", step.get("detail", ""))
         if m:
             quality_score = float(m.group(1))
             break
+    else:
+        # Fallback: SchemaValidator was skipped or failed — compute from cleaned df
+        try:
+            n = cleaned_df.shape[0] * cleaned_df.shape[1]
+            missing_rate = float(cleaned_df.isnull().sum().sum() / n) if n > 0 else 0.0
+            quality_score = round(max(0.0, min(100.0, (1.0 - missing_rate * 2) * 100)), 1)
+        except Exception:
+            quality_score = 0.0
 
     update_session(
         req.session_id,

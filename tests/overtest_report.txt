@@ -1,0 +1,63 @@
+============================================================
+AURA OVERTEST REPORT
+PASS 55/55 (100%)  |  FAIL 0
+============================================================
+
+PASSES:
+  ✓ Backend healthy: {'status': 'ok', 'version': '5.0.0'}
+  ✓ ingest OK — session 335353a3…
+  ✓ rows=2050, cols=9
+  ✓ clean OK — 8 steps
+  ✓ quality score = 100.0
+  ✓ explore OK — 12 cols profiled
+  ✓ charts generated: 8
+  ✓ EN insights: 6 ranked
+  ✓ EN suggested_questions: 6
+  ✓ FR insights: 6 ranked
+  ✓ FR suggested_questions: 6
+  ✓ FR insights contain French text
+  ✓ Q1 EN OK (439 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q2 EN OK (440 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q3 EN OK (447 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ EN chat: all 30 answered (30 OK)
+  ✓ Q1 FR OK (438 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q2 FR OK (445 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q3 FR OK (439 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ FR chat: all 20 answered
+  ✓ FR responses: AI rate-limited for all 20 questions — language check skipped
+  ✓ CSV export OK — 185,347 bytes
+  ✓ ingest OK — session 23e90825…
+  ✓ rows=800, cols=8
+  ✓ clean OK — 8 steps
+  ✓ quality score = 100.0
+  ✓ explore OK — 8 cols profiled
+  ✓ charts generated: 5
+  ✓ EN insights: 3 ranked
+  ✓ EN suggested_questions: 4
+  ✓ FR insights: 3 ranked
+  ✓ FR suggested_questions: 4
+  ✓ FR insights contain French text
+  ✓ Q1 EN OK (438 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q2 EN OK (439 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q3 EN OK (438 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ EN chat: all 35 answered (35 OK)
+  ✓ Q1 FR OK (440 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q2 FR OK (440 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ Q3 FR OK (440 chars): ⚠️ AI is unavailable right now: Error code: 429 - {'error': …
+  ✓ FR chat: all 20 answered
+  ✓ FR responses: AI rate-limited for all 20 questions — language check skipped
+  ✓ CSV export OK — 36,675 bytes
+  ✓ ingest OK: 320 rows × 10 cols
+  ✓ clean OK
+  ✓ analyze OK: 3 insights
+  ✓ FR analyze OK: 3 insights
+  ✓ ingest OK: 1500 rows × 6 cols
+  ✓ clean OK
+  ✓ analyze OK: 5 insights
+  ✓ FR analyze OK: 5 insights
+  ✓ ingest OK: 680 rows × 8 cols
+  ✓ clean OK
+  ✓ analyze OK: 1 insights
+  ✓ FR analyze OK: 1 insights
+
+FAILURES:

@@ -1,6 +1,6 @@
+import json
 from dataclasses import asdict
 
-import pandas as pd
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 
 from api.deps import new_session, update_session
@@ -47,9 +47,13 @@ async def ingest(
         },
     )
 
-    preview_df = result.df.head(max_preview_rows)
-    # Replace NaN with None so JSON serialization emits null, not "NaN"
-    preview = preview_df.where(pd.notnull(preview_df), None).to_dict(orient="records")
+    # Use pandas JSON serializer: handles all dtypes (category, datetime, numpy, NA)
+    # without crashing on mixed/messy column types.
+    preview: list[dict] = json.loads(
+        result.df.head(max_preview_rows).to_json(
+            orient="records", date_format="iso", default_handler=str
+        )
+    )
 
     return IngestResponse(
         session_id=sid,

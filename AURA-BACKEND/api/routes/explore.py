@@ -30,7 +30,7 @@ async def explore(session_id: str):
         "profile": profile,
         "semantics": semantics,
         "recommendations": recommendations,
-        # Backward-compat convenience fields (still used by some frontend code paths)
+        "charts": recommendations,  # backward-compat alias (tests + older clients)
         "numeric_cols": profile["numeric_cols"],
         "categorical_cols": profile["categorical_cols"],
         "datetime_cols": profile["datetime_cols"],
