@@ -9,9 +9,9 @@ import { ChatInput } from "@/components/ai/ChatInput";
 import { AuraBot, type BotState } from "@/components/ai/AuraBot";
 import { IntelPanel } from "@/components/ai/IntelPanel";
 // GlowCard removed from suggestions — replaced with clean glass cards
-import { streamAsk, fetchAnalysis } from "@/lib/api";
+import { streamAsk, fetchAnalysis, SessionExpiredError } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 
 import { SettingsPopover } from "@/components/ai/SettingsPopover";
 
@@ -27,12 +27,14 @@ const ACCENTS = ["purple", "cyan", "blue"] as const;
 export default function AiChatPage() {
   const t = useTranslations("ai");
   const locale = useLocale();
-  const { sessionId, meta, chatHistory, addMessage } = useStore();
+  const router = useRouter();
+  const { sessionId, meta, chatHistory, addMessage, reset } = useStore();
   const [loading, setLoading] = useState(false);
   const [streamedResponse, setStreamedResponse] = useState("");
   const [botState, setBotState] = useState<BotState>("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<string[] | null>(null);
+  const [sessionExpired, setSessionExpired] = useState(false);
   const rawProvider = useStore((s) => s.provider).toLowerCase();
   const currentProvider = (
     ["gemini", "groq", "claude", "openai"].includes(rawProvider) ? rawProvider : "gemini"
@@ -84,6 +86,11 @@ export default function AiChatPage() {
         transitionTimer.current = setTimeout(() => setBotState("idle"), 1800);
       }
     } catch (e: any) {
+      if (e instanceof SessionExpiredError) {
+        setSessionExpired(true);
+        setBotState("error");
+        return;
+      }
       addMessage({ role: "assistant", content: `${t("error")} (${e.message})`, ts: Date.now() });
       setBotState("error");
       if (transitionTimer.current) clearTimeout(transitionTimer.current);
@@ -111,6 +118,26 @@ export default function AiChatPage() {
 
   if (!meta || !sessionId) {
     return <EmptyState />;
+  }
+
+  if (sessionExpired) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh] gap-6 text-center">
+        <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl">⚠</div>
+        <div>
+          <h2 className="text-xl font-bricolage font-bold text-text mb-2">Session expired</h2>
+          <p className="text-text-m text-sm max-w-sm">
+            The backend restarted and your session was cleared. Re-upload your file to continue.
+          </p>
+        </div>
+        <button
+          onClick={() => { reset(); router.push("/ingest"); }}
+          className="px-6 py-2.5 rounded-lg bg-cyan/10 border border-cyan/30 text-cyan text-sm font-semibold hover:bg-cyan/20 transition-colors"
+        >
+          Re-upload data →
+        </button>
+      </div>
+    );
   }
 
   const isEmpty = chatHistory.length === 0 && !streamedResponse && !loading;

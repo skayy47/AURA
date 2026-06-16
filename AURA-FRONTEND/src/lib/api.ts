@@ -2,6 +2,11 @@ import { Meta, CleaningConfig, CleanResult, ExploreData, Message } from './types
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+/** Thrown when the backend returns 404 — session expired after a restart. */
+export class SessionExpiredError extends Error {
+  constructor() { super("session_expired"); this.name = "SessionExpiredError"; }
+}
+
 export async function uploadFile(file: File): Promise<{ session_id: string; meta: Meta; warnings: string[]; preview: Array<Record<string, any>> }> {
   const formData = new FormData();
   formData.append('file', file);
@@ -84,9 +89,8 @@ export async function* streamAsk(
     }),
   });
 
-  if (!response.ok) {
-    throw new Error(`Ask failed: ${response.statusText}`);
-  }
+  if (response.status === 404) throw new SessionExpiredError();
+  if (!response.ok) throw new Error(`Ask failed: ${response.statusText}`);
 
   const reader = response.body?.getReader();
   if (!reader) throw new Error('No response body');
