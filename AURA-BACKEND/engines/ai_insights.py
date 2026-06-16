@@ -62,7 +62,7 @@ PROVIDERS: dict[AIProvider, ProviderSpec] = {
         env_var="GOOGLE_API_KEY",
         model="gemini-2.0-flash",
         kind="openai_compat",
-        base_url="https://generativelanguage.googleapis.com/openai/",
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     ),
     AIProvider.GROQ: ProviderSpec(
         label="Groq · Llama 3.3 70B",
