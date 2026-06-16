@@ -146,7 +146,7 @@ It goes deeper than the UI chrome: when French is selected, **the AI answers in 
 | **Styling** | Tailwind 3.4 + Framer Motion 12 | Dark "Luminal Void" palette (`#00E5FF` / `#8B5CF6` on `#030712`) |
 | **i18n** | next-intl v4 | EN + FR — 222 keys at parity; premium toggle; locale-aware AI |
 | **Billing** | Stripe SDK | Checkout flow wired; entitlement persistence is v5.1 |
-| **Testing** | pytest + ruff + black / tsc + Next build | Quality gates enforced in CI on both stacks |
+| **Testing** | pytest + ruff + black / tsc + Next build + 55-check overtest | CI gates on both stacks; 55/55 end-to-end checks across 5 datasets |
 | **Deploy** | HF Spaces Docker (backend) + Vercel (frontend) | Free-tier hosting; Dockerfile bakes Playwright+Chromium |
 
 ---
@@ -225,6 +225,15 @@ cd AURA-FRONTEND
 npx tsc --noEmit
 npm run build
 ```
+
+### End-to-end overtest (55 checks across 5 datasets)
+
+```bash
+# Start backend first, then:
+cd AURA && PYTHONIOENCODING=utf-8 python tests/aura_overtest_local.py
+```
+
+Exercises all 5 pipeline stages (ingest → clean → explore → analyze EN/FR → export) across 5 real datasets including `messy_retail.csv` (mixed formats, nulls, mixed booleans). **Last result: 55/55 passed (100%).**
 
 ---
 
