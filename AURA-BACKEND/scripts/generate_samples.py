@@ -239,7 +239,10 @@ def make_workforce() -> None:
 def make_retail_raw() -> None:
     n = 400
     cities = ["Casablanca", "Rabat", "Marrakech", "Dubai", "Cairo", "Riyadh", "", None]
-    payment = ["Card", "Cash", "COD", "Wallet", "card", "CARD"]
+    # Consistent casing: AURA dedups case-variant rows but doesn't canonicalize
+    # category labels, so mixed casing here would survive as noisy bars in the
+    # final report. The cleaning story is carried by headers/dupes/dates/nulls.
+    payment = ["Card", "Cash", "COD", "Wallet"]
     reps = [f"Rep {i:02d}" for i in range(1, 28)]
 
     qty = rng.integers(1, 18, n).astype(float)
