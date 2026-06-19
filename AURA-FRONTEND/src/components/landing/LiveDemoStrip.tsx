@@ -51,7 +51,7 @@ export function LiveDemoStrip() {
     setLoadingReal(true);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-      const res = await fetch(`${apiUrl}/api/samples/mena-orders/load`, { method: "POST" });
+      const res = await fetch(`${apiUrl}/api/samples/mena-retail-raw/load`, { method: "POST" });
       if (!res.ok) throw new Error();
       const result = await res.json();
       setSession(result.session_id);

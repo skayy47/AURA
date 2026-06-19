@@ -1,0 +1,501 @@
+  Order ID  ,Customer Name,Order Date,Sale Amount ($),QTY,City,Payment Method,Delivered?,Discount %,Rating,Sales Rep
+OID4112,Youssef K.,14/10/2024,560.12,16.0,,Card,no,36.7,,Rep 10
+OID8684,,Jun 01 2024,325.02,4.0,Rabat,COD,Y,22.2,,Rep 02
+OID5197,Lina M.,27/10/2024,507.0,16.0,Riyadh,card,N,17.9,3.0,Rep 08
+OID3148,Omar R.,Sep 28 2024,721.94,9.0,,CARD,YES,18.1,2.0,Rep 26
+OID4812,Amine B.,2024-07-07,200.9,5.0,Dubai,Wallet,no,37.6,,Rep 06
+OID3259,Youssef K.,23/04/2024,196.99,8.0,,COD,N,41.1,5.0,Rep 16
+OID4722,Omar R.,2024/06/26,616.19,6.0,,card,yes,11.1,2.0,Rep 16
+OID1971,Sara L.,Sep 22 2024,285.92,7.0,Riyadh,card,No,38.6,1.0,Rep 06
+OID8140,Amine B.,03/02/2025,336.94,9.0,,Cash,no,26.5,1.0,Rep 20
+OID3379,Omar R.,2024-03-24,,10.0,Cairo,Cash,YES,16.5,3.0,Rep 19
+OID1347,Amine B.,Dec 20 2024,609.19,,Riyadh,Cash,Y,6.5,,Rep 11
+OID1999,Youssef K.,2024-04-07,411.33,15.0,Marrakech,CARD,0,34.9,,Rep 23
+OID2841,,2024/04/09,,7.0,,Card,Y,19.2,1.0,Rep 25
+OID8560,Youssef K.,Oct 30 2024,1360.51,,Cairo,Cash,yes,,5.0,Rep 23
+OID8626,Amine B.,Oct 07 2024,545.83,7.0,Cairo,Card,Y,17.6,1.0,Rep 03
+OID4461,,Dec 12 2024,584.41,12.0,,Wallet,No,7.7,2.0,Rep 14
+OID6514,Sara L.,Nov 08 2024,482.8,4.0,Riyadh,COD,N,13.6,,Rep 27
+OID2981,Youssef K.,2024/10/31,1251.78,13.0,Riyadh,Cash,No,7.9,,Rep 11
+OID4053,Youssef K.,11/01/2024,,13.0,Casablanca,COD,Y,32.0,3.0,Rep 05
+OID4431,,25/11/2024,1206.52,,Riyadh,Card,yes,34.4,3.0,Rep 06
+OID7579,Omar R.,09/06/2024,,3.0,Dubai,card,YES,38.1,1.0,Rep 01
+OID1952,,2024/10/09,586.37,7.0,Marrakech,Cash,0,16.6,1.0,Rep 13
+OID1831,,24/08/2024,564.75,17.0,Casablanca,CARD,no,2.5,,Rep 17
+OID5544,Youssef K.,2024/09/08,343.74,4.0,Rabat,Wallet,true,,2.0,Rep 23
+OID4196,Sara L.,2024/05/18,,16.0,,card,yes,6.6,4.0,Rep 22
+OID3174,Lina M.,17/02/2024,,,,Wallet,N,36.0,,Rep 26
+OID3174,Lina M.,17/02/2024,,,,Wallet,N,36.0,,Rep 26
+OID7740,Youssef K.,2024-03-08,,2.0,Dubai,CARD,Y,19.4,,Rep 09
+OID3405,Amine B.,Aug 05 2024,1517.79,11.0,,COD,yes,27.3,2.0,Rep 18
+OID1243,Omar R.,14/06/2024,215.59,2.0,Marrakech,Card,YES,19.9,1.0,Rep 13
+OID3972,Amine B.,Jan 30 2025,659.92,8.0,,CARD,No,35.2,3.0,Rep 13
+OID9095,Sara L.,2025-01-07,2012.72,17.0,,Wallet,N,,5.0,Rep 17
+OID2527,Lina M.,N/A,874.88,7.0,,Wallet,Yes,4.2,4.0,Rep 26
+OID3908,,2024/11/26,705.02,12.0,Casablanca,Card,1,14.3,5.0,Rep 09
+OID7672,Sara L.,Jan 30 2024,352.83,8.0,Dubai,CARD,no,15.7,5.0,Rep 17
+OID1878,Omar R.,2024-11-07,131.63,3.0,,Wallet,true,2.8,,Rep 07
+OID5617,Sara L.,03/06/2024,,16.0,Dubai,COD,Y,38.2,1.0,Rep 16
+OID9922,Sara L.,2024/12/25,452.72,4.0,,Card,Y,23.0,2.0,Rep 27
+OID5152,Youssef K.,Aug 08 2024,,,Dubai,CARD,Y,37.1,4.0,Rep 15
+OID3456,Amine B.,2024-10-21,45.0,1.0,Marrakech,Cash,true,11.2,,Rep 19
+OID8766,,Oct 20 2024,1456.51,,Cairo,Cash,Yes,40.1,2.0,Rep 05
+OID4287,,Jun 20 2024,,11.0,Dubai,Cash,no,36.0,,Rep 17
+OID7918,Sara L.,2024/03/11,825.53,9.0,,Cash,YES,44.1,,Rep 26
+OID3985,Amine B.,N/A,629.22,9.0,Riyadh,COD,N,23.4,,Rep 08
+OID1424,Youssef K.,11/01/2024,1418.28,11.0,Riyadh,Wallet,yes,1.2,1.0,Rep 08
+OID9492,Omar R.,Mar 03 2024,375.5,,Cairo,Card,0,35.1,1.0,Rep 01
+OID4399,,14/10/2024,59.83,2.0,,COD,Y,13.4,,Rep 12
+OID6374,Youssef K.,2024-06-26,2271.55,17.0,Marrakech,card,0,38.2,4.0,Rep 15
+OID9031,Sara L.,Feb 08 2024,,10.0,Rabat,Cash,Yes,3.8,5.0,Rep 07
+OID1217,Lina M.,2024/03/15,1749.93,13.0,,Cash,N,28.0,2.0,Rep 26
+OID1847,,May 20 2024,96.89,1.0,Casablanca,Cash,No,38.8,,Rep 11
+OID6834,,2024-02-01,573.62,12.0,Casablanca,CARD,true,22.5,3.0,Rep 21
+OID1136,Sara L.,19/01/2025,420.56,9.0,Marrakech,card,Yes,18.7,2.0,Rep 01
+OID9636,Amine B.,2024-08-03,1140.31,17.0,Dubai,card,N,12.4,2.0,Rep 10
+OID6364,Lina M.,2024/08/03,49.34,2.0,,Card,Y,4.5,4.0,Rep 01
+OID8784,Sara L.,2024/06/27,409.82,8.0,Rabat,card,0,27.3,5.0,Rep 26
+OID7361,Lina M.,N/A,,16.0,Cairo,COD,Y,7.7,,Rep 03
+OID8524,Sara L.,Oct 22 2024,655.37,5.0,,Card,YES,9.5,1.0,Rep 18
+OID5920,Youssef K.,2024-09-14,568.97,5.0,,Wallet,true,34.2,,Rep 04
+OID6072,Youssef K.,2025/02/01,,9.0,Casablanca,Card,No,24.2,3.0,Rep 06
+OID7314,Lina M.,Jan 27 2025,67.34,2.0,,Cash,YES,16.5,5.0,Rep 25
+OID9219,Omar R.,Jan 07 2024,350.41,11.0,Marrakech,card,yes,32.7,,Rep 24
+OID5155,Omar R.,2024-10-18,402.14,12.0,Rabat,Card,yes,,5.0,Rep 18
+OID9769,Omar R.,2024-04-02,943.35,,,Wallet,no,,2.0,Rep 01
+OID1458,Amine B.,05/10/2024,2311.48,,,CARD,0,20.2,4.0,Rep 18
+OID9207,,2024/03/19,243.46,9.0,Rabat,card,0,28.9,4.0,Rep 10
+OID5467,,01/11/2024,1864.43,15.0,Rabat,Wallet,0,32.5,1.0,Rep 18
+OID4798,Lina M.,2024/04/13,,1.0,,Wallet,N,14.4,,Rep 22
+OID8579,Sara L.,22/12/2024,333.96,6.0,Rabat,card,YES,9.4,5.0,Rep 21
+OID9422,Amine B.,01/04/2024,965.22,8.0,Cairo,COD,0,16.3,,Rep 27
+OID9492,Omar R.,Mar 03 2024,375.5,,Cairo,Card,0,35.1,1.0,Rep 01
+OID5014,Omar R.,2024/07/28,1813.5,14.0,Casablanca,Cash,1,,3.0,Rep 11
+OID5331,,Nov 26 2024,,2.0,Dubai,card,N,,,Rep 04
+OID4554,Omar R.,2024-06-29,,17.0,,Card,yes,15.5,,Rep 15
+OID9303,Amine B.,Feb 15 2024,102.13,1.0,Riyadh,COD,Yes,30.8,3.0,Rep 04
+OID1528,Sara L.,2025-01-02,794.77,6.0,Cairo,card,Y,0.3,,Rep 07
+OID2529,Sara L.,2024-10-25,1179.51,11.0,Rabat,COD,0,18.7,1.0,Rep 20
+OID7693,Amine B.,Apr 25 2024,1293.8,17.0,Casablanca,Cash,yes,42.6,1.0,Rep 24
+OID6899,,Sep 22 2024,388.23,5.0,,Cash,YES,30.1,,Rep 12
+OID7599,Sara L.,Jun 30 2024,,12.0,,Card,Y,38.2,5.0,Rep 09
+OID2386,Omar R.,2024-12-20,411.36,4.0,,Cash,yes,37.0,,Rep 03
+OID2962,Sara L.,2024/09/05,115.85,1.0,Riyadh,Card,N,0.5,4.0,Rep 16
+OID9636,Amine B.,2024-08-03,1140.31,17.0,Dubai,card,N,12.4,2.0,Rep 10
+OID4932,Omar R.,N/A,247.75,9.0,,Card,No,,1.0,Rep 23
+OID3349,Lina M.,2024/06/30,243.07,6.0,Marrakech,Wallet,YES,25.1,2.0,Rep 26
+OID9640,Omar R.,Jan 15 2025,1259.1,14.0,Rabat,Card,N,43.3,2.0,Rep 24
+OID3989,Sara L.,2024/12/07,33.45,1.0,,Wallet,no,23.8,,Rep 12
+OID7736,Lina M.,Aug 14 2024,,,Casablanca,COD,Yes,21.3,1.0,Rep 04
+OID8957,Lina M.,2025-01-26,,14.0,Rabat,card,0,4.1,3.0,Rep 20
+OID2270,,2024-02-13,149.44,5.0,Marrakech,CARD,YES,28.2,,Rep 16
+OID7007,Lina M.,28/11/2024,2049.62,15.0,,CARD,true,18.9,4.0,Rep 13
+OID4983,Amine B.,2024/03/14,654.58,8.0,Riyadh,Card,No,34.0,4.0,Rep 19
+OID3885,Youssef K.,Jul 03 2024,677.06,15.0,Riyadh,Card,true,15.2,,Rep 22
+OID1635,Sara L.,2024-08-31,442.7,6.0,,Card,0,20.5,3.0,Rep 24
+OID9223,,22/02/2024,145.12,3.0,Casablanca,COD,Yes,2.6,,Rep 10
+OID6213,Youssef K.,Jul 02 2024,,3.0,Dubai,Wallet,no,39.4,5.0,Rep 09
+OID2852,Lina M.,Oct 16 2024,294.51,,Cairo,COD,0,12.8,,Rep 16
+OID5608,Sara L.,11/01/2024,490.15,4.0,,Card,true,36.8,,Rep 27
+OID7273,Youssef K.,2025-02-03,127.69,1.0,,card,no,39.1,,Rep 09
+OID8741,Sara L.,Jul 08 2024,902.99,7.0,Cairo,Card,1,38.9,5.0,Rep 08
+OID3656,Sara L.,2024-11-08,470.14,,Marrakech,Cash,no,0.3,4.0,Rep 02
+OID7472,,2024/06/27,1153.91,15.0,Marrakech,COD,no,25.5,2.0,Rep 07
+OID6019,Omar R.,2024-05-01,,,Dubai,card,yes,26.3,,Rep 24
+OID3344,Youssef K.,2025/02/02,205.24,3.0,Rabat,card,no,21.3,1.0,Rep 09
+OID2133,Amine B.,07/09/2024,,4.0,Dubai,CARD,Y,35.9,4.0,Rep 19
+OID7211,Omar R.,2024/01/27,470.38,12.0,Casablanca,Cash,YES,27.2,4.0,Rep 11
+OID1424,Youssef K.,11/01/2024,1418.28,11.0,Riyadh,Wallet,yes,1.2,1.0,Rep 08
+OID3159,Youssef K.,2024/09/01,520.29,11.0,Dubai,CARD,true,37.4,,Rep 27
+OID5031,Lina M.,22/02/2024,213.9,4.0,Casablanca,Cash,1,21.4,2.0,Rep 20
+OID1747,Lina M.,2025-01-07,102.84,2.0,Riyadh,CARD,Yes,4.5,3.0,Rep 13
+OID7904,Youssef K.,2024-10-05,782.07,,Rabat,Cash,yes,41.5,,Rep 27
+OID7967,Omar R.,2024/01/26,1375.48,12.0,Cairo,CARD,0,8.0,4.0,Rep 14
+OID7399,,2024/07/27,726.96,15.0,Marrakech,CARD,1,2.2,2.0,Rep 11
+OID9604,Amine B.,31/05/2024,276.02,7.0,,CARD,yes,21.7,2.0,Rep 23
+OID9095,Sara L.,2025-01-07,2012.72,17.0,,Wallet,N,,5.0,Rep 17
+OID3727,Lina M.,2024-02-16,429.71,6.0,Marrakech,card,Yes,25.7,2.0,Rep 16
+OID8030,Sara L.,Nov 27 2024,378.39,4.0,Rabat,Wallet,no,38.8,,Rep 06
+OID5462,Omar R.,19/02/2024,1494.77,13.0,Riyadh,CARD,0,43.9,2.0,Rep 27
+OID7529,Amine B.,18/07/2024,1340.88,,Riyadh,CARD,YES,42.4,1.0,Rep 13
+OID4458,Omar R.,2024-06-05,567.81,11.0,Riyadh,CARD,Yes,34.7,3.0,Rep 18
+OID1308,Amine B.,10/12/2024,316.93,15.0,Dubai,Cash,N,41.8,1.0,Rep 17
+OID8030,Sara L.,Nov 27 2024,378.39,4.0,Rabat,Wallet,no,38.8,,Rep 06
+OID2841,,2024/04/09,,7.0,,Card,Y,19.2,1.0,Rep 25
+OID2591,Sara L.,Jun 30 2024,834.14,6.0,,Wallet,no,18.8,5.0,Rep 14
+OID7593,Amine B.,2024/08/24,74.61,3.0,Cairo,COD,true,13.4,5.0,Rep 20
+OID3816,Youssef K.,2024-10-25,79.44,1.0,,COD,Y,17.1,5.0,Rep 11
+OID9887,Lina M.,Jan 25 2025,1572.92,15.0,,Card,1,25.3,2.0,Rep 22
+OID6767,Youssef K.,2024/05/02,181.16,4.0,,Card,N,37.3,5.0,Rep 18
+OID8628,,2024-04-12,592.4,6.0,,Wallet,0,11.2,4.0,Rep 17
+OID2106,Youssef K.,2024/03/31,,11.0,Cairo,COD,Y,14.5,1.0,Rep 10
+OID7783,Sara L.,2025-01-07,732.08,13.0,Riyadh,card,YES,6.0,,Rep 21
+OID7131,Lina M.,2024/12/05,1171.27,11.0,Dubai,CARD,yes,1.6,3.0,Rep 07
+OID3486,Lina M.,03/01/2025,569.87,14.0,Marrakech,CARD,No,36.4,5.0,Rep 10
+OID6072,Youssef K.,2025/02/01,,9.0,Casablanca,Card,No,24.2,3.0,Rep 06
+OID5657,Amine B.,N/A,939.03,13.0,Marrakech,CARD,true,19.3,4.0,Rep 21
+OID4570,,04/01/2024,351.5,3.0,Riyadh,Card,No,19.9,,Rep 06
+OID6151,Sara L.,2024/01/03,272.48,5.0,,COD,1,19.8,3.0,Rep 08
+OID1006,Omar R.,Mar 30 2024,461.82,17.0,Dubai,CARD,0,16.0,2.0,Rep 07
+OID1202,Youssef K.,Jun 19 2024,393.27,4.0,Riyadh,Wallet,N,,,Rep 02
+OID6080,Lina M.,2024/03/27,522.45,14.0,Cairo,Card,no,3.4,3.0,Rep 07
+OID7961,Lina M.,2024-06-03,1347.1,12.0,Marrakech,COD,Y,23.3,,Rep 19
+OID7093,,11/09/2024,639.98,16.0,,Wallet,No,18.7,4.0,Rep 05
+OID3742,Lina M.,2024/01/13,990.96,8.0,Riyadh,Wallet,no,18.3,,Rep 14
+OID2696,Youssef K.,2024/07/19,370.29,6.0,Casablanca,CARD,No,40.2,3.0,Rep 25
+OID4600,,2024-02-18,195.1,4.0,Rabat,card,YES,24.6,2.0,Rep 12
+OID6582,Amine B.,17/02/2024,145.82,2.0,Marrakech,Wallet,YES,24.9,2.0,Rep 22
+OID3611,Sara L.,2024-09-20,627.55,8.0,Rabat,COD,Y,43.1,2.0,Rep 08
+OID7498,Amine B.,2024-03-09,592.01,7.0,,card,1,29.3,2.0,Rep 21
+OID9812,Youssef K.,Feb 21 2024,673.06,11.0,Riyadh,Card,true,27.0,4.0,Rep 19
+OID6790,,2024-06-19,1713.77,16.0,,Card,yes,4.4,5.0,Rep 05
+OID5694,Amine B.,2024/04/30,502.13,8.0,Casablanca,card,no,20.6,2.0,Rep 24
+OID3406,,Apr 03 2024,348.08,10.0,Dubai,Cash,true,27.1,5.0,Rep 08
+OID8401,Sara L.,04/10/2024,867.35,7.0,,Card,true,34.5,,Rep 04
+OID2305,Amine B.,2024-05-20,862.24,15.0,Casablanca,CARD,no,40.6,4.0,Rep 11
+OID8726,Lina M.,2024/02/20,519.52,4.0,Cairo,Wallet,Yes,20.4,4.0,Rep 16
+OID9223,,22/02/2024,145.12,3.0,Casablanca,COD,Yes,2.6,,Rep 10
+OID3799,Amine B.,2024/07/17,2109.97,16.0,Riyadh,CARD,Y,10.0,2.0,Rep 17
+OID4856,Lina M.,Jul 29 2024,1870.15,,Casablanca,Card,1,15.6,5.0,Rep 03
+OID8378,,N/A,790.11,7.0,Riyadh,CARD,true,11.2,3.0,Rep 24
+OID6101,,2024/04/26,1272.29,15.0,Casablanca,COD,0,28.9,4.0,Rep 25
+OID7584,,N/A,1648.24,17.0,,CARD,no,13.9,,Rep 10
+OID4741,Sara L.,N/A,19.37,1.0,Cairo,Card,true,0.1,3.0,Rep 04
+OID8764,Sara L.,2024-01-28,637.57,11.0,Rabat,card,N,10.7,5.0,Rep 08
+OID2381,,2025-01-08,437.86,12.0,,Wallet,1,38.6,,Rep 15
+OID4413,Amine B.,Nov 08 2024,167.57,5.0,Casablanca,card,Y,35.1,5.0,Rep 15
+OID5331,,Nov 26 2024,,2.0,Dubai,card,N,,,Rep 04
+OID9745,Youssef K.,08/03/2024,,9.0,,Card,No,38.0,3.0,Rep 10
+OID2981,Youssef K.,2024/10/31,1251.78,13.0,Riyadh,Cash,No,7.9,,Rep 11
+OID3623,Lina M.,06/01/2025,324.24,3.0,Riyadh,card,0,,4.0,Rep 23
+OID5590,,2024-07-19,964.29,,Riyadh,CARD,Y,28.3,,Rep 10
+OID4434,Amine B.,2025-01-03,515.46,7.0,Marrakech,Wallet,YES,44.0,2.0,Rep 02
+OID5789,Youssef K.,2024-04-03,387.5,,Casablanca,COD,no,33.4,1.0,Rep 12
+OID5498,Youssef K.,Feb 26 2024,38.9,2.0,,CARD,N,5.1,5.0,Rep 03
+OID8493,Amine B.,Oct 26 2024,677.85,8.0,,CARD,Yes,19.8,4.0,Rep 25
+OID5451,,16/06/2024,233.02,11.0,,CARD,true,38.9,4.0,Rep 20
+OID7529,Amine B.,18/07/2024,1340.88,,Riyadh,CARD,YES,42.4,1.0,Rep 13
+OID7213,Sara L.,2024/01/15,306.51,9.0,Riyadh,Card,Yes,27.1,5.0,Rep 18
+OID7777,Youssef K.,Mar 14 2024,1370.57,14.0,Riyadh,COD,Yes,39.4,4.0,Rep 22
+OID2647,Omar R.,2024-09-21,,13.0,Cairo,Card,Yes,,,Rep 21
+OID9597,Sara L.,Dec 21 2024,,11.0,,Cash,N,,4.0,Rep 21
+OID9323,Amine B.,N/A,,9.0,Dubai,COD,no,,1.0,Rep 10
+OID7211,Omar R.,2024/01/27,470.38,12.0,Casablanca,Cash,YES,27.2,4.0,Rep 11
+OID4292,Amine B.,03/06/2024,1268.12,16.0,Cairo,COD,0,18.9,3.0,Rep 15
+OID3325,,2024-01-02,,13.0,Dubai,Wallet,Yes,,,Rep 04
+OID3109,Youssef K.,2024-09-07,1574.42,,Cairo,CARD,N,19.5,,Rep 04
+OID7567,Sara L.,Dec 16 2024,623.36,14.0,Casablanca,Wallet,N,16.1,,Rep 20
+OID4460,Youssef K.,2024-11-25,170.24,5.0,Riyadh,Wallet,YES,25.4,,Rep 03
+OID6582,Amine B.,17/02/2024,145.82,2.0,Marrakech,Wallet,YES,24.9,2.0,Rep 22
+OID7151,Lina M.,2024/03/13,,12.0,Casablanca,Card,no,28.1,3.0,Rep 07
+OID5534,Sara L.,2024-09-12,64.58,,Rabat,Cash,No,13.2,3.0,Rep 24
+OID3143,Omar R.,Jun 06 2024,1113.31,10.0,Riyadh,CARD,N,37.4,2.0,Rep 15
+OID9219,Lina M.,May 20 2024,,15.0,,Cash,1,24.4,5.0,Rep 23
+OID3603,,Jun 24 2024,1603.54,15.0,,Wallet,N,34.8,3.0,Rep 08
+OID8452,Amine B.,03/01/2024,1342.86,10.0,Cairo,CARD,true,8.3,,Rep 09
+OID9699,Youssef K.,Jun 04 2024,1169.06,11.0,Marrakech,Cash,Yes,15.1,4.0,Rep 17
+OID9702,Youssef K.,2024/11/30,1774.36,13.0,Rabat,card,N,39.1,2.0,Rep 24
+OID3040,Lina M.,2025/02/02,468.2,6.0,,Cash,no,13.5,,Rep 09
+OID7472,,2024/06/27,1153.91,15.0,Marrakech,COD,no,25.5,2.0,Rep 07
+OID9623,Youssef K.,2024-02-19,90.44,1.0,,Wallet,N,,1.0,Rep 25
+OID1379,Sara L.,14/03/2024,55054.07,2.0,Riyadh,COD,Y,14.4,5.0,Rep 02
+OID7693,Lina M.,2024/03/18,1547.81,16.0,,Cash,true,33.7,,Rep 05
+OID6384,Lina M.,11/06/2024,1496.41,17.0,Riyadh,COD,No,15.9,1.0,Rep 02
+OID9422,Amine B.,01/04/2024,965.22,8.0,Cairo,COD,0,16.3,,Rep 27
+OID4426,,19/05/2024,2099.58,16.0,Riyadh,card,1,21.0,1.0,Rep 19
+OID6131,Omar R.,Oct 16 2024,288.1,17.0,Dubai,Cash,0,2.5,3.0,Rep 07
+OID5123,Omar R.,2024/06/04,1421.76,13.0,Rabat,CARD,Y,34.4,,Rep 19
+OID9922,Sara L.,2024/12/25,452.72,4.0,,Card,Y,23.0,2.0,Rep 27
+OID8633,Omar R.,2024-03-20,89.24,3.0,Marrakech,CARD,no,36.1,2.0,Rep 27
+OID4545,Youssef K.,2024-11-08,215.33,10.0,,Wallet,No,10.6,,Rep 21
+OID3121,Omar R.,2024/09/05,1454.28,13.0,Casablanca,CARD,no,39.6,4.0,Rep 21
+OID5329,Amine B.,May 23 2024,74.82,2.0,Cairo,Cash,YES,10.7,1.0,Rep 03
+OID2993,,2024-12-01,852.69,15.0,Casablanca,COD,N,20.3,,Rep 04
+OID4413,Amine B.,Nov 08 2024,167.57,5.0,Casablanca,card,Y,35.1,5.0,Rep 15
+OID6863,Amine B.,Aug 31 2024,635.36,9.0,,Cash,YES,26.9,2.0,Rep 20
+OID9848,Omar R.,2024-08-08,313.16,3.0,Rabat,Cash,Y,4.7,3.0,Rep 12
+OID9935,Lina M.,2024-04-13,1807.17,,Riyadh,Cash,1,18.7,5.0,Rep 14
+OID9155,Lina M.,May 30 2024,177.81,9.0,Dubai,Wallet,N,37.0,5.0,Rep 12
+OID8366,Youssef K.,Sep 27 2024,909.32,7.0,Dubai,Cash,no,40.0,,Rep 09
+OID3200,Omar R.,16/01/2025,110.94,2.0,Rabat,Wallet,N,4.4,4.0,Rep 26
+OID5534,Sara L.,2024-09-12,64.58,,Rabat,Cash,No,13.2,3.0,Rep 24
+OID7416,Lina M.,2024/05/19,692.81,8.0,,COD,1,6.8,2.0,Rep 14
+OID4169,Sara L.,N/A,752.31,11.0,Dubai,Wallet,no,40.3,3.0,Rep 27
+OID6389,Lina M.,2024/03/06,1776.02,16.0,Riyadh,Card,0,14.0,5.0,Rep 17
+OID4387,Youssef K.,2025-01-12,398.11,14.0,Marrakech,Cash,no,31.7,1.0,Rep 10
+OID1508,,21/12/2024,684.94,10.0,Rabat,Card,Y,21.9,,Rep 26
+OID6836,Youssef K.,N/A,1305.21,10.0,Casablanca,Cash,YES,20.7,5.0,Rep 14
+OID6822,Sara L.,2024/05/21,402.76,17.0,Riyadh,Card,N,5.3,,Rep 02
+OID5245,Lina M.,2024/06/07,299.7,11.0,Cairo,card,YES,9.3,3.0,Rep 20
+OID4352,,2024-04-22,865.15,9.0,,COD,No,1.4,1.0,Rep 26
+OID5168,Sara L.,2024/04/22,58510.55,2.0,Riyadh,CARD,no,33.4,2.0,Rep 07
+OID6348,,N/A,,16.0,Casablanca,Wallet,true,10.7,,Rep 02
+OID1999,Youssef K.,2024-04-07,411.33,15.0,Marrakech,CARD,0,34.9,,Rep 23
+OID4439,Youssef K.,2024/05/16,278.49,9.0,Dubai,card,YES,38.5,3.0,Rep 07
+OID9499,Lina M.,N/A,,6.0,,CARD,Y,12.3,4.0,Rep 17
+OID5078,Sara L.,2024/08/13,449.9,12.0,Riyadh,card,no,24.5,3.0,Rep 24
+OID3812,Youssef K.,Nov 17 2024,242.01,2.0,Casablanca,CARD,no,18.6,2.0,Rep 15
+OID9719,Amine B.,N/A,36.09,2.0,,Cash,N,,,Rep 03
+OID8657,,N/A,1434.3,16.0,,Wallet,true,1.5,3.0,Rep 24
+OID4385,Omar R.,2024/03/26,516.78,10.0,Marrakech,card,no,36.3,,Rep 04
+OID4169,Sara L.,N/A,752.31,11.0,Dubai,Wallet,no,40.3,3.0,Rep 27
+OID7599,Sara L.,Jun 30 2024,,12.0,,Card,Y,38.2,5.0,Rep 09
+OID8165,Sara L.,2024-06-10,137.43,1.0,Casablanca,card,Y,5.7,2.0,Rep 07
+OID5992,Youssef K.,2024/02/20,1674.8,12.0,,CARD,yes,36.7,1.0,Rep 05
+OID7410,,31/10/2024,1821.2,14.0,,CARD,No,8.2,,Rep 12
+OID7403,,2024/12/01,,14.0,Dubai,CARD,no,34.4,4.0,Rep 15
+OID8536,Youssef K.,Oct 03 2024,818.78,9.0,Cairo,card,1,8.3,,Rep 06
+OID9809,,2024-08-27,46.96,2.0,Riyadh,Wallet,no,33.5,5.0,Rep 05
+OID4053,Youssef K.,11/01/2024,,13.0,Casablanca,COD,Y,32.0,3.0,Rep 05
+OID5760,Lina M.,Jul 16 2024,,9.0,,Wallet,Y,0.4,5.0,Rep 05
+OID8563,,24/07/2024,,9.0,Riyadh,CARD,Y,7.8,,Rep 11
+OID9256,,05/07/2024,,17.0,,Wallet,Y,2.1,1.0,Rep 23
+OID3504,Omar R.,06/07/2024,1086.33,11.0,Riyadh,Wallet,No,38.3,4.0,Rep 03
+OID9984,Youssef K.,May 03 2024,400.03,5.0,Dubai,Cash,yes,12.0,5.0,Rep 06
+OID7793,,Feb 01 2024,871.02,8.0,Casablanca,Card,Yes,8.6,2.0,Rep 20
+OID7312,Youssef K.,N/A,2239.3,17.0,,Wallet,true,22.0,1.0,Rep 18
+OID9923,Omar R.,2024-02-28,419.72,4.0,Cairo,CARD,No,36.6,3.0,Rep 19
+OID9930,Sara L.,2024-11-16,765.6,15.0,Rabat,Cash,N,34.0,1.0,Rep 24
+OID7213,Omar R.,2024-03-10,,,Rabat,Wallet,YES,15.6,4.0,Rep 01
+OID9178,Amine B.,2024-06-18,,,Dubai,Cash,Y,29.2,,Rep 24
+OID8452,Amine B.,N/A,1913.86,,Riyadh,card,Y,21.0,,Rep 26
+OID9461,Lina M.,25/11/2024,70509.35,3.0,Riyadh,card,Y,34.6,2.0,Rep 19
+OID5864,Youssef K.,2024-05-18,,7.0,Dubai,CARD,yes,0.9,,Rep 04
+OID1947,Sara L.,N/A,1379.15,,Riyadh,card,true,34.1,2.0,Rep 18
+OID8264,Lina M.,13/06/2024,1354.19,16.0,Riyadh,COD,1,30.5,4.0,Rep 25
+OID7584,,N/A,1648.24,17.0,,CARD,no,13.9,,Rep 10
+OID9155,Lina M.,May 30 2024,177.81,9.0,Dubai,Wallet,N,37.0,5.0,Rep 12
+OID1948,Amine B.,2024/12/30,,4.0,,Wallet,true,41.3,4.0,Rep 14
+OID1011,Omar R.,2025/01/11,,6.0,Riyadh,Card,no,20.6,,Rep 13
+OID4265,,2024-09-01,887.77,11.0,,CARD,N,40.9,2.0,Rep 15
+OID6464,Lina M.,Aug 30 2024,702.64,14.0,Cairo,Wallet,yes,19.8,5.0,Rep 03
+OID3323,Sara L.,Jan 24 2024,385.57,8.0,Riyadh,Cash,0,13.7,,Rep 08
+OID4112,Youssef K.,14/10/2024,560.12,16.0,,Card,no,36.7,,Rep 10
+OID6047,Sara L.,2024-09-08,124.55,4.0,,Wallet,yes,2.5,1.0,Rep 22
+OID6151,Sara L.,2024/01/03,272.48,5.0,,COD,1,19.8,3.0,Rep 08
+OID1379,Sara L.,22/01/2024,409.6,,Rabat,Wallet,YES,39.8,5.0,Rep 04
+OID4952,Sara L.,09/12/2024,482.51,8.0,,Wallet,Yes,,,Rep 17
+OID3177,Omar R.,N/A,1335.34,10.0,Riyadh,CARD,Y,27.7,,Rep 19
+OID2230,Sara L.,2024/11/10,1055.73,12.0,Dubai,Card,Y,41.7,5.0,Rep 10
+OID5845,,09/06/2024,1863.55,14.0,,COD,Yes,17.2,2.0,Rep 13
+OID3349,Lina M.,2024/06/30,243.07,6.0,Marrakech,Wallet,YES,25.1,2.0,Rep 26
+OID4111,Youssef K.,29/04/2024,1321.33,15.0,Cairo,CARD,N,14.6,2.0,Rep 03
+OID9400,Lina M.,2024/05/14,790.57,6.0,,card,0,40.6,,Rep 25
+OID5289,Sara L.,2024-10-08,1232.03,14.0,,Cash,1,26.0,3.0,Rep 01
+OID5555,Lina M.,2024-07-06,1187.3,16.0,,Wallet,1,,,Rep 10
+OID8002,Sara L.,Jan 29 2025,2029.82,,Riyadh,CARD,1,19.1,1.0,Rep 09
+OID1372,,20/09/2024,203.13,9.0,Cairo,card,Y,44.6,1.0,Rep 03
+OID3664,Lina M.,N/A,315.42,6.0,Casablanca,Wallet,true,25.2,,Rep 12
+OID4332,,21/07/2024,,6.0,Dubai,Cash,N,,2.0,Rep 11
+OID5091,Sara L.,May 10 2024,,16.0,Rabat,Cash,no,25.4,,Rep 08
+OID2852,Lina M.,Oct 16 2024,294.51,,Cairo,COD,0,12.8,,Rep 16
+OID5918,Lina M.,Jan 24 2024,261.11,5.0,Cairo,CARD,1,29.2,,Rep 07
+OID7807,,Oct 27 2024,1349.3,13.0,Rabat,card,0,,1.0,Rep 02
+OID5663,,15/10/2024,137.87,4.0,,Card,no,7.7,,Rep 02
+OID5555,Lina M.,2024-07-06,1187.3,16.0,,Wallet,1,,,Rep 10
+OID3458,Lina M.,2024/08/25,1034.67,10.0,Cairo,COD,true,,1.0,Rep 21
+OID2012,Amine B.,Jan 20 2025,1963.38,15.0,Marrakech,card,true,37.3,,Rep 04
+OID8564,Amine B.,2024-08-01,69.97,2.0,Marrakech,card,N,36.2,,Rep 19
+OID4196,Sara L.,2024/05/18,,16.0,,card,yes,6.6,4.0,Rep 22
+OID8378,,N/A,790.11,7.0,Riyadh,CARD,true,11.2,3.0,Rep 24
+OID5091,Sara L.,May 10 2024,,16.0,Rabat,Cash,no,25.4,,Rep 08
+OID3635,Sara L.,May 25 2024,318.38,10.0,,Card,true,19.6,3.0,Rep 07
+OID4303,Omar R.,2024-09-18,564.92,17.0,Dubai,COD,yes,25.9,1.0,Rep 09
+OID9365,Sara L.,15/07/2024,222.39,12.0,,COD,No,39.5,,Rep 06
+OID5386,Lina M.,N/A,786.25,14.0,Rabat,Cash,No,12.5,1.0,Rep 19
+OID1279,Youssef K.,N/A,1459.12,17.0,Marrakech,card,No,31.8,5.0,Rep 09
+OID3817,Omar R.,Dec 01 2024,149.22,2.0,Cairo,COD,Y,12.7,,Rep 01
+OID6019,Omar R.,2024-05-01,,,Dubai,card,yes,26.3,,Rep 24
+OID8025,,2024-03-02,1271.81,16.0,Marrakech,COD,0,35.8,,Rep 25
+OID9997,Lina M.,2024/06/08,,11.0,Riyadh,Cash,yes,21.6,,Rep 10
+OID8342,Omar R.,2024-07-12,344.5,7.0,,Cash,yes,,4.0,Rep 16
+OID1567,Amine B.,Jul 04 2024,548.33,10.0,Cairo,Card,N,36.5,,Rep 08
+OID4650,,Jun 10 2024,142.19,8.0,Riyadh,Card,no,25.8,5.0,Rep 13
+OID6019,Youssef K.,2024-05-30,1148.11,,Rabat,CARD,Yes,31.0,,Rep 14
+OID2999,,28/11/2024,85110.39,12.0,Casablanca,COD,YES,38.1,5.0,Rep 19
+OID1758,Amine B.,2024/01/03,867.61,7.0,,Wallet,0,13.7,1.0,Rep 17
+OID8022,Omar R.,23/01/2024,1481.78,13.0,Riyadh,card,N,43.3,3.0,Rep 16
+OID9432,Youssef K.,2024/08/04,,15.0,Riyadh,CARD,yes,9.0,,Rep 13
+OID5284,Lina M.,2024-01-20,198.84,4.0,Marrakech,CARD,1,32.2,4.0,Rep 03
+OID1526,Amine B.,Apr 24 2024,,6.0,Dubai,CARD,0,25.3,,Rep 18
+OID6034,Sara L.,13/07/2024,486.82,10.0,,Card,0,4.0,1.0,Rep 06
+OID8132,Youssef K.,2024-06-12,1342.74,16.0,,card,0,23.9,,Rep 26
+OID4554,Omar R.,2024-06-29,,17.0,,Card,yes,15.5,,Rep 15
+OID2007,,19/02/2024,,3.0,,Cash,true,22.6,,Rep 19
+OID1527,,2024-05-22,61.31,4.0,,Wallet,no,40.2,,Rep 15
+OID8663,,Feb 26 2024,175.9,2.0,,CARD,no,44.1,,Rep 07
+OID4131,Amine B.,2024-11-21,606.4,7.0,,COD,1,2.9,1.0,Rep 16
+OID8452,Amine B.,N/A,1913.86,,Riyadh,card,Y,21.0,,Rep 26
+OID4394,Amine B.,2024-01-12,111.09,1.0,Riyadh,Cash,1,0.3,3.0,Rep 16
+OID9522,Youssef K.,Jan 17 2024,181.94,8.0,Marrakech,COD,No,35.9,2.0,Rep 26
+OID9522,Youssef K.,Jan 17 2024,181.94,8.0,Marrakech,COD,No,35.9,2.0,Rep 26
+OID3453,Sara L.,2024/11/27,967.16,13.0,Cairo,COD,1,35.4,1.0,Rep 27
+OID7093,,11/09/2024,639.98,16.0,,Wallet,No,18.7,4.0,Rep 05
+OID2331,Lina M.,Feb 17 2024,450.64,,Cairo,CARD,no,14.4,5.0,Rep 17
+OID6145,,2024-08-02,1566.03,,,Wallet,No,26.1,5.0,Rep 09
+OID9671,Lina M.,2024/10/02,1570.52,16.0,Riyadh,CARD,1,23.7,,Rep 06
+OID5168,Sara L.,2024/04/22,58510.55,2.0,Riyadh,CARD,no,33.4,2.0,Rep 07
+OID4631,Youssef K.,2024-01-14,292.51,5.0,Rabat,Wallet,Yes,22.1,5.0,Rep 23
+OID1747,Lina M.,2025-01-07,102.84,2.0,Riyadh,CARD,Yes,4.5,3.0,Rep 13
+OID8131,Youssef K.,2024-10-08,993.68,9.0,,Wallet,yes,36.0,1.0,Rep 15
+OID5966,Amine B.,2024-11-16,136.39,3.0,Rabat,Wallet,No,11.2,4.0,Rep 09
+OID6395,Youssef K.,2024-12-08,,1.0,Cairo,card,no,,3.0,Rep 08
+OID3808,,2024-01-14,1084.11,10.0,,CARD,no,25.0,4.0,Rep 23
+OID5341,,2024/02/21,884.94,17.0,Riyadh,Wallet,0,39.1,,Rep 05
+OID4741,Sara L.,N/A,19.37,1.0,Cairo,Card,true,0.1,3.0,Rep 04
+OID2525,Youssef K.,N/A,1273.2,13.0,,Card,No,27.6,2.0,Rep 14
+OID6167,Youssef K.,N/A,831.12,17.0,Riyadh,Card,0,15.6,,Rep 02
+OID4635,,2024/01/15,645.83,,Marrakech,COD,Yes,14.1,,Rep 15
+OID2158,Youssef K.,May 21 2024,800.04,7.0,,Cash,Y,2.6,4.0,Rep 07
+OID5764,Lina M.,15/07/2024,,9.0,Dubai,COD,true,41.0,,Rep 26
+OID3731,Omar R.,2024/01/02,520.71,6.0,,Wallet,YES,2.6,4.0,Rep 09
+OID9185,Lina M.,Feb 02 2024,336.34,7.0,Dubai,COD,true,,5.0,Rep 17
+OID3319,Lina M.,08/09/2024,,13.0,Riyadh,Cash,0,,,Rep 18
+OID5119,Youssef K.,2024-11-06,284.0,7.0,Marrakech,Card,YES,20.9,,Rep 16
+OID7507,Omar R.,2024-12-02,325.43,6.0,Rabat,Wallet,1,34.7,1.0,Rep 19
+OID8657,,N/A,1434.3,16.0,,Wallet,true,1.5,3.0,Rep 24
+OID8197,Lina M.,31/01/2025,1100.63,12.0,Riyadh,Wallet,no,42.8,4.0,Rep 12
+OID9094,Youssef K.,18/01/2025,925.53,8.0,Dubai,card,N,22.8,,Rep 14
+OID9432,Youssef K.,2024/08/04,,15.0,Riyadh,CARD,yes,9.0,,Rep 13
+OID8342,Omar R.,2024-07-12,344.5,7.0,,Cash,yes,,4.0,Rep 16
+OID9256,,05/07/2024,,17.0,,Wallet,Y,2.1,1.0,Rep 23
+OID6810,Lina M.,2024/01/25,1459.61,13.0,Marrakech,Card,No,37.9,,Rep 04
+OID3473,Sara L.,2024-12-20,869.86,13.0,Riyadh,Cash,Yes,40.2,,Rep 23
+OID8206,Omar R.,13/05/2024,,9.0,,CARD,no,3.9,4.0,Rep 09
+OID7268,Omar R.,2024-12-22,381.69,17.0,,Card,no,31.9,4.0,Rep 16
+OID7904,Youssef K.,2024-10-05,782.07,,Rabat,Cash,yes,41.5,,Rep 27
+OID7693,Lina M.,2024/03/18,1547.81,16.0,,Cash,true,33.7,,Rep 05
+OID6810,Lina M.,2024/01/25,1459.61,13.0,Marrakech,Card,No,37.9,,Rep 04
+OID8064,,Mar 17 2024,128.14,1.0,Rabat,Wallet,no,40.0,1.0,Rep 07
+OID3861,Lina M.,26/05/2024,,12.0,Rabat,COD,1,10.9,2.0,Rep 19
+OID9887,Lina M.,Jan 25 2025,1572.92,15.0,,Card,1,25.3,2.0,Rep 22
+OID3121,Omar R.,2024/09/05,1454.28,13.0,Casablanca,CARD,no,39.6,4.0,Rep 21
+OID6602,Amine B.,N/A,66.44,1.0,Dubai,Cash,yes,11.4,4.0,Rep 26
+OID8165,Sara L.,2024-06-10,137.43,1.0,Casablanca,card,Y,5.7,2.0,Rep 07
+OID8087,Sara L.,19/01/2025,115.78,2.0,Rabat,COD,no,,2.0,Rep 11
+OID8002,Sara L.,Jan 29 2025,2029.82,,Riyadh,CARD,1,19.1,1.0,Rep 09
+OID3533,Omar R.,May 30 2024,279.31,3.0,Marrakech,Cash,Y,,4.0,Rep 17
+OID4635,,2024/01/15,645.83,,Marrakech,COD,Yes,14.1,,Rep 15
+OID6118,Youssef K.,N/A,896.33,,Casablanca,CARD,Yes,25.5,3.0,Rep 22
+OID7268,Omar R.,2024-12-22,381.69,17.0,,Card,no,31.9,4.0,Rep 16
+OID4352,,2024-04-22,865.15,9.0,,COD,No,1.4,1.0,Rep 26
+OID8726,Lina M.,2024/02/20,519.52,4.0,Cairo,Wallet,Yes,20.4,4.0,Rep 16
+OID9923,Omar R.,2024-02-28,419.72,4.0,Cairo,CARD,No,36.6,3.0,Rep 19
+OID8025,,2024-03-02,1271.81,16.0,Marrakech,COD,0,35.8,,Rep 25
+OID7416,Lina M.,2024/05/19,692.81,8.0,,COD,1,6.8,2.0,Rep 14
+OID8536,Youssef K.,Oct 03 2024,818.78,9.0,Cairo,card,1,8.3,,Rep 06
+OID8606,Lina M.,2024-08-29,903.62,13.0,Marrakech,Cash,Y,18.1,4.0,Rep 26
+OID6617,Amine B.,2025/01/09,57.78,3.0,,Wallet,yes,6.6,,Rep 25
+OID4131,Amine B.,2024-11-21,606.4,7.0,,COD,1,2.9,1.0,Rep 16
+OID5451,,16/06/2024,233.02,11.0,,CARD,true,38.9,4.0,Rep 20
+OID5433,Omar R.,2024-10-07,633.75,6.0,Cairo,card,Yes,6.6,5.0,Rep 20
+OID4182,Omar R.,2024/08/09,124.12,4.0,Casablanca,CARD,true,34.1,,Rep 14
+OID6578,Youssef K.,Feb 29 2024,134.45,5.0,,Wallet,no,29.3,,Rep 03
+OID4518,,N/A,582.37,,Marrakech,Cash,yes,,4.0,Rep 22
+OID6791,Youssef K.,2024-07-10,665.16,12.0,Cairo,card,1,25.6,3.0,Rep 07
+OID4414,,Sep 15 2024,1785.14,,,card,0,4.8,3.0,Rep 01
+OID1071,Lina M.,Dec 28 2024,291.35,3.0,Rabat,Cash,true,19.9,5.0,Rep 04
+OID2555,Omar R.,07/01/2025,56527.44,,Riyadh,COD,true,23.3,4.0,Rep 05
+OID5014,Omar R.,2024/07/28,1813.5,14.0,Casablanca,Cash,1,,3.0,Rep 11
+OID3972,Amine B.,Jan 30 2025,659.92,8.0,,CARD,No,35.2,3.0,Rep 13
+OID3473,Sara L.,2024-12-20,869.86,13.0,Riyadh,Cash,Yes,40.2,,Rep 23
+OID7313,Sara L.,25/09/2024,642.73,13.0,Casablanca,Wallet,Yes,3.1,4.0,Rep 23
+OID7314,Lina M.,Jan 27 2025,67.34,2.0,,Cash,YES,16.5,5.0,Rep 25
+OID5966,Amine B.,2024-11-16,136.39,3.0,Rabat,Wallet,No,11.2,4.0,Rep 09
+OID1209,Omar R.,Jan 15 2025,55.29,1.0,Casablanca,card,Y,40.0,1.0,Rep 16
+OID8849,Omar R.,2024/11/28,678.45,17.0,Marrakech,Cash,Yes,6.2,,Rep 07
+OID3436,Omar R.,29/12/2024,1039.18,11.0,Dubai,Wallet,No,38.2,1.0,Rep 09
+OID8970,,2024/03/28,833.08,13.0,Rabat,Card,1,5.0,5.0,Rep 24
+OID6195,Lina M.,2024-12-13,279.33,10.0,Rabat,card,no,,,Rep 08
+OID3801,,2024/06/28,74.02,1.0,,COD,no,2.9,5.0,Rep 02
+OID4635,,2024/11/11,,1.0,Cairo,CARD,true,4.8,1.0,Rep 19
+OID8710,,2024/01/10,353.68,5.0,,card,YES,37.8,3.0,Rep 21
+OID3168,Omar R.,07/04/2024,55.74,1.0,,Cash,yes,20.6,,Rep 17
+OID8140,Amine B.,03/02/2025,336.94,9.0,,Cash,no,26.5,1.0,Rep 20
+OID9793,,Apr 04 2024,1157.98,11.0,Casablanca,card,0,32.9,,Rep 03
+OID3676,Youssef K.,09/12/2024,415.15,,Casablanca,COD,Y,1.4,,Rep 21
+OID8384,Amine B.,2024-11-23,105.3,2.0,Rabat,Card,0,31.4,3.0,Rep 01
+OID5716,Sara L.,Nov 15 2024,1233.26,10.0,Marrakech,Wallet,1,2.2,,Rep 07
+OID9597,Sara L.,Dec 21 2024,,11.0,,Cash,N,,4.0,Rep 21
+OID8543,Omar R.,N/A,602.6,12.0,Marrakech,Wallet,No,0.5,2.0,Rep 17
+OID4880,Lina M.,Oct 22 2024,864.32,9.0,Casablanca,Cash,Y,,5.0,Rep 09
+OID5289,Sara L.,2024-10-08,1232.03,14.0,,Cash,1,26.0,3.0,Rep 01
+OID5328,Omar R.,05/08/2024,412.02,9.0,Cairo,Card,Yes,17.6,,Rep 09
+OID6703,Sara L.,N/A,689.49,14.0,Riyadh,CARD,true,,4.0,Rep 04
+OID4983,Amine B.,2024/03/14,654.58,8.0,Riyadh,Card,No,34.0,4.0,Rep 19
+OID1352,,04/03/2024,2146.31,16.0,,CARD,Y,7.5,2.0,Rep 16
+OID5290,Youssef K.,2025/01/13,562.97,6.0,Casablanca,Wallet,Y,18.3,3.0,Rep 13
+OID9617,Lina M.,2024-03-04,136.48,4.0,Casablanca,Cash,Y,9.9,4.0,Rep 26
+OID8333,Sara L.,Apr 18 2024,250.69,2.0,Cairo,Card,1,30.2,5.0,Rep 25
+OID3248,Sara L.,Nov 29 2024,1106.86,14.0,Cairo,Wallet,true,34.5,,Rep 06
+OID9114,,2024/12/04,324.79,6.0,Rabat,CARD,1,35.8,3.0,Rep 14
+OID3233,,Nov 30 2024,39.04,1.0,Rabat,Wallet,No,10.5,,Rep 26
+OID7780,Lina M.,22/02/2024,751.73,8.0,Cairo,COD,YES,1.2,1.0,Rep 18
+OID5483,Amine B.,2024/01/23,1541.93,13.0,Cairo,COD,true,15.9,5.0,Rep 02
+OID1878,Omar R.,2024-11-07,131.63,3.0,,Wallet,true,2.8,,Rep 07
+OID6080,Lina M.,2024/03/27,522.45,14.0,Cairo,Card,no,3.4,3.0,Rep 07
+OID3168,Omar R.,07/04/2024,55.74,1.0,,Cash,yes,20.6,,Rep 17
+OID7410,,31/10/2024,1821.2,14.0,,CARD,No,8.2,,Rep 12
+OID8484,Amine B.,2024-03-09,814.96,13.0,Cairo,Wallet,no,8.0,2.0,Rep 04
+OID4044,Omar R.,27/10/2024,,,Marrakech,card,No,9.6,2.0,Rep 10
+OID2647,Omar R.,2024-09-21,,13.0,Cairo,Card,Yes,,,Rep 21
+OID4148,Lina M.,06/09/2024,949.83,12.0,Riyadh,card,true,1.8,4.0,Rep 26
+OID9945,,Oct 03 2024,97105.06,5.0,Cairo,CARD,Y,21.3,2.0,Rep 04
+OID5472,Youssef K.,2024-02-28,,3.0,Marrakech,card,N,35.4,4.0,Rep 10
+OID3464,Omar R.,Aug 04 2024,350.54,10.0,Riyadh,card,0,29.7,,Rep 12
+OID4871,Amine B.,13/01/2025,,11.0,Cairo,CARD,0,4.3,,Rep 25
+OID3100,,Mar 01 2024,527.12,4.0,Riyadh,CARD,Yes,28.5,,Rep 04
+OID8206,Omar R.,13/05/2024,,9.0,,CARD,no,3.9,4.0,Rep 09
+OID3609,Youssef K.,09/02/2024,171.25,4.0,Rabat,Cash,YES,29.7,3.0,Rep 03
+OID7177,Youssef K.,2024-04-29,145.15,8.0,,Wallet,1,4.6,5.0,Rep 11
+OID1518,Youssef K.,2024/06/13,599.06,5.0,Dubai,CARD,Y,6.9,1.0,Rep 03
+OID4628,,N/A,420.5,15.0,Cairo,Wallet,true,29.1,3.0,Rep 05
+OID8064,,Mar 17 2024,128.14,1.0,Rabat,Wallet,no,40.0,1.0,Rep 07
+OID5483,Amine B.,2024/01/23,1541.93,13.0,Cairo,COD,true,15.9,5.0,Rep 02
+OID5296,Sara L.,18/05/2024,,,,card,0,16.8,3.0,Rep 22
+OID2227,Lina M.,2024-03-23,711.76,6.0,Riyadh,card,1,7.9,1.0,Rep 11
+OID4531,,13/02/2024,632.28,,Rabat,card,no,38.5,,Rep 09
+OID7567,Sara L.,Dec 16 2024,623.36,14.0,Casablanca,Wallet,N,16.1,,Rep 20
+OID3731,Omar R.,2024/01/02,520.71,6.0,,Wallet,YES,2.6,4.0,Rep 09
+OID2424,,18/06/2024,311.72,9.0,,COD,yes,22.4,5.0,Rep 27
+OID8085,Amine B.,2024/03/21,160.45,6.0,Casablanca,COD,N,31.0,,Rep 22
+OID3091,Sara L.,2024/03/22,170.87,4.0,Rabat,CARD,N,1.7,,Rep 08
+OID5716,Sara L.,Nov 15 2024,1233.26,10.0,Marrakech,Wallet,1,2.2,,Rep 07
+OID2377,Lina M.,N/A,,7.0,Riyadh,Wallet,YES,14.4,2.0,Rep 19
+OID3995,Amine B.,2024/10/29,185.0,8.0,Riyadh,CARD,Y,42.9,1.0,Rep 23
+OID8227,,2024-02-05,636.08,10.0,Casablanca,CARD,YES,25.4,,Rep 19
+OID8128,Amine B.,01/01/2024,438.89,14.0,,COD,0,23.5,2.0,Rep 09
+OID6263,Sara L.,01/10/2024,995.74,9.0,,Card,no,28.7,1.0,Rep 22
+OID1376,Amine B.,14/04/2024,945.12,17.0,,Wallet,N,39.3,,Rep 22
+OID8063,Lina M.,Feb 28 2024,367.33,12.0,,Wallet,1,11.6,2.0,Rep 03
+OID7177,Youssef K.,2024-04-29,145.15,8.0,,Wallet,1,4.6,5.0,Rep 11
+OID7498,Amine B.,2024-03-09,592.01,7.0,,card,1,29.3,2.0,Rep 21
+OID8579,Sara L.,22/12/2024,333.96,6.0,Rabat,card,YES,9.4,5.0,Rep 21
+OID6195,Lina M.,2024-12-13,279.33,10.0,Rabat,card,no,,,Rep 08
+OID6145,,2024-08-02,1566.03,,,Wallet,No,26.1,5.0,Rep 09
+OID3817,Omar R.,Dec 01 2024,149.22,2.0,Cairo,COD,Y,12.7,,Rep 01
+OID3611,Sara L.,2024-09-20,627.55,8.0,Rabat,COD,Y,43.1,2.0,Rep 08
+OID7131,Lina M.,2024/12/05,1171.27,11.0,Dubai,CARD,yes,1.6,3.0,Rep 07
+OID6247,Sara L.,2024-01-25,415.08,8.0,Casablanca,Card,1,29.0,1.0,Rep 06
+OID3406,,Apr 03 2024,348.08,10.0,Dubai,Cash,true,27.1,5.0,Rep 08
+OID7653,Amine B.,2024/08/02,286.09,13.0,Rabat,Card,1,9.6,4.0,Rep 02
+OID9242,Omar R.,2024-02-13,948.54,8.0,Dubai,CARD,N,44.8,,Rep 12
+OID4059,Omar R.,Jul 31 2024,2280.24,17.0,,CARD,YES,4.6,5.0,Rep 16
+OID1830,Youssef K.,2024/09/18,403.75,,Rabat,card,YES,37.3,4.0,Rep 14
+OID3177,Omar R.,N/A,1335.34,10.0,Riyadh,CARD,Y,27.7,,Rep 19
+OID3676,Youssef K.,09/12/2024,415.15,,Casablanca,COD,Y,1.4,,Rep 21
+OID9556,Omar R.,25/02/2024,221.14,5.0,Casablanca,COD,yes,41.2,,Rep 24
+OID9047,Omar R.,2024-07-24,522.08,16.0,Marrakech,Card,Yes,9.6,,Rep 26
+OID3325,,2024-01-02,,13.0,Dubai,Wallet,Yes,,,Rep 04
+OID8766,,Oct 20 2024,1456.51,,Cairo,Cash,Yes,40.1,2.0,Rep 05
+OID6128,Amine B.,2024/06/30,605.38,12.0,Marrakech,card,YES,1.1,,Rep 26
+OID3432,Lina M.,2024-03-11,1871.69,17.0,Marrakech,CARD,No,26.7,2.0,Rep 16
+OID4131,Sara L.,2024/05/01,508.87,14.0,,Cash,no,21.1,1.0,Rep 25
+OID8784,Sara L.,2024/06/27,409.82,8.0,Rabat,card,0,27.3,5.0,Rep 26
+OID5630,Amine B.,2024-02-11,,9.0,Casablanca,Card,YES,,1.0,Rep 19
+OID5296,Sara L.,18/05/2024,,,,card,0,16.8,3.0,Rep 22
+OID5898,Lina M.,2024-07-23,239.57,2.0,Rabat,card,0,33.5,2.0,Rep 25
+OID2505,Sara L.,Jan 27 2024,130.45,1.0,Casablanca,card,YES,27.7,2.0,Rep 02
+OID1352,,04/03/2024,2146.31,16.0,,CARD,Y,7.5,2.0,Rep 16
+OID4461,,Dec 12 2024,584.41,12.0,,Wallet,No,7.7,2.0,Rep 14
+OID8384,Amine B.,2024-11-23,105.3,2.0,Rabat,Card,0,31.4,3.0,Rep 01
