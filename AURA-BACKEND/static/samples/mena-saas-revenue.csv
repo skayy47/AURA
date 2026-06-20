@@ -1,0 +1,621 @@
+order_id,order_date,region,country,product_line,channel,segment,quantity,unit_price_usd,discount_pct,revenue_usd,profit_usd,marketing_spend_usd
+ORD-00000,2023-01-05,North Africa,Saudi Arabia,Support Plan,Partner,SMB,34,153.58,,3138.05,388.6,4400.69
+ORD-00001,2023-01-06,Gulf,Morocco,Support Plan,Online,Enterprise,27,94.27,0.07,5453.26,791.63,873.89
+ORD-00002,2023-01-07,Levant,Morocco,Professional Services,Direct,Startup,27,510.94,0.134,5494.73,987.81,8481.54
+ORD-00003,2023-01-07,Levant,Egypt,Professional Services,Online,Startup,21,291.64,0.051,2351.59,364.9,7051.97
+ORD-00004,2023-01-09,Nile Valley,UAE,Analytics Suite,Reseller,SMB,1,552.07,0.193,310.43,87.25,1070.26
+ORD-00005,2023-01-13,Levant,Saudi Arabia,Analytics Suite,Direct,SMB,16,1793.95,0.255,17172.51,2459.67,685.22
+ORD-00006,2023-01-16,Gulf,Saudi Arabia,Support Plan,Partner,SMB,29,146.24,0.124,3127.19,971.05,3032.04
+ORD-00007,2023-01-16,Levant,Morocco,Support Plan,Online,Startup,32,194.62,0.057,2941.78,496.12,50.0
+ORD-00008,2023-01-18,Gulf,Saudi Arabia,Analytics Suite,Online,Mid-Market,22,543.11,0.079,16831.24,2421.85,10831.72
+ORD-00009,2023-01-19,Gulf,Bahrain,Support Plan,Online,Enterprise,28,190.54,0.286,11051.16,1350.71,1737.66
+ORD-00010,2023-01-20,Levant,UAE,Professional Services,Online,SMB,1,631.72,0.094,498.3,138.2,50.0
+ORD-00011,2023-01-20,Levant,Kuwait,Professional Services,Online,SMB,19,375.46,0.271,4457.75,786.59,50.0
+ORD-00012,2023-01-20,Gulf,Kuwait,Support Plan,Online,Enterprise,20,172.0,0.116,6819.67,1582.78,50.0
+ORD-00013,2023-01-21,Gulf,Morocco,Analytics Suite,Direct,SMB,35,1656.74,,45500.22,6577.31,8378.77
+ORD-00014,2023-01-22,Gulf,Bahrain,Analytics Suite,Reseller,Enterprise,13,901.49,0.255,20386.55,6865.48,50.0
+ORD-00015,2023-01-23,Gulf,Saudi Arabia,Support Plan,Partner,Startup,9,44.14,0.164,131.44,19.4,5774.75
+ORD-00016,2023-01-28,Gulf,UAE,Analytics Suite,Direct,Mid-Market,14,2106.67,0.011,37167.27,7828.31,50.0
+ORD-00017,2023-01-29,North Africa,Egypt,Support Plan,Partner,Enterprise,7,170.16,0.336,2291.04,704.18,942.21
+ORD-00018,2023-01-31,Gulf,UAE,Professional Services,Partner,Enterprise,22,370.06,0.052,21896.97,3807.34,8659.71
+ORD-00019,2023-02-02,Nile Valley,Egypt,Analytics Suite,Direct,Mid-Market,26,822.41,0.124,30283.95,5412.77,50.0
+ORD-00020,2023-02-02,Nile Valley,Egypt,Analytics Suite,Reseller,Mid-Market,32,1107.85,0.135,50020.63,14899.64,16586.8
+ORD-00021,2023-02-06,Levant,Jordan,Analytics Suite,Direct,Enterprise,38,1736.2,0.171,161988.41,29179.74,17208.3
+ORD-00022,2023-02-08,Gulf,Egypt,Hardware,Partner,Mid-Market,3,634.8,0.275,1755.08,211.72,950.55
+ORD-00023,2023-02-08,Levant,Bahrain,Support Plan,Partner,Enterprise,10,223.05,,6579.88,1409.02,3786.42
+ORD-00024,2023-02-09,North Africa,Jordan,Analytics Suite,Reseller,Mid-Market,12,965.48,0.326,12301.65,1510.12,5284.21
+ORD-00025,2023-02-09,North Africa,Bahrain,Hardware,Online,Mid-Market,10,1334.58,0.226,16438.26,5262.78,3408.91
+ORD-00026,2023-02-13,North Africa,Saudi Arabia,Support Plan,Reseller,Mid-Market,33,86.52,0.333,2445.56,638.78,5524.02
+ORD-00027,2023-02-15,Levant,Bahrain,Support Plan,Direct,Mid-Market,6,147.64,0.286,803.0,199.36,2818.5
+ORD-00028,2023-02-16,Levant,Qatar,Hardware,Reseller,Enterprise,2,923.66,0.325,3749.61,616.25,9684.48
+ORD-00029,2023-02-18,Gulf,Bahrain,Analytics Suite,Reseller,Enterprise,34,1080.38,0.21,69848.0,19137.52,11120.98
+ORD-00030,2023-02-21,North Africa,Egypt,Analytics Suite,Partner,Mid-Market,38,1821.83,0.125,83702.14,22515.54,20347.33
+ORD-00031,2023-02-26,Gulf,Bahrain,Support Plan,Online,SMB,9,117.84,0.155,727.57,96.99,4812.8
+ORD-00032,2023-02-27,North Africa,Qatar,Analytics Suite,Direct,Startup,13,857.0,0.23,3524.66,1105.99,50.0
+ORD-00033,2023-02-28,Nile Valley,Saudi Arabia,Professional Services,Reseller,Startup,20,444.23,0.149,2999.85,742.38,14053.3
+ORD-00034,2023-03-01,Gulf,Morocco,Analytics Suite,Reseller,SMB,21,2173.66,0.256,32166.35,9467.93,847.95
+ORD-00035,2023-03-01,Levant,UAE,Analytics Suite,Partner,SMB,39,1670.98,0.032,57965.03,10308.56,14798.83
+ORD-00036,2023-03-09,Gulf,Bahrain,Analytics Suite,Online,Mid-Market,16,1512.01,0.29,27895.47,4096.46,3487.97
+ORD-00037,2023-03-11,North Africa,Egypt,Support Plan,Partner,SMB,1,42.8,0.071,30.75,8.44,5568.33
+ORD-00038,2023-03-11,Gulf,UAE,Analytics Suite,Direct,SMB,17,731.76,0.33,6317.4,1861.45,50.0
+ORD-00039,2023-03-13,Nile Valley,Qatar,Analytics Suite,Online,Startup,22,1543.97,0.054,14637.81,2999.69,5038.11
+ORD-00040,2023-03-14,Gulf,Morocco,Hardware,Online,Startup,21,1217.92,0.045,11233.06,1406.52,50.0
+ORD-00041,2023-03-16,Nile Valley,Saudi Arabia,Analytics Suite,Reseller,Mid-Market,20,2063.7,0.284,36555.2,10967.14,12667.34
+ORD-00042,2023-03-16,North Africa,Jordan,Analytics Suite,Reseller,SMB,36,1776.5,0.287,41086.36,6793.25,7230.86
+ORD-00043,2023-03-17,Levant,Jordan,Analytics Suite,Partner,Startup,32,1205.29,0.259,15369.66,2990.74,6752.69
+ORD-00044,2023-03-19,North Africa,Kuwait,Analytics Suite,Reseller,Mid-Market,10,1749.13,0.336,17057.63,4404.46,50.0
+ORD-00045,2023-03-20,North Africa,Qatar,Analytics Suite,Online,Startup,14,2155.73,0.095,12373.94,1756.98,1036.11
+ORD-00046,2023-03-21,Nile Valley,Morocco,Support Plan,Online,Enterprise,27,75.85,0.289,3817.23,518.53,2611.11
+ORD-00047,2023-03-21,Gulf,Qatar,Analytics Suite,Online,Startup,17,1556.55,,9571.22,1202.67,2321.24
+ORD-00048,2023-03-22,Levant,Qatar,Hardware,Reseller,SMB,17,454.5,0.188,4872.22,1567.2,5625.23
+ORD-00049,2023-03-23,Gulf,UAE,Hardware,Online,Enterprise,7,1240.26,0.156,19922.22,3755.42,471.77
+ORD-00050,2023-03-24,Levant,Saudi Arabia,Analytics Suite,Direct,SMB,10,1995.8,0.002,16324.53,4331.63,2214.8
+ORD-00051,2023-03-24,Gulf,Egypt,Analytics Suite,Direct,Enterprise,29,575.58,0.201,36786.98,12420.45,10609.1
+ORD-00052,2023-03-25,Levant,Morocco,Analytics Suite,Partner,SMB,33,1567.21,0.262,35360.16,9451.03,50.0
+ORD-00053,2023-03-25,Levant,UAE,Support Plan,Online,SMB,31,72.58,0.061,1626.28,383.02,3285.86
+ORD-00054,2023-03-26,Levant,Saudi Arabia,Analytics Suite,Online,SMB,13,1506.29,0.326,9510.56,2231.2,50.0
+ORD-00055,2023-03-27,Levant,Jordan,Hardware,Partner,Startup,6,291.85,0.186,580.72,,50.0
+ORD-00056,2023-03-29,North Africa,Egypt,Professional Services,Online,Enterprise,7,243.65,0.062,3891.85,980.56,2231.95
+ORD-00057,2023-03-31,North Africa,Qatar,Professional Services,Reseller,Mid-Market,16,445.3,0.226,8295.44,2745.24,7432.53
+ORD-00058,2023-04-01,Levant,Qatar,Support Plan,Partner,Mid-Market,21,46.05,0.067,1453.09,426.29,5623.92
+ORD-00059,2023-04-03,Levant,Kuwait,Hardware,Partner,Enterprise,35,562.71,0.022,58905.32,12566.26,6360.07
+ORD-00060,2023-04-04,Nile Valley,Kuwait,Analytics Suite,Online,Mid-Market,36,1476.0,0.24,62080.85,11990.16,12042.32
+ORD-00061,2023-04-04,Gulf,Egypt,Support Plan,Partner,Mid-Market,1,270.42,0.039,373.13,117.3,4597.15
+ORD-00062,2023-04-04,Gulf,Jordan,Analytics Suite,Reseller,Mid-Market,28,840.06,0.037,30037.7,4501.84,3146.33
+ORD-00063,2023-04-05,Gulf,Egypt,Hardware,Reseller,Mid-Market,12,1262.03,0.259,16128.52,4949.98,50.0
+ORD-00064,2023-04-06,North Africa,Jordan,Support Plan,Online,Startup,8,212.18,0.019,753.22,132.65,50.0
+ORD-00065,2023-04-07,Levant,Morocco,Professional Services,Partner,Mid-Market,22,447.45,,11626.68,,5789.13
+ORD-00066,2023-04-11,North Africa,Saudi Arabia,Analytics Suite,Online,Startup,2,1137.46,,780.09,231.97,50.0
+ORD-00067,2023-04-11,North Africa,Jordan,Hardware,Direct,Mid-Market,14,1260.15,0.049,22873.94,,50.0
+ORD-00068,2023-04-12,Gulf,Saudi Arabia,Support Plan,Partner,Mid-Market,22,155.06,0.181,3890.21,631.39,50.0
+ORD-00069,2023-04-13,Nile Valley,Jordan,Support Plan,Direct,SMB,11,205.19,0.034,1652.79,505.5,4560.68
+ORD-00070,2023-04-14,North Africa,Saudi Arabia,Hardware,Direct,Mid-Market,24,1497.73,0.221,46937.08,9427.4,2765.0
+ORD-00071,2023-04-15,Gulf,UAE,Analytics Suite,Direct,Mid-Market,18,2135.22,0.022,48491.74,9240.08,7551.65
+ORD-00072,2023-04-15,Gulf,Qatar,Analytics Suite,Online,SMB,32,1868.37,0.331,29147.13,6768.07,9999.01
+ORD-00073,2023-04-18,Gulf,Bahrain,Support Plan,Direct,Enterprise,8,191.96,0.073,3574.97,771.19,50.0
+ORD-00074,2023-04-19,Gulf,Morocco,Analytics Suite,Online,Mid-Market,3,1964.37,0.239,7330.31,1981.17,642.93
+ORD-00075,2023-04-19,Gulf,Saudi Arabia,Analytics Suite,Partner,SMB,21,2032.25,0.045,35099.79,5271.41,3316.81
+ORD-00076,2023-04-22,Nile Valley,UAE,Analytics Suite,Partner,Mid-Market,11,1007.48,0.073,15960.96,3445.2,3906.79
+ORD-00077,2023-04-23,Levant,Bahrain,Analytics Suite,Reseller,Startup,28,1499.73,0.158,16311.96,5157.42,8455.92
+ORD-00078,2023-04-23,Gulf,Kuwait,Hardware,Online,Mid-Market,4,575.83,0.201,2405.02,307.68,50.0
+ORD-00079,2023-04-25,North Africa,Saudi Arabia,Support Plan,Online,Startup,23,134.5,0.35,1074.85,237.13,3117.15
+ORD-00080,2023-04-26,Levant,Morocco,Analytics Suite,Online,SMB,39,799.51,0.009,24081.6,6389.26,8299.38
+ORD-00081,2023-04-27,Nile Valley,Egypt,Support Plan,Direct,Startup,4,195.18,0.0,324.54,102.33,50.0
+ORD-00082,2023-04-27,North Africa,UAE,Support Plan,Direct,Startup,12,196.69,0.123,1023.91,256.63,50.0
+ORD-00083,2023-05-03,Levant,Jordan,Support Plan,Online,Enterprise,33,128.48,0.128,9050.13,2727.59,3280.47
+ORD-00084,2023-05-04,Gulf,Qatar,Hardware,Reseller,SMB,21,1365.59,0.309,14997.33,2534.43,3607.99
+ORD-00085,2023-05-04,Nile Valley,UAE,Hardware,Direct,Enterprise,7,403.16,0.319,5868.72,1159.76,3758.26
+ORD-00086,2023-05-04,North Africa,Kuwait,Analytics Suite,Direct,Startup,9,769.47,0.308,2320.33,759.37,3221.94
+ORD-00087,2023-05-04,Nile Valley,Morocco,Analytics Suite,Reseller,SMB,30,1216.51,0.05,27626.02,8699.83,50.0
+ORD-00088,2023-05-05,Gulf,Saudi Arabia,Support Plan,Reseller,Mid-Market,34,142.4,0.144,5984.44,1452.72,5911.35
+ORD-00089,2023-05-07,Nile Valley,Morocco,Support Plan,Direct,Startup,15,299.93,0.261,1729.52,388.46,6326.46
+ORD-00090,2023-05-07,Levant,UAE,Support Plan,Partner,Enterprise,19,98.51,0.109,4081.52,894.81,1465.65
+ORD-00091,2023-05-08,Gulf,UAE,Professional Services,Online,SMB,31,588.21,0.232,10740.87,1427.82,50.0
+ORD-00092,2023-05-09,Levant,Bahrain,Support Plan,Direct,SMB,7,154.95,0.083,893.0,282.48,50.0
+ORD-00093,2023-05-11,North Africa,Kuwait,Analytics Suite,Partner,Enterprise,9,2136.25,0.113,49659.16,14897.4,6978.62
+ORD-00094,2023-05-14,Gulf,UAE,Analytics Suite,Partner,SMB,31,1237.9,0.301,26609.8,5864.14,50.0
+ORD-00095,2023-05-14,Levant,Jordan,Analytics Suite,Online,Startup,8,485.45,0.088,1668.24,302.75,50.0
+ORD-00096,2023-05-15,North Africa,Qatar,Analytics Suite,Partner,Enterprise,31,550.41,0.338,27807.92,5434.85,50.0
+ORD-00097,2023-05-15,Gulf,Jordan,Analytics Suite,Partner,SMB,20,1102.5,0.107,17344.96,2551.36,5266.2
+ORD-00098,2023-05-16,Levant,Kuwait,Professional Services,Partner,Mid-Market,39,139.33,0.008,8564.79,2387.81,1898.09
+ORD-00099,2023-05-16,Levant,Egypt,Analytics Suite,Reseller,SMB,2,705.89,0.089,1000.85,242.67,50.0
+ORD-00100,2023-05-18,Gulf,Qatar,Analytics Suite,Direct,Enterprise,37,2115.77,0.06,212222.32,36396.71,27309.85
+ORD-00101,2023-05-22,Nile Valley,Qatar,Support Plan,Direct,Startup,9,115.01,0.177,380.73,97.87,50.0
+ORD-00102,2023-05-22,North Africa,Kuwait,Professional Services,Direct,Startup,2,567.76,0.039,592.31,198.68,2779.29
+ORD-00103,2023-05-22,Gulf,UAE,Analytics Suite,Reseller,Enterprise,29,1769.51,0.219,125506.05,18440.22,13007.43
+ORD-00104,2023-05-25,Nile Valley,Egypt,Professional Services,Reseller,Mid-Market,21,167.45,0.306,3662.63,808.95,50.0
+ORD-00105,2023-05-26,Nile Valley,UAE,Hardware,Online,SMB,33,363.31,0.127,10467.53,2394.08,50.0
+ORD-00106,2023-05-26,Gulf,Egypt,Support Plan,Direct,SMB,5,268.65,0.059,1269.38,198.91,50.0
+ORD-00107,2023-05-27,North Africa,UAE,Professional Services,Reseller,Mid-Market,4,642.67,0.14,3021.09,715.84,461.25
+ORD-00108,2023-05-27,Gulf,Saudi Arabia,Analytics Suite,Partner,Enterprise,23,736.05,0.275,33679.64,8531.56,4817.49
+ORD-00109,2023-05-27,Nile Valley,Bahrain,Hardware,Reseller,Enterprise,35,1015.68,0.207,83054.59,12841.55,8966.37
+ORD-00110,2023-05-31,North Africa,Saudi Arabia,Analytics Suite,Partner,Startup,16,943.23,0.035,6314.17,972.63,50.0
+ORD-00111,2023-06-03,North Africa,Bahrain,Hardware,Reseller,Mid-Market,32,1237.45,,47856.36,14758.75,3899.91
+ORD-00112,2023-06-03,Gulf,Saudi Arabia,Support Plan,Reseller,Startup,36,140.72,0.164,1951.63,367.89,13385.37
+ORD-00113,2023-06-04,Nile Valley,Jordan,Analytics Suite,Direct,Mid-Market,34,1581.61,0.114,83561.05,21615.02,5985.44
+ORD-00114,2023-06-05,Gulf,Egypt,Analytics Suite,Online,Startup,20,1212.34,0.039,11281.05,2909.27,50.0
+ORD-00115,2023-06-07,Gulf,Qatar,Professional Services,Partner,Enterprise,28,769.25,0.343,43857.22,13359.68,22536.71
+ORD-00116,2023-06-07,Gulf,Egypt,Support Plan,Partner,Enterprise,21,234.7,0.062,12853.33,3634.62,3750.3
+ORD-00117,2023-06-09,North Africa,Morocco,Analytics Suite,Partner,Startup,27,1611.99,0.067,17992.42,5486.37,50.0
+ORD-00118,2023-06-09,Gulf,Morocco,Professional Services,Online,Startup,23,849.05,0.051,10250.58,2640.01,5649.34
+ORD-00119,2023-06-09,Nile Valley,Qatar,Hardware,Partner,Mid-Market,21,716.04,0.2,15890.16,3478.05,50.0
+ORD-00120,2023-06-10,North Africa,Morocco,Support Plan,Online,Mid-Market,18,141.31,,2894.69,598.0,5114.72
+ORD-00121,2023-06-15,Gulf,Qatar,Support Plan,Online,Mid-Market,26,81.85,0.087,2898.16,589.45,50.0
+ORD-00122,2023-06-16,Gulf,Jordan,Analytics Suite,Reseller,Mid-Market,30,996.25,0.15,41753.23,8853.63,2703.98
+ORD-00123,2023-06-19,Gulf,Morocco,Professional Services,Reseller,Enterprise,36,456.46,0.236,34615.1,,12592.7
+ORD-00124,2023-06-21,Levant,Egypt,Analytics Suite,Direct,Startup,24,742.76,0.099,7006.24,1494.23,3811.11
+ORD-00125,2023-06-21,North Africa,UAE,Hardware,Reseller,Mid-Market,4,916.25,0.32,3675.18,755.9,5543.64
+ORD-00126,2023-06-22,Gulf,Egypt,Analytics Suite,Direct,SMB,23,1375.13,0.107,23274.7,2969.99,5073.8
+ORD-00127,2023-06-25,North Africa,UAE,Support Plan,Online,Enterprise,13,166.09,0.069,4968.1,896.89,50.0
+ORD-00128,2023-06-25,Gulf,UAE,Analytics Suite,Partner,Enterprise,2,1640.01,0.334,6412.55,1830.27,3975.61
+ORD-00129,2023-06-27,North Africa,Bahrain,Analytics Suite,Online,SMB,3,2099.1,0.284,3571.89,882.79,6770.07
+ORD-00130,2023-06-28,Nile Valley,Saudi Arabia,Professional Services,Online,Mid-Market,24,850.3,0.12,26345.57,7834.03,3868.07
+ORD-00131,2023-06-28,North Africa,Morocco,Support Plan,Reseller,SMB,37,203.74,0.295,4968.43,,10044.5
+ORD-00132,2023-07-08,North Africa,Jordan,Support Plan,Partner,Enterprise,20,244.77,0.182,12467.93,3838.86,5956.33
+ORD-00133,2023-07-16,North Africa,Bahrain,Hardware,Reseller,Startup,18,816.27,0.121,6056.23,1787.4,1838.44
+ORD-00134,2023-07-19,Gulf,UAE,Hardware,Partner,SMB,4,1292.33,0.294,3111.43,,1692.23
+ORD-00135,2023-07-19,Gulf,UAE,Hardware,Direct,Startup,27,291.4,0.263,2709.22,907.43,1044.81
+ORD-00136,2023-07-20,Gulf,Egypt,Analytics Suite,Partner,Enterprise,3,1917.5,0.104,17135.82,2111.89,50.0
+ORD-00137,2023-07-22,Levant,Qatar,Support Plan,Online,Mid-Market,33,228.33,0.212,8485.79,2132.52,545.93
+ORD-00138,2023-07-22,North Africa,Bahrain,Hardware,Online,Mid-Market,32,864.65,0.129,34390.1,10122.81,5286.77
+ORD-00139,2023-07-24,Levant,UAE,Analytics Suite,Reseller,SMB,39,1077.77,0.0,37279.16,7195.5,2291.44
+ORD-00140,2023-07-25,Nile Valley,UAE,Analytics Suite,Direct,Mid-Market,12,946.01,0.337,10789.06,2715.45,3065.56
+ORD-00141,2023-07-28,Gulf,Egypt,Professional Services,Partner,Enterprise,7,267.39,0.192,3981.98,,589.58
+ORD-00142,2023-07-28,North Africa,Jordan,Support Plan,Reseller,Mid-Market,12,194.76,0.209,2569.37,,4365.77
+ORD-00143,2023-07-28,Gulf,Saudi Arabia,Support Plan,Partner,Mid-Market,32,295.79,0.21,12341.9,1504.0,4958.57
+ORD-00144,2023-07-30,Gulf,Morocco,Hardware,Direct,Mid-Market,9,1149.28,0.193,13680.79,1927.21,2518.29
+ORD-00145,2023-07-30,North Africa,Saudi Arabia,Support Plan,Reseller,Enterprise,35,248.17,0.102,24028.6,3403.65,50.0
+ORD-00146,2023-07-31,Nile Valley,UAE,Support Plan,Partner,Mid-Market,7,194.75,0.34,1545.49,393.16,9576.48
+ORD-00147,2023-08-01,Levant,Bahrain,Analytics Suite,Reseller,SMB,2,1681.09,,2264.13,533.63,50.0
+ORD-00148,2023-08-03,Gulf,Saudi Arabia,Support Plan,Reseller,Mid-Market,9,210.45,0.235,2594.09,571.22,50.0
+ORD-00149,2023-08-05,Levant,Egypt,Analytics Suite,Reseller,Mid-Market,30,730.83,0.159,281388.9399914106,70347.23499785265,1970.81
+ORD-00150,2023-08-07,Gulf,Bahrain,Professional Services,Online,SMB,24,186.19,0.101,3991.76,493.79,50.0
+ORD-00151,2023-08-08,Nile Valley,Qatar,Professional Services,Reseller,SMB,14,518.99,0.023,6898.45,1239.08,8925.26
+ORD-00152,2023-08-09,North Africa,Saudi Arabia,Analytics Suite,Reseller,Mid-Market,26,1036.95,0.123,36137.61,,11605.3
+ORD-00153,2023-08-14,Gulf,Morocco,Analytics Suite,Partner,SMB,26,622.82,0.062,12961.49,4150.21,3885.9
+ORD-00154,2023-08-18,Gulf,Bahrain,Hardware,Direct,Startup,22,1360.23,0.232,11534.11,2496.37,820.33
+ORD-00155,2023-08-19,Gulf,Morocco,Analytics Suite,Partner,SMB,21,997.15,0.308,11647.29,1606.47,4644.49
+ORD-00156,2023-08-20,Nile Valley,Qatar,Support Plan,Online,Startup,4,263.26,0.106,477.25,141.13,444.28
+ORD-00157,2023-08-22,Levant,Qatar,Support Plan,Online,SMB,11,103.18,0.117,792.01,249.28,50.0
+ORD-00158,2023-08-23,North Africa,Kuwait,Professional Services,Direct,Enterprise,21,843.72,0.235,34365.43,7251.29,5896.97
+ORD-00159,2023-08-25,Levant,UAE,Analytics Suite,Online,Mid-Market,6,961.78,0.052,9910.65,1719.88,50.0
+ORD-00160,2023-08-28,Levant,Jordan,Professional Services,Direct,SMB,19,890.78,0.325,11072.48,1435.81,2651.64
+ORD-00161,2023-08-30,Gulf,Bahrain,Analytics Suite,Online,Startup,5,2135.86,0.127,4902.97,1225.93,1659.34
+ORD-00162,2023-08-31,Nile Valley,UAE,Support Plan,Online,Mid-Market,31,166.45,0.035,7623.12,2440.7,4076.73
+ORD-00163,2023-09-01,Gulf,Jordan,Analytics Suite,Online,Enterprise,5,1686.86,0.061,24170.78,6505.21,50.0
+ORD-00164,2023-09-01,Levant,Jordan,Support Plan,Partner,SMB,4,101.27,0.326,280.64,53.26,3757.82
+ORD-00165,2023-09-01,North Africa,Kuwait,Support Plan,Partner,Enterprise,25,42.4,,3031.73,792.6,50.0
+ORD-00166,2023-09-03,Levant,Egypt,Analytics Suite,Online,SMB,9,573.14,0.232,3765.61,1141.19,50.0
+ORD-00167,2023-09-04,Nile Valley,Morocco,Analytics Suite,Online,SMB,14,739.41,0.055,8921.38,2004.48,50.0
+ORD-00168,2023-09-05,Gulf,Jordan,Analytics Suite,Reseller,SMB,13,537.95,0.068,5740.36,1724.09,50.0
+ORD-00169,2023-09-05,Levant,UAE,Analytics Suite,Partner,Startup,9,1487.44,0.308,5104.39,1052.63,5938.93
+ORD-00170,2023-09-06,Levant,Jordan,Analytics Suite,Partner,SMB,30,2175.86,0.052,65504.07,12882.77,2778.52
+ORD-00171,2023-09-08,Levant,Bahrain,Hardware,Partner,SMB,27,354.48,0.007,8602.07,2135.53,50.0
+ORD-00172,2023-09-08,Gulf,Kuwait,Support Plan,Online,SMB,10,122.43,0.175,904.93,201.1,6692.28
+ORD-00173,2023-09-10,Gulf,Egypt,Professional Services,Direct,Startup,27,757.9,0.302,7288.33,2441.33,50.0
+ORD-00174,2023-09-11,Gulf,Qatar,Hardware,Partner,Startup,28,967.7,0.114,12247.76,2861.15,483.06
+ORD-00175,2023-09-11,Gulf,Saudi Arabia,Analytics Suite,Direct,Enterprise,22,472.33,0.045,34360.2,7034.83,50.0
+ORD-00176,2023-09-13,Levant,Bahrain,Professional Services,Online,SMB,23,669.48,0.344,9972.37,,5564.9
+ORD-00177,2023-09-14,Levant,Egypt,Hardware,Reseller,Mid-Market,37,453.81,0.237,19974.14,4804.72,6837.41
+ORD-00178,2023-09-16,Levant,Saudi Arabia,Support Plan,Reseller,Startup,18,251.09,0.298,1597.65,316.46,4066.95
+ORD-00179,2023-09-17,Levant,Jordan,Support Plan,Partner,SMB,16,277.64,0.263,2985.31,833.02,3177.19
+ORD-00180,2023-09-18,Levant,Kuwait,Support Plan,Direct,Mid-Market,22,276.77,0.244,6462.69,1316.75,1161.44
+ORD-00181,2023-09-20,Gulf,Qatar,Analytics Suite,Direct,Enterprise,33,863.2,0.135,75369.27,15413.9,6294.34
+ORD-00182,2023-09-21,Levant,Saudi Arabia,Support Plan,Direct,Mid-Market,28,120.79,0.114,5356.64,1369.88,50.0
+ORD-00183,2023-09-22,Gulf,Jordan,Hardware,Reseller,SMB,3,813.08,0.251,1789.58,238.71,6979.36
+ORD-00184,2023-09-23,Gulf,Kuwait,Hardware,Reseller,Mid-Market,18,1294.63,0.251,25985.09,6864.69,7129.05
+ORD-00185,2023-09-23,Levant,Jordan,Analytics Suite,Online,Enterprise,29,544.98,,34272.38,7920.14,476.81
+ORD-00186,2023-09-25,Levant,Jordan,Professional Services,Direct,Startup,9,868.98,0.199,3517.6,772.7,631.0
+ORD-00187,2023-09-27,Gulf,UAE,Analytics Suite,Direct,SMB,39,1955.33,0.103,59543.31,16567.07,5571.31
+ORD-00188,2023-09-29,Levant,UAE,Hardware,Reseller,Enterprise,32,1136.18,0.171,95242.15,27317.0,5512.42
+ORD-00189,2023-09-30,Levant,Bahrain,Analytics Suite,Partner,Mid-Market,34,918.97,0.215,41649.32,12752.08,5929.57
+ORD-00190,2023-10-01,North Africa,Qatar,Hardware,Direct,Startup,4,461.32,0.149,914.15,185.08,50.0
+ORD-00191,2023-10-01,Levant,Morocco,Professional Services,Direct,SMB,23,373.32,0.277,40223.44487939107,10055.861219847768,50.0
+ORD-00192,2023-10-02,North Africa,Egypt,Analytics Suite,Partner,SMB,21,1396.18,0.205,19936.31,5525.45,50.0
+ORD-00193,2023-10-04,Gulf,Kuwait,Analytics Suite,Online,Mid-Market,25,1659.86,0.003,67877.47,16833.41,50.0
+ORD-00194,2023-10-05,North Africa,Jordan,Professional Services,Reseller,Mid-Market,34,558.62,0.199,21649.08,5607.03,650.03
+ORD-00195,2023-10-06,Levant,Saudi Arabia,Analytics Suite,Partner,Enterprise,14,1098.5,0.222,35760.68,8661.77,3845.02
+ORD-00196,2023-10-07,Levant,Qatar,Support Plan,Online,SMB,21,83.78,0.32,1226.4,355.65,50.0
+ORD-00197,2023-10-07,Levant,Bahrain,Hardware,Direct,Enterprise,27,1183.47,0.145,75059.27,12145.27,12419.76
+ORD-00198,2023-10-08,Gulf,Egypt,Support Plan,Direct,Enterprise,30,131.83,0.201,9592.07,2323.74,807.31
+ORD-00199,2023-10-09,Levant,Egypt,Analytics Suite,Direct,SMB,31,2077.23,0.166,58262.92,9018.07,10016.89
+ORD-00200,2023-10-10,North Africa,Bahrain,Support Plan,Reseller,Startup,14,96.72,,588.06,123.26,50.0
+ORD-00201,2023-10-10,Nile Valley,Saudi Arabia,Analytics Suite,Online,SMB,39,2060.93,,74336.62,19779.39,4792.54
+ORD-00202,2023-10-10,Nile Valley,Morocco,Hardware,Reseller,Mid-Market,1,225.25,0.314,260.96,59.62,629.78
+ORD-00203,2023-10-14,Levant,Morocco,Analytics Suite,Direct,Mid-Market,20,1568.91,0.319,32165.55,6546.01,50.0
+ORD-00204,2023-10-18,Levant,Jordan,Analytics Suite,Direct,Mid-Market,24,2070.83,0.192,59698.88,,9992.82
+ORD-00205,2023-10-18,North Africa,UAE,Analytics Suite,Reseller,Mid-Market,3,1150.07,0.195,4867.36,1411.64,50.0
+ORD-00206,2023-10-19,Gulf,Morocco,Hardware,Direct,SMB,18,1394.99,0.02,22674.31,5346.24,7536.37
+ORD-00207,2023-10-22,North Africa,UAE,Analytics Suite,Direct,Mid-Market,24,512.63,,15186.61,4996.57,50.0
+ORD-00208,2023-10-22,Levant,Jordan,Hardware,Online,SMB,24,1337.53,0.15,22337.29,4765.89,8252.68
+ORD-00209,2023-10-23,Gulf,Kuwait,Professional Services,Online,Startup,5,742.57,0.248,1652.65,484.85,50.0
+ORD-00210,2023-10-26,Gulf,Morocco,Professional Services,Direct,Startup,11,562.85,0.016,2809.94,441.01,50.0
+ORD-00211,2023-10-29,North Africa,Morocco,Hardware,Partner,Enterprise,10,267.97,0.249,6716.14,1228.21,2803.66
+ORD-00212,2023-11-02,Gulf,UAE,Professional Services,Online,Mid-Market,25,559.98,0.1,20317.48,3949.29,8576.5
+ORD-00213,2023-11-02,Gulf,Bahrain,Hardware,Partner,Enterprise,13,395.85,0.228,12713.26,1821.56,10265.73
+ORD-00214,2023-11-08,Gulf,Kuwait,Analytics Suite,Partner,Mid-Market,23,663.59,0.219,18443.95,4249.43,2430.21
+ORD-00215,2023-11-11,Gulf,Egypt,Professional Services,Direct,Mid-Market,29,424.4,0.079,17030.56,2764.01,11681.29
+ORD-00216,2023-11-15,Gulf,Morocco,Support Plan,Partner,Enterprise,32,171.7,0.154,14624.87,3795.46,235.91
+ORD-00217,2023-11-17,North Africa,Kuwait,Support Plan,Reseller,SMB,8,166.54,0.292,957.48,154.94,5877.13
+ORD-00218,2023-11-17,Gulf,Kuwait,Hardware,Online,Mid-Market,36,202.91,0.212,8788.45,1293.41,50.0
+ORD-00219,2023-11-19,North Africa,Morocco,Hardware,Reseller,Startup,7,863.86,0.024,3128.81,1042.52,2579.1
+ORD-00220,2023-11-19,Nile Valley,Egypt,Professional Services,Direct,Enterprise,1,719.44,0.155,1868.32,494.76,50.0
+ORD-00221,2023-11-20,Gulf,Kuwait,Support Plan,Direct,Enterprise,2,258.38,0.109,1317.18,,50.0
+ORD-00222,2023-11-23,Gulf,Kuwait,Support Plan,Online,Mid-Market,8,268.57,0.225,2862.7,652.05,2790.9
+ORD-00223,2023-11-23,Levant,Qatar,Analytics Suite,Direct,Enterprise,35,1651.99,,127056.33,16180.44,8363.98
+ORD-00224,2023-11-23,Gulf,Saudi Arabia,Analytics Suite,Online,Mid-Market,9,650.21,0.004,9870.5,2431.71,3423.5
+ORD-00225,2023-11-25,Gulf,Morocco,Analytics Suite,Reseller,Startup,28,1854.1,0.213,19618.95,4764.12,7107.98
+ORD-00226,2023-11-25,Nile Valley,Qatar,Analytics Suite,Partner,Mid-Market,17,1618.92,0.257,34409.53,,1500.09
+ORD-00227,2023-11-26,Nile Valley,Bahrain,Analytics Suite,Online,Enterprise,2,750.71,0.269,3253.22,1006.78,50.0
+ORD-00228,2023-12-01,North Africa,Qatar,Professional Services,Online,SMB,18,849.77,0.021,14285.39,3662.68,50.0
+ORD-00229,2023-12-02,Gulf,Egypt,Support Plan,Direct,Mid-Market,2,46.64,0.106,138.44,39.29,50.0
+ORD-00230,2023-12-07,North Africa,Qatar,Hardware,Reseller,SMB,19,600.57,0.147,10579.77,2419.2,738.78
+ORD-00231,2023-12-13,North Africa,UAE,Support Plan,Direct,Mid-Market,22,261.43,0.063,9118.09,2334.67,1629.56
+ORD-00232,2023-12-16,Gulf,Saudi Arabia,Analytics Suite,Reseller,Startup,21,1332.95,,14274.6,2521.51,108.15
+ORD-00233,2023-12-21,Levant,Kuwait,Analytics Suite,Online,Enterprise,12,579.88,0.025,19653.4,6568.69,11139.19
+ORD-00234,2023-12-22,Gulf,Bahrain,Analytics Suite,Direct,Mid-Market,30,695.66,0.04,32575.96,6780.96,136.37
+ORD-00235,2023-12-24,Gulf,Jordan,Hardware,Online,SMB,24,937.57,0.234,14626.52,2277.52,9052.23
+ORD-00236,2023-12-26,Levant,Qatar,Analytics Suite,Direct,Startup,10,2117.39,0.092,10277.3,1359.7,50.0
+ORD-00237,2023-12-27,Gulf,Saudi Arabia,Support Plan,Online,Mid-Market,17,89.42,0.249,2044.7,531.54,627.03
+ORD-00238,2023-12-27,Gulf,Bahrain,Hardware,Reseller,SMB,5,585.3,0.017,3089.35,1039.08,6575.24
+ORD-00239,2023-12-28,North Africa,Morocco,Hardware,Reseller,Enterprise,37,592.32,0.197,56904.26,18042.91,12761.65
+ORD-00240,2023-12-30,Nile Valley,Egypt,Analytics Suite,Reseller,Enterprise,30,2016.85,0.137,172640.62,47383.46,18512.93
+ORD-00241,2024-01-01,Levant,Bahrain,Analytics Suite,Partner,Enterprise,12,1413.34,0.279,35072.26,11852.02,7119.6
+ORD-00242,2024-01-02,North Africa,Kuwait,Analytics Suite,Online,SMB,27,2054.49,0.274,33891.68,9456.53,6275.78
+ORD-00243,2024-01-02,Nile Valley,Kuwait,Analytics Suite,Partner,Mid-Market,27,939.86,0.131,41044.56,7988.72,2093.76
+ORD-00244,2024-01-03,Gulf,Egypt,Analytics Suite,Reseller,SMB,24,606.7,0.218,10036.99,2532.01,4434.64
+ORD-00245,2024-01-03,Levant,Bahrain,Support Plan,Partner,Enterprise,3,299.71,0.08,2312.33,318.06,10044.88
+ORD-00246,2024-01-04,Gulf,Morocco,Hardware,Reseller,Startup,35,695.75,0.203,12109.58,2043.74,3926.87
+ORD-00247,2024-01-10,Gulf,Qatar,Support Plan,Partner,Startup,38,255.97,0.028,5942.41,1258.95,3683.21
+ORD-00248,2024-01-13,North Africa,Jordan,Support Plan,Online,Enterprise,38,81.37,0.152,8660.62,1423.81,4564.23
+ORD-00249,2024-01-16,Levant,Kuwait,Analytics Suite,Direct,Enterprise,39,1250.63,0.064,140533.15,46343.65,9202.23
+ORD-00250,2024-01-16,Levant,UAE,Professional Services,Online,Enterprise,37,450.73,,40512.12,13734.88,7275.0
+ORD-00251,2024-01-17,Gulf,Egypt,Support Plan,Direct,Startup,29,149.64,0.156,1848.98,372.76,50.0
+ORD-00252,2024-01-17,Gulf,Egypt,Hardware,Direct,Mid-Market,3,1049.43,0.207,4214.01,1163.2,50.0
+ORD-00253,2024-01-17,Nile Valley,Bahrain,Hardware,Partner,SMB,19,1058.59,0.126,16584.14,3477.85,13327.89
+ORD-00254,2024-01-18,Gulf,Kuwait,Analytics Suite,Partner,Mid-Market,10,467.16,0.101,8148.12,1227.86,50.0
+ORD-00255,2024-01-18,Gulf,Egypt,Analytics Suite,Online,SMB,9,1847.2,0.071,17168.39,3332.79,50.0
+ORD-00256,2024-01-18,Gulf,Kuwait,Analytics Suite,Partner,Mid-Market,33,582.58,0.319,23657.14,4053.46,8883.31
+ORD-00257,2024-01-20,Levant,Kuwait,Support Plan,Direct,SMB,32,182.9,0.28,3681.21,707.44,50.0
+ORD-00258,2024-01-20,Levant,Morocco,Hardware,Partner,Startup,21,258.42,0.047,2864.36,479.22,50.0
+ORD-00259,2024-01-22,Levant,Morocco,Analytics Suite,Partner,Enterprise,29,477.36,0.261,30394.0,4398.5,10197.64
+ORD-00260,2024-01-22,Gulf,Bahrain,Professional Services,Online,Startup,6,486.57,0.146,1549.39,260.04,410.21
+ORD-00261,2024-01-22,Gulf,Qatar,Support Plan,Online,Enterprise,9,81.91,0.005,2106.86,672.65,50.0
+ORD-00262,2024-01-24,North Africa,UAE,Analytics Suite,Direct,Mid-Market,34,529.2,0.185,22065.14,3061.51,5500.64
+ORD-00263,2024-01-26,Levant,Kuwait,Analytics Suite,Online,Startup,18,1258.75,0.046,12822.85,2454.89,50.0
+ORD-00264,2024-01-28,Levant,Qatar,Professional Services,Online,SMB,22,860.42,0.073,17187.45,4060.69,10137.88
+ORD-00265,2024-01-28,North Africa,Qatar,Professional Services,Reseller,SMB,19,372.82,0.244,5870.22,,50.0
+ORD-00266,2024-01-29,North Africa,Kuwait,Support Plan,Online,Mid-Market,8,202.13,0.09,2236.16,522.98,5781.25
+ORD-00267,2024-01-29,Gulf,Bahrain,Analytics Suite,Reseller,Mid-Market,33,1774.14,0.312,76541.44,9916.13,18497.2
+ORD-00268,2024-01-31,Gulf,Egypt,Professional Services,Direct,Mid-Market,30,603.69,,20950.59,5503.41,50.0
+ORD-00269,2024-02-01,Levant,Morocco,Analytics Suite,Online,SMB,27,652.32,0.291,10689.19,2607.79,269.44
+ORD-00270,2024-02-01,Gulf,UAE,Hardware,Direct,Mid-Market,14,1377.3,0.215,26127.32,7049.48,5173.33
+ORD-00271,2024-02-04,North Africa,Kuwait,Analytics Suite,Direct,Mid-Market,26,1470.57,0.304,42630.38,10435.78,619.5
+ORD-00272,2024-02-05,Levant,Morocco,Analytics Suite,Reseller,Mid-Market,38,1554.99,0.127,92837.23,20084.29,12557.97
+ORD-00273,2024-02-06,North Africa,Egypt,Support Plan,Partner,Mid-Market,26,171.49,0.192,5409.37,1065.81,50.0
+ORD-00274,2024-02-07,Nile Valley,Kuwait,Support Plan,Online,Mid-Market,20,295.92,0.181,7313.44,1241.94,50.0
+ORD-00275,2024-02-08,Levant,Morocco,Support Plan,Online,Enterprise,11,98.06,0.316,2565.27,590.05,564.48
+ORD-00276,2024-02-09,Nile Valley,Morocco,Support Plan,Online,Startup,21,166.87,0.058,1700.56,213.81,577.8
+ORD-00277,2024-02-11,Levant,Morocco,Hardware,Direct,SMB,15,509.19,0.202,6400.54,1230.27,1627.5
+ORD-00278,2024-02-12,Nile Valley,Egypt,Support Plan,Direct,Enterprise,24,131.0,0.264,8117.74,2184.74,50.0
+ORD-00279,2024-02-12,Gulf,UAE,Support Plan,Direct,SMB,2,226.5,0.13,343.89,49.49,50.0
+ORD-00280,2024-02-12,Levant,Jordan,Support Plan,Reseller,Startup,8,85.36,0.304,290.77,38.92,50.0
+ORD-00281,2024-02-15,Levant,Saudi Arabia,Analytics Suite,Direct,Mid-Market,31,460.5,0.131,20341.05,5359.45,2206.21
+ORD-00282,2024-02-16,Gulf,Egypt,Support Plan,Online,Enterprise,15,148.34,0.061,6614.86,1372.65,50.0
+ORD-00283,2024-02-16,Gulf,Kuwait,Analytics Suite,Partner,Enterprise,17,569.61,0.204,22105.84,6552.2,4351.53
+ORD-00284,2024-02-18,Nile Valley,UAE,Support Plan,Direct,Enterprise,22,282.6,0.147,19145.65,6245.47,50.0
+ORD-00285,2024-02-18,Levant,Kuwait,Analytics Suite,Partner,SMB,18,1549.72,0.005,28516.21,9426.0,50.0
+ORD-00286,2024-02-19,Gulf,Kuwait,Hardware,Direct,Startup,30,1208.58,0.024,20125.02,4299.32,946.99
+ORD-00287,2024-02-19,Gulf,Kuwait,Support Plan,Direct,Enterprise,10,148.24,0.068,5174.89,921.92,50.0
+ORD-00288,2024-02-21,Gulf,Egypt,Hardware,Direct,SMB,30,574.9,0.269,12115.69,3076.11,9997.83
+ORD-00289,2024-02-23,Gulf,Saudi Arabia,Support Plan,Reseller,Enterprise,9,115.52,,2628.41,678.66,414.33
+ORD-00290,2024-02-23,Nile Valley,Bahrain,Analytics Suite,Online,SMB,15,1034.94,0.191,13561.47,3484.16,2554.4
+ORD-00291,2024-02-29,Levant,Egypt,Professional Services,Reseller,SMB,23,637.39,0.037,16152.42,3081.74,50.0
+ORD-00292,2024-03-04,Gulf,Jordan,Support Plan,Partner,Mid-Market,35,129.35,0.187,7333.69,982.9,797.29
+ORD-00293,2024-03-05,Levant,UAE,Professional Services,Direct,Enterprise,10,528.07,,14003.94,2327.47,50.0
+ORD-00294,2024-03-07,Gulf,UAE,Support Plan,Online,SMB,23,298.65,0.262,4579.2,705.07,50.0
+ORD-00295,2024-03-09,Gulf,Jordan,Support Plan,Reseller,Startup,3,184.46,0.102,309.47,45.57,50.0
+ORD-00296,2024-03-09,North Africa,Bahrain,Hardware,Online,Mid-Market,3,822.59,0.043,4587.33,1485.3,50.0
+ORD-00297,2024-03-10,Levant,Jordan,Support Plan,Direct,Enterprise,30,207.3,0.315,14701.96,1809.03,50.0
+ORD-00298,2024-03-11,Nile Valley,Jordan,Analytics Suite,Partner,Enterprise,29,1262.6,0.299,79364.6,20032.32,3608.2
+ORD-00299,2024-03-12,Levant,UAE,Professional Services,Reseller,SMB,15,270.0,0.019,4617.38,1516.55,8231.3
+ORD-00300,2024-03-13,Levant,Bahrain,Professional Services,Online,SMB,25,231.81,0.288,3835.43,764.06,4815.08
+ORD-00301,2024-03-14,North Africa,Kuwait,Hardware,Reseller,SMB,15,791.53,0.034,11709.48,2762.99,8322.53
+ORD-00302,2024-03-15,Nile Valley,UAE,Analytics Suite,Online,SMB,11,860.69,0.022,9521.03,2599.93,8420.1
+ORD-00303,2024-03-15,North Africa,UAE,Support Plan,Direct,Startup,17,199.74,0.266,1289.04,244.63,3684.01
+ORD-00304,2024-03-16,Nile Valley,Jordan,Professional Services,Reseller,Startup,13,412.01,0.188,2671.49,601.31,50.0
+ORD-00305,2024-03-16,North Africa,Egypt,Support Plan,Reseller,Mid-Market,32,157.14,0.145,6753.73,2024.51,50.0
+ORD-00306,2024-03-16,Nile Valley,Jordan,Professional Services,Online,SMB,17,754.07,0.316,9501.15,2698.12,7153.97
+ORD-00307,2024-03-19,Gulf,UAE,Support Plan,Reseller,Mid-Market,13,114.9,0.294,2091.22,622.89,589.56
+ORD-00308,2024-03-20,North Africa,Egypt,Analytics Suite,Direct,Mid-Market,21,1479.31,,52196.43,17601.41,19342.89
+ORD-00309,2024-03-20,Levant,Egypt,Professional Services,Reseller,Startup,30,759.51,0.216,10972.91,,50.0
+ORD-00310,2024-03-21,Levant,Egypt,Analytics Suite,Direct,SMB,11,2080.1,0.27,15392.34,4376.97,12193.47
+ORD-00311,2024-03-23,North Africa,Kuwait,Analytics Suite,Reseller,Startup,37,2086.43,0.193,39796.52,,3953.32
+ORD-00312,2024-03-27,Nile Valley,Bahrain,Support Plan,Direct,Mid-Market,19,235.88,0.344,6012.65,,7728.11
+ORD-00313,2024-03-29,Nile Valley,Bahrain,Professional Services,Online,SMB,26,421.37,0.24,7680.73,2171.9,9819.59
+ORD-00314,2024-03-30,Gulf,Kuwait,Hardware,Reseller,Mid-Market,38,348.54,0.036,24342.58,6936.2,50.0
+ORD-00315,2024-04-01,North Africa,UAE,Analytics Suite,Direct,Enterprise,17,515.15,0.069,27365.77,8616.49,740.43
+ORD-00316,2024-04-03,North Africa,Bahrain,Analytics Suite,Direct,Mid-Market,8,1727.43,0.289,17910.15,3525.63,50.0
+ORD-00317,2024-04-03,Gulf,Qatar,Hardware,Reseller,SMB,30,588.1,0.349,12600.54,,50.0
+ORD-00318,2024-04-05,Gulf,Qatar,Analytics Suite,Direct,Enterprise,1,554.0,0.034,1790.87,325.34,3713.18
+ORD-00319,2024-04-08,Gulf,Kuwait,Analytics Suite,Online,Startup,18,960.2,0.035,9994.66,2506.71,168.19
+ORD-00320,2024-04-12,North Africa,Jordan,Analytics Suite,Reseller,Enterprise,39,422.44,0.267,37334.76,10650.06,4754.79
+ORD-00321,2024-04-12,Levant,Bahrain,Support Plan,Online,Enterprise,17,119.78,0.023,6455.94,,3691.78
+ORD-00322,2024-04-14,Nile Valley,Qatar,Hardware,Partner,SMB,27,1205.39,0.024,36532.59,7760.52,50.0
+ORD-00323,2024-04-17,Levant,Qatar,Professional Services,Partner,Enterprise,21,839.9,0.311,36168.3,8388.1,11088.34
+ORD-00324,2024-04-20,Nile Valley,Kuwait,Professional Services,Online,Startup,9,281.74,0.28,1096.91,212.19,50.0
+ORD-00325,2024-04-22,Levant,Egypt,Analytics Suite,Online,SMB,13,1924.37,0.309,16266.13,2556.84,4743.99
+ORD-00326,2024-04-22,North Africa,Egypt,Analytics Suite,Online,Enterprise,21,1131.7,0.228,440825.8698542622,110206.46746356555,11469.63
+ORD-00327,2024-04-24,Gulf,Kuwait,Support Plan,Direct,SMB,5,95.59,0.113,451.51,144.79,7243.0
+ORD-00328,2024-04-24,Levant,Saudi Arabia,Analytics Suite,Online,SMB,17,1311.65,0.317,15387.2,2892.38,1296.56
+ORD-00329,2024-04-25,North Africa,Egypt,Analytics Suite,Online,SMB,17,801.47,,11754.94,3931.4,50.0
+ORD-00330,2024-04-26,Nile Valley,Kuwait,Analytics Suite,Online,Startup,33,2099.46,0.096,36011.04,6234.42,4620.92
+ORD-00331,2024-04-26,North Africa,Bahrain,Analytics Suite,Direct,SMB,5,894.95,0.31,30651.034295047142,7662.758573761786,1491.96
+ORD-00332,2024-05-02,Gulf,Qatar,Support Plan,Online,SMB,33,97.07,0.238,2554.12,628.97,50.0
+ORD-00333,2024-05-02,Gulf,Morocco,Professional Services,Online,Mid-Market,17,148.1,0.313,3130.76,855.67,1149.17
+ORD-00334,2024-05-03,Gulf,Morocco,Analytics Suite,Direct,SMB,26,1060.04,,29251.03,7654.14,1616.85
+ORD-00335,2024-05-03,Gulf,Kuwait,Support Plan,Reseller,Startup,22,170.01,,1414.03,389.54,50.0
+ORD-00336,2024-05-03,North Africa,Qatar,Professional Services,Online,SMB,12,387.3,0.214,3738.54,1193.42,3970.07
+ORD-00337,2024-05-03,North Africa,Saudi Arabia,Professional Services,Partner,SMB,37,626.3,0.234,17689.31,4315.54,50.0
+ORD-00338,2024-05-05,North Africa,Qatar,Professional Services,Online,Mid-Market,9,508.2,0.32,5108.72,689.3,50.0
+ORD-00339,2024-05-07,Nile Valley,Morocco,Support Plan,Online,SMB,2,259.12,0.133,501.42,90.05,50.0
+ORD-00340,2024-05-11,North Africa,Kuwait,Professional Services,Online,Startup,30,176.97,0.252,2607.91,719.28,6792.13
+ORD-00341,2024-05-12,North Africa,Bahrain,Analytics Suite,Partner,Enterprise,25,1879.19,0.224,139587.66,31923.2,16535.94
+ORD-00342,2024-05-12,Gulf,Bahrain,Analytics Suite,Reseller,Mid-Market,35,683.68,0.276,35525.75,8550.39,4677.91
+ORD-00343,2024-05-14,Gulf,Qatar,Analytics Suite,Reseller,SMB,18,586.32,0.314,7506.6,1886.02,50.0
+ORD-00344,2024-05-15,Levant,Egypt,Support Plan,Direct,Mid-Market,1,126.11,0.238,165.55,33.8,2447.26
+ORD-00345,2024-05-17,Nile Valley,Morocco,Analytics Suite,Online,SMB,1,1609.4,0.024,1723.73,500.32,7283.03
+ORD-00346,2024-05-18,Gulf,UAE,Analytics Suite,Direct,Enterprise,17,1831.95,0.064,113479.01,31680.81,17015.03
+ORD-00347,2024-05-20,Levant,Bahrain,Professional Services,Partner,Mid-Market,10,191.08,0.334,2509.74,695.57,3903.28
+ORD-00348,2024-05-23,North Africa,Jordan,Analytics Suite,Reseller,SMB,36,1792.93,0.339,303936.0757712495,75984.01894281237,8575.19
+ORD-00349,2024-05-24,Gulf,Jordan,Analytics Suite,Direct,SMB,5,1106.88,0.339,4085.81,1290.62,50.0
+ORD-00350,2024-05-24,Levant,Egypt,Analytics Suite,Partner,SMB,35,459.16,0.013,18140.51,4553.02,50.0
+ORD-00351,2024-05-26,Nile Valley,Egypt,Support Plan,Direct,SMB,9,62.87,0.134,583.65,194.21,50.0
+ORD-00352,2024-05-26,North Africa,Jordan,Analytics Suite,Online,SMB,5,469.7,0.266,1969.15,287.93,50.0
+ORD-00353,2024-05-29,Gulf,Qatar,Analytics Suite,Partner,SMB,11,992.1,0.264,8343.34,2161.18,50.0
+ORD-00354,2024-06-01,Nile Valley,Kuwait,Analytics Suite,Online,SMB,6,1291.88,0.03,7428.31,2063.02,50.0
+ORD-00355,2024-06-04,Gulf,Morocco,Professional Services,Reseller,SMB,16,582.81,0.213,7781.19,1750.68,50.0
+ORD-00356,2024-06-04,Nile Valley,Morocco,Hardware,Online,SMB,13,1200.68,0.05,14928.89,2738.05,446.18
+ORD-00357,2024-06-07,Gulf,Kuwait,Support Plan,Online,Enterprise,21,193.28,0.173,13133.31,3165.24,1211.91
+ORD-00358,2024-06-08,Levant,Jordan,Support Plan,Direct,Mid-Market,21,158.36,,5680.79,1137.55,50.0
+ORD-00359,2024-06-09,Gulf,Egypt,Hardware,Direct,SMB,1,1114.86,0.019,7567.385300749553,1891.8463251873882,552.39
+ORD-00360,2024-06-10,Gulf,Jordan,Hardware,Reseller,Startup,5,1487.19,0.028,4130.48,819.88,50.0
+ORD-00361,2024-06-11,Nile Valley,UAE,Support Plan,Reseller,SMB,7,284.28,0.319,1504.25,238.66,5899.77
+ORD-00362,2024-06-14,Gulf,Morocco,Hardware,Online,Enterprise,8,556.51,0.261,11471.91,2831.33,529.02
+ORD-00363,2024-06-14,Gulf,Bahrain,Hardware,Partner,SMB,4,1257.58,0.326,3213.29,665.53,4037.34
+ORD-00364,2024-06-17,Gulf,Bahrain,Professional Services,Direct,Mid-Market,13,389.0,0.164,8766.25,1236.9,2117.66
+ORD-00365,2024-06-18,North Africa,Bahrain,Support Plan,Reseller,SMB,22,230.71,0.145,4440.95,1084.77,50.0
+ORD-00366,2024-06-22,North Africa,Egypt,Analytics Suite,Reseller,Startup,13,1649.28,0.125,11045.63,2632.46,850.04
+ORD-00367,2024-06-24,Nile Valley,Jordan,Analytics Suite,Direct,SMB,13,1565.34,0.216,15563.11,2460.58,50.0
+ORD-00368,2024-07-01,Gulf,Bahrain,Support Plan,Online,SMB,19,72.28,0.123,1309.66,,50.0
+ORD-00369,2024-07-06,Levant,Bahrain,Support Plan,Online,Mid-Market,22,126.27,0.261,4080.03,998.87,50.0
+ORD-00370,2024-07-06,Gulf,Saudi Arabia,Support Plan,Partner,Mid-Market,13,226.27,0.28,4423.82,1283.77,2533.97
+ORD-00371,2024-07-07,Levant,Kuwait,Support Plan,Reseller,Startup,9,202.68,0.307,660.47,131.79,50.0
+ORD-00372,2024-07-08,Nile Valley,Bahrain,Support Plan,Direct,SMB,16,257.67,0.085,4623.72,807.89,631.95
+ORD-00373,2024-07-08,North Africa,Jordan,Professional Services,Partner,SMB,1,273.64,0.184,254.34,83.74,3032.42
+ORD-00374,2024-07-09,Levant,UAE,Analytics Suite,Direct,Mid-Market,20,1313.05,0.078,42581.98,10367.34,9869.51
+ORD-00375,2024-07-11,Gulf,Jordan,Analytics Suite,Online,Enterprise,37,1163.81,0.013,135361.31,17051.57,12235.86
+ORD-00376,2024-07-12,Nile Valley,Saudi Arabia,Professional Services,Online,Enterprise,16,162.72,0.248,6431.3,1932.97,864.85
+ORD-00377,2024-07-12,Levant,Morocco,Professional Services,Reseller,Enterprise,5,228.73,0.192,3598.18,587.53,1397.5
+ORD-00378,2024-07-12,Gulf,Kuwait,Hardware,Online,Mid-Market,28,836.0,0.253,30897.24,9050.67,11821.21
+ORD-00379,2024-07-14,Gulf,Morocco,Hardware,Direct,Startup,5,297.93,0.031,866.14,238.31,50.0
+ORD-00380,2024-07-19,Gulf,Kuwait,Hardware,Partner,SMB,8,1081.27,0.348,6457.57,2151.27,50.0
+ORD-00381,2024-07-19,Gulf,UAE,Analytics Suite,Direct,Mid-Market,6,1959.3,0.348,16100.52,5352.25,16639.41
+ORD-00382,2024-07-20,Gulf,Qatar,Support Plan,Online,Enterprise,35,40.83,0.163,4402.28,794.04,50.0
+ORD-00383,2024-07-25,Levant,Kuwait,Analytics Suite,Online,Mid-Market,39,1402.3,0.303,77597.25,22396.03,50.0
+ORD-00384,2024-07-27,Levant,Kuwait,Support Plan,Reseller,Startup,23,54.12,0.085,625.08,118.58,50.0
+ORD-00385,2024-07-29,Gulf,Egypt,Hardware,Partner,Mid-Market,25,1199.78,0.258,46938.49,12130.01,50.0
+ORD-00386,2024-07-30,Levant,Egypt,Analytics Suite,Partner,SMB,26,1388.16,0.308,25251.26,6350.8,4293.6
+ORD-00387,2024-08-03,Nile Valley,Egypt,Support Plan,Direct,Startup,24,177.92,0.285,1654.23,218.36,4445.23
+ORD-00388,2024-08-04,North Africa,Morocco,Analytics Suite,Partner,Enterprise,22,1190.69,0.284,75574.53,9155.1,4287.94
+ORD-00389,2024-08-05,Levant,Qatar,Analytics Suite,Partner,SMB,39,883.32,0.162,28536.54,3787.03,955.78
+ORD-00390,2024-08-05,Gulf,Egypt,Analytics Suite,Reseller,Startup,29,648.92,0.287,7306.3,1082.41,5720.64
+ORD-00391,2024-08-06,Nile Valley,Morocco,Analytics Suite,Reseller,Mid-Market,4,1657.54,0.242,9926.75,1753.89,50.0
+ORD-00392,2024-08-06,Gulf,Egypt,Hardware,Direct,Enterprise,16,1148.76,0.046,58608.67,18727.24,102.37
+ORD-00393,2024-08-06,Gulf,UAE,Support Plan,Partner,Startup,39,215.48,0.04,4397.2,1029.38,50.0
+ORD-00394,2024-08-07,Nile Valley,Kuwait,Professional Services,Online,Startup,16,305.42,0.27,2251.79,664.99,50.0
+ORD-00395,2024-08-08,Levant,Jordan,Professional Services,Partner,SMB,8,131.02,0.219,961.85,292.81,50.0
+ORD-00396,2024-08-09,North Africa,Egypt,Analytics Suite,Direct,SMB,34,534.61,0.182,17651.2,,50.0
+ORD-00397,2024-08-11,Levant,Jordan,Analytics Suite,Reseller,Mid-Market,25,598.31,0.318,17485.32,,3222.16
+ORD-00398,2024-08-12,North Africa,Qatar,Professional Services,Online,Startup,22,384.94,0.231,4070.54,1262.07,50.0
+ORD-00399,2024-08-13,Gulf,UAE,Analytics Suite,Online,Mid-Market,17,1566.33,0.139,48002.52,13596.76,8640.4
+ORD-00400,2024-08-14,Gulf,Egypt,Hardware,Partner,Enterprise,5,1010.01,0.145,13790.8,3909.6,2705.84
+ORD-00401,2024-08-19,Gulf,Saudi Arabia,Analytics Suite,Reseller,SMB,15,1901.96,0.212,22453.72,7148.06,3778.38
+ORD-00402,2024-08-19,Gulf,Saudi Arabia,Professional Services,Direct,Startup,18,784.46,0.266,5431.52,1367.15,50.0
+ORD-00403,2024-08-19,Nile Valley,Egypt,Professional Services,Partner,Startup,37,307.96,0.198,5679.01,1341.87,3264.76
+ORD-00404,2024-08-22,Gulf,Morocco,Analytics Suite,Reseller,Mid-Market,12,1980.38,,34056.25,10756.18,2351.6
+ORD-00405,2024-08-23,Levant,Jordan,Analytics Suite,Reseller,Enterprise,6,1862.51,0.254,31718.27,6977.43,2932.51
+ORD-00406,2024-08-24,North Africa,UAE,Hardware,Partner,Startup,17,1314.31,0.247,11837.03,3533.89,6917.82
+ORD-00407,2024-08-24,North Africa,Jordan,Analytics Suite,Online,Startup,39,853.08,0.291,112017.28753849275,28004.321884623187,50.0
+ORD-00408,2024-08-27,Levant,UAE,Support Plan,Direct,SMB,19,58.97,0.022,1259.07,151.45,7237.06
+ORD-00409,2024-08-29,Levant,UAE,Support Plan,Direct,SMB,15,59.03,0.264,654.91,154.7,7653.8
+ORD-00410,2024-09-02,Nile Valley,Kuwait,Analytics Suite,Partner,Mid-Market,27,1585.92,0.18,57892.09,7884.59,10894.85
+ORD-00411,2024-09-04,North Africa,Jordan,Professional Services,Reseller,Mid-Market,26,254.45,0.026,13387.22,4482.57,50.0
+ORD-00412,2024-09-05,North Africa,Qatar,Professional Services,Online,Enterprise,12,845.22,0.238,27160.3,3292.11,50.0
+ORD-00413,2024-09-05,Nile Valley,Saudi Arabia,Analytics Suite,Partner,Enterprise,38,497.89,0.251,57643.62,16024.52,12574.93
+ORD-00414,2024-09-07,North Africa,Saudi Arabia,Professional Services,Partner,Mid-Market,24,560.82,0.183,21458.7,3724.04,3159.18
+ORD-00415,2024-09-08,Gulf,Morocco,Analytics Suite,Direct,Startup,3,817.74,,987.9,328.83,50.0
+ORD-00416,2024-09-08,Levant,Morocco,Analytics Suite,Partner,Enterprise,16,1516.06,0.105,534128.7999648309,133532.19999120772,15373.3
+ORD-00417,2024-09-11,Gulf,Bahrain,Support Plan,Direct,Mid-Market,36,49.85,0.071,2940.81,370.55,50.0
+ORD-00418,2024-09-12,North Africa,Egypt,Hardware,Direct,SMB,16,780.58,0.123,13504.39,1700.55,50.0
+ORD-00419,2024-09-15,Nile Valley,UAE,Analytics Suite,Online,Mid-Market,23,1930.51,0.144,77946.42,18842.93,12106.23
+ORD-00420,2024-09-21,Levant,Bahrain,Analytics Suite,Direct,Enterprise,24,1949.38,0.244,121423.88,40929.15,8730.84
+ORD-00421,2024-09-22,Levant,UAE,Support Plan,Direct,SMB,28,185.82,0.296,4097.44,1374.9,50.0
+ORD-00422,2024-09-23,Gulf,Saudi Arabia,Professional Services,Online,Mid-Market,35,365.61,0.252,19529.37,3792.6,8055.25
+ORD-00423,2024-09-23,Nile Valley,Morocco,Analytics Suite,Partner,SMB,6,1124.7,0.061,7636.24,1727.28,2023.47
+ORD-00424,2024-09-25,Gulf,Morocco,Analytics Suite,Partner,Startup,21,677.54,0.128,6778.48,963.22,7355.25
+ORD-00425,2024-09-25,Gulf,Qatar,Professional Services,Direct,Enterprise,21,858.58,0.055,52740.41,12387.61,12273.76
+ORD-00426,2024-09-27,Gulf,Bahrain,Analytics Suite,Direct,Startup,6,555.45,0.24,1401.55,353.1,208.77
+ORD-00427,2024-09-27,Gulf,Bahrain,Analytics Suite,Partner,Startup,27,1981.25,0.087,29635.55,5193.14,50.0
+ORD-00428,2024-09-28,Levant,Egypt,Analytics Suite,Online,Startup,5,2063.72,0.184,5226.04,1330.89,50.0
+ORD-00429,2024-10-01,Levant,Bahrain,Support Plan,Partner,SMB,18,101.33,,1309.92,416.47,4160.32
+ORD-00430,2024-10-04,Gulf,Kuwait,Support Plan,Online,SMB,13,248.06,,2680.05,322.17,50.0
+ORD-00431,2024-10-09,Gulf,Saudi Arabia,Hardware,Online,SMB,7,781.36,0.104,5373.65,915.48,50.0
+ORD-00432,2024-10-09,Gulf,Bahrain,Support Plan,Partner,SMB,33,145.55,0.117,4185.29,695.52,2277.32
+ORD-00433,2024-10-10,Gulf,UAE,Professional Services,Partner,Enterprise,10,545.99,0.229,17215.57,2535.08,9772.69
+ORD-00434,2024-10-10,Gulf,Qatar,Hardware,Partner,Startup,10,1043.07,0.192,5459.56,854.65,50.0
+ORD-00435,2024-10-11,North Africa,Jordan,Support Plan,Direct,SMB,34,203.0,0.034,7216.64,1859.73,50.0
+ORD-00436,2024-10-12,Gulf,UAE,Support Plan,Online,SMB,35,87.88,0.306,2396.54,341.73,50.0
+ORD-00437,2024-10-16,Gulf,Egypt,Hardware,Online,Mid-Market,2,1096.68,0.179,3334.02,941.78,2240.36
+ORD-00438,2024-10-17,Gulf,Morocco,Analytics Suite,Partner,Enterprise,11,412.75,0.166,15277.94,4814.77,1024.44
+ORD-00439,2024-10-18,Levant,Bahrain,Professional Services,Partner,SMB,28,760.81,0.069,22751.72,7368.13,8232.85
+ORD-00440,2024-10-19,Gulf,UAE,Professional Services,Partner,SMB,31,465.06,0.132,14035.04,3722.64,50.0
+ORD-00441,2024-10-19,Gulf,Kuwait,Analytics Suite,Online,Mid-Market,39,738.15,0.116,56193.0,9183.47,7373.32
+ORD-00442,2024-10-20,Nile Valley,Morocco,Support Plan,Reseller,Mid-Market,22,119.55,0.095,5160.92,716.16,2954.12
+ORD-00443,2024-10-20,Gulf,Saudi Arabia,Analytics Suite,Direct,Mid-Market,1,1055.85,0.199,1822.88,311.8,50.0
+ORD-00444,2024-10-24,Levant,Kuwait,Analytics Suite,Partner,SMB,35,1982.14,0.162,60095.11,19929.38,11615.07
+ORD-00445,2024-10-28,Levant,Jordan,Support Plan,Direct,Mid-Market,7,209.8,0.311,1787.19,592.84,995.64
+ORD-00446,2024-10-29,Gulf,Qatar,Analytics Suite,Partner,Startup,5,1622.33,,3646.68,744.0,4574.52
+ORD-00447,2024-10-29,Levant,UAE,Professional Services,Direct,Enterprise,27,326.76,0.077,29587.12,5671.09,4568.39
+ORD-00448,2024-10-30,North Africa,UAE,Hardware,Partner,Mid-Market,24,603.0,0.035,29114.16,6760.38,5467.66
+ORD-00449,2024-10-31,North Africa,Morocco,Professional Services,Partner,Mid-Market,3,679.67,,3151.91,,50.0
+ORD-00450,2024-11-03,Gulf,Qatar,Analytics Suite,Partner,SMB,7,1645.38,0.348,7966.11,2672.84,50.0
+ORD-00451,2024-11-04,Gulf,Qatar,Analytics Suite,Partner,Mid-Market,24,1406.64,,43620.63,7357.44,11655.54
+ORD-00452,2024-11-04,Gulf,UAE,Analytics Suite,Reseller,SMB,10,401.79,0.008,4498.17,905.08,3872.57
+ORD-00453,2024-11-05,Levant,Qatar,Analytics Suite,Reseller,Startup,27,463.16,0.088,6773.68,1452.69,50.0
+ORD-00454,2024-11-06,North Africa,Egypt,Hardware,Direct,Mid-Market,17,741.75,0.015,25869.72,3816.15,4052.86
+ORD-00455,2024-11-07,Gulf,Kuwait,Support Plan,Partner,SMB,23,267.71,,5346.02,1091.77,50.0
+ORD-00456,2024-11-09,Gulf,Jordan,Analytics Suite,Reseller,Enterprise,19,2087.62,0.203,115557.81,35647.36,10857.04
+ORD-00457,2024-11-10,Nile Valley,Kuwait,Professional Services,Online,Mid-Market,15,863.67,0.18,22536.02,3400.22,7744.21
+ORD-00458,2024-11-12,Gulf,Saudi Arabia,Analytics Suite,Direct,Mid-Market,14,436.8,0.194,9832.18,2443.15,523.56
+ORD-00459,2024-11-15,Levant,Bahrain,Analytics Suite,Online,Enterprise,28,1825.33,0.088,183194.9,38372.04,22601.75
+ORD-00460,2024-11-15,North Africa,Saudi Arabia,Analytics Suite,Direct,SMB,21,1212.06,0.211,20977.82,3304.39,50.0
+ORD-00461,2024-11-16,Gulf,Bahrain,Support Plan,Direct,SMB,24,192.12,0.011,5565.82,683.0,50.0
+ORD-00462,2024-11-16,Gulf,Saudi Arabia,Professional Services,Online,SMB,23,246.01,0.226,5311.12,956.72,2411.32
+ORD-00463,2024-11-17,Gulf,Qatar,Analytics Suite,Online,SMB,9,918.76,0.257,6513.58,870.23,3221.73
+ORD-00464,2024-11-18,Nile Valley,Saudi Arabia,Hardware,Reseller,SMB,36,953.03,0.236,30423.4,6172.57,8697.66
+ORD-00465,2024-11-18,Gulf,Saudi Arabia,Hardware,Partner,Mid-Market,22,731.07,0.116,31422.8,9371.73,2668.09
+ORD-00466,2024-11-19,Gulf,Kuwait,Professional Services,Reseller,Enterprise,29,339.43,0.289,24023.41,6686.45,2014.07
+ORD-00467,2024-11-20,Gulf,Kuwait,Analytics Suite,Partner,Enterprise,35,942.26,0.25,98332.16,32294.68,4813.88
+ORD-00468,2024-11-21,Gulf,Saudi Arabia,Analytics Suite,Online,SMB,37,958.65,0.045,44025.15,9418.89,4210.45
+ORD-00469,2024-11-22,Levant,Bahrain,Hardware,Direct,Startup,27,555.81,0.068,9990.35,2754.5,50.0
+ORD-00470,2024-11-23,Gulf,Egypt,Analytics Suite,Direct,Enterprise,31,1190.58,0.223,103587.0,27593.01,2739.72
+ORD-00471,2024-11-23,Levant,Egypt,Support Plan,Reseller,SMB,19,267.56,0.101,5404.06,906.53,50.0
+ORD-00472,2024-11-25,Levant,Egypt,Professional Services,Reseller,SMB,29,447.33,0.042,16357.0,3055.29,9874.78
+ORD-00473,2024-11-28,North Africa,Morocco,Analytics Suite,Reseller,Startup,13,1137.1,,9208.86,2178.47,50.0
+ORD-00474,2024-11-29,Gulf,UAE,Professional Services,Partner,SMB,28,142.68,0.058,3821.97,1128.49,1611.73
+ORD-00475,2024-11-30,Nile Valley,Morocco,Hardware,Direct,SMB,4,384.97,0.167,1272.41,281.96,50.0
+ORD-00476,2024-12-01,Levant,UAE,Professional Services,Reseller,SMB,36,626.38,0.213,22191.1,3774.78,50.0
+ORD-00477,2024-12-02,Gulf,Saudi Arabia,Support Plan,Online,Startup,10,227.12,,1347.33,456.15,5070.9
+ORD-00478,2024-12-02,North Africa,Egypt,Hardware,Direct,Enterprise,26,300.82,0.249,20295.31,2951.49,50.0
+ORD-00479,2024-12-05,Nile Valley,Kuwait,Support Plan,Reseller,Startup,1,230.16,0.098,128.31,42.38,50.0
+ORD-00480,2024-12-06,Gulf,Jordan,Professional Services,Reseller,Enterprise,7,408.19,0.109,10272.39,3061.07,946.27
+ORD-00481,2024-12-07,Nile Valley,Egypt,Professional Services,Partner,Startup,39,333.88,0.078,51014.50400256053,12753.626000640132,2133.4
+ORD-00482,2024-12-08,Levant,Egypt,Professional Services,Reseller,Enterprise,33,688.83,0.275,68662.58,20247.35,4429.71
+ORD-00483,2024-12-08,Levant,Jordan,Analytics Suite,Reseller,Enterprise,9,1413.37,,33936.96,5626.67,50.0
+ORD-00484,2024-12-09,Nile Valley,Kuwait,Analytics Suite,Online,Enterprise,6,1659.97,0.172,35358.26,9163.73,50.0
+ORD-00485,2024-12-09,Gulf,Jordan,Analytics Suite,Online,Mid-Market,32,1749.51,0.015,124624.43,35703.03,11028.25
+ORD-00486,2024-12-11,North Africa,Bahrain,Support Plan,Partner,Mid-Market,39,244.09,0.091,16226.87,4609.26,50.0
+ORD-00487,2024-12-12,Gulf,Jordan,Support Plan,Reseller,Enterprise,7,184.25,0.055,4803.27,863.36,5663.64
+ORD-00488,2024-12-12,North Africa,Bahrain,Support Plan,Reseller,Mid-Market,26,119.85,0.295,3813.41,609.56,50.0
+ORD-00489,2024-12-17,Levant,Morocco,Analytics Suite,Reseller,Mid-Market,12,1297.07,0.03,35150.99,6755.57,5796.53
+ORD-00490,2024-12-19,Gulf,Morocco,Professional Services,Online,SMB,30,198.74,0.338,4248.31,958.27,1339.95
+ORD-00491,2024-12-24,Levant,Egypt,Hardware,Direct,Startup,17,517.93,0.206,4790.05,1179.46,5611.69
+ORD-00492,2024-12-25,Gulf,UAE,Analytics Suite,Partner,SMB,5,1940.73,0.181,10194.22,3100.36,525.13
+ORD-00493,2024-12-26,Gulf,Kuwait,Professional Services,Partner,Enterprise,13,265.44,0.297,8233.9,2381.14,5136.97
+ORD-00494,2024-12-27,Gulf,Kuwait,Professional Services,Reseller,Mid-Market,22,291.03,0.01,14250.75,3829.93,806.92
+ORD-00495,2024-12-28,Gulf,Jordan,Support Plan,Online,Startup,32,191.71,0.272,2495.4,444.1,2577.52
+ORD-00496,2024-12-29,Gulf,UAE,Analytics Suite,Online,Enterprise,1,1690.7,,6029.88,1358.85,50.0
+ORD-00497,2024-12-29,Gulf,Morocco,Professional Services,Direct,Mid-Market,38,605.0,0.294,32802.75,6357.04,50.0
+ORD-00498,2024-12-30,North Africa,UAE,Hardware,Reseller,Startup,26,882.38,0.185,11795.15,2025.04,3395.37
+ORD-00499,2024-12-31,North Africa,Bahrain,Professional Services,Partner,Startup,35,826.05,0.021,19046.59,2328.52,4546.83
+ORD-00500,2025-01-01,North Africa,Egypt,Hardware,Direct,Mid-Market,37,1470.76,0.292,88542.82,17237.66,13118.8
+ORD-00501,2025-01-01,Gulf,UAE,Hardware,Reseller,SMB,6,777.68,0.01,5117.74,902.49,50.0
+ORD-00502,2025-01-02,Nile Valley,Qatar,Analytics Suite,Direct,Mid-Market,4,401.16,0.048,3197.27,785.95,8196.17
+ORD-00503,2025-01-02,Levant,Bahrain,Support Plan,Direct,SMB,31,127.22,0.279,3700.64,494.8,50.0
+ORD-00504,2025-01-02,Gulf,Bahrain,Support Plan,Direct,Enterprise,8,43.19,0.163,1190.3,213.68,2350.04
+ORD-00505,2025-01-03,Gulf,Saudi Arabia,Hardware,Partner,Enterprise,6,586.02,0.308,7978.21,1035.96,4075.81
+ORD-00506,2025-01-06,North Africa,Egypt,Analytics Suite,Direct,SMB,19,1293.81,0.222,25372.17,6624.98,12058.19
+ORD-00507,2025-01-08,Gulf,UAE,Support Plan,Reseller,Mid-Market,36,116.58,0.218,5816.28,1425.0,50.0
+ORD-00508,2025-01-09,Levant,Egypt,Hardware,Online,SMB,32,417.56,0.102,128600.69329939586,32150.173324848965,50.0
+ORD-00509,2025-01-09,Nile Valley,Qatar,Analytics Suite,Partner,Mid-Market,21,900.53,,37868.86,5771.73,50.0
+ORD-00510,2025-01-10,Gulf,Egypt,Professional Services,Direct,Startup,8,370.87,,1412.62,,8310.54
+ORD-00511,2025-01-12,Gulf,Saudi Arabia,Analytics Suite,Partner,Startup,14,1673.08,0.037,13344.59,3317.02,3811.34
+ORD-00512,2025-01-14,Nile Valley,Qatar,Hardware,Direct,Mid-Market,27,995.46,0.185,40740.11,10975.59,7264.79
+ORD-00513,2025-01-15,Levant,Saudi Arabia,Hardware,Reseller,SMB,7,1371.54,0.095,10993.58,2604.34,17664.05
+ORD-00514,2025-01-17,Gulf,UAE,Analytics Suite,Partner,Mid-Market,21,2054.04,0.092,72189.09,,10367.31
+ORD-00515,2025-01-18,Nile Valley,Saudi Arabia,Professional Services,Partner,Mid-Market,1,328.94,0.208,532.21,,50.0
+ORD-00516,2025-01-20,Nile Valley,Saudi Arabia,Analytics Suite,Direct,Enterprise,13,1496.97,0.279,57479.51,11737.1,5870.17
+ORD-00517,2025-01-22,Levant,Morocco,Support Plan,Direct,Startup,10,278.67,0.272,1407.33,382.52,50.0
+ORD-00518,2025-01-22,Levant,Jordan,Professional Services,Direct,Startup,27,368.03,0.304,4193.24,715.26,50.0
+ORD-00519,2025-01-23,Gulf,Jordan,Professional Services,Direct,Startup,36,497.17,0.103,10045.43,,50.0
+ORD-00520,2025-01-25,Gulf,Saudi Arabia,Analytics Suite,Online,Startup,6,1337.54,0.163,5094.19,1058.65,50.0
+ORD-00521,2025-01-25,Levant,Saudi Arabia,Analytics Suite,Reseller,Startup,32,1962.83,0.003,41008.2,4982.17,50.0
+ORD-00522,2025-01-30,Gulf,Egypt,Professional Services,Reseller,Mid-Market,26,811.89,0.261,27876.9,9205.4,11696.73
+ORD-00523,2025-02-02,North Africa,Kuwait,Support Plan,Partner,Startup,38,50.7,0.106,1050.97,326.91,1693.35
+ORD-00524,2025-02-02,North Africa,Kuwait,Support Plan,Reseller,SMB,36,77.77,0.197,2539.5,467.23,50.0
+ORD-00525,2025-02-08,Gulf,Jordan,Analytics Suite,Online,Mid-Market,4,1178.19,0.059,10577.36,3591.08,5242.54
+ORD-00526,2025-02-09,Levant,Egypt,Analytics Suite,Direct,SMB,29,595.46,0.287,13746.39,2608.63,4119.97
+ORD-00527,2025-02-14,Gulf,UAE,Hardware,Direct,Mid-Market,24,537.07,0.286,16401.7,3623.89,3414.0
+ORD-00528,2025-02-18,Nile Valley,Saudi Arabia,Analytics Suite,Online,Mid-Market,5,1907.71,0.307,13791.97,4237.96,5247.35
+ORD-00529,2025-02-20,Gulf,UAE,Analytics Suite,Partner,Mid-Market,11,1271.89,0.016,25056.41,4685.83,3709.16
+ORD-00530,2025-02-21,Levant,Saudi Arabia,Hardware,Direct,Enterprise,37,611.4,0.347,53198.35,11656.76,9898.62
+ORD-00531,2025-02-22,Levant,Jordan,Analytics Suite,Reseller,Mid-Market,22,429.68,,20635.36,5497.86,6425.76
+ORD-00532,2025-02-23,Gulf,Egypt,Professional Services,Online,Startup,14,453.39,0.108,4023.96,598.37,1336.22
+ORD-00533,2025-02-23,North Africa,Jordan,Analytics Suite,Online,SMB,13,695.88,0.087,8512.16,1812.38,50.0
+ORD-00534,2025-02-24,North Africa,Qatar,Hardware,Reseller,SMB,33,1382.09,0.094,48527.11,9126.5,13849.06
+ORD-00535,2025-02-25,Levant,Qatar,Professional Services,Reseller,Mid-Market,12,135.89,0.193,2475.36,665.6,50.0
+ORD-00536,2025-02-25,North Africa,Morocco,Hardware,Reseller,Mid-Market,7,1086.34,0.084,12906.21,1934.81,3600.9
+ORD-00537,2025-02-27,Nile Valley,Jordan,Analytics Suite,Partner,Mid-Market,23,1465.92,0.138,62350.85,10674.52,9652.75
+ORD-00538,2025-03-01,Levant,Saudi Arabia,Support Plan,Reseller,Startup,39,255.65,0.229,5173.72,1430.55,50.0
+ORD-00539,2025-03-03,Levant,Saudi Arabia,Professional Services,Online,Enterprise,8,740.65,0.293,17478.13,2698.09,50.0
+ORD-00540,2025-03-05,Gulf,Morocco,Analytics Suite,Online,SMB,10,1999.83,0.242,20262.48,4312.75,575.8
+ORD-00541,2025-03-05,North Africa,Morocco,Analytics Suite,Reseller,SMB,19,1379.38,0.208,22964.99,6357.48,174.48
+ORD-00542,2025-03-07,Levant,Qatar,Analytics Suite,Direct,SMB,8,1994.6,0.052,20430.44,5892.2,50.0
+ORD-00543,2025-03-07,Levant,Kuwait,Hardware,Partner,Startup,26,571.7,0.286,7199.31,1014.19,50.0
+ORD-00544,2025-03-10,Gulf,Qatar,Professional Services,Direct,Mid-Market,10,490.04,0.013,9418.7,2895.68,2526.39
+ORD-00545,2025-03-16,Nile Valley,Egypt,Support Plan,Partner,Startup,5,58.05,0.092,196.3,54.82,6662.5
+ORD-00546,2025-03-17,Gulf,Egypt,Professional Services,Partner,SMB,11,144.37,0.02,1608.8,,3100.43
+ORD-00547,2025-03-18,North Africa,Jordan,Support Plan,Reseller,SMB,37,234.67,0.234,8140.22,2344.68,50.0
+ORD-00548,2025-03-21,Gulf,UAE,Support Plan,Reseller,SMB,37,213.21,,8812.7,2469.55,4420.69
+ORD-00549,2025-03-22,Nile Valley,Qatar,Support Plan,Partner,Startup,20,92.98,0.228,907.32,228.82,50.0
+ORD-00550,2025-03-23,Gulf,Qatar,Support Plan,Partner,Startup,16,277.44,0.121,2929.18,711.4,2727.57
+ORD-00551,2025-03-24,Gulf,Jordan,Analytics Suite,Online,Mid-Market,32,1395.76,0.16,72978.65,,8683.31
+ORD-00552,2025-03-24,Nile Valley,Kuwait,Hardware,Reseller,Startup,8,673.34,0.16,3379.9,1148.62,50.0
+ORD-00553,2025-03-25,Nile Valley,Morocco,Professional Services,Reseller,SMB,26,489.71,0.016,13202.12,3264.64,1048.1
+ORD-00554,2025-03-25,Gulf,Egypt,Analytics Suite,Direct,Mid-Market,27,926.44,0.151,40299.17,12005.85,4718.3
+ORD-00555,2025-03-26,Levant,Egypt,Support Plan,Direct,Startup,28,281.36,0.224,4002.74,1135.74,7530.75
+ORD-00556,2025-03-26,North Africa,Morocco,Analytics Suite,Online,Mid-Market,9,1296.9,0.191,22086.6,6808.81,2547.29
+ORD-00557,2025-03-27,Nile Valley,UAE,Hardware,Partner,SMB,28,1486.27,0.026,43769.67,14443.79,10945.2
+ORD-00558,2025-03-27,Gulf,Kuwait,Hardware,Direct,Enterprise,24,284.78,0.234,22910.28,3722.42,7678.35
+ORD-00559,2025-04-01,Levant,UAE,Hardware,Direct,Mid-Market,35,1411.75,0.108,85795.16,13418.46,13793.58
+ORD-00560,2025-04-01,North Africa,Kuwait,Analytics Suite,Partner,Startup,7,1679.92,0.005,7858.67,1956.79,50.0
+ORD-00561,2025-04-02,North Africa,Jordan,Analytics Suite,Partner,Mid-Market,24,1307.08,0.054,60137.01,13160.68,13072.36
+ORD-00562,2025-04-03,North Africa,Bahrain,Analytics Suite,Online,Mid-Market,33,2028.11,0.174,103872.86,25506.91,10063.39
+ORD-00563,2025-04-04,Levant,Saudi Arabia,Analytics Suite,Direct,Mid-Market,11,732.0,0.109,17274.21,5105.73,5826.37
+ORD-00564,2025-04-05,Gulf,Jordan,Analytics Suite,Online,Mid-Market,30,2152.03,0.243,101923.85,33122.92,7130.64
+ORD-00565,2025-04-05,Nile Valley,Saudi Arabia,Analytics Suite,Online,Startup,4,1861.94,0.084,4927.62,1043.82,50.0
+ORD-00566,2025-04-06,Nile Valley,Egypt,Hardware,Partner,Startup,29,1056.46,0.27,15629.95,4344.27,12240.3
+ORD-00567,2025-04-07,North Africa,UAE,Analytics Suite,Direct,Enterprise,24,1269.23,0.1,108413.54,17703.48,7990.95
+ORD-00568,2025-04-14,Gulf,UAE,Analytics Suite,Online,SMB,8,1906.96,0.217,15042.76,3574.18,7815.62
+ORD-00569,2025-04-14,Gulf,UAE,Professional Services,Online,Mid-Market,3,478.45,0.28,2466.89,307.86,917.05
+ORD-00570,2025-04-18,North Africa,Saudi Arabia,Support Plan,Partner,SMB,30,77.79,0.135,2607.32,601.83,50.0
+ORD-00571,2025-04-19,Gulf,Jordan,Professional Services,Partner,Mid-Market,10,671.33,0.016,14228.94,3414.58,1472.38
+ORD-00572,2025-04-20,Nile Valley,Saudi Arabia,Support Plan,Online,Mid-Market,20,47.86,0.187,1733.09,488.38,50.0
+ORD-00573,2025-04-23,Gulf,Morocco,Hardware,Partner,Mid-Market,3,780.56,,3364.14,884.39,331.57
+ORD-00574,2025-04-24,North Africa,Kuwait,Support Plan,Partner,SMB,38,209.06,0.339,6284.76,1249.71,50.0
+ORD-00575,2025-04-24,Nile Valley,Bahrain,Support Plan,Partner,SMB,22,217.27,0.077,5592.52,678.15,50.0
+ORD-00576,2025-04-25,Gulf,Jordan,Professional Services,Partner,Mid-Market,37,597.17,0.264,34195.98,4972.33,8956.03
+ORD-00577,2025-04-26,Gulf,UAE,Support Plan,Online,Startup,7,227.61,0.121,1038.94,347.08,1457.72
+ORD-00578,2025-04-27,Levant,Bahrain,Analytics Suite,Partner,SMB,9,1741.51,0.056,20665.32,6673.11,50.0
+ORD-00579,2025-04-27,Levant,Kuwait,Support Plan,Partner,Mid-Market,24,255.55,0.233,11477.65,2198.21,5842.75
+ORD-00580,2025-04-30,Levant,UAE,Analytics Suite,Online,Startup,24,1778.33,0.175,26609.94,4708.57,3155.96
+ORD-00581,2025-05-01,Levant,Morocco,Professional Services,Partner,Startup,31,219.36,0.189,3923.15,847.45,50.0
+ORD-00582,2025-05-02,Nile Valley,Bahrain,Analytics Suite,Direct,Enterprise,37,1123.06,0.29,126575.97,34401.68,19104.88
+ORD-00583,2025-05-02,Levant,Morocco,Analytics Suite,Reseller,SMB,33,1700.46,0.118,54931.95,10904.11,5714.96
+ORD-00584,2025-05-03,Gulf,UAE,Analytics Suite,Direct,Mid-Market,6,2047.25,0.233,20122.63,2712.62,50.0
+ORD-00585,2025-05-04,Gulf,Bahrain,Professional Services,Online,SMB,13,749.33,0.128,9683.33,2020.09,10852.4
+ORD-00586,2025-05-05,Gulf,Bahrain,Analytics Suite,Partner,Mid-Market,36,1102.8,0.015,71666.16,12708.53,8509.28
+ORD-00587,2025-05-06,Gulf,Bahrain,Professional Services,Direct,SMB,22,224.45,0.132,6013.87,1151.56,294.86
+ORD-00588,2025-05-08,Gulf,Bahrain,Hardware,Direct,Mid-Market,34,377.88,0.333,20506.44,3195.94,336.29
+ORD-00589,2025-05-08,North Africa,Jordan,Analytics Suite,Reseller,SMB,22,926.67,0.169,20965.11,5554.6,8703.87
+ORD-00590,2025-05-12,Gulf,Morocco,Professional Services,Partner,Startup,2,183.0,0.038,226.29,,50.0
+ORD-00591,2025-05-14,Nile Valley,UAE,Analytics Suite,Partner,Mid-Market,19,990.53,0.241,32647.47,5863.15,50.0
+ORD-00592,2025-05-16,Gulf,Qatar,Analytics Suite,Online,Startup,33,1850.78,0.337,27569.19,6667.6,50.0
+ORD-00593,2025-05-20,Gulf,UAE,Professional Services,Direct,Startup,26,771.99,0.318,10383.26,2371.49,8203.95
+ORD-00594,2025-05-22,North Africa,Morocco,Hardware,Online,Startup,6,610.58,0.2,2343.06,691.47,4645.09
+ORD-00595,2025-05-23,Nile Valley,Kuwait,Analytics Suite,Partner,Enterprise,9,2195.82,0.132,65866.11,21756.67,6566.56
+ORD-00596,2025-05-23,Gulf,Bahrain,Support Plan,Online,Startup,34,121.17,0.203,2110.16,313.88,7454.93
+ORD-00597,2025-05-25,Gulf,Egypt,Analytics Suite,Direct,Enterprise,39,1989.13,0.286,207518.27,65256.39,28824.6
+ORD-00598,2025-05-26,Gulf,Egypt,Support Plan,Reseller,Mid-Market,30,218.84,0.301,8732.73,2401.98,50.0
+ORD-00599,2025-05-28,Levant,Kuwait,Support Plan,Direct,Startup,4,50.62,0.287,97.55,26.57,50.0
+ORD-00067,2023-04-11,North Africa,Jordan,Hardware,Direct,Mid-Market,14,1260.15,0.049,22873.94,,50.0
+ORD-00061,2023-04-04,Gulf,Egypt,Support Plan,Partner,Mid-Market,1,270.42,0.039,373.13,117.3,4597.15
+ORD-00037,2023-03-11,North Africa,Egypt,Support Plan,Partner,SMB,1,42.8,0.071,30.75,8.44,5568.33
+ORD-00010,2023-01-20,Levant,UAE,Professional Services,Online,SMB,1,631.72,0.094,498.3,138.2,50.0
+ORD-00579,2025-04-27,Levant,Kuwait,Support Plan,Partner,Mid-Market,24,255.55,0.233,11477.65,2198.21,5842.75
+ORD-00053,2023-03-25,Levant,UAE,Support Plan,Online,SMB,31,72.58,0.061,1626.28,383.02,3285.86
+ORD-00346,2024-05-18,Gulf,UAE,Analytics Suite,Direct,Enterprise,17,1831.95,0.064,113479.01,31680.81,17015.03
+ORD-00091,2023-05-08,Gulf,UAE,Professional Services,Online,SMB,31,588.21,0.232,10740.87,1427.82,50.0
+ORD-00134,2023-07-19,Gulf,UAE,Hardware,Partner,SMB,4,1292.33,0.294,3111.43,,1692.23
+ORD-00457,2024-11-10,Nile Valley,Kuwait,Professional Services,Online,Mid-Market,15,863.67,0.18,22536.02,3400.22,7744.21
+ORD-00318,2024-04-05,Gulf,Qatar,Analytics Suite,Direct,Enterprise,1,554.0,0.034,1790.87,325.34,3713.18
+ORD-00329,2024-04-25,North Africa,Egypt,Analytics Suite,Online,SMB,17,801.47,,11754.94,3931.4,50.0
+ORD-00578,2025-04-27,Levant,Bahrain,Analytics Suite,Partner,SMB,9,1741.51,0.056,20665.32,6673.11,50.0
+ORD-00144,2023-07-30,Gulf,Morocco,Hardware,Direct,Mid-Market,9,1149.28,0.193,13680.79,1927.21,2518.29
+ORD-00552,2025-03-24,Nile Valley,Kuwait,Hardware,Reseller,Startup,8,673.34,0.16,3379.9,1148.62,50.0
+ORD-00081,2023-04-27,Nile Valley,Egypt,Support Plan,Direct,Startup,4,195.18,0.0,324.54,102.33,50.0
+ORD-00124,2023-06-21,Levant,Egypt,Analytics Suite,Direct,Startup,24,742.76,0.099,7006.24,1494.23,3811.11
+ORD-00291,2024-02-29,Levant,Egypt,Professional Services,Reseller,SMB,23,637.39,0.037,16152.42,3081.74,50.0
+ORD-00382,2024-07-20,Gulf,Qatar,Support Plan,Online,Enterprise,35,40.83,0.163,4402.28,794.04,50.0
+ORD-00129,2023-06-27,North Africa,Bahrain,Analytics Suite,Online,SMB,3,2099.1,0.284,3571.89,882.79,6770.07
