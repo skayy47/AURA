@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
@@ -12,6 +12,7 @@ type State = "idle" | "loading" | "error";
 export function ExportPDFButton({ sessionId }: Props) {
   const t = useTranslations("actions");
   const tErrors = useTranslations("errors");
+  const locale = useLocale();
   const [state, setState] = useState<State>("idle");
 
   const handleExport = async () => {
@@ -22,7 +23,7 @@ export function ExportPDFButton({ sessionId }: Props) {
       const res = await fetch(`${apiUrl}/api/export/pdf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId }),
+        body: JSON.stringify({ session_id: sessionId, lang: locale }),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));

@@ -88,7 +88,12 @@ PROVIDERS: dict[AIProvider, ProviderSpec] = {
     ),
 }
 
-_DEFAULT_ORDER = [AIProvider.GEMINI, AIProvider.GROQ, AIProvider.OPENAI, AIProvider.CLAUDE]
+_DEFAULT_ORDER = [
+    AIProvider.GEMINI,
+    AIProvider.GROQ,
+    AIProvider.OPENAI,
+    AIProvider.CLAUDE,
+]
 
 
 # ---------------------------------------------------------------------------
@@ -281,7 +286,9 @@ def _build_system_prompt(
                 f"Correlation: {c['col_a']} × {c['col_b']} r={c['r']:+.2f}"
             )
         for ins in (analysis.get("insights") or [])[:6]:
-            finding_lines.append(f"Finding [{ins.get('kind','')}]: {ins.get('title','')} — {ins.get('detail','')}")
+            finding_lines.append(
+                f"Finding [{ins.get('kind','')}]: {ins.get('title','')} — {ins.get('detail','')}"
+            )
         if finding_lines:
             sections.append(
                 "AURA Pre-computed Findings (AUTHORITATIVE — these are computed from the FULL dataset. "
@@ -417,12 +424,18 @@ _SUMMARY_SYSTEM = (
 )
 
 
-def executive_summary(payload: dict, provider: AIProvider = AIProvider.GROQ) -> dict:
+def executive_summary(
+    payload: dict,
+    provider: AIProvider = AIProvider.GROQ,
+    language: str = "en",
+) -> dict:
     """Structured exec summary from a compact stats *payload* (no raw rows).
 
     Tries the requested provider first, then every other configured provider
     (free first), then falls back to a deterministic summary. Always returns.
+    Localized to *language* ("en" / "fr") for both the LLM and the fallback.
     """
+    system = _SUMMARY_SYSTEM + _language_directive(language)
     user = f"Dataset statistics:\n{json.dumps(payload, default=str)}"
 
     order: list[AIProvider] = []
@@ -435,9 +448,7 @@ def executive_summary(payload: dict, provider: AIProvider = AIProvider.GROQ) -> 
         if not is_configured(prov):
             continue
         try:
-            raw = "".join(
-                _stream_provider(prov, _SUMMARY_SYSTEM, user, stream=False)
-            ).strip()
+            raw = "".join(_stream_provider(prov, system, user, stream=False)).strip()
             if "```" in raw:
                 raw = raw.split("```")[1]
                 if raw.lstrip().startswith("json"):
@@ -459,17 +470,55 @@ def executive_summary(payload: dict, provider: AIProvider = AIProvider.GROQ) -> 
             logger.warning("Exec summary via %s failed: %s", prov.value, exc)
 
     logger.warning("Executive summary fell back to deterministic (last: %s)", last_exc)
-    return _deterministic_summary(payload)
+    return _deterministic_summary(payload, language)
 
 
-def _deterministic_summary(payload: dict) -> dict:
-    """Respectable summary built from the payload without any LLM."""
+def _deterministic_summary(payload: dict, language: str = "en") -> dict:
+    """Respectable summary built from the payload without any LLM (EN / FR)."""
     rows = payload.get("rows", "—")
     cols = payload.get("columns", "—")
     q = payload.get("quality_score", "—")
     insights = payload.get("top_insights", [])
+    n = len(insights)
+
+    if (language or "en").strip().lower().startswith("fr"):
+        findings = [i["title"] for i in insights[:5]] or [
+            "Aucune anomalie majeure détectée."
+        ]
+        recs: list[str] = []
+        if payload.get("missing_pct", 0) >= 5:
+            recs.append(
+                "Étudier l'origine des valeurs manquantes avant toute modélisation."
+            )
+        if payload.get("trend"):
+            recs.append(
+                f"Surveiller l'évolution de {payload['trend']['measure']} à l'avenir."
+            )
+        if payload.get("correlations"):
+            c = payload["correlations"][0]
+            recs.append(
+                f"Explorer la relation {c['a']}–{c['b']} pour sa valeur prédictive."
+            )
+        if not recs:
+            recs.append(
+                "Le jeu de données est propre et prêt pour la modélisation ou la BI."
+            )
+        return {
+            "headline": f"{rows} lignes × {cols} colonnes · qualité {q}/100",
+            "summary": (
+                f"Ce jeu de données contient {rows} enregistrements répartis sur {cols} "
+                f"colonnes, avec un score de qualité de {q}/100. L'analyse a révélé {n} "
+                "tendances notables à travers les corrélations, les segments et la qualité "
+                "des données."
+            ),
+            "findings": findings,
+            "recommendations": recs[:4],
+            "provider": "Déterministe",
+            "by_ai": False,
+        }
+
     findings = [i["title"] for i in insights[:5]] or ["No major anomalies detected."]
-    recs: list[str] = []
+    recs = []
     if payload.get("missing_pct", 0) >= 5:
         recs.append("Investigate the source of missing values before modeling.")
     if payload.get("trend"):
@@ -483,7 +532,7 @@ def _deterministic_summary(payload: dict) -> dict:
         "headline": f"{rows} rows × {cols} columns · quality {q}/100",
         "summary": (
             f"This dataset contains {rows} records across {cols} columns with a quality "
-            f"score of {q}/100. The analysis surfaced {len(insights)} notable patterns "
+            f"score of {q}/100. The analysis surfaced {n} notable patterns "
             "across correlations, segments, and data-quality dimensions."
         ),
         "findings": findings,
@@ -529,21 +578,25 @@ def suggested_questions(
         ranked.append(
             (
                 100,
-                f"Qu'est-ce qui explique la tendance {direction_fr.get(d, d)} de "
-                f"{pct:.0f} % de {trends['measure']} ?"
-                if is_fr
-                else f"What's driving the {pct:.0f}% {d} trend in {trends['measure']}?",
+                (
+                    f"Qu'est-ce qui explique la tendance {direction_fr.get(d, d)} de "
+                    f"{pct:.0f} % de {trends['measure']} ?"
+                    if is_fr
+                    else f"What's driving the {pct:.0f}% {d} trend in {trends['measure']}?"
+                ),
             )
         )
     if segments and segments.get("top") and segments.get("bottom"):
         ranked.append(
             (
                 92,
-                f"Pourquoi {segments['top']['label']} surpasse-t-il "
-                f"{segments['bottom']['label']} pour {segments['measure']} ?"
-                if is_fr
-                else f"Why does {segments['top']['label']} outperform "
-                f"{segments['bottom']['label']} in {segments['measure']}?",
+                (
+                    f"Pourquoi {segments['top']['label']} surpasse-t-il "
+                    f"{segments['bottom']['label']} pour {segments['measure']} ?"
+                    if is_fr
+                    else f"Why does {segments['top']['label']} outperform "
+                    f"{segments['bottom']['label']} in {segments['measure']}?"
+                ),
             )
         )
     if correlations:
@@ -551,18 +604,22 @@ def suggested_questions(
         ranked.append(
             (
                 85,
-                f"Qu'est-ce qui explique la relation entre {c['col_a']} et {c['col_b']} ?"
-                if is_fr
-                else f"What explains the relationship between {c['col_a']} and {c['col_b']}?",
+                (
+                    f"Qu'est-ce qui explique la relation entre {c['col_a']} et {c['col_b']} ?"
+                    if is_fr
+                    else f"What explains the relationship between {c['col_a']} and {c['col_b']}?"
+                ),
             )
         )
     if measures:
         ranked.append(
             (
                 68,
-                f"Quelles colonnes sont les plus prédictives de {measures[0]} ?"
-                if is_fr
-                else f"Which columns are most predictive of {measures[0]}?",
+                (
+                    f"Quelles colonnes sont les plus prédictives de {measures[0]} ?"
+                    if is_fr
+                    else f"Which columns are most predictive of {measures[0]}?"
+                ),
             )
         )
     hotspots = quality.get("missing_hotspots", [])
@@ -571,28 +628,34 @@ def suggested_questions(
         ranked.append(
             (
                 64,
-                f"Comment gérer les {h['pct']:.0f} % de valeurs manquantes dans {h['column']} ?"
-                if is_fr
-                else f"How should I handle the {h['pct']:.0f}% missing values in {h['column']}?",
+                (
+                    f"Comment gérer les {h['pct']:.0f} % de valeurs manquantes dans {h['column']} ?"
+                    if is_fr
+                    else f"How should I handle the {h['pct']:.0f}% missing values in {h['column']}?"
+                ),
             )
         )
     if outliers and outliers[0].get("pct", 0) >= 2:
         ranked.append(
             (
                 60,
-                f"Les valeurs aberrantes de {outliers[0]['column']} sont-elles "
-                f"des erreurs ou de vrais extrêmes ?"
-                if is_fr
-                else f"Are the outliers in {outliers[0]['column']} data errors or genuine extremes?",
+                (
+                    f"Les valeurs aberrantes de {outliers[0]['column']} sont-elles "
+                    f"des erreurs ou de vrais extrêmes ?"
+                    if is_fr
+                    else f"Are the outliers in {outliers[0]['column']} data errors or genuine extremes?"
+                ),
             )
         )
     if quality.get("score") is not None and quality["score"] < 90:
         ranked.append(
             (
                 50,
-                "Que dois-je nettoyer ou corriger avant de modéliser ces données ?"
-                if is_fr
-                else "What should I clean or fix before modeling this data?",
+                (
+                    "Que dois-je nettoyer ou corriger avant de modéliser ces données ?"
+                    if is_fr
+                    else "What should I clean or fix before modeling this data?"
+                ),
             )
         )
     if dominance:
@@ -600,9 +663,11 @@ def suggested_questions(
         ranked.append(
             (
                 46,
-                f"La domination de {d0['value']} dans {d0['column']} biaise-t-elle l'analyse ?"
-                if is_fr
-                else f"Does {d0['value']} dominating {d0['column']} bias the analysis?",
+                (
+                    f"La domination de {d0['value']} dans {d0['column']} biaise-t-elle l'analyse ?"
+                    if is_fr
+                    else f"Does {d0['value']} dominating {d0['column']} bias the analysis?"
+                ),
             )
         )
 
@@ -613,7 +678,9 @@ def suggested_questions(
         )
     else:
         label = f"{domain} " if domain else ""
-        ranked.append((40, f"Give me the 3 biggest takeaways from this {label}dataset."))
+        ranked.append(
+            (40, f"Give me the 3 biggest takeaways from this {label}dataset.")
+        )
 
     ranked.sort(key=lambda x: x[0], reverse=True)
     out: list[str] = []

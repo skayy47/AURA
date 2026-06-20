@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
   <meta charset="UTF-8" />
-  <title>AURA — Data Intelligence Report — {{ dataset_name }}</title>
+  <title>AURA — {{ labels.report_tag }} — {{ dataset_name }}</title>
   <style>
     :root {
       --bg: #030712; --surface: #070d1c; --surface2: #0b1426;
@@ -162,12 +162,12 @@
         <div class="glyph">A</div>
         <div><div class="brand-name">NEX<span>·</span>AURA</div></div>
       </div>
-      <div class="cover-tag">Data Intelligence Report</div>
+      <div class="cover-tag">{{ labels.report_tag }}</div>
     </div>
     <div class="cover-meta">
       <h1>{{ dataset_name }}</h1>
-      <p>{{ n_rows }} rows · {{ n_cols }} cols</p>
-      <p>Generated {{ generated_at }}</p>
+      <p>{{ n_rows|gi(lang) }} {{ labels.rows_l }} · {{ n_cols|gi(lang) }} {{ labels.cols_l }}</p>
+      <p>{{ labels.generated }} {{ generated_at }}</p>
       {% if archetype %}
       <div class="cover-arch">
         <span>{{ archetype }}</span>
@@ -180,8 +180,8 @@
   <!-- Executive Summary -->
   {% if exec_summary %}
   <div class="section exec">
-    <div class="section-title">Executive Summary</div>
-    <div class="ai-badge"><span class="dot"></span>{{ "AI-generated" if exec_summary.by_ai else "Auto-generated" }}</div>
+    <div class="section-title">{{ labels.exec_summary }}</div>
+    <div class="ai-badge"><span class="dot"></span>{{ labels.ai_generated if exec_summary.by_ai else labels.auto_generated }}</div>
     <div class="exec-headline grad">{{ exec_summary.headline }}</div>
     <p class="exec-summary">{{ exec_summary.summary }}</p>
   </div>
@@ -189,14 +189,14 @@
 
   <!-- Dataset metrics -->
   <div class="section">
-    <div class="section-title">Dataset Overview</div>
+    <div class="section-title">{{ labels.overview }}</div>
     <div class="metrics">
-      <div class="metric"><div class="metric-value">{{ n_rows }}</div><div class="metric-label">Rows</div></div>
-      <div class="metric"><div class="metric-value">{{ n_cols }}</div><div class="metric-label">Columns</div></div>
-      <div class="metric"><div class="metric-value">{{ missing_total }}</div><div class="metric-label">Missing</div></div>
-      <div class="metric"><div class="metric-value">{{ memory_mb }}MB</div><div class="metric-label">In-memory</div></div>
+      <div class="metric"><div class="metric-value">{{ n_rows|gi(lang) }}</div><div class="metric-label">{{ labels.m_rows }}</div></div>
+      <div class="metric"><div class="metric-value">{{ n_cols|gi(lang) }}</div><div class="metric-label">{{ labels.m_columns }}</div></div>
+      <div class="metric"><div class="metric-value">{{ missing_total|gi(lang) }}</div><div class="metric-label">{{ labels.m_missing }}</div></div>
+      <div class="metric"><div class="metric-value">{{ memory_mb|gd(lang, 2) }} MB</div><div class="metric-label">{{ labels.m_memory }}</div></div>
       {% if quality_score is not none %}
-      <div class="metric q"><div class="metric-value">{{ quality_score }}</div><div class="metric-label">Quality /100</div></div>
+      <div class="metric q"><div class="metric-value">{{ quality_score }}</div><div class="metric-label">{{ labels.m_quality }}</div></div>
       {% endif %}
     </div>
   </div>
@@ -204,7 +204,7 @@
   <!-- Dataset DNA — semantic column roles -->
   {% if role_summary %}
   <div class="section">
-    <div class="section-title">Dataset DNA — Column Roles</div>
+    <div class="section-title">{{ labels.dna_title }}</div>
     {% if archetype_blurb %}<p style="color: var(--text-m); font-size: 12px; margin-bottom: 14px;">{{ archetype_blurb }}</p>{% endif %}
     <div class="dna">
       {% for r in role_summary %}
@@ -214,7 +214,7 @@
           <span class="dna-label">{{ r.label }}</span>
           <span class="dna-count" style="color: {{ r.color }};">{{ r.cols|length }}</span>
         </div>
-        <div class="dna-cols">{{ r.cols[:6]|join(", ") }}{% if r.cols|length > 6 %} +{{ r.cols|length - 6 }} more{% endif %}</div>
+        <div class="dna-cols">{{ r.cols[:6]|join(", ") }}{% if r.cols|length > 6 %} +{{ r.cols|length - 6 }} {{ labels.more }}{% endif %}</div>
       </div>
       {% endfor %}
     </div>
@@ -224,7 +224,7 @@
   <!-- Data Quality scorecard -->
   {% if quality %}
   <div class="section">
-    <div class="section-title">Data Quality</div>
+    <div class="section-title">{{ labels.data_quality }}</div>
     <div class="quality-grid">
       <div class="gauge" style="background: conic-gradient(var(--cyan) {{ (quality.score or 0) * 3.6 }}deg, var(--surface2) 0);">
         <div class="gauge-inner">
@@ -233,18 +233,18 @@
         </div>
       </div>
       <div class="q-items">
-        <div class="q-row"><span class="k">Missing values</span>
+        <div class="q-row"><span class="k">{{ labels.q_missing }}</span>
           <div class="barbg"><div class="barfill" style="width:{{ [quality.missing_pct, 100]|min }}%; background: var(--amber);"></div></div>
-          <span class="v">{{ quality.missing_pct }}%</span></div>
-        <div class="q-row"><span class="k">Duplicate rows</span>
+          <span class="v">{{ quality.missing_pct|gd(lang, 1) }}{{ labels.pct }}</span></div>
+        <div class="q-row"><span class="k">{{ labels.q_duplicates }}</span>
           <div class="barbg"><div class="barfill" style="width:{{ [quality.duplicate_pct, 100]|min }}%; background: var(--violet);"></div></div>
-          <span class="v">{{ quality.duplicate_rows }}</span></div>
+          <span class="v">{{ quality.duplicate_rows|gi(lang) }}</span></div>
         {% if quality.missing_hotspots %}
-        <div class="q-row"><span class="k">Worst column</span>
-          <span class="v">{{ quality.missing_hotspots[0].column }} ({{ quality.missing_hotspots[0].pct }}%)</span></div>
+        <div class="q-row"><span class="k">{{ labels.q_worst }}</span>
+          <span class="v">{{ quality.missing_hotspots[0].column }} ({{ quality.missing_hotspots[0].pct|gd(lang, 1) }}{{ labels.pct }})</span></div>
         {% endif %}
         {% if quality.constant_cols %}
-        <div class="q-row"><span class="k">Constant columns</span><span class="v">{{ quality.constant_cols|join(", ") }}</span></div>
+        <div class="q-row"><span class="k">{{ labels.q_constant }}</span><span class="v">{{ quality.constant_cols|join(", ") }}</span></div>
         {% endif %}
       </div>
     </div>
@@ -254,7 +254,7 @@
   <!-- Key Findings -->
   {% if insights %}
   <div class="section">
-    <div class="section-title">Key Findings</div>
+    <div class="section-title">{{ labels.findings }}</div>
     {% for f in insights %}
     <div class="finding">
       <div class="sev sev-{{ f.severity }}"></div>
@@ -262,7 +262,7 @@
         <h4>{{ f.title }}</h4>
         <p>{{ f.detail }}</p>
       </div>
-      <span class="sev-tag tag-{{ f.severity }}">{{ "Critical" if f.severity == 3 else ("Notable" if f.severity == 2 else "Minor") }}</span>
+      <span class="sev-tag tag-{{ f.severity }}">{{ labels.sev_critical if f.severity == 3 else (labels.sev_notable if f.severity == 2 else labels.sev_minor) }}</span>
     </div>
     {% endfor %}
   </div>
@@ -271,7 +271,7 @@
   <!-- Visual Analysis — bespoke charts rendered as inline SVG -->
   {% if charts %}
   <div class="section">
-    <div class="section-title">Visual Analysis</div>
+    <div class="section-title">{{ labels.visual }}</div>
     <div class="svg-grid">
       {% for chart in charts %}
       <div class="svg-box{% if chart.full %} full{% endif %}">
@@ -287,10 +287,10 @@
   <!-- Correlations -->
   {% if top_pairs %}
   <div class="section">
-    <div class="section-title">Correlations</div>
+    <div class="section-title">{{ labels.correlations }}</div>
     <div class="pairs">
       {% for p in top_pairs %}
-      <div class="chip {{ 'pos' if p.r >= 0 else 'neg' }}">{{ p.col_a }} × {{ p.col_b }} · r={{ "%.2f"|format(p.r) }}</div>
+      <div class="chip {{ 'pos' if p.r >= 0 else 'neg' }}">{{ p.col_a }} × {{ p.col_b }} · r={{ p.r|gd(lang, 2) }}</div>
       {% endfor %}
     </div>
   </div>
@@ -299,7 +299,7 @@
   <!-- Recommendations -->
   {% if exec_summary and exec_summary.recommendations %}
   <div class="section">
-    <div class="section-title">Recommendations</div>
+    <div class="section-title">{{ labels.recommendations }}</div>
     <ul class="recs">
       {% for r in exec_summary.recommendations %}<li>{{ r }}</li>{% endfor %}
     </ul>
@@ -309,18 +309,18 @@
   <!-- Column appendix -->
   {% if columns %}
   <div class="section">
-    <div class="section-title">Column Appendix</div>
+    <div class="section-title">{{ labels.appendix }}</div>
     <table>
-      <thead><tr><th>Column</th><th>Type</th><th>Missing</th><th>Unique</th><th>Mean / Top</th></tr></thead>
+      <thead><tr><th>{{ labels.t_column }}</th><th>{{ labels.t_type }}</th><th>{{ labels.t_missing }}</th><th>{{ labels.t_unique }}</th><th>{{ labels.t_meantop }}</th></tr></thead>
       <tbody>
         {% for col in columns %}
         <tr>
           <td>{{ col.name }}</td>
           <td><span class="badge">{{ col.kind or col.dtype }}</span></td>
-          <td>{{ col.missing_count }}{% if col.missing_pct %} ({{ col.missing_pct }}%){% endif %}</td>
-          <td>{{ col.n_unique if col.n_unique is not none else "—" }}</td>
+          <td>{{ col.missing_count|gi(lang) }}{% if col.missing_pct %} ({{ col.missing_pct|gd(lang, 1) }}{{ labels.pct }}){% endif %}</td>
+          <td>{{ col.n_unique|gi(lang) if col.n_unique is not none else "—" }}</td>
           <td style="font-family:monospace;">
-            {% if col.mean is not none %}{{ "%.3f"|format(col.mean) }}
+            {% if col.mean is not none %}{{ col.mean|gd(lang, 3) }}
             {% elif col.top_value %}{{ col.top_value[:28] }}
             {% else %}—{% endif %}
           </td>
@@ -332,7 +332,7 @@
   {% endif %}
 
   <div class="footer">
-    <p>AURA · Universal Data Engine · Built by Oussama Skia</p>
+    <p>{{ labels.footer_brand }}</p>
     <p>{{ generated_at }}</p>
   </div>
 

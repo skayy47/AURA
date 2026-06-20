@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useLocale } from "next-intl";
 import { exportUrl } from "@/lib/api";
 
 const DownloadIcon = ({ size = 18 }: { size?: number }) => (
@@ -12,6 +13,7 @@ const DownloadIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 export function ExportPanel({ sessionId }: { sessionId: string }) {
+  const locale = useLocale();
   const [pdfState, setPdfState] = useState<"idle" | "loading" | "error">("idle");
 
   const formats = [
@@ -29,7 +31,7 @@ export function ExportPanel({ sessionId }: { sessionId: string }) {
       const res = await fetch(`${apiUrl}/api/export/pdf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId }),
+        body: JSON.stringify({ session_id: sessionId, lang: locale }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const blob = await res.blob();

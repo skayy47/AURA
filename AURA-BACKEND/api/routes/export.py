@@ -86,7 +86,9 @@ async def analyze_session(session_id: str, lang: str = "en"):
 
         name = (sess.get("meta") or {}).get("name") or "dataset"
         semantics = sess.get("semantics")
-        result = analyze(df, profile, meta_name=name, semantics=semantics, language=lang)
+        result = analyze(
+            df, profile, meta_name=name, semantics=semantics, language=lang
+        )
         sess[cache_key] = result
         result["suggested_questions"] = suggested_questions(
             result, result.get("semantics"), language=lang
@@ -99,6 +101,7 @@ async def analyze_session(session_id: str, lang: str = "en"):
 
 class PDFRequest(BaseModel):
     session_id: str
+    lang: str = "en"
 
 
 @router.post("/export/pdf")
@@ -135,7 +138,7 @@ async def export_pdf(body: PDFRequest):
     try:
         from services.pdf_renderer import build_report_context, render_pdf
 
-        context = build_report_context(sess, profile)
+        context = build_report_context(sess, profile, language=body.lang)
         pdf_bytes = await render_pdf(context)
     except RuntimeError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
