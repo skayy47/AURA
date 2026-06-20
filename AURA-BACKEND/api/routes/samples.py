@@ -89,7 +89,11 @@ def load_sample(slug: str) -> dict:
         },
     )
 
-    preview = result.df.head(20).fillna("").astype(str).to_dict(orient="records")
+    # astype(object) first: low-cardinality columns get promoted to pandas
+    # `category` dtype on ingest, and fillna("")/where on a Categorical rejects
+    # the empty string as a new category. Cast to object, blank the NAs, stringify.
+    head = result.df.head(20).astype(object)
+    preview = head.where(head.notna(), "").astype(str).to_dict(orient="records")
     return {
         "session_id": session_id,
         "meta": result.meta.__dict__,
