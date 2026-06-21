@@ -48,7 +48,7 @@ export default function ExplorePage() {
   useEffect(() => {
     if (sessionId && !exploreData && !loading) {
       setLoading(true);
-      fetchExplore(sessionId)
+      fetchExplore(sessionId, locale)
         .then((res) => setExplore(res))
         .catch((e) => setError(e.message))
         .finally(() => setLoading(false));

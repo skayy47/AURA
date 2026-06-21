@@ -40,8 +40,8 @@ export async function runCleaning(
   return response.json();
 }
 
-export async function fetchExplore(sessionId: string): Promise<ExploreData> {
-  const response = await fetch(`${API_URL}/api/explore/${sessionId}`);
+export async function fetchExplore(sessionId: string, locale = 'en'): Promise<ExploreData> {
+  const response = await fetch(`${API_URL}/api/explore/${sessionId}?lang=${locale}`);
 
   if (!response.ok) {
     throw new Error(`Explore failed: ${response.statusText}`);

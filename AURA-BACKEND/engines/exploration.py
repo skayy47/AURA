@@ -297,6 +297,7 @@ def recommend_charts(
     df: pd.DataFrame,
     profile: dict[str, Any],
     semantics: dict[str, Any] | None = None,
+    language: str = "en",
 ) -> list[dict[str, Any]]:
     """Recommend a *data-dependent* set of charts driven by semantic roles.
 
@@ -304,11 +305,15 @@ def recommend_charts(
     lines, a segmented table with comparison bars, a numeric table with
     distributions and correlations. Identifiers (row_id) are never charted as
     measures. Each rec embeds the exact data the frontend needs to render.
+    Titles and rationales are localized to *language* ("en" / "fr"); column
+    names and numeric values are kept verbatim.
     """
     if semantics is None:
         from engines.semantics import infer_semantics
 
         semantics = infer_semantics(df, profile)
+
+    is_fr = str(language or "en").strip().lower().startswith("fr")
 
     measures: list[str] = semantics.get("primary_measures", [])
     segmentable: list[str] = semantics.get("segmentable_cols", [])
@@ -333,13 +338,20 @@ def recommend_charts(
         )
         ts = _timeseries_points(df, temporal, primary, by=split)
         if ts.get("points") or ts.get("series"):
-            rationale = f"How {primary} moves over {temporal}" + (
-                f", split by {split}" if split else ""
-            )
+            if is_fr:
+                rationale = f"Évolution de {primary} selon {temporal}" + (
+                    f", par {split}" if split else ""
+                )
+                ts_title = f"{primary} selon {temporal}"
+            else:
+                rationale = f"How {primary} moves over {temporal}" + (
+                    f", split by {split}" if split else ""
+                )
+                ts_title = f"{primary} over {temporal}"
             recs.append(
                 {
                     "type": "timeseries",
-                    "title": f"{primary} over {temporal}",
+                    "title": ts_title,
                     "x": temporal,
                     "y": primary,
                     "split": split,
@@ -361,11 +373,17 @@ def recommend_charts(
             recs.append(
                 {
                     "type": "bar_grouped",
-                    "title": f"{primary} by {dim}",
+                    "title": (
+                        f"{primary} par {dim}" if is_fr else f"{primary} by {dim}"
+                    ),
                     "x": dim,
                     "y": primary,
                     "bars": bars,
-                    "rationale": f"Average {primary} across {dim} — where the gaps are",
+                    "rationale": (
+                        f"{primary} moyen par {dim} — où sont les écarts"
+                        if is_fr
+                        else f"Average {primary} across {dim} — where the gaps are"
+                    ),
                     "priority": 90 - idx * 6,
                 }
             )
@@ -378,7 +396,15 @@ def recommend_charts(
                 {"x": float(a), "y": float(b)} for a, b in sub.itertuples(index=False)
             ]
             if points:
-                strength = "Strong" if abs(pair["r"]) >= 0.7 else "Moderate"
+                if is_fr:
+                    strength = "fort" if abs(pair["r"]) >= 0.7 else "modéré"
+                    rval = f"{pair['r']:.2f}".replace(".", ",")
+                    scatter_rationale = f"Lien {strength} (r={rval}) à modéliser"
+                else:
+                    strength = "Strong" if abs(pair["r"]) >= 0.7 else "Moderate"
+                    scatter_rationale = (
+                        f"{strength} link (r={pair['r']:.2f}) worth modeling"
+                    )
                 recs.append(
                     {
                         "type": "scatter",
@@ -387,7 +413,7 @@ def recommend_charts(
                         "y": pair["col_b"],
                         "r": pair["r"],
                         "points": points,
-                        "rationale": f"{strength} link (r={pair['r']:.2f}) worth modeling",
+                        "rationale": scatter_rationale,
                         "priority": 84,
                     }
                 )
@@ -398,10 +424,18 @@ def recommend_charts(
         recs.append(
             {
                 "type": "donut",
-                "title": f"Composition by {donut_dim}",
+                "title": (
+                    f"Composition par {donut_dim}"
+                    if is_fr
+                    else f"Composition by {donut_dim}"
+                ),
                 "x": donut_dim,
                 "segments": _composition(df, donut_dim),
-                "rationale": f"How records split across {donut_dim}",
+                "rationale": (
+                    f"Répartition des enregistrements par {donut_dim}"
+                    if is_fr
+                    else f"How records split across {donut_dim}"
+                ),
                 "priority": 70,
             }
         )
@@ -409,17 +443,26 @@ def recommend_charts(
     # 5. Distribution of the primary measure (flag skew)
     if primary and col_by_name.get(primary, {}).get("histogram"):
         skew = col_by_name[primary].get("skewness", 0) or 0
-        shape = (
-            "right-skewed — a few large values stretch the tail"
-            if skew > 1
-            else "left-skewed" if skew < -1 else "roughly symmetric"
-        )
+        if is_fr:
+            shape = (
+                "asymétrie à droite — quelques grandes valeurs étirent la queue"
+                if skew > 1
+                else "asymétrie à gauche" if skew < -1 else "globalement symétrique"
+            )
+            hist_rationale = f"Répartition de {primary} ({shape})"
+        else:
+            shape = (
+                "right-skewed — a few large values stretch the tail"
+                if skew > 1
+                else "left-skewed" if skew < -1 else "roughly symmetric"
+            )
+            hist_rationale = f"Spread of {primary} ({shape})"
         recs.append(
             {
                 "type": "histogram",
                 "title": f"Distribution — {primary}",
                 "column": primary,
-                "rationale": f"Spread of {primary} ({shape})",
+                "rationale": hist_rationale,
                 "priority": 66,
             }
         )
@@ -430,9 +473,13 @@ def recommend_charts(
         recs.append(
             {
                 "type": "heatmap_corr",
-                "title": "Correlation matrix",
+                "title": "Matrice de corrélation" if is_fr else "Correlation matrix",
                 "columns": ordered or list(measure_set),
-                "rationale": f"Pairwise correlation across {len(measure_set)} measures",
+                "rationale": (
+                    f"Corrélation par paires sur {len(measure_set)} mesures"
+                    if is_fr
+                    else f"Pairwise correlation across {len(measure_set)} measures"
+                ),
                 "priority": 58,
             }
         )
@@ -446,7 +493,9 @@ def recommend_charts(
                     "type": "histogram",
                     "title": f"Distribution — {second}",
                     "column": second,
-                    "rationale": f"Spread of {second}",
+                    "rationale": (
+                        f"Répartition de {second}" if is_fr else f"Spread of {second}"
+                    ),
                     "priority": 50,
                 }
             )
