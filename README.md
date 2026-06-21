@@ -78,6 +78,8 @@ Each observation is ranked. The UI shows the top three with actionable framing. 
 
 The output is a paginated, fully styled PDF with the AURA brand, dataset summary, insight section, and chart thumbnails. It works because Chromium does the layout. The `Dockerfile` bakes in Playwright + Chromium so it works cold on any host.
 
+The report is **fully bilingual (EN / FR)** — every section label, the AI executive summary, ranked findings, the chart titles and captions, and even locale-aware number/date formatting (`1 234,56` and `21 juin 2026` in FR) follow the UI language. A French session produces a French report end to end; localized strings live in one place, `services/report_i18n.py`.
+
 ---
 
 ### 4 · SSE streaming end-to-end (FastAPI → Next.js)
@@ -99,7 +101,7 @@ This works across all three AI providers — each has a different SDK streaming 
 
 Every string in the app is keyed through `next-intl v4`. The URL path carries the locale: `/en/explore` · `/fr/explore`. A premium animated language toggle — Framer Motion shared-layout indicator, reduced-motion aware, keyboard-accessible — switches locale in place. 222 translation keys, maintained at parity in `messages/en.json` and `messages/fr.json`.
 
-It goes deeper than the UI chrome: when French is selected, **the AI answers in French too**. The chat system prompt and the data-grounded suggested questions are locale-aware, so the experience is French end-to-end — not just the labels.
+It goes deeper than the UI chrome: when French is selected, **the AI answers in French too**. The chat system prompt and the data-grounded suggested questions are locale-aware, so the experience is French end-to-end — not just the labels. The localization even reaches the **exported PDF report and the auto-generated chart titles** — pick FR and the entire branded report, charts included, comes out in French.
 
 ---
 
@@ -193,7 +195,7 @@ npm run dev
 # → http://localhost:3000
 ```
 
-Click **"Try with sample data"** on the landing page to load a pre-built sample dataset with no upload needed.
+Click **"Try with sample data"** on the landing page to load one of three pre-built MENA datasets — no upload needed. Each stress-tests a different part of the engine: **MENA SaaS Revenue** (620×13, a rising-trend time-series), **MENA Workforce** (515×12, a cross-section with strong hidden correlations), and **MENA Retail · raw dump** (500×11, the cleaning showcase — junk headers, four date formats, ~20% duplicate rows).
 
 ---
 
