@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.get("/explore/{session_id}")
-async def explore(session_id: str):
+async def explore(session_id: str, lang: str = "en"):
     try:
         sess = get_session(session_id)
     except KeyError:
@@ -22,7 +22,7 @@ async def explore(session_id: str):
 
     profile = profile_dataframe(df)
     semantics = infer_semantics(df, profile)
-    recommendations = recommend_charts(df, profile, semantics)
+    recommendations = recommend_charts(df, profile, semantics, language=lang)
     update_session(session_id, {"explore_profile": profile, "semantics": semantics})
 
     return {

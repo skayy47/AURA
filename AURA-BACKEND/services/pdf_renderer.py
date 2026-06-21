@@ -112,7 +112,7 @@ def build_report_context(session: dict, profile: dict, language: str = "en") -> 
             from engines.exploration import recommend_charts
             from services.svg_charts import FULL_WIDTH, chart_to_svg
 
-            for rec in recommend_charts(df, profile, semantics or None):
+            for rec in recommend_charts(df, profile, semantics or None, language=lang):
                 svg = chart_to_svg(rec, profile)
                 if svg:
                     charts.append(
