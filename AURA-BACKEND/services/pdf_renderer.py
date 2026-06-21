@@ -7,6 +7,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from services import report_i18n
+
 logger = logging.getLogger(__name__)
 
 _TEMPLATE_DIR = Path(__file__).parent.parent / "templates"
@@ -14,6 +16,12 @@ _ENV = Environment(
     loader=FileSystemLoader(str(_TEMPLATE_DIR)),
     autoescape=select_autoescape(["html"]),
 )
+
+# Locale-aware number filters for the template:
+#   {{ value | gi(lang) }}        grouped integer  (1 234 567)
+#   {{ value | gd(lang, places) }} grouped decimal (0,97)
+_ENV.filters["gi"] = report_i18n.fmt_int
+_ENV.filters["gd"] = report_i18n.fmt_dec
 
 
 async def render_pdf(context: dict) -> bytes:
@@ -50,10 +58,17 @@ def _get_df(session: dict):
     return df
 
 
-def build_report_context(session: dict, profile: dict) -> dict:
+def build_report_context(session: dict, profile: dict, language: str = "en") -> dict:
     """Assemble the Data Intelligence Report context: expert analysis + an
-    LLM executive summary + chart-ready data + column appendix."""
+    LLM executive summary + chart-ready data + column appendix.
+
+    Fully localized to *language* ("en" / "fr"): insights, executive summary,
+    role/archetype/domain labels, the date, and every static template string.
+    """
     from datetime import datetime, timezone
+
+    lang = report_i18n.normalize_lang(language)
+    labels = report_i18n.labels_for(lang)
 
     meta = session.get("meta", {})
     cleaning_log = session.get("cleaning_log", [])
@@ -66,20 +81,30 @@ def build_report_context(session: dict, profile: dict) -> dict:
     semantics: dict = session.get("semantics") or {}
     df = _get_df(session)
     if df is not None:
-        try:
-            from engines.analysis import analyze
-
-            analysis = analyze(
-                df, profile, meta_name=dataset_name, semantics=semantics or None
-            )
+        # Reuse the per-language analysis the /analyze route already cached.
+        cached = session.get(f"analysis_{lang}")
+        if cached and cached.get("llm_payload"):
+            analysis = cached
             semantics = analysis.get("semantics") or semantics
-        except Exception as exc:
-            logger.warning("Analysis failed during report build: %s", exc)
+        else:
+            try:
+                from engines.analysis import analyze
+
+                analysis = analyze(
+                    df,
+                    profile,
+                    meta_name=dataset_name,
+                    semantics=semantics or None,
+                    language=lang,
+                )
+                semantics = analysis.get("semantics") or semantics
+            except Exception as exc:
+                logger.warning("Analysis failed during report build: %s", exc)
         try:
             from engines.ai_insights import executive_summary
 
             if analysis.get("llm_payload"):
-                exec_summary = executive_summary(analysis["llm_payload"])
+                exec_summary = executive_summary(analysis["llm_payload"], language=lang)
         except Exception as exc:
             logger.warning("Exec summary failed: %s", exc)
         # ── Bespoke charts → inline SVG (always renders) ─────────
@@ -130,38 +155,26 @@ def build_report_context(session: dict, profile: dict) -> dict:
             break
 
     # ── Dataset DNA — semantic role breakdown for the cover/overview ──
-    role_summary = [
-        {
-            "label": "Measures",
-            "cols": semantics.get("measure_cols", []),
-            "color": "#8b5cf6",
-        },
-        {
-            "label": "Dimensions",
-            "cols": semantics.get("dimension_cols", []),
-            "color": "#3b82f6",
-        },
-        {
-            "label": "Temporal",
-            "cols": semantics.get("temporal_cols", []),
-            "color": "#00e5ff",
-        },
-        {
-            "label": "Geographic",
-            "cols": semantics.get("geo_cols", []),
-            "color": "#00ffb2",
-        },
-        {
-            "label": "Identifiers",
-            "cols": semantics.get("id_cols", []),
-            "color": "#ec4899",
-        },
+    role_names = report_i18n.role_labels_for(lang)
+    role_specs = [
+        (semantics.get("measure_cols", []), "#8b5cf6"),
+        (semantics.get("dimension_cols", []), "#3b82f6"),
+        (semantics.get("temporal_cols", []), "#00e5ff"),
+        (semantics.get("geo_cols", []), "#00ffb2"),
+        (semantics.get("id_cols", []), "#ec4899"),
     ]
-    role_summary = [r for r in role_summary if r["cols"]]
+    role_summary = [
+        {"label": role_names[i], "cols": cols, "color": color}
+        for i, (cols, color) in enumerate(role_specs)
+        if cols
+    ]
 
+    arch_label, arch_blurb = report_i18n.archetype_for(semantics.get("archetype"), lang)
     return {
+        "lang": lang,
+        "labels": labels,
         "dataset_name": dataset_name,
-        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "generated_at": report_i18n.fmt_date(datetime.now(timezone.utc), lang),
         "n_rows": profile.get("n_rows", meta.get("n_rows", "—")),
         "n_cols": profile.get("n_cols", meta.get("n_cols", "—")),
         "missing_total": profile.get("missing_total", "—"),
@@ -176,9 +189,9 @@ def build_report_context(session: dict, profile: dict) -> dict:
         "histogram": histogram,
         "charts": charts,
         "columns": columns,
-        "archetype": semantics.get("archetype_label"),
-        "archetype_blurb": semantics.get("archetype_blurb"),
-        "domain": semantics.get("domain"),
+        "archetype": arch_label or semantics.get("archetype_label"),
+        "archetype_blurb": arch_blurb or semantics.get("archetype_blurb"),
+        "domain": report_i18n.domain_for(semantics.get("domain"), lang),
         "role_summary": role_summary,
         "top_pairs": (profile.get("correlation") or {}).get("top_pairs", [])[:6],
         "cleaning_log": cleaning_log,

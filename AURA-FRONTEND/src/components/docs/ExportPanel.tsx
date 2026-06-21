@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { exportUrl } from "@/lib/api";
 
 const DownloadIcon = ({ size = 18 }: { size?: number }) => (
@@ -12,13 +13,15 @@ const DownloadIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 export function ExportPanel({ sessionId }: { sessionId: string }) {
+  const locale = useLocale();
+  const t = useTranslations("docs");
   const [pdfState, setPdfState] = useState<"idle" | "loading" | "error">("idle");
 
   const formats = [
-    { id: "csv", label: "CSV", desc: "Simple tabular data" },
-    { id: "xlsx", label: "Excel", desc: "Sharing with stakeholders" },
-    { id: "json", label: "JSON", desc: "Web apps & APIs" },
-    { id: "parquet", label: "Parquet", desc: "Big-data analytics" },
+    { id: "csv", label: "CSV", desc: t("descCsv") },
+    { id: "xlsx", label: "Excel", desc: t("descXlsx") },
+    { id: "json", label: "JSON", desc: t("descJson") },
+    { id: "parquet", label: "Parquet", desc: t("descParquet") },
   ] as const;
 
   const handlePdf = async () => {
@@ -29,7 +32,7 @@ export function ExportPanel({ sessionId }: { sessionId: string }) {
       const res = await fetch(`${apiUrl}/api/export/pdf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: sessionId }),
+        body: JSON.stringify({ session_id: sessionId, lang: locale }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const blob = await res.blob();
@@ -71,12 +74,12 @@ export function ExportPanel({ sessionId }: { sessionId: string }) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-bricolage font-bold text-lg text-text">Data Intelligence Report</h3>
+              <h3 className="font-bricolage font-bold text-lg text-text">{t("reportTitle")}</h3>
               <span className="text-[0.6rem] font-bold uppercase tracking-wide px-2 py-0.5 rounded
                 text-mint bg-[rgba(0,255,178,0.12)]">PDF</span>
             </div>
             <p className="text-text-m text-sm mt-0.5">
-              Branded report — executive summary, quality scorecard, ranked findings, charts &amp; recommendations.
+              {t("reportDesc")}
             </p>
           </div>
           <span className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold
@@ -86,12 +89,12 @@ export function ExportPanel({ sessionId }: { sessionId: string }) {
             ) : (
               <DownloadIcon size={16} />
             )}
-            {pdfState === "loading" ? "Generating…" : pdfState === "error" ? "Retry" : "Generate"}
+            {pdfState === "loading" ? t("generating") : pdfState === "error" ? t("retry") : t("generate")}
           </span>
         </div>
         {pdfState === "error" && (
           <p className="relative z-10 mt-3 text-xs text-amber">
-            Report service is waking up — give it a few seconds and retry.
+            {t("waking")}
           </p>
         )}
       </button>
@@ -99,7 +102,7 @@ export function ExportPanel({ sessionId }: { sessionId: string }) {
       {/* Raw data exports */}
       <div>
         <p className="text-[0.7rem] font-bold tracking-[0.15em] uppercase text-text-d mb-3">
-          Raw data exports
+          {t("rawExports")}
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {formats.map((f) => (
