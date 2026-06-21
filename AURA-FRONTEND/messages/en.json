@@ -12,6 +12,7 @@
     "explore": "Explore Data",
     "export": "Export",
     "exportPdf": "Export PDF",
+    "generating": "Generating…",
     "startOver": "Start Over",
     "askAi": "Ask AI"
   },
@@ -118,7 +119,18 @@
   },
   "docs": {
     "title": "Export & Documentation",
-    "subtitle": "Download your processed dataset in multiple formats."
+    "subtitle": "Download your processed dataset in multiple formats.",
+    "reportTitle": "Data Intelligence Report",
+    "reportDesc": "Branded report — executive summary, quality scorecard, ranked findings, charts & recommendations.",
+    "generate": "Generate",
+    "generating": "Generating…",
+    "retry": "Retry",
+    "waking": "Report service is waking up — give it a few seconds and retry.",
+    "rawExports": "Raw data exports",
+    "descCsv": "Simple tabular data",
+    "descXlsx": "Sharing with stakeholders",
+    "descJson": "Web apps & APIs",
+    "descParquet": "Big-data analytics"
   },
   "empty": {
     "heading": "No dataset loaded",

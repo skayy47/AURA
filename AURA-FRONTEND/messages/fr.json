@@ -12,6 +12,7 @@
     "explore": "Explorer les données",
     "export": "Exporter",
     "exportPdf": "Exporter en PDF",
+    "generating": "Génération…",
     "startOver": "Recommencer",
     "askAi": "Demander à l'IA"
   },
@@ -118,7 +119,18 @@
   },
   "docs": {
     "title": "Export & documentation",
-    "subtitle": "Téléchargez votre jeu de données traité dans plusieurs formats."
+    "subtitle": "Téléchargez votre jeu de données traité dans plusieurs formats.",
+    "reportTitle": "Rapport d'Intelligence des Données",
+    "reportDesc": "Rapport de marque — résumé exécutif, tableau de qualité, constats classés, graphiques & recommandations.",
+    "generate": "Générer",
+    "generating": "Génération…",
+    "retry": "Réessayer",
+    "waking": "Le service de rapport se réveille — patientez quelques secondes puis réessayez.",
+    "rawExports": "Exports de données brutes",
+    "descCsv": "Données tabulaires simples",
+    "descXlsx": "Partage avec les parties prenantes",
+    "descJson": "Applications web & API",
+    "descParquet": "Analytique big data"
   },
   "empty": {
     "heading": "Aucun jeu de données chargé",

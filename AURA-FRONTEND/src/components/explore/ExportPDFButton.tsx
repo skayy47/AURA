@@ -78,7 +78,7 @@ export function ExportPDFButton({ sessionId }: Props) {
 
         <span className="relative z-10">
           {state === "loading"
-            ? "Generating…"
+            ? t("generating")
             : state === "error"
             ? tErrors("renderTimeout")
             : t("exportPdf")}
