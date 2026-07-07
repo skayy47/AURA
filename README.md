@@ -16,7 +16,7 @@ pinned: false
 
 **A full-stack data intelligence platform that ingests any messy file, cleans and profiles it automatically, lets you interrogate it through streaming AI chat, and delivers a branded Data Intelligence Report — all in a five-step pipeline.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-aura--skayy47s--projects.vercel.app-6C3FE5?style=for-the-badge&logo=vercel&logoColor=white)](https://aura-skayy47s-projects.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-aura--sooty--five--27.vercel.app-6C3FE5?style=for-the-badge&logo=vercel&logoColor=white)](https://aura-sooty-five-27.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-skayy47%2FAURA-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/skayy47/AURA)
 [![Python](https://img.shields.io/badge/Python-3.11-3776ab?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=for-the-badge&logo=fastapi&logoColor=white)
@@ -260,13 +260,13 @@ git remote add space https://huggingface.co/spaces/SKAY00/aura-backend
 git push space main
 ```
 
-Set Space secrets: `GOOGLE_API_KEY` (primary, best FR quality), `GROQ_API_KEY` (fallback), `ALLOWED_ORIGINS=https://aura-skayy47s-projects.vercel.app`, `PORT=7860`.
+Set Space secrets: `GOOGLE_API_KEY` (primary, best FR quality), `GROQ_API_KEY` (fallback), `ALLOWED_ORIGINS=https://aura-sooty-five-27.vercel.app`, `PORT=7860`.
 
 **Live backend:** `https://skay00-aura-backend.hf.space`
 
 ### Frontend → Vercel
 
-**Live app:** [`https://aura-skayy47s-projects.vercel.app`](https://aura-skayy47s-projects.vercel.app)
+**Live app:** [`https://aura-sooty-five-27.vercel.app`](https://aura-sooty-five-27.vercel.app)
 
 Set root directory to `AURA-FRONTEND`. Add one env var:
 
