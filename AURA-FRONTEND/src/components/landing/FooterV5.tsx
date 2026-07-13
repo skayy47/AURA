@@ -29,25 +29,7 @@ export function FooterV5() {
             <p className="mt-4 text-text-d text-xs font-geist-mono">{t("footerTagline")}</p>
           </div>
 
-          {/* Minimal links */}
-          <div className="flex flex-col gap-3 pt-1">
-            <a
-              href="https://github.com/skayy47"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-sm text-text-m hover:text-cyan transition-colors duration-200"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan/40 group-hover:bg-cyan group-hover:shadow-[0_0_6px_rgba(34,211,238,0.8)] transition-all duration-200" />
-              {t("footerGithub")}
-            </a>
-            <a
-              href="mailto:oussamaiskia@gmail.com"
-              className="group flex items-center gap-2 text-sm text-text-m hover:text-cyan transition-colors duration-200"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-purple/40 group-hover:bg-purple group-hover:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all duration-200" />
-              {t("footerContact")}
-            </a>
-          </div>
+          {/* Links — to be added */}
         </div>
 
         <div className="divider-aurora mb-6" />

@@ -60,7 +60,7 @@ LABELS: dict[str, dict[str, str]] = {
         "t_missing": "Missing",
         "t_unique": "Unique",
         "t_meantop": "Mean / Top",
-        "footer_brand": "AURA · Universal Data Engine · Built by Oussama Skia",
+        "footer_brand": "AURA · Universal Data Engine",
         "pct": "%",
     },
     "fr": {
@@ -97,7 +97,7 @@ LABELS: dict[str, dict[str, str]] = {
         "t_missing": "Manquantes",
         "t_unique": "Uniques",
         "t_meantop": "Moyenne / Fréquent",
-        "footer_brand": "AURA · Moteur Universel de Données · Conçu par Oussama Skia",
+        "footer_brand": "AURA · Moteur Universel de Données",
         "pct": " %",
     },
 }
