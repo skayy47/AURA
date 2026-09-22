@@ -16,7 +16,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { SettingsPopover } from "@/components/ai/SettingsPopover";
 
 const PROVIDER_BADGE: Record<string, { label: string; color: string }> = {
-  gemini:  { label: "Gemini · Flash 2.0", color: "#4285F4" },
+  gemini:  { label: "Gemini · Flash 3.6", color: "#4285F4" },
   groq:    { label: "Groq · Free",        color: "#00FFB2" },
   claude:  { label: "Claude",             color: "#8B5CF6" },
   openai:  { label: "OpenAI",             color: "#3B82F6" },

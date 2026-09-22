@@ -38,7 +38,7 @@ You drop a CSV, Excel, JSON, or Parquet file:
 | 📂 **Ingest** | `/ingest` | Auto-detected encoding, type inference, 200 MB guard, 5-row preview |
 | 🧼 **Clean** | `/clean` | 8-step pipeline — normalize names, coerce types, dedupe, impute, outlier flags. Every change logged, diff shown. |
 | 🔍 **Explore** | `/explore` | Auto-generated Plotly charts: histograms, scatter, correlation heatmap, missing-value map, per-column profiles |
-| 🤖 **AI Chat** | `/ai-chat` | Ask questions in EN or FR — streamed token-by-token. Gemini Flash 2.0 (free default), Groq fallback, GPT-4o, or Claude. AI never sees raw rows. |
+| 🤖 **AI Chat** | `/ai-chat` | Ask questions in EN or FR — streamed token-by-token. Gemini Flash 3.6 (free default), Groq fallback, GPT-4o, or Claude. AI never sees raw rows. |
 | 📄 **Export** | `/docs` | CSV · XLSX · JSON · Parquet · branded **PDF Data Intelligence Report** (real headless render, not a screenshot) |
 
 **No sign-up. No database. In-memory, session-scoped (4h TTL).**
@@ -49,7 +49,7 @@ You drop a CSV, Excel, JSON, or Parquet file:
 
 ### 1 · Multi-provider AI with free-first cascade
 
-A single `PROVIDERS` registry is the source of truth for all AI integrations. `resolve_provider()` tries **Gemini Flash 2.0** first (best bilingual EN/FR quality, 15 RPM free), then Groq as fallback, then OpenAI, then Claude — whichever is configured. Gemini, Groq, and OpenAI share one OpenAI-compatible call path (only `api_key` + `base_url` differ); Claude uses the Anthropic SDK. Adding a new provider is one dictionary entry, nothing else.
+A single `PROVIDERS` registry is the source of truth for all AI integrations. `resolve_provider()` tries **Gemini Flash 3.6** first (best bilingual EN/FR quality, free tier), then Groq as fallback, then OpenAI, then Claude — whichever is configured. Gemini, Groq, and OpenAI share one OpenAI-compatible call path (only `api_key` + `base_url` differ); Claude uses the Anthropic SDK. Adding a new provider is one dictionary entry, nothing else.
 
 `executive_summary()` (called during PDF generation) cascades further: if no LLM is reachable, it builds a deterministic textual summary from the stats payload so **the PDF always renders** — even with no API keys configured.
 
@@ -150,7 +150,7 @@ It goes deeper than the UI chrome: when French is selected, **the AI answers in 
 |---|---|---|
 | **Backend** | FastAPI 0.111 + Python 3.11 | Async, typed, OpenAPI auto-docs |
 | **Data** | Pandas 2.2 + Plotly | Industry standard; Plotly specs ship to the frontend as JSON |
-| **AI** | Gemini Flash 2.0 (free default) / Groq / OpenAI / Claude | Single registry; free-first cascade; bilingual EN+FR |
+| **AI** | Gemini Flash 3.6 (free default) / Groq GPT-OSS 120B / OpenAI / Claude | Single registry; free-first cascade; bilingual EN+FR |
 | **PDF** | Playwright + Jinja2 | Real headless Chromium render — paginated, styled, not a screenshot |
 | **Insights** | Custom `analysis.py` | Ranked, actionable observations — not just `df.describe()` |
 | **Frontend** | Next.js 14 App Router + TypeScript | Full-stack TypeScript; locale-aware SSR routing |
@@ -203,12 +203,12 @@ Click **"Try with sample data"** on the landing page to load one of three pre-bu
 
 All backend secrets live in `AURA-BACKEND/.env` (gitignored — never committed).
 
-AURA is **free-first**: it defaults to **Gemini Flash 2.0** (best bilingual EN/FR) and cascades to Groq, then paid providers. `GOOGLE_API_KEY` is all that's needed for best-quality AI; `GROQ_API_KEY` is the free fallback.
+AURA is **free-first**: it defaults to **Gemini Flash 3.6** (best bilingual EN/FR) and cascades to Groq, then paid providers. `GOOGLE_API_KEY` is all that's needed for best-quality AI; `GROQ_API_KEY` is the free fallback.
 
 | Variable | Tier | Description |
 |---|---|---|
-| `GOOGLE_API_KEY` | **Free · primary** | [aistudio.google.com](https://aistudio.google.com/apikey) — Gemini Flash 2.0, best EN+FR |
-| `GROQ_API_KEY` | **Free · fallback** | [console.groq.com](https://console.groq.com/keys) — Llama 3.3 70B |
+| `GOOGLE_API_KEY` | **Free · primary** | [aistudio.google.com](https://aistudio.google.com/apikey) — Gemini Flash 3.6, best EN+FR |
+| `GROQ_API_KEY` | **Free · fallback** | [console.groq.com](https://console.groq.com/keys) — GPT-OSS 120B |
 | `OPENAI_API_KEY` | Paid · optional | GPT-4o mini upgrade |
 | `ANTHROPIC_API_KEY` | Paid · optional | Claude Sonnet 4.6 upgrade |
 | `ALLOWED_ORIGINS` | — | Comma-separated CORS origins (e.g. `https://your-frontend.vercel.app`) |

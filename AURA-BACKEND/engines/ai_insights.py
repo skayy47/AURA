@@ -1,9 +1,15 @@
 """AI insights engine — multi-provider, free-first.
 
 Providers (see PROVIDERS registry):
-    • Groq · Llama 3.3 70B   — FREE  (default; OpenAI-compatible API)
+    • Gemini · Flash 3.6     — FREE  (default; OpenAI-compatible API)
+    • Groq · GPT-OSS 120B    — FREE  (fallback; OpenAI-compatible API)
     • OpenAI · GPT-4o mini   — PAID  (OpenAI-compatible API)
     • Claude · Sonnet 4.6    — PAID  (Anthropic API)
+
+Model pins are verified live, not taken from docs — both previous pins
+(``gemini-2.0-flash``, ``llama-3.3-70b-versatile``) were retired by their
+providers and returned 404, which is why ``api/routes/ai.py::_is_retriable``
+treats 404 as a fall-through-to-the-next-provider condition.
 
 Groq and OpenAI share one OpenAI-compatible code path (only api_key + base_url
 differ). Claude uses the Anthropic SDK. Resolution is resilient: if the requested
@@ -15,7 +21,7 @@ from __future__ import annotations
 
 import json
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Generator
 
@@ -51,26 +57,39 @@ class ProviderSpec:
     model: str
     kind: str  # "openai_compat" | "anthropic"
     base_url: str | None = None
+    # Provider-specific request params merged into the chat-completion call.
+    extra_params: dict = field(default_factory=dict)
 
 
 # Single source of truth for provider config. Order = preference (free first).
-# Gemini Flash leads: 15 RPM free tier, excellent bilingual (EN/FR) quality.
+# Gemini Flash leads: generous free tier, excellent bilingual (EN/FR) quality.
 PROVIDERS: dict[AIProvider, ProviderSpec] = {
     AIProvider.GEMINI: ProviderSpec(
-        label="Gemini · Flash 2.0",
+        label="Gemini · Flash 3.6",
         tier="free",
         env_var="GOOGLE_API_KEY",
-        model="gemini-2.0-flash",
+        # gemini-2.0-flash was retired ("no longer available", HTTP 404);
+        # Google's own 404 body points at gemini-3.6-flash as the replacement.
+        model="gemini-3.6-flash",
         kind="openai_compat",
         base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     ),
     AIProvider.GROQ: ProviderSpec(
-        label="Groq · Llama 3.3 70B",
+        label="Groq · GPT-OSS 120B",
         tier="free",
         env_var="GROQ_API_KEY",
-        model="llama-3.3-70b-versatile",
+        # llama-3.3-70b-versatile was deprecated by Groq and now 404s
+        # ("model_not_found"). gpt-oss-120b is on the live /v1/models list.
+        model="openai/gpt-oss-120b",
         kind="openai_compat",
         base_url="https://api.groq.com/openai/v1",
+        # gpt-oss-120b is a reasoning model: it burns part of the completion
+        # budget on hidden reasoning before emitting content, which starves
+        # short answers when a caller caps max_tokens. "low" keeps that budget
+        # small (measured 298 -> 38 reasoning chars for the same answer, same
+        # wall time). Reasoning arrives on a separate `reasoning` delta field,
+        # so it never leaks into the streamed content below.
+        extra_params={"reasoning_effort": "low"},
     ),
     AIProvider.OPENAI: ProviderSpec(
         label="OpenAI · GPT-4o mini",
@@ -346,13 +365,15 @@ def _stream_openai_compat(
     ]
     if stream:
         for chunk in client.chat.completions.create(
-            model=spec.model, messages=messages, stream=True
+            model=spec.model, messages=messages, stream=True, **spec.extra_params
         ):
             delta = chunk.choices[0].delta.content
             if delta:
                 yield delta
     else:
-        resp = client.chat.completions.create(model=spec.model, messages=messages)
+        resp = client.chat.completions.create(
+            model=spec.model, messages=messages, **spec.extra_params
+        )
         yield resp.choices[0].message.content or ""
 
 
