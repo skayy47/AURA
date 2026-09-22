@@ -57,8 +57,13 @@ class ProviderSpec:
     model: str
     kind: str  # "openai_compat" | "anthropic"
     base_url: str | None = None
-    # Provider-specific request params merged into the chat-completion call.
-    extra_params: dict = field(default_factory=dict)
+    # Provider-specific request fields. Sent through the SDK's ``extra_body``
+    # (NOT as kwargs): the pinned openai==1.35.0 has no **kwargs on
+    # ``chat.completions.create``, so an unknown kwarg raises TypeError, and a
+    # TypeError is deliberately NOT retriable — it would kill the provider
+    # chain. ``extra_body`` is merged into the JSON payload on every 1.x/2.x
+    # SDK, so it is version-proof.
+    extra_body: dict = field(default_factory=dict)
 
 
 # Single source of truth for provider config. Order = preference (free first).
@@ -89,7 +94,7 @@ PROVIDERS: dict[AIProvider, ProviderSpec] = {
         # small (measured 298 -> 38 reasoning chars for the same answer, same
         # wall time). Reasoning arrives on a separate `reasoning` delta field,
         # so it never leaks into the streamed content below.
-        extra_params={"reasoning_effort": "low"},
+        extra_body={"reasoning_effort": "low"},
     ),
     AIProvider.OPENAI: ProviderSpec(
         label="OpenAI · GPT-4o mini",
@@ -363,16 +368,18 @@ def _stream_openai_compat(
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_message},
     ]
+    # extra_body (never **kwargs) — see ProviderSpec.extra_body.
+    extra_body = spec.extra_body or None
     if stream:
         for chunk in client.chat.completions.create(
-            model=spec.model, messages=messages, stream=True, **spec.extra_params
+            model=spec.model, messages=messages, stream=True, extra_body=extra_body
         ):
             delta = chunk.choices[0].delta.content
             if delta:
                 yield delta
     else:
         resp = client.chat.completions.create(
-            model=spec.model, messages=messages, **spec.extra_params
+            model=spec.model, messages=messages, extra_body=extra_body
         )
         yield resp.choices[0].message.content or ""
 

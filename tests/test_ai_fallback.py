@@ -32,6 +32,13 @@ RETIRED_MODEL_IDS = {
 }
 
 
+# The only kwargs chat.completions.create may ever be called with. Anything
+# provider-specific travels inside extra_body, which every openai 1.x/2.x
+# release merges into the JSON payload. Keeping this list fixed is what makes
+# the call shape safe across SDK versions.
+ALLOWED_CREATE_KWARGS = {"model", "messages", "stream", "extra_body"}
+
+
 class _HttpError(Exception):
     """Stand-in for openai.APIStatusError / anthropic.APIStatusError."""
 
@@ -58,7 +65,7 @@ def test_every_provider_has_a_model_and_env_var() -> None:
     for provider, spec in PROVIDERS.items():
         assert spec.model, f"{provider.value} has no model pinned"
         assert spec.env_var, f"{provider.value} has no env var"
-        assert isinstance(spec.extra_params, dict)
+        assert isinstance(spec.extra_body, dict)
 
 
 def test_groq_reasoning_model_caps_hidden_reasoning() -> None:
@@ -67,7 +74,7 @@ def test_groq_reasoning_model_caps_hidden_reasoning() -> None:
     get empty content back with finish_reason='length' (the MAESTRO bug)."""
     spec = PROVIDERS[AIProvider.GROQ]
     if "gpt-oss" in spec.model:
-        assert spec.extra_params.get("reasoning_effort") == "low", (
+        assert spec.extra_body.get("reasoning_effort") == "low", (
             f"{spec.model} is a reasoning model; pin reasoning_effort='low' "
             "so short answers are not starved of tokens."
         )
@@ -195,3 +202,112 @@ def test_midstream_failure_does_not_splice_two_answers() -> None:
             break
 
     assert "SECOND ANSWER" not in out
+
+
+# --------------------------------------------------------------------------
+# Defect 3 — provider-specific fields must not be passed as SDK kwargs
+# --------------------------------------------------------------------------
+#
+# Caught before it reached users, but only just: the first cut of this fix sent
+# reasoning_effort as a kwarg. That works on openai 2.x (the dev machine) and
+# raises TypeError on openai==1.35.0 (requirements.txt / the Docker image),
+# which has no **kwargs on chat.completions.create. A TypeError is NOT
+# retriable by design, so it would have killed the provider chain in production
+# while every local test stayed green. This test pins the call shape against
+# whichever SDK version is actually installed.
+
+
+def test_openai_compat_call_uses_only_params_the_installed_sdk_accepts() -> None:
+    import inspect
+    from types import SimpleNamespace
+
+    from openai.resources.chat.completions import Completions
+
+    import engines.ai_insights as ai
+
+    sig = inspect.signature(Completions.create)
+    accepts_var_kwargs = any(p.kind is p.VAR_KEYWORD for p in sig.parameters.values())
+    captured: dict = {}
+
+    class _FakeCompletions:
+        def create(self, **kwargs):
+            captured.update(kwargs)
+            return SimpleNamespace(
+                choices=[SimpleNamespace(message=SimpleNamespace(content="ok"))]
+            )
+
+    class _FakeClient:
+        def __init__(self, *a, **k):
+            self.chat = SimpleNamespace(completions=_FakeCompletions())
+
+    import openai
+
+    original = openai.OpenAI
+    openai.OpenAI = _FakeClient
+    try:
+        for provider, spec in PROVIDERS.items():
+            if spec.kind != "openai_compat":
+                continue
+            captured.clear()
+            list(ai._stream_openai_compat(spec, "sys", "usr", stream=False))
+
+            # (a) Version-INDEPENDENT: the call may only ever use this fixed
+            #     set of kwargs. This is the assertion that actually catches
+            #     the bug on a dev machine whose SDK happens to be new enough
+            #     to accept the kwarg, which is precisely how it slipped past
+            #     a green local test run the first time.
+            assert set(captured) <= ALLOWED_CREATE_KWARGS, (
+                f"{provider.value} passes "
+                f"{sorted(set(captured) - ALLOWED_CREATE_KWARGS)} as kwargs to "
+                "chat.completions.create. Provider-specific fields must go in "
+                "extra_body, or they break on older pinned SDKs."
+            )
+
+            # (b) Version-DEPENDENT: also reject anything the SDK that is
+            #     actually installed would refuse.
+            unknown = set(captured) - set(sig.parameters)
+            assert accepts_var_kwargs or not unknown, (
+                f"{provider.value} passes {sorted(unknown)} as kwargs, which "
+                f"openai=={openai.__version__} rejects with TypeError. "
+                "Provider-specific fields belong in extra_body."
+            )
+
+            # (c) Whatever the provider declares must actually be delivered.
+            if spec.extra_body:
+                assert captured.get("extra_body") == spec.extra_body, (
+                    f"{provider.value}: extra_body {spec.extra_body} was not "
+                    f"sent (got {captured.get('extra_body')!r})"
+                )
+    finally:
+        openai.OpenAI = original
+
+
+def test_pinned_sdk_version_still_accepts_the_call_shape() -> None:
+    """Guard the assumption that ALLOWED_CREATE_KWARGS is safe on the SDK
+    version requirements.txt actually pins (which is what ships in Docker),
+    not merely on whatever happens to be installed here."""
+    import re
+    from pathlib import Path
+
+    req = Path(__file__).resolve().parents[1] / "AURA-BACKEND" / "requirements.txt"
+    pin = re.search(r"^openai==(\S+)", req.read_text(encoding="utf-8"), re.M)
+    assert pin, "openai is no longer pinned in requirements.txt"
+
+    # extra_body has existed on every openai 1.x/2.x release; a major bump
+    # beyond that needs this call shape re-verified against the new SDK.
+    major = int(pin.group(1).split(".")[0])
+    assert major in (1, 2), (
+        f"openai is pinned to {pin.group(1)}; re-verify that "
+        f"{sorted(ALLOWED_CREATE_KWARGS)} is still the correct call shape."
+    )
+
+
+def test_reasoning_effort_value_is_valid() -> None:
+    for provider, spec in PROVIDERS.items():
+        effort = spec.extra_body.get("reasoning_effort")
+        assert effort is None or effort in {
+            "none",
+            "low",
+            "medium",
+            "high",
+        }, f"{provider.value} has an invalid reasoning_effort: {effort!r}"
