@@ -196,6 +196,89 @@ def _language_directive(language: str | None) -> str:
     )
 
 
+_ADDITIVE_HINTS = (
+    "revenue",
+    "sales",
+    "profit",
+    "amount",
+    "total",
+    "spend",
+    "cost",
+    "income",
+)
+_NON_ADDITIVE_HINTS = (
+    "pct",
+    "percent",
+    "rate",
+    "ratio",
+    "price",
+    "avg",
+    "mean",
+    "score",
+)
+
+
+def _measure_rank(col: str) -> int:
+    name = col.lower()
+    if any(h in name for h in _ADDITIVE_HINTS):
+        return 0
+    if any(h in name for h in _NON_ADDITIVE_HINTS):
+        return 2
+    return 1
+
+
+def _group_totals_section(
+    df: pd.DataFrame,
+    semantics: dict | None = None,
+    max_dims: int = 5,
+    max_measures: int = 3,
+    max_groups: int = 12,
+) -> str:
+    """Exact per-group sums and means for "total X by Y" questions.
+
+    Without these the model only had overall mean/count and answered compound
+    questions with mean × row-count approximations presented as totals. Kept
+    small on purpose: a few low-cardinality dimensions × a few measures.
+    """
+    semantics = semantics or {}
+    ids = set(semantics.get("id_cols") or [])
+    measures = [
+        c
+        for c in (semantics.get("measure_cols") or [])
+        if c in df.columns and pd.api.types.is_numeric_dtype(df[c])
+    ]
+    if not measures:
+        measures = [
+            c for c in df.select_dtypes(include="number").columns if c not in ids
+        ]
+    dims = [c for c in (semantics.get("dimension_cols") or []) if c in df.columns]
+    if not dims:
+        dims = list(df.select_dtypes(include=["object", "category"]).columns)
+    dims = [c for c in dims if c not in ids and 1 < df[c].nunique(dropna=True) <= 30]
+    # Fewest categories first: "by segment" beats "by country" for a compact prompt.
+    dims.sort(key=lambda c: df[c].nunique(dropna=True))
+    # Additive money/volume columns first; rates and unit prices are not meant to be summed.
+    measures.sort(key=_measure_rank)
+
+    lines: list[str] = []
+    for dim in dims[:max_dims]:
+        for m in measures[:max_measures]:
+            g = df.groupby(dim, dropna=True)[m].agg(["sum", "mean", "count"])
+            g = g.sort_values("sum", ascending=False).head(max_groups)
+            parts = ", ".join(
+                f'"{k}": sum={row["sum"]:,.2f}, mean={row["mean"]:,.2f}, n={int(row["count"])}'
+                for k, row in g.iterrows()
+            )
+            lines.append(f"  {m} by {dim}: {parts}")
+    if not lines:
+        return ""
+    return (
+        "Exact group aggregates (computed on the full dataset — use these for any "
+        "'total/average X by Y' question, never multiply a mean by a count):\n"
+        + "\n".join(lines)
+    )
+
+
 def _build_system_prompt(
     df: pd.DataFrame,
     semantics: dict | None = None,
@@ -254,6 +337,10 @@ def _build_system_prompt(
     ]
     if cat_section:
         sections.append(cat_section)
+
+    group_section = _group_totals_section(df, semantics)
+    if group_section:
+        sections.append(group_section)
 
     id_rule = ""
     if semantics:
