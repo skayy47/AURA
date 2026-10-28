@@ -337,7 +337,7 @@ AURA/
 |---|---|---|
 | **v5.0** | ✅ Shipped | 3D landing, bilingual EN/FR + locale-aware AI, Stripe checkout, E2E CI, PDF report, ranked insight engine |
 | **v5.1** | 🔜 Planned | Entitlement persistence; Redis session store for multi-worker support |
-| **v6.0** | 💡 Future | Live public demo URL; agent mode (multi-step analysis plans) |
+| **v6.0** | 💡 Future | Agent mode (multi-step analysis plans). *(The live public demo shipped with v5.0 — see the badge above.)* |
 
 ---
 
