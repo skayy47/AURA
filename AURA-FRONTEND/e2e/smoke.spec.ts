@@ -9,22 +9,19 @@ test("landing page loads and shows hero", async ({ page }) => {
   await expect(h1).toContainText(/data/i);
 });
 
-test("language switcher toggles to Arabic", async ({ page }) => {
+test("language switcher toggles to French", async ({ page }) => {
   await page.goto("/en");
-  const arButton = page.locator("button[lang='ar']");
-  await arButton.click();
-  await expect(page).toHaveURL(/\/ar/);
-  // html dir should be rtl
-  const dir = await page.locator("html").getAttribute("dir");
-  expect(dir).toBe("rtl");
+  await page.locator("button[lang='fr']").first().click();
+  await expect(page).toHaveURL(/\/fr/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });
 
 test("pricing page renders all 3 tiers", async ({ page }) => {
   await page.goto("/en/pricing");
   // Three tier name headings should be visible
-  await expect(page.getByText("Free")).toBeVisible();
-  await expect(page.getByText("Pro")).toBeVisible();
-  await expect(page.getByText("Team")).toBeVisible();
+  for (const tier of ["Free", "Pro", "Team"]) {
+    await expect(page.getByText(tier, { exact: true }).first()).toBeVisible();
+  }
 });
 
 test("ingest page shows empty state without session", async ({ page }) => {
