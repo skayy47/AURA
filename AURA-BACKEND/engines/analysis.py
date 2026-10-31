@@ -263,7 +263,15 @@ def _build_insights(
                 f"{trends['measure']} changed {trends['change_pct']:+.0f}% across the "
                 f"{trends['date_col']} timeline."
             )
-        items.append({"kind": "trend", "severity": sev, "icon": "trend", "title": title, "detail": detail})
+        items.append(
+            {
+                "kind": "trend",
+                "severity": sev,
+                "icon": "trend",
+                "title": title,
+                "detail": detail,
+            }
+        )
 
     for c in correlations[:3]:
         strength = abs(c["r"])
@@ -283,7 +291,15 @@ def _build_insights(
                 f"{c['col_a']} is {rel} correlated with {c['col_b']} (r = {c['r']:+.2f}). "
                 f"{'Strong' if strength >= 0.7 else 'Moderate'} relationship worth modeling."
             )
-        items.append({"kind": "correlation", "severity": sev, "icon": "link", "title": title, "detail": detail})
+        items.append(
+            {
+                "kind": "correlation",
+                "severity": sev,
+                "icon": "link",
+                "title": title,
+                "detail": detail,
+            }
+        )
 
     if (
         segments
@@ -304,7 +320,15 @@ def _build_insights(
                 f"'{segments['bottom']['label']}' at {segments['bottom']['value']:.2f} — a "
                 f"{abs(segments['spread_pct']):.0f}% gap across {segments['dimension']}."
             )
-        items.append({"kind": "segment", "severity": 2, "icon": "segment", "title": title, "detail": detail})
+        items.append(
+            {
+                "kind": "segment",
+                "severity": 2,
+                "icon": "segment",
+                "title": title,
+                "detail": detail,
+            }
+        )
 
     if quality["missing_hotspots"]:
         h = quality["missing_hotspots"][0]
@@ -322,7 +346,15 @@ def _build_insights(
                     "Imputed during cleaning, but high missingness can bias analysis — "
                     "verify the source."
                 )
-            items.append({"kind": "missing", "severity": sev, "icon": "missing", "title": title, "detail": detail})
+            items.append(
+                {
+                    "kind": "missing",
+                    "severity": sev,
+                    "icon": "missing",
+                    "title": title,
+                    "detail": detail,
+                }
+            )
 
     for o in outliers[:2]:
         if o["pct"] >= 1:
@@ -338,13 +370,15 @@ def _build_insights(
                     f"{o['pct']:.0f}% of values fall outside 1.5×IQR — possible data errors "
                     "or genuine extremes."
                 )
-            items.append({
-                "kind": "outliers",
-                "severity": 2 if o["pct"] >= 5 else 1,
-                "icon": "outlier",
-                "title": title,
-                "detail": detail,
-            })
+            items.append(
+                {
+                    "kind": "outliers",
+                    "severity": 2 if o["pct"] >= 5 else 1,
+                    "icon": "outlier",
+                    "title": title,
+                    "detail": detail,
+                }
+            )
 
     for d in dominance[:1]:
         if is_fr:
@@ -359,7 +393,15 @@ def _build_insights(
                 f"'{d['value']}' accounts for {d['share']:.0f}% of rows — limited variance "
                 "in this dimension."
             )
-        items.append({"kind": "dominant", "severity": 1, "icon": "dominant", "title": title, "detail": detail})
+        items.append(
+            {
+                "kind": "dominant",
+                "severity": 1,
+                "icon": "dominant",
+                "title": title,
+                "detail": detail,
+            }
+        )
 
     if quality["duplicate_rows"] > 0:
         if is_fr:
@@ -368,7 +410,15 @@ def _build_insights(
         else:
             title = f"{quality['duplicate_rows']} duplicate rows removed"
             detail = f"{quality['duplicate_pct']:.0f}% of rows were exact duplicates."
-        items.append({"kind": "duplicates", "severity": 1, "icon": "duplicate", "title": title, "detail": detail})
+        items.append(
+            {
+                "kind": "duplicates",
+                "severity": 1,
+                "icon": "duplicate",
+                "title": title,
+                "detail": detail,
+            }
+        )
 
     items.sort(key=lambda x: x["severity"], reverse=True)
     return items[:_TOP_INSIGHTS]

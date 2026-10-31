@@ -5,6 +5,7 @@ Docker image rebuilds (e.g. HF Space redeploy) unless SESSION_STORE_PATH
 points to persistent storage (set to /data/sessions on HF Spaces with
 persistent storage enabled).
 """
+
 from __future__ import annotations
 
 import logging

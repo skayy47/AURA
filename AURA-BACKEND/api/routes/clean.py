@@ -61,7 +61,9 @@ async def clean(req: CleaningConfigRequest):
         try:
             n = cleaned_df.shape[0] * cleaned_df.shape[1]
             missing_rate = float(cleaned_df.isnull().sum().sum() / n) if n > 0 else 0.0
-            quality_score = round(max(0.0, min(100.0, (1.0 - missing_rate * 2) * 100)), 1)
+            quality_score = round(
+                max(0.0, min(100.0, (1.0 - missing_rate * 2) * 100)), 1
+            )
         except Exception:
             quality_score = 0.0
 

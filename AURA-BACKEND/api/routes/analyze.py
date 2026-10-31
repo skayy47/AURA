@@ -47,7 +47,9 @@ async def analyze(session_id: str, lang: str = "en"):
         semantics = infer_semantics(df, profile)
 
     meta_name = sess.get("meta_name", "dataset")
-    analysis = run_analysis(df, profile, meta_name=meta_name, semantics=semantics, language=language)
+    analysis = run_analysis(
+        df, profile, meta_name=meta_name, semantics=semantics, language=language
+    )
 
     questions = suggested_questions(analysis, semantics=semantics, language=language)
 
