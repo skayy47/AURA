@@ -121,11 +121,11 @@ jobs:
           npm run build
           npm start &
         env:
-          NEXT_PUBLIC_API_URL: "http://localhost:8000"
+          NEXT_PUBLIC_API_URL: "http://127.0.0.1:8000"
 
       - name: Wait for services
         run: |
-          npx wait-on http://localhost:8000/health http://localhost:3000 --timeout 60000
+          npx wait-on http://127.0.0.1:8000/health http://127.0.0.1:3000 --timeout 90000
 
       - name: Playwright smoke test
         working-directory: AURA-FRONTEND
